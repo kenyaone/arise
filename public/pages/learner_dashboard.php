@@ -325,9 +325,6 @@ trackPageView('dashboard');
                 <?php if ($certCount > 0): ?>
                     <span class="level-pill" style="background:#10b981;">🎓 <?= $certCount ?> cert<?= $certCount !== 1 ? 's' : '' ?></span>
                 <?php endif; ?>
-                <?php if ($myLeaderboardRank !== null): ?>
-                    <span class="level-pill" style="background:#7c3aed;color:#fff;">🏆 Rank #<?= $myLeaderboardRank ?></span>
-                <?php endif; ?>
             </div>
         </div>
         <!-- XP bar -->
