@@ -190,8 +190,26 @@ if ($action === 'post') {
 
     foreach ($data as $k => $v) $lines[] = sprintf("%-20s: %s", ucfirst($k), $v);
 
+    // Add school breakdown to email
     $lines[] = "";
-    $lines[] = "SEE FULL REPORT WITH SCHOOL BREAKDOWN, MODULE ANALYSIS & CHARTS:";
+    $lines[] = "SCHOOL BREAKDOWN";
+    $lines[] = str_repeat("-", 60);
+    $lines[] = sprintf("%-30s | %8s | %8s | %10s | %5s", "School", "Learners", "Quizzed", "Avg Score", "Cert %");
+    $lines[] = str_repeat("-", 60);
+
+    $result = db()->query("SELECT s.school_name, COUNT(DISTINCT s.id) as learners, COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers, ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.percentage ELSE NULL END), 1) as avg_score, COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified, ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate FROM students s LEFT JOIN quiz_attempts qa ON s.id = qa.student_id LEFT JOIN certificates c ON s.id = c.student_id WHERE s.is_active=1 AND s.deleted_at IS NULL GROUP BY s.school_name ORDER BY learners DESC");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $lines[] = sprintf("%-30s | %8d | %8d | %9.1f%% | %5.1f%%",
+            substr($row['school_name'], 0, 29),
+            $row['learners'],
+            $row['quiz_takers'],
+            $row['avg_score'],
+            $row['cert_rate']
+        );
+    }
+
+    $lines[] = "";
+    $lines[] = "SEE FULL REPORT WITH CHARTS & MODULE ANALYSIS:";
     $lines[] = "http://192.168.0.10/arise/?p=donor_report";
     $lines[] = "";
     $lines[] = "Platform: http://192.168.0.10/arise/";
