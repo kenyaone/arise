@@ -3,20 +3,13 @@
  * Learner Dashboard — rich student home page
  * Route: ?p=dashboard
  */
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $student = getStudentBySession();
 if (!$student) { header('Location: /arise/?p=login'); exit; }
 $sid = $student['id'];
 
 // Notifications
-try {
-    $notifs = getStudentNotifications($sid);
-    if ($notifs) markNotificationsRead($sid);
-} catch (Exception $e) {
-    $notifs = [];
-}
+$notifs = getStudentNotifications($sid);
+if ($notifs) markNotificationsRead($sid);
 
 // ── XP data (mirrored from my_progress.php) ────────────────────────────────
 $xp = db()->querySingle("SELECT * FROM student_xp WHERE student_id=$sid", true);
@@ -91,7 +84,7 @@ while ($r = $mpRes->fetchArray(SQLITE3_ASSOC)) {
 
 // Which modules have a quiz?
 $modulesWithQuiz = [];
-$mqRes = db()->query("SELECT DISTINCT module_id FROM quizzes WHERE is_active=1");
+$mqRes = db()->query("SELECT DISTINCT module_id FROM quiz_questions WHERE is_active=1");
 while ($r = $mqRes->fetchArray(SQLITE3_ASSOC)) {
     $modulesWithQuiz[] = $r['module_id'];
 }
