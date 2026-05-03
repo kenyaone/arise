@@ -499,5 +499,5 @@ trackPageView('dashboard');
         <?php endif; ?>
     </div>
 
-
 </div>
+<!-- End .container -->
