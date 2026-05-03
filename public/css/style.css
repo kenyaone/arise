@@ -59,7 +59,7 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',system-ui,sans-serif;background:#F5FFF8;color:var(--dark);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:linear-gradient(135deg,#0D5E3D 0%,#1E8055 35%,#FF9700 100%);background-attachment:fixed;color:var(--dark);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
 h1,h2,h3,h4,h5{font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:-.3px;line-height:1.25;}
 a{color:var(--green);text-decoration:none;transition:var(--t);}
 a:hover{color:var(--green-dark);}

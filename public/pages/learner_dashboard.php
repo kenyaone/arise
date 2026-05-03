@@ -286,6 +286,13 @@ trackPageView('dashboard');
 
 <div class="container">
 
+    <!-- DEBUG: Check if page is loading -->
+    <?php if (empty($student)): ?>
+        <div style="background:#fee2e2;border:2px solid #dc2626;color:#991b1b;padding:16px;border-radius:8px;margin-bottom:16px;">
+            <strong>⚠️ Error:</strong> Student data not found. Please <a href="/arise/?p=login">log in again</a>.
+        </div>
+    <?php endif; ?>
+
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="/arise/">Home</a> <span class="sep">›</span>
