@@ -3,19 +3,12 @@
  * Learner Dashboard — rich student home page
  * Route: ?p=dashboard
  */
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $student = getStudentBySession();
 if (!$student) { header('Location: /arise/?p=login'); exit; }
 $sid = $student['id'];
 
-echo "<!-- Student: " . htmlspecialchars($student['full_name'] ?? 'Unknown') . " -->";
-
 // Notifications (temporarily disabled due to schema mismatch)
 $notifs = [];
-
-echo "<!-- Notifications skipped -->";
 
 // ── XP data (mirrored from my_progress.php) ────────────────────────────────
 $xp = db()->querySingle("SELECT * FROM student_xp WHERE student_id=$sid", true);
