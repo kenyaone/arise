@@ -433,6 +433,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 </div>
 <?php endif; ?>
 
+<!-- Reports -->
+<div class="card">
+  <h2>📊 Donor & Impact Reports</h2>
+  <div class="gbtns">
+    <a href="/arise/?p=donor_report" target="_blank" style="background:#d97706;color:#fff;text-decoration:none;padding:9px 18px;border-radius:8px;font-weight:700;font-size:.84rem;cursor:pointer;border:none;display:inline-block">📈 View Full Impact Report</a>
+    <button class="gbtn pull" style="background:#10b981" onclick="openDonorGuide()">📋 Reporting Guide</button>
+  </div>
+  <p style="font-size:.8rem;color:#6b7280;margin-top:12px">✓ Professional, printable reports aggregated by school and module<br>✓ Knowledge gain analysis, completion funnels, and engagement metrics</p>
+</div>
+
 <!-- GitHub -->
 <div class="card">
   <h2>GitHub — kenyaone/arise</h2>
@@ -664,6 +674,7 @@ function setProvider(p){
 
 function openSettings(){document.getElementById('settingsModal').classList.add('show');}
 function openGitHub(){document.getElementById('githubModal').classList.add('show');}
+function openDonorGuide(){alert('📊 Donor Report Features:\n\n✓ Full impact metrics aggregated by school\n✓ Module performance with quiz scores\n✓ Knowledge gain (pre/post test analysis)\n✓ Completion funnel visualization\n✓ Daily activity tracking\n✓ Professional PDF export\n\nClick "View Full Impact Report" to access the complete report.');}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 
 document.addEventListener('click',e=>{
