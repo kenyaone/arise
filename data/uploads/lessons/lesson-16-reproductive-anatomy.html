@@ -1,0 +1,58 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">👩 Female Reproductive System</div>
+<table class="ar-table"><tr><th>Organ</th><th>Function</th></tr>
+<tr><td>Ovaries</td><td>Produce eggs (ova) and secrete oestrogen & progesterone</td></tr>
+<tr><td>Fallopian Tubes</td><td>Transport egg from ovary to uterus; site of fertilisation</td></tr>
+<tr><td>Uterus (Womb)</td><td>Houses and nourishes the developing fetus</td></tr>
+<tr><td>Cervix</td><td>Lower part of uterus; dilates during childbirth</td></tr>
+<tr><td>Vagina</td><td>Passageway for menstrual flow, intercourse, and childbirth</td></tr>
+<tr><td>Vulva</td><td>External female genitalia</td></tr></table>
+</div>
+<div class="ar-section">
+<div class="ar-h2">👨 Male Reproductive System</div>
+<table class="ar-table"><tr><th>Organ</th><th>Function</th></tr>
+<tr><td>Testes</td><td>Produce sperm and testosterone</td></tr>
+<tr><td>Epididymis</td><td>Stores and matures sperm; connects testes to vas deferens</td></tr>
+<tr><td>Vas Deferens</td><td>Muscular tube transporting sperm during ejaculation</td></tr>
+<tr><td>Seminal Vesicles</td><td>Produce fructose-rich fluid that energises sperm</td></tr>
+<tr><td>Prostate Gland</td><td>Produces fluid that nourishes and protects sperm in semen</td></tr>
+<tr><td>Urethra</td><td>Carries both urine AND semen out of the body (not simultaneously)</td></tr>
+<tr><td>Penis</td><td>Delivers sperm during intercourse; passes urine</td></tr></table>
+<div class="ar-key"><strong>🔑 Sperm Journey:</strong> Testes → Epididymis (matures, 64 days) → Vas Deferens → mixes with seminal fluid → Urethra → out during ejaculation</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🔬 Fertilisation & Conception</div>
+<p class="ar-p">Fertilisation occurs when one sperm penetrates and merges with an egg in the fallopian tube. The fertilised egg (zygote) travels to the uterus and implants in the lining — pregnancy begins. Sperm can survive inside the female body for up to <strong>5 days</strong>.</p>
+</div>
+<div class="ar-quiz">
+<h3>✅ Quiz</h3>
+<div class="ar-q"><p>1. In which specific reproductive organ does fertilisation of the egg by sperm normally occur?</p>
+<input class="ar-input" id="q1" placeholder="Name the organ...">
+<button class="ar-btn" onclick="chk('q1',['fallopian','tube'],'fb1',1,'The Fallopian Tube — the egg is released from the ovary and travels through the fallopian tube, where sperm meets and fertilises it.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Sperm takes approximately how many days to fully mature inside the epididymis?</p>
+<input class="ar-input" id="q2" placeholder="Number of days...">
+<button class="ar-btn" onclick="chk('q2',['64','sixty'],'fb2',1,'Approximately 64 days — spermatogenesis (sperm production and maturation) takes about 64 days from start to finish.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Which female reproductive organ produces both eggs AND the hormones oestrogen and progesterone?</p>
+<input class="ar-input" id="q3" placeholder="Name the organ...">
+<button class="ar-btn" onclick="chk('q3',['ovar'],'fb3',1,'The Ovaries — they serve dual functions: producing eggs (ova) for reproduction and secreting the hormones oestrogen and progesterone that regulate the menstrual cycle.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. A student says "the urethra carries only urine." Correct this misconception.</p>
+<textarea class="ar-textarea" id="q4" placeholder="Correct the misconception..."></textarea>
+<button class="ar-btn" onclick="chkKw('q4',['semen','ejaculation','both','also','reproductive','not only','urine'],'fb4',1,1,'In males, the urethra carries BOTH urine (from the bladder) and semen (during ejaculation) — but never simultaneously. A muscle sphincter prevents mixing of these two functions.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

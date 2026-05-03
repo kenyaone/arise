@@ -1,0 +1,64 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">💪 What Are Life Skills?</div>
+<p class="ar-p">Life skills are the abilities that help you navigate daily challenges, make good decisions, build relationships, and achieve your goals. The World Health Organization identifies 10 core life skills every young person needs.</p>
+<table class="ar-table"><tr><th>Life Skill</th><th>Why It Matters in Kenya</th></tr>
+<tr><td>Communication</td><td>Express yourself clearly; avoid misunderstandings</td></tr>
+<tr><td>Decision-Making</td><td>Choose wisely when facing pressure, relationships, career</td></tr>
+<tr><td>Critical Thinking</td><td>Evaluate information — important in the age of fake news</td></tr>
+<tr><td>Problem-Solving</td><td>Find solutions without panicking or giving up</td></tr>
+<tr><td>Self-Awareness</td><td>Understand your strengths, weaknesses, values</td></tr>
+<tr><td>Empathy</td><td>Understand others' feelings — builds respect and cooperation</td></tr>
+<tr><td>Stress Management</td><td>Handle exam pressure, family stress, peer pressure</td></tr>
+<tr><td>Time Management</td><td>Balance school, chores, social life effectively</td></tr>
+<tr><td>Assertiveness</td><td>Say NO to drugs, sex, or wrong choices confidently</td></tr>
+<tr><td>Resilience</td><td>Recover from failure, disappointment, or setbacks</td></tr></table>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🗣️ Communication Skills in Practice</div>
+<p class="ar-p">Effective communication is both speaking AND listening. Many conflicts arise not from disagreement but from poor communication.</p>
+<table class="ar-table"><tr><th>Type</th><th>Key Skill</th><th>Example</th></tr>
+<tr><td>Verbal</td><td>Clear, calm, specific language</td><td>"I feel hurt when you ignore me" vs "You always ignore me!"</td></tr>
+<tr><td>Non-verbal</td><td>Open body language, eye contact</td><td>Nodding, facing the speaker, uncrossed arms</td></tr>
+<tr><td>Listening</td><td>Active listening — full attention</td><td>Phone away, no interrupting, reflecting back</td></tr>
+<tr><td>Written</td><td>Clear, respectful tone</td><td>Professional texts and emails</td></tr></table>
+<div class="ar-key"><strong>🔑 "I" Statements:</strong> Say "I feel..." instead of "You always..." — this prevents the other person from becoming defensive and keeps conversation productive.</div>
+<div class="ar-scenario"><strong>🇰🇪 Classroom Scenario:</strong> Zawadi's group ignored her project ideas. Instead of sulking or attacking ("You never listen to me!"), she said: "I feel frustrated when my ideas aren't considered. Can we give everyone 2 minutes to share?" The group responded positively. One assertive, clear statement changed everything.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🧭 Decision-Making in Real Life</div>
+<p class="ar-p">Good decisions don't happen by accident. They follow a clear process:</p>
+<p class="ar-p"><strong>1. Define the problem</strong> → <strong>2. Consider all options</strong> → <strong>3. Evaluate pros and cons</strong> → <strong>4. Choose & act</strong> → <strong>5. Reflect on the outcome</strong></p>
+<div class="ar-scenario"><strong>🇰🇪 Kipchoge's Decision:</strong> Was offered money by an older student to carry a package without being told what was inside. He used the decision-making model: What are my options? What are the risks? Could this involve drugs? He refused. Later found out the package contained cannabis — he would have been arrested.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Aisha has a group project due tomorrow but her teammates haven't contributed. She's angry. Using the "I" statement technique, write what she should say to her group — NOT what she should NOT say.</p>
+<textarea class="ar-textarea" id="q1" placeholder="Write an 'I' statement..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['i feel','i am','i need','i would','frustrated','concerned','worried','when'],'fb1',1,2,'Example: "I feel stressed and overwhelmed when I'm the only one working on our project. I need each of us to complete our sections by tonight so we can submit on time." — Specific, calm, uses 'I', states a need.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Brian always does his homework at night while chatting on WhatsApp with friends, watching TikTok, and eating. He constantly fails to finish. Which life skill does Brian need to develop most urgently?</p>
+<input class="ar-input" id="q2" placeholder="Name the life skill...">
+<button class="ar-btn" onclick="chk('q2',['time management','focus','discipline','self','control'],'fb2',1,'Time Management — Brian needs to create a study schedule, eliminate distractions (phone), and prioritise homework before social media.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. List the 5 steps of the decision-making model in the correct order.</p>
+<textarea class="ar-textarea" id="q3" placeholder="List the 5 steps..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['define','consider','evaluat','choose','reflect','option','pros','cons','act'],'fb3',3,3,'(1) Define the problem. (2) Consider all options. (3) Evaluate pros and cons. (4) Choose and act. (5) Reflect on the outcome. This model prevents impulsive decisions.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. Empathy means understanding your own emotions clearly. True or False? Correct if False.</p>
+<textarea class="ar-textarea" id="q4" placeholder="True or False? Explain..."></textarea>
+<button class="ar-btn" onclick="chkKw('q4',['false','others','their','another','different','self-awareness','empathy is'],'fb4',1,2,'FALSE. Empathy is understanding and sharing the feelings of OTHERS. Understanding your OWN emotions is self-awareness. Both are important but distinct life skills.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(7)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

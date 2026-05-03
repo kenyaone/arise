@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Effects of Smoking | ARISE Health</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;
+  --ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;
+  --white:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#d0e4d8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:72px;font-size:15px;}
+
+/* TOP BAR */
+.top-bar{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;padding:11px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(10,94,42,.35);}
+.top-bar .subject{font-size:.72rem;opacity:.8;margin-bottom:1px;}
+.top-bar .lesson-name{font-size:.96rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.3);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;margin-left:12px;}
+
+/* SLIDES */
+.slides-wrap{max-width:740px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 8px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* SLIDE CONTENT */
+.teach-block{margin-bottom:18px;}
+.teach-block h3{font-size:1rem;font-weight:700;color:var(--pri);padding-bottom:5px;border-bottom:3px solid var(--acc);margin-bottom:12px;display:inline-block;}
+
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+.lo-box h3{color:var(--pri);font-size:.93rem;font-weight:700;margin-bottom:8px;border:none;padding:0;display:block;}
+.lo-box ol{padding-left:18px;}
+.lo-box ol li{margin-bottom:5px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:.85rem;color:#6b4a00;}
+.inquiry strong{color:var(--pri);font-size:.9rem;}
+
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:10px;}
+
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:2px;font-size:.88rem;}
+
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+
+.example-box{background:#e8f5ec;border:1px solid #a8d5b5;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:.85rem;line-height:1.65;}
+.example-box strong{color:var(--pri);display:block;margin-bottom:4px;}
+
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.85rem;}
+.tip-box strong{color:#1a3db5;}
+
+.info-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.83rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:6px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+
+/* DIAGRAM WRAP */
+.diagram-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin:12px 0;text-align:center;}
+
+/* QUIZ */
+.quiz-wrap{margin-top:2px;}
+.quiz-wrap h3{color:var(--pri);font-size:.95rem;font-weight:700;margin-bottom:12px;padding-bottom:5px;border-bottom:3px solid var(--acc);}
+.q-block{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.q-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:9px;line-height:1.5;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;min-width:110px;font-size:.88rem;padding:2px 5px;outline:none;text-align:center;color:var(--dark);font-family:inherit;}
+.fill-blank.correct{border-bottom:2px solid var(--ok);background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 6px;}
+.fill-blank.wrong{border-bottom:2px solid var(--no);background:#ffebee;color:#b71c1c;border-radius:4px;padding:2px 6px;}
+.sa-box{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-size:.85rem;min-height:68px;resize:vertical;font-family:inherit;color:var(--dark);}
+.sa-box:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:7px 18px;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;transition:.15s;}
+.grade-btn:hover{background:var(--pri-l);}
+.fb-box{background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.8rem;display:none;line-height:1.65;}
+.kw-found{color:var(--ok);font-weight:700;}
+.kw-miss{color:var(--no);font-weight:700;}
+.score-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:10px;letter-spacing:.3px;}
+.score-box{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:12px;display:none;box-shadow:0 4px 16px rgba(10,94,42,.3);}
+.score-box .score-num{font-size:1.5rem;font-weight:800;margin-bottom:5px;}
+.score-box .grade-label{font-size:.92rem;opacity:.92;font-weight:600;}
+.next-btn{display:block;text-align:center;padding:12px;background:linear-gradient(135deg,var(--pri),var(--acc));color:#fff;border-radius:10px;font-size:.92rem;font-weight:700;text-decoration:none;margin-top:14px;}
+
+/* BOTTOM NAV */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.08);}
+.nav-inner{max-width:740px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.done{background:var(--acc);}
+
+@media(max-width:600px){
+  .top-bar .lesson-name{font-size:.82rem;}
+  .slide{padding:12px 12px 6px;}
+  .info-table{font-size:.76rem;}
+  .nav-btn{padding:8px 14px;font-size:.78rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="subject">ARISE · Mental Health & Substance Abuse</div>
+    <div class="lesson-name">🚬 Effects of Smoking on the Body</div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: LEARNING OUTCOMES -->
+<div class="slide active">
+  <div class="lo-box">
+    <h3>📋 Learning Outcomes</h3>
+    <p style="font-size:.82rem;color:#3a5a3a;margin-bottom:8px;">By the end of this lesson, you will be able to:</p>
+    <ol>
+      <li>Describe the harmful effects of smoking on the respiratory and cardiovascular systems</li>
+      <li>Identify how smoking damages fertility, pregnancy, and child health</li>
+      <li>Explain the addictive mechanism of nicotine in the brain</li>
+      <li>Calculate the financial cost of smoking and evaluate quitting timelines</li>
+      <li>Apply evidence to challenge myths about tobacco use</li>
+    </ol>
+    <div class="inquiry">
+      <strong>🔍 Key Inquiry Question:</strong> Why do people continue smoking even when they know it kills — and what exactly does it do inside the body?
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: RESPIRATORY -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>🫁 The Respiratory System — Worst Hit</h3>
+    <p class="tp">Every cigarette contains over <strong>7,000 chemicals</strong> — 70 of which are confirmed carcinogens. The lungs absorb these directly with every breath of smoke, making them the most damaged organ.</p>
+    <div class="key-term">
+      <strong>🔑 Carcinogen:</strong> A cancer-causing chemical. Tobacco smoke contains tar, benzene, and formaldehyde that directly damage lung cell DNA, triggering uncontrolled cell growth.
+    </div>
+    <table class="info-table">
+      <tr><th>Condition</th><th>What Happens</th><th>Main Symptoms</th></tr>
+      <tr><td><strong>Lung Cancer</strong></td><td>Carcinogens damage DNA; cells grow uncontrollably</td><td>Chronic cough, blood in sputum, chest pain</td></tr>
+      <tr><td><strong>Chronic Bronchitis</strong></td><td>Airways permanently inflamed and clogged with mucus</td><td>Persistent cough, wheezing, breathlessness</td></tr>
+      <tr><td><strong>Emphysema</strong></td><td>Air sacs (alveoli) permanently destroyed — no gas exchange</td><td>Severe breathlessness, cannot walk or exercise</td></tr>
+    </table>
+    <div class="example-box">
+      <strong>🇰🇪 Mwangi, Murang'a:</strong> Started smoking at Form 2 "to fit in." At 40, he cannot walk to his shamba without stopping to catch his breath. His doctor diagnosed COPD — there is no cure. His children now do all the farm work while he watches from a chair by the door.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: CARDIOVASCULAR -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>❤️ Heart &amp; Blood Vessels</h3>
+    <p class="tp">Nicotine causes the heart to beat faster and raises blood pressure with every single cigarette. Over time, blood vessel walls are damaged and hardened — a condition called <strong>atherosclerosis</strong>.</p>
+    <div class="key-term">
+      <strong>🔑 Atherosclerosis:</strong> Build-up of fatty plaques that narrow and harden arteries. Smoking is a major trigger — the process begins in teenagers who smoke regularly.
+    </div>
+    <table class="info-table">
+      <tr><th>Cardiovascular Risk</th><th>Compared to Non-Smokers</th><th>How It Happens</th></tr>
+      <tr><td>Heart Attack</td><td>2–4× higher</td><td>Blocked coronary arteries from plaque</td></tr>
+      <tr><td>Stroke</td><td>2–3× higher</td><td>Blood clots travel to brain arteries</td></tr>
+      <tr><td>High Blood Pressure</td><td>Raised every cigarette</td><td>Nicotine constricts blood vessels</td></tr>
+      <tr><td>Limb Amputation (PAD)</td><td>6× higher</td><td>Severe blood flow reduction to legs</td></tr>
+    </table>
+    <div class="warn-box">
+      <strong>⚠️ Carbon monoxide</strong> in smoke replaces oxygen in red blood cells. Your heart must work <strong>3× harder</strong> after each cigarette to supply adequate oxygen to the body.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: OTHER SYSTEMS -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>🛡️ Immune System, Digestion &amp; Skin</h3>
+    <p class="tp">Smoking is not just a lung disease — it attacks every body system simultaneously.</p>
+    <table class="info-table">
+      <tr><th>Body System</th><th>Effect of Smoking</th></tr>
+      <tr><td><strong>Immune System</strong></td><td>Weakened — more infections, slower recovery, 3× higher TB risk</td></tr>
+      <tr><td><strong>Digestive</strong></td><td>Cancer of mouth, throat, oesophagus, stomach, colon; peptic ulcers</td></tr>
+      <tr><td><strong>Skin</strong></td><td>Premature wrinkles, dull complexion, slow wound healing</td></tr>
+      <tr><td><strong>Oral Health</strong></td><td>Severe gum disease, tooth loss, mouth cancer, persistent bad breath</td></tr>
+      <tr><td><strong>Bones</strong></td><td>Osteoporosis — reduced bone density, increased fracture risk</td></tr>
+    </table>
+    <div class="example-box">
+      <strong>🇰🇪 Akinyi, Kisumu:</strong> A 32-year-old teacher constantly mistaken for 45. Her doctor links recurring stomach ulcers directly to her 14-year smoking habit. "My students once asked if I was the headteacher's mother." She has tried to quit three times.
+    </div>
+    <div class="tip-box">
+      <strong>💡 Did You Know?</strong> Smokers are 3× more likely to develop tuberculosis (TB). Smoking destroys the tiny cilia (hair-like structures) that protect airways from bacteria — leaving lungs wide open to infection.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: FERTILITY -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>👶 Fertility, Pregnancy &amp; Children</h3>
+    <table class="info-table">
+      <tr><th>Who</th><th>Specific Effects of Smoking</th></tr>
+      <tr><td><strong>Men</strong></td><td>Reduced sperm count and quality, poor motility, erectile dysfunction</td></tr>
+      <tr><td><strong>Women</strong></td><td>Reduced fertility, earlier menopause, higher miscarriage risk</td></tr>
+      <tr><td><strong>Pregnant women</strong></td><td>Premature birth, low birth weight, birth defects, placenta problems</td></tr>
+      <tr><td><strong>Babies exposed</strong></td><td>Higher SIDS (Sudden Infant Death Syndrome) risk</td></tr>
+      <tr><td><strong>Children near smokers</strong></td><td>Asthma, ear infections, ADHD, developmental delays</td></tr>
+    </table>
+    <div class="example-box">
+      <strong>🇰🇪 Nasieku, Kajiado:</strong> Both she and her husband smoked during pregnancy. Their son was born 7 weeks premature and spent 3 weeks in NICU. She quit immediately after. "Every scan, the doctor showed me how my baby was getting less oxygen. I wish someone had told me this the day I lit my first cigarette."
+    </div>
+    <div class="warn-box">
+      <strong>⚠️</strong> Smoking during pregnancy is the <strong>single most preventable</strong> cause of premature birth and infant death in Kenya. There is no "safe" level of smoking during pregnancy.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: LIFE EXPECTANCY & QUITTING -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>📉 Life Expectancy, Cost &amp; Quitting</h3>
+    <p class="tp">Smokers live on average <strong>10 years less</strong> than non-smokers. The earlier you start, the more life-years you lose. But quitting at ANY age improves health immediately.</p>
+    <table class="info-table">
+      <tr><th>Time After Quitting</th><th>What Recovers</th></tr>
+      <tr><td>20 minutes</td><td>Blood pressure and heart rate normalise</td></tr>
+      <tr><td>48 hours</td><td>Carbon monoxide leaves blood; nerve endings begin regrowing</td></tr>
+      <tr><td>2 weeks</td><td>Circulation improves; walking becomes easier</td></tr>
+      <tr><td>1 year</td><td>Heart disease risk drops by 50%</td></tr>
+      <tr><td>10 years</td><td>Lung cancer risk halved; stroke risk equals a non-smoker</td></tr>
+    </table>
+    <div class="key-term">
+      <strong>💰 Financial Cost in Kenya:</strong> A pack costs KES 50–200. A pack-a-day habit costs up to <strong>KES 73,000/year</strong> — enough to pay secondary school fees, buy a dairy cow, or save for land.
+    </div>
+    <p class="tp">Resources for quitting: NACADA helpline <strong>1192</strong> (free), your doctor, or a pharmacist for nicotine replacement therapy (NRT).</p>
+  </div>
+</div>
+
+<!-- SLIDE 7: WHY PEOPLE SMOKE / ADDICTION -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>🧠 Nicotine Addiction — Why Quitting Is Hard</h3>
+    <p class="tp">Understanding why people start — and why they struggle to stop — is key to genuine prevention.</p>
+    <div class="key-term">
+      <strong>🔑 Nicotine Addiction:</strong> Nicotine floods the brain with <strong>dopamine</strong> — the "reward" chemical. Within weeks of regular smoking, the brain requires nicotine just to feel normal. Stopping causes withdrawal: irritability, anxiety, difficulty concentrating, insomnia.
+    </div>
+    <table class="info-table">
+      <tr><th>Reason for Starting</th><th>The Reality</th></tr>
+      <tr><td>Peer pressure / "fitting in"</td><td>Friends who truly care do not pressure you to harm yourself</td></tr>
+      <tr><td>Stress relief</td><td>Nicotine temporarily masks stress — worsens anxiety long-term</td></tr>
+      <tr><td>"Looks cool / adult"</td><td>Tobacco companies deliberately target teenagers with this image</td></tr>
+      <tr><td>Curiosity</td><td>One cigarette creates measurable brain changes in dopamine craving</td></tr>
+    </table>
+    <div class="warn-box">
+      <strong>⚠️ Tobacco Marketing in Kenya:</strong> Tobacco companies specifically target young Kenyans with affordable single cigarettes and flavoured products. They know that <strong>90% of adult smokers started before age 18.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: PASSIVE SMOKING & LAW -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>🏛️ Second-Hand Smoke &amp; Kenya's Tobacco Laws</h3>
+    <p class="tp"><strong>Second-hand smoke</strong> is nearly as dangerous as smoking directly. Non-smokers who regularly inhale someone else's smoke face 80–90% of the same cancer and cardiovascular risks.</p>
+    <ul class="bl">
+      <li>Children with smoking parents have 40% higher asthma risk</li>
+      <li>Partners of smokers have 30% higher heart disease risk</li>
+      <li>Second-hand smoke contains the same 70 carcinogenic chemicals</li>
+      <li>There is <strong>no safe level</strong> of exposure to tobacco smoke</li>
+    </ul>
+    <div class="tip-box">
+      <strong>🇰🇪 Tobacco Control Act 2007:</strong>
+      <ul class="bl" style="margin-top:7px;">
+        <li>Smoking banned in all public places, workplaces, and public transport</li>
+        <li>Selling cigarettes to anyone under 18 is a criminal offence</li>
+        <li>Graphic health warnings mandatory on all tobacco packaging</li>
+        <li>Penalties: fines up to KES 500,000 or 2 years imprisonment</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide">
+  <div class="teach-block">
+    <h3>📝 Practice Problems</h3>
+    <div class="example-box">
+      <strong>Question 1:</strong> Musa smokes 10 cigarettes a day at KES 15 each. Calculate: (a) weekly cost, (b) monthly cost, (c) annual cost. What could be bought with the annual amount?
+      <br><br><strong>Solution:</strong><br>
+      (a) Daily: 10 × 15 = KES 150 | Weekly: 150 × 7 = <strong>KES 1,050</strong><br>
+      (b) Monthly: 150 × 30 = <strong>KES 4,500</strong><br>
+      (c) Annual: 150 × 365 = <strong>KES 54,750</strong> — enough for Form 1–2 school fees at most county schools, or a quality goat every 2 weeks.
+    </div>
+    <div class="example-box">
+      <strong>Question 2:</strong> Name THREE body systems damaged by smoking (apart from the lungs) and give one specific disease or condition per system.
+      <br><br><strong>Model Answer:</strong><br>
+      1. Cardiovascular → Heart attack (2–4× higher risk from atherosclerosis)<br>
+      2. Digestive → Stomach cancer and peptic ulcers (from carcinogen damage to mucosa)<br>
+      3. Immune → Tuberculosis — 3× higher risk because cilia are destroyed, allowing bacteria into airways
+    </div>
+    <div class="example-box">
+      <strong>Question 3:</strong> Your younger brother says "I only smoke 2 on weekends — that can't hurt." Using evidence, how would you respond?
+      <br><br><strong>Model Answer:</strong> Even 2 cigarettes causes measurable arterial damage and nicotine-induced brain changes. Addiction typically begins with "weekend-only" use. One cigarette can trigger cravings in genetically susceptible individuals. Lung damage is cumulative — there is no safe threshold.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide">
+<div class="teach-block" style="margin-bottom:4px;">
+  <h3>📊 Quiz — Effects of Smoking</h3>
+</div>
+<div class="quiz-wrap">
+
+  <h3 style="margin-top:0;">Part A: Fill in the Blanks <span style="font-weight:400;font-size:.82rem;">(5 marks)</span></h3>
+
+  <div class="q-block">
+    <p class="q-text">1. Smoking is the leading cause of <input class="fill-blank" id="f1" placeholder="  ___  "> cancer, caused by carcinogens in tobacco smoke.</p>
+    <div class="fb-box" id="fb1"></div>
+  </div>
+  <div class="q-block">
+    <p class="q-text">2. The addictive substance in cigarettes that raises blood pressure is called <input class="fill-blank" id="f2" placeholder="  ___  ">.</p>
+    <div class="fb-box" id="fb2"></div>
+  </div>
+  <div class="q-block">
+    <p class="q-text">3. Hardening and narrowing of arteries due to plaque build-up is called <input class="fill-blank" id="f3" placeholder="  ___  ">.</p>
+    <div class="fb-box" id="fb3"></div>
+  </div>
+  <div class="q-block">
+    <p class="q-text">4. After <input class="fill-blank" id="f4" placeholder=" ___ "> year(s) smoke-free, a person's heart disease risk drops by 50%.</p>
+    <div class="fb-box" id="fb4"></div>
+  </div>
+  <div class="q-block">
+    <p class="q-text">5. Smoking during pregnancy increases the risk of premature birth and <input class="fill-blank" id="f5" placeholder="  ___  "> birth weight.</p>
+    <div class="fb-box" id="fb5"></div>
+  </div>
+  <button class="grade-btn" onclick="checkFills()" style="width:100%;padding:10px;margin-top:4px;">✓ Check Fill-in-Blank Answers</button>
+
+  <h3 style="margin-top:18px;">Part B: Short Answer <span style="font-weight:400;font-size:.82rem;">(10 marks)</span></h3>
+
+  <div class="q-block">
+    <p class="q-text">6. Omondi (50, Kisumu) has smoked for 30 years and now has breathlessness and a persistent cough. Name the most likely disease and explain what has happened inside his lungs. <span style="font-weight:400;font-size:.78rem;color:#4a6058;">(3 marks)</span></p>
+    <textarea class="sa-box" id="sa1" placeholder="Write your answer here..."></textarea>
+    <button class="grade-btn" onclick="gradeAnswer('sa1','sfb1',{keywords:['copd','emphysema','bronchitis','alveoli','destroyed','inflamed','airway','gas exchange','mucus','breathing'],required:3,marks:3,model:'COPD (Chronic Obstructive Pulmonary Disease) — specifically emphysema (alveoli permanently destroyed, no gas exchange) and chronic bronchitis (airways permanently inflamed and narrowed by mucus). Both caused by 30 years of toxic smoke damaging lung tissue.'})">✓ Grade My Answer</button>
+    <div class="fb-box" id="sfb1"></div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-text">7. A pregnant woman in your community continues smoking. Using specific evidence, explain TWO serious risks to her unborn baby. <span style="font-weight:400;font-size:.78rem;color:#4a6058;">(4 marks)</span></p>
+    <textarea class="sa-box" id="sa2" placeholder="Write your answer here..."></textarea>
+    <button class="grade-btn" onclick="gradeAnswer('sa2','sfb2',{keywords:['premature','low birth weight','oxygen','carbon monoxide','placenta','sids','development','brain','defect','miscarriage'],required:4,marks:4,model:'(1) Premature birth — carbon monoxide replaces oxygen in mother\'s blood; reduced oxygen triggers early labour. (2) Low birth weight — insufficient nutrients and oxygen stunt fetal growth. (3) Developmental damage — toxic chemicals cross the placenta and affect fetal brain development.'})">✓ Grade My Answer</button>
+    <div class="fb-box" id="sfb2"></div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-text">8. "My grandfather smoked his whole life and lived to 90, so smoking can't be that bad." Evaluate this argument using evidence from this lesson. <span style="font-weight:400;font-size:.78rem;color:#4a6058;">(3 marks)</span></p>
+    <textarea class="sa-box" id="sa3" placeholder="Write your answer here..."></textarea>
+    <button class="grade-btn" onclick="gradeAnswer('sa3','sfb3',{keywords:['anecdote','exception','average','10 years','statistics','probability','risk','majority','individual','evidence'],required:3,marks:3,model:'This is an anecdotal argument — one exception does not disprove a statistical rule. Smokers die on average 10 years earlier than non-smokers. Individual genetic variation exists, but population-level risk is established by thousands of scientific studies. One person\'s experience cannot override collective evidence.'})">✓ Grade My Answer</button>
+    <div class="fb-box" id="sfb3"></div>
+  </div>
+
+  <button class="score-btn" onclick="showTotalScore()">🏆 Show My Total Score</button>
+  <div class="score-box" id="scoreBox">
+    <div class="score-num" id="scoreNum"></div>
+    <div class="grade-label" id="gradeLabel"></div>
+  </div>
+  <a class="next-btn" href="?p=modules" style="margin-top:14px;">📚 Back to All Modules →</a>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<!-- BOTTOM NAV -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+// ── Navigation ──────────────────────────────────────────────
+var cur = 0;
+var slides = [];
+
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+}
+
+function navigate(dir) { go(cur + dir); }
+
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.add('active');
+  upd();
+  window.scrollTo(0, 0);
+}
+
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('prevBtn').disabled = cur === 0;
+  document.getElementById('nextBtn').disabled = cur === slides.length - 1;
+}
+
+// ── Quiz Logic ───────────────────────────────────────────────
+var fbAns = {
+  f1: ['lung'],
+  f2: ['nicotine'],
+  f3: ['atherosclerosis'],
+  f4: ['1', 'one'],
+  f5: ['low']
+};
+var fillScore = 0;
+var saScores = {};
+
+function showFb(id, html) {
+  var el = document.getElementById(id);
+  el.innerHTML = html;
+  el.style.display = 'block';
+}
+
+function checkFills() {
+  fillScore = 0;
+  Object.entries(fbAns).forEach(function(entry) {
+    var id = entry[0], ans = entry[1];
+    var el = document.getElementById(id);
+    var val = el.value.toLowerCase().trim();
+    var ok = ans.some(function(a) { return val === a || val.includes(a); });
+    el.classList.toggle('correct', ok);
+    el.classList.toggle('wrong', !ok);
+    if (ok) fillScore++;
+    var fbId = 'fb' + id.slice(1);
+    var models = {f1:'Lung cancer — 85% of lung cancers are directly caused by smoking.',f2:'Nicotine — releases dopamine causing addiction, and constricts blood vessels raising blood pressure.',f3:'Atherosclerosis — plaque build-up in arteries; begins in teenage smokers.',f4:'One year — the cardiovascular system heals fast once smoking stops.',f5:'Low birth weight — insufficient oxygen from carbon monoxide stunts fetal growth.'};
+    showFb(fbId, ok ? '<span class="kw-found">✓ Correct! (1 mark)</span> ' + (models[id]||'') : '<span class="kw-miss">✗ Expected: <strong>' + ans[0] + '</strong></span> — ' + (models[id]||''));
+  });
+}
+
+function gradeAnswer(saId, fbId, config) {
+  var val = document.getElementById(saId).value.toLowerCase();
+  var found = config.keywords.filter(function(k) { return val.includes(k); });
+  var hitRate = Math.min(found.length / config.required, 1.0);
+  var awarded = Math.round(hitRate * config.marks);
+  saScores[saId] = awarded;
+  var grade = awarded >= config.marks ? 'Excellent 🎉' : awarded >= config.marks * 0.5 ? 'Good attempt 👍' : 'Needs improvement 📖';
+  var foundStr = found.length ? '<br><span class="kw-found">✓ Keywords found: ' + found.join(', ') + '</span>' : '';
+  var miss = config.keywords.filter(function(k) { return !val.includes(k); }).slice(0, 5);
+  var missStr = miss.length ? '<br><span class="kw-miss">✗ Missing: ' + miss.join(', ') + '</span>' : '';
+  showFb(fbId, '<strong>' + awarded + '/' + config.marks + ' marks — ' + grade + '</strong>' + foundStr + missStr + '<br><em>Model answer: ' + config.model + '</em>');
+}
+
+function showTotalScore() {
+  var saTotal = Object.values(saScores).reduce(function(a, b) { return a + b; }, 0);
+  var total = fillScore + saTotal;
+  var max = 15;
+  var pct = Math.round((total / max) * 100);
+  var grade = pct >= 80 ? 'Exceeds Expectation 🎉' : pct >= 60 ? 'Meets Expectation 👍' : pct >= 40 ? 'Approaches Expectation 📖' : 'Below Expectation 💪';
+  document.getElementById('scoreBox').style.display = 'block';
+  document.getElementById('scoreNum').textContent = total + ' / ' + max + '  (' + pct + '%)';
+  document.getElementById('gradeLabel').textContent = grade;
+  submitExamToMTTI(total, max, pct);
+}
+
+function submitExamToMTTI(score, total, percent) {
+  try {
+    fetch('/wp-json/mtti/v1/exam-result', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-WP-Nonce': window.mtti_nonce || ''},
+      body: JSON.stringify({lesson_id:'arise-01-smoking', score:score, total:total, percent:percent, timestamp: new Date().toISOString()})
+    }).then(function(r){return r.json();}).then(function(d){ if(d&&d.success) console.log('[ARISE] Result saved:', d); }).catch(function(e){ console.log('[ARISE] Offline:', e); });
+  } catch(e) { console.log('[ARISE] Error:', e); }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+
+function gradeKw(qid,fbid,kws,req,pts,model){
+  var val=document.getElementById(qid).value.toLowerCase();
+  var found=kws.filter(function(k){return val.includes(k);});
+  var awarded=Math.round((Math.min(found.length,req)/req)*pts);
+  saScores[qid]=awarded;
+  var grade=awarded>=pts?'Excellent!':awarded>0?'Good attempt':'Needs improvement';
+  var fs=found.length?'<br><span class="kf">Found: '+found.join(', ')+'</span>':'';
+  var miss=kws.filter(function(k){return !val.includes(k);}).slice(0,5);
+  var ms=miss.length?'<br><span class="km">Missing: '+miss.join(', ')+'</span>':'';
+  var fb=document.getElementById(fbid);
+  fb.innerHTML='<strong>'+awarded+'/'+pts+' - '+grade+'</strong>'+fs+ms+(model?'<br><em style="font-size:.78rem;color:#888;">Model: '+model+'</em>':'');
+  fb.style.display='block';
+}
+
+</script>
+</body>
+</html>

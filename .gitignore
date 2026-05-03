@@ -1,5 +1,11 @@
-data/arise.db
-data/uploads/
+# Exclude video files (too large) but include everything else
+data/uploads/**/*.mp4
+data/uploads/**/*.webm
+data/uploads/**/*.ogg
+data/uploads/**/*.avi
+data/uploads/**/*.mov
+
+# Exclude backups and logs
 data/backups/
 *.log
 .env

@@ -1,0 +1,57 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">⚖️ What is FGM?</div>
+<p class="ar-p">Female Genital Mutilation (FGM) refers to procedures that intentionally alter or cause injury to female genital organs for non-medical reasons. It is internationally recognised as a <strong>violation of human rights</strong> and is <strong>illegal in Kenya</strong> under the Prohibition of FGM Act 2011.</p>
+<table class="ar-table"><tr><th>Type</th><th>Description</th></tr>
+<tr><td>Type 1 (Clitoridectomy)</td><td>Partial or total removal of the clitoris</td></tr>
+<tr><td>Type 2 (Excision)</td><td>Removal of clitoris and labia minora</td></tr>
+<tr><td>Type 3 (Infibulation)</td><td>Narrowing of vaginal opening by cutting and sealing labia — most severe</td></tr>
+<tr><td>Type 4 (Other)</td><td>Pricking, piercing, scraping, or burning genital area</td></tr></table>
+<div class="ar-warn"><strong>⚠️ In Kenya:</strong> FGM is most prevalent among Maasai, Somali, Kalenjin, and some Kisii communities. Over <strong>21% of Kenyan women</strong> have undergone FGM. Anyone who performs, assists, or fails to report FGM faces up to 3 years imprisonment or a fine of KES 200,000.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🔍 Why Does FGM Happen? The Causes</div>
+<ul class="ar-list">
+<li><strong>Cultural tradition:</strong> Seen as a rite of passage into womanhood</li>
+<li><strong>Social pressure:</strong> Families fear social exclusion if they don't comply</li>
+<li><strong>Marriageability:</strong> Belief that uncut girls are undesirable as wives</li>
+<li><strong>Myth about sexuality:</strong> False belief that it controls female sexual desire</li>
+<li><strong>Misrepresented religion:</strong> FGM is not prescribed by Islam, Christianity, or any major religion</li></ul>
+</div>
+<div class="ar-section">
+<div class="ar-h2">💔 Health Consequences of FGM</div>
+<table class="ar-table"><tr><th>Immediate</th><th>Long-Term</th></tr>
+<tr><td>Severe bleeding</td><td>Chronic pain and infections</td></tr>
+<tr><td>Shock and pain</td><td>Cysts and scarring</td></tr>
+<tr><td>Infection (HIV risk from shared blades)</td><td>Infertility</td></tr>
+<tr><td>Urination problems</td><td>Severe complications in childbirth</td></tr>
+<tr><td>Death</td><td>PTSD and psychological trauma</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Naipanoi, Narok:</strong> Managed to escape FGM after her teacher alerted the Anti-FGM Board of Kenya. "I was told I would not be marriageable. But I graduated from university. I am the first in my village to do so. My body is complete."</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Halima's mother tells her: "FGM is part of our religion — all Muslim girls must do it." Is this accurate? Explain.</p>
+<textarea class="ar-textarea" id="q2" placeholder="Accurate or not? Explain..."></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['false','incorrect','not prescribed','no','religion','islam','quran','not required','cultural','misconception'],'fb2',1,2,'This is FALSE. FGM is not prescribed by Islam or any major religion. The Quran does not mention FGM. It is a cultural practice that has been incorrectly attributed to religion in some communities. Major Islamic scholars and organisations condemn FGM.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>2. You discover your 12-year-old cousin is being prepared for FGM next weekend. What should you do? Name TWO specific actions.</p>
+<textarea class="ar-textarea" id="q3" placeholder="Name two actions..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['report','police','teacher','counsellor','anti-fgm','board','chief','authority','hotline','1195'],'fb3',1,2,'(1) Report immediately to a trusted adult — teacher, school counsellor, local Chief, or police. (2) Call the Anti-FGM Board of Kenya or GBV hotline 1195. FGM on a minor is a criminal offence — time is critical. Your action could save her life.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>3. Which type of FGM is the most severe, involving the narrowing of the vaginal opening?</p>
+<input class="ar-input" id="q4" placeholder="Type number and name...">
+<button class="ar-btn" onclick="chk('q4',['type 3','infibulation','type iii'],'fb4',1,'Type 3 — Infibulation. The most severe form, involving cutting and repositioning of the labia to narrow the vaginal opening. It causes lifelong complications including urination difficulties, infection, and obstructed childbirth.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

@@ -1,0 +1,52 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🎯 Making Career Decisions as a Teenager</div>
+<p class="ar-p">Career decisions don't need to be final at 16 — but starting early gives you an advantage. Many Kenyans change careers multiple times. What matters is building a foundation of self-knowledge and skills.</p>
+<div class="ar-key"><strong>🔑 Career Decision Framework:</strong><br>
+1. Self-Assessment → 2. Explore Options → 3. Education/Training → 4. Decide & Plan → 5. Review & Adapt</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🔎 Step 1: Know Yourself First</div>
+<table class="ar-table"><tr><th>Question</th><th>Why it Matters</th></tr>
+<tr><td>What activities do I enjoy most?</td><td>Interest-aligned careers feel less like work</td></tr>
+<tr><td>What am I naturally good at?</td><td>Strengths predict success and satisfaction</td></tr>
+<tr><td>What are my values?</td><td>Career must align with what matters to you</td></tr>
+<tr><td>Do I prefer working with people, data, or things?</td><td>Determines right industry and role type</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Grace, Eldoret:</strong> Always loved biology but assumed she'd become a nurse because "that's what girls do." After a career assessment exercise at school, she discovered she had strong analytical skills and interest in research. She is now studying Biomedical Science at Moi University — a field she never knew existed at 14.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">📚 Kenyan Career Pathways</div>
+<table class="ar-table"><tr><th>Pathway</th><th>Examples</th><th>Entry Requirements</th></tr>
+<tr><td>University (Degree)</td><td>Medicine, Law, Engineering, Education</td><td>KCSE C+ and above</td></tr>
+<tr><td>TVET/Polytechnic</td><td>Electrical, ICT, Nursing, Hospitality</td><td>KCSE D+ and above</td></tr>
+<tr><td>Artisan/Trade</td><td>Plumbing, Welding, Tailoring</td><td>KCSE or primary certificate</td></tr>
+<tr><td>Entrepreneurship</td><td>Farming, Trade, Tech startup</td><td>Passion + skills + capital</td></tr></table>
+<div class="ar-tip"><strong>💡 TVET in Kenya:</strong> Technical and Vocational Education and Training centres like MTTI offer practical skills that lead directly to employment — often faster and at lower cost than university. Plumbers and electricians in Kenya earn more than many degree holders.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Omondi (Form 3, Kisumu) wants to be a doctor but scored a D in Biology last term. Using the career decision framework, what should his FIRST step be before deciding to give up or continue?</p>
+<textarea class="ar-textarea" id="q1" placeholder="What should Omondi do first?"></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['self','assess','strength','interest','why','passion','improve','tutor','help','explore'],'fb1',1,2,'First step: Self-assessment. Is medicine truly his passion, or is it external pressure? If he genuinely loves medicine, the next step is improving — extra tuition, past papers, practice. One bad term does not end a dream. He should also explore alternative paths like Clinical Medicine or Medical Laboratory Science.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. A Form 4 student scored C- in KCSE. She wants to become an ICT professional. Which career pathway is MOST suitable for her, and why?</p>
+<textarea class="ar-textarea" id="q2" placeholder="Which pathway and why?"></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['tvet','polytechnic','vocational','practical','ict','d+','c','certificate','mtti','technical'],'fb2',1,2,'TVET/Technical Training is most suitable. With a C-, she meets the minimum entry for TVET institutions offering ICT programmes. TVET is practical, faster (1–2 years), and directly employment-focused. Many successful ICT professionals in Kenya are TVET graduates.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Name TWO advantages of pursuing a TVET education over a university degree for a student interested in electrical work.</p>
+<textarea class="ar-textarea" id="q3" placeholder="Two advantages..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['faster','practical','cost','cheaper','employ','certificate','hands','direct','income','quicker'],'fb3',1,2,'Advantages: (1) Faster completion (1–2 years vs 4+ years). (2) Lower cost. (3) Practical hands-on training directly applicable to the job. (4) Direct pathways to employment — electricians are in high demand in Kenya.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

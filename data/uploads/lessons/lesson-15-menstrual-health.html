@@ -1,0 +1,58 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🩸 The Menstrual Cycle Explained</div>
+<p class="ar-p">Menstruation is a normal, healthy biological process. The average cycle is <strong>28 days</strong> (range: 21–45 days in teens), regulated by four key hormones.</p>
+<table class="ar-table"><tr><th>Phase</th><th>Days</th><th>What Happens</th></tr>
+<tr><td>Menstrual Phase</td><td>1–5</td><td>Uterine lining sheds (period). Lasts 3–7 days.</td></tr>
+<tr><td>Follicular Phase</td><td>1–13</td><td>FSH stimulates egg follicles; oestrogen rebuilds lining</td></tr>
+<tr><td>Ovulation</td><td>~14</td><td>LH surge releases mature egg — MOST FERTILE point</td></tr>
+<tr><td>Luteal Phase</td><td>15–28</td><td>Progesterone prepares lining. If no pregnancy: cycle resets</td></tr></table>
+<div class="ar-key"><strong>🔑 Key Hormones:</strong> FSH → grows follicles | Oestrogen → rebuilds lining | LH → triggers ovulation | Progesterone → prepares for pregnancy</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🚿 Menstrual Hygiene — Why It Matters</div>
+<p class="ar-p">Poor menstrual hygiene management causes real health problems — and also affects girls' education and dignity.</p>
+<table class="ar-table"><tr><th>Risk of Poor Hygiene</th><th>How it Happens</th></tr>
+<tr><td>UTI (Urinary Tract Infection)</td><td>Not changing pads regularly allows bacteria to grow</td></tr>
+<tr><td>Bacterial Vaginosis</td><td>Disruption of vaginal flora from poor hygiene</td></tr>
+<tr><td>Skin rashes</td><td>Prolonged contact with damp, soiled materials</td></tr>
+<tr><td>PID (Pelvic Inflammatory Disease)</td><td>Untreated infections spread to reproductive organs</td></tr>
+<tr><td>School absence</td><td>Lack of sanitary products or private toilets</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Zawadi, Turkana:</strong> Used to miss 3–4 school days every month because her school had no private toilets or water. She used old cloth that caused infections. After her school received a sanitary pad programme from the government, her attendance became consistent and her grades improved. Access to menstrual hygiene is a right.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🌍 Cultural Myths vs. Facts</div>
+<table class="ar-table"><tr><th>Myth</th><th>Fact</th></tr>
+<tr><td>Menstruation is dirty/impure</td><td>It is a normal healthy biological process</td></tr>
+<tr><td>You cannot exercise during periods</td><td>Exercise actually reduces cramps and improves mood</td></tr>
+<tr><td>You cannot get pregnant during your period</td><td>You CAN — sperm survives 5 days; ovulation can be irregular</td></tr>
+<tr><td>Tampons remove virginity</td><td>False — virginity is not a physical state determined by a tampon</td></tr>
+<tr><td>Menstrual blood "stops" in water</td><td>False — swimming during periods is safe with appropriate products</td></tr></table>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Aisha's period is 5 days late. She tells her friend: "I can't be pregnant because we had sex during my period — that's impossible." Is Aisha correct? Explain.</p>
+<textarea class="ar-textarea" id="q1" placeholder="Correct or not? Explain..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['incorrect','wrong','no','sperm','survive','days','irregular','ovulation','possible','can'],'fb1',1,2,'Aisha is INCORRECT. Pregnancy CAN occur from sex during a period because: (1) Sperm survive inside the body for up to 5 days. (2) If Aisha ovulates early in her cycle (irregular cycles are common in teens), sperm from period sex could fertilise an egg.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Name the hormone that TRIGGERS ovulation (egg release) in the menstrual cycle.</p>
+<input class="ar-input" id="q2" placeholder="Name the hormone...">
+<button class="ar-btn" onclick="chk('q2',['lh','luteinizing','luteinising'],'fb2',1,'LH — Luteinizing Hormone. A surge in LH around day 14 causes the dominant follicle to rupture and release a mature egg into the fallopian tube.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Your 13-year-old sister got her first period and is scared something is wrong. Name TWO things you would tell her to reassure and educate her.</p>
+<textarea class="ar-textarea" id="q3" placeholder="What would you tell her?"></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['normal','natural','healthy','28','days','hormone','cycle','pad','clean','hygiene'],'fb3',1,2,'(1) This is completely normal — it is called menarche and it means her body is healthy and maturing. (2) The cycle usually lasts 3–7 days and repeats approximately every 28 days. Show her how to use sanitary pads and practise good hygiene.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

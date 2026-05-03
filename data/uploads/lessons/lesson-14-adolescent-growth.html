@@ -1,0 +1,54 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🌱 Stages of Adolescent Development</div>
+<p class="ar-p">Adolescence is the transition from childhood to adulthood, typically between ages <strong>10–19</strong>. It is divided into three stages, each with distinct changes.</p>
+<table class="ar-table"><tr><th>Stage</th><th>Age</th><th>Key Changes</th></tr>
+<tr><td>Early Adolescence</td><td>10–14</td><td>Puberty begins, growth spurts, concrete thinking, peer influence grows</td></tr>
+<tr><td>Middle Adolescence</td><td>15–17</td><td>Abstract thinking, identity exploration, romantic relationships, risk-taking</td></tr>
+<tr><td>Late Adolescence</td><td>18–19</td><td>Full physical maturity, stable identity, future planning, greater independence</td></tr></table>
+</div>
+<div class="ar-section">
+<div class="ar-h2">😊 Social & Emotional Changes</div>
+<p class="ar-p">Adolescence is not just physical. The brain is undergoing massive rewiring — especially the prefrontal cortex (responsible for judgment) which isn't fully developed until age 25.</p>
+<table class="ar-table"><tr><th>Change</th><th>What it Looks Like</th></tr>
+<tr><td>Mood swings</td><td>Happy one hour, crying the next — hormonal surges cause this</td></tr>
+<tr><td>Identity formation</td><td>Experimenting with style, values, beliefs — "Who am I?"</td></tr>
+<tr><td>Peer importance</td><td>Friends matter more than family approval (temporarily)</td></tr>
+<tr><td>Risk-taking</td><td>Testing limits — can lead to positive (sport, art) or negative (drugs, reckless sex) experimentation</td></tr>
+<tr><td>Romantic relationships</td><td>First experiences of love, jealousy, heartbreak</td></tr>
+<tr><td>Self-consciousness</td><td>Intense focus on body image and how others perceive you</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Ochieng, Kisumu:</strong> His mother complained he "changed overnight" at 15 — suddenly moody, obsessed with his appearance, and spending all his time with friends. His school counsellor explained: his brain is literally being rewired. These are normal developmental changes, not character flaws.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🧠 Semenarche & Wet Dreams</div>
+<p class="ar-p"><strong>Semenarche</strong> is the first ejaculation in males, marking the beginning of reproductive capability. It typically occurs between ages 9–14 during puberty.</p>
+<p class="ar-p"><strong>Wet dreams (nocturnal emissions)</strong> are involuntary ejaculations during sleep. They are completely normal, not a sign of illness or sin, and caused by hormonal changes during puberty. They occur in both males and females.</p>
+<div class="ar-key"><strong>🔑 Normal & Healthy:</strong> Wet dreams are a normal part of puberty. They require no treatment and are not harmful. Many young people feel shame or confusion — this lesson aims to replace shame with accurate information.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Juma (13) woke up with wet underwear and is terrified, thinking something is medically wrong. What is the correct explanation you would give him as a peer educator?</p>
+<textarea class="ar-textarea" id="q1" placeholder="Explain to Juma..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['normal','wet dream','nocturnal','puberty','hormone','ejaculation','nothing wrong','natural'],'fb1',1,2,'Tell Juma: "What you experienced is called a nocturnal emission or wet dream. It is completely normal during puberty — your body is developing and hormones are changing. It requires no treatment and is not a sign of illness or wrongdoing."')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. In which stage of adolescence does abstract thinking and career planning become stronger?</p>
+<input class="ar-input" id="q2" placeholder="Early, Middle or Late?">
+<button class="ar-btn" onclick="chk('q2',['late','middle','18','19'],'fb2',1,'Late adolescence (18–19) — this is when full abstract thinking, mature decision-making, and strong future orientation develop. Middle adolescence begins abstract thinking but late adolescence consolidates it.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Why do adolescents take more risks than adults? Link your answer to brain development.</p>
+<textarea class="ar-textarea" id="q3" placeholder="Explain the brain connection..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['prefrontal','brain','develop','25','judgment','impulse','control','mature','not fully'],'fb3',1,2,'The prefrontal cortex — responsible for judgment, impulse control, and weighing consequences — is not fully developed until age 25. Adolescents are making decisions with an incomplete "braking system," which is why risky behaviour is developmentally common.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

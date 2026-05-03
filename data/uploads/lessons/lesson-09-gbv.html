@@ -1,0 +1,66 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">⚖️ What is Gender-Based Violence (GBV)?</div>
+<p class="ar-p">GBV refers to harmful acts directed at a person because of their gender. It is rooted in inequality, abuse of power, and harmful cultural norms. It affects anyone, but disproportionately affects women and girls.</p>
+<table class="ar-table"><tr><th>Type of GBV</th><th>Description</th><th>Kenyan Example</th></tr>
+<tr><td>Physical Violence</td><td>Hitting, beating, slapping</td><td>Domestic violence by an intimate partner</td></tr>
+<tr><td>Sexual Violence</td><td>Rape, defilement, sexual harassment</td><td>Defilement of schoolgirls by teachers</td></tr>
+<tr><td>Psychological Violence</td><td>Threats, intimidation, humiliation</td><td>Partner telling you you're worthless</td></tr>
+<tr><td>Economic Abuse</td><td>Controlling access to money</td><td>Husband refusing to allow wife to work</td></tr>
+<tr><td>FGM</td><td>Cutting female genitals</td><td>Common in Maasai, Somali, Kalenjin communities</td></tr>
+<tr><td>Child Marriage</td><td>Forced marriage of minors</td><td>Girls married off at 12–15 in some counties</td></tr>
+<tr><td>Human Trafficking</td><td>Exploitation for labour or sex</td><td>Girls trafficked to Middle East from Kenya</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Naipanoi, Kajiado:</strong> Was to undergo FGM at 13 as part of Maasai cultural transition. Her teacher and the Girls Not Brides organisation helped her understand her rights. She reported the plan to authorities and was protected. She is now in Form 3 and a community advocate.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🔍 Causes of GBV</div>
+<ul class="ar-list">
+<li><strong>Gender inequality:</strong> Societies that treat women as inferior create environments where GBV is normalised</li>
+<li><strong>Cultural norms:</strong> Practices that enforce male dominance (FGM, child marriage, bride price)</li>
+<li><strong>Economic inequality:</strong> Women dependent on men cannot easily leave abusive situations</li>
+<li><strong>Weak justice systems:</strong> Perpetrators face no consequences, encouraging repeat abuse</li>
+<li><strong>Substance abuse:</strong> Alcohol and drugs reduce impulse control and increase aggression</li>
+<li><strong>Media:</strong> Content that portrays violence against women as normal or entertaining</li></ul>
+</div>
+<div class="ar-section">
+<div class="ar-h2">💥 Effects of GBV on Victims</div>
+<table class="ar-table"><tr><th>Effect</th><th>Description</th></tr>
+<tr><td>Physical injury</td><td>Bruises, broken bones, disability, death</td></tr>
+<tr><td>Mental health</td><td>PTSD, depression, anxiety, suicidal thoughts</td></tr>
+<tr><td>STIs & unwanted pregnancy</td><td>From sexual violence</td></tr>
+<tr><td>Social isolation</td><td>Stigma causes victims to be rejected by community</td></tr>
+<tr><td>Economic harm</td><td>Medical bills, loss of job, dependence on abuser</td></tr>
+<tr><td>Effects on children</td><td>Witnessing GBV causes trauma and perpetuates the cycle</td></tr></table>
+<div class="ar-tip"><strong>💡 Where to Get Help in Kenya:</strong> Gender Violence Recovery Centre (GVRC) — Nairobi Hospital. National GBV Hotline: <strong>1195</strong> (free, 24 hours). Nearest police Gender Desk.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Halima's husband controls all the money in the house, refuses to let her get a job, and takes her phone so she cannot contact family. What specific type of GBV is he committing? (name TWO)</p>
+<textarea class="ar-textarea" id="q1" placeholder="Name the types of GBV..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['economic','psychological','isolation','control','emotional','financial'],'fb1',2,2,'(1) Economic abuse — controlling access to money and preventing employment. (2) Psychological/emotional abuse — isolation from family and control through the phone. Both are forms of GBV.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. A classmate says: "FGM is part of our culture, so we must respect it." Do you agree? Explain your position clearly.</p>
+<textarea class="ar-textarea" id="q2" placeholder="Agree or disagree? Explain..."></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['disagree','harm','right','health','human','illegal','kenya','culture','law','pain'],'fb2',1,2,'Disagree. Culture does not justify harm. FGM is illegal in Kenya (Prohibition of FGM Act 2011), violates human rights, causes permanent physical damage, and constitutes GBV. Harmful cultural practices must evolve.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. A 14-year-old girl in your village tells you she is being forced into marriage next week. What is the most important immediate step you should take?</p>
+<textarea class="ar-textarea" id="q3" placeholder="What would you do?"></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['report','police','adult','teacher','counsellor','authority','1195','ministry','child','protection'],'fb3',1,2,'Report immediately to a trusted adult, school counsellor, local Chief, police Gender Desk, or call the GBV hotline 1195. Child marriage is illegal in Kenya and carries a criminal sentence. Time is critical.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. Name the free, 24-hour National GBV Hotline number in Kenya.</p>
+<input class="ar-input" id="q4" placeholder="Hotline number...">
+<button class="ar-btn" onclick="chk('q4',['1195'],'fb4',1,'1195 — the National GBV Hotline. Free, confidential, available 24 hours a day. Call if you or someone you know is in danger.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(7)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

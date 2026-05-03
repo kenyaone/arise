@@ -1,0 +1,49 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🎓 What is Peer Education?</div>
+<p class="ar-p">Peer education is when people from similar backgrounds — same age, school, or community — educate each other. Research shows that young people are <strong>more likely to listen to and trust peers</strong> than adults on sensitive topics like SRH, drugs, and mental health.</p>
+<div class="ar-key"><strong>🔑 Why Peers?</strong> Shared language, shared experiences, less judgment. A peer educator in your class understands your reality better than any textbook.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🛠️ Skills of an Effective Peer Educator</div>
+<table class="ar-table"><tr><th>Skill</th><th>How to Demonstrate It</th></tr>
+<tr><td>Active Listening</td><td>Eye contact, nodding, no phone, paraphrasing what you heard</td></tr>
+<tr><td>Empathy</td><td>"I can understand why you feel that way..."</td></tr>
+<tr><td>Knowledge</td><td>Know your topic well — be ready for tough questions</td></tr>
+<tr><td>Confidentiality</td><td>Never share what someone tells you in a peer session</td></tr>
+<tr><td>Non-judgment</td><td>No one will share if they fear mockery or shame</td></tr>
+<tr><td>Referral</td><td>Know where to send someone for professional help</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Fatuma, Malindi:</strong> A Form 4 student trained by AMREF as a peer educator. When her classmate confided she was being harassed by a teacher, Fatuma listened without judgment, reassured her it wasn't her fault, and helped her report it to the school counsellor. "She trusted me because I didn't react with shock or gossip," Fatuma said.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">⚠️ Limits of Peer Education</div>
+<p class="ar-p">Peer educators are <strong>not counsellors or therapists</strong>. If someone reveals abuse, suicidal thoughts, pregnancy, or addiction — refer them to a qualified adult immediately. You are a bridge, not the destination.</p>
+<div class="ar-warn"><strong>⚠️ Mandatory Reporting:</strong> In Kenya, if a peer discloses child abuse or defilement, you are legally and morally obligated to report it to an authority — even if they ask you to keep it secret.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. During a peer session, your classmate Kamau reveals he has been injecting heroin. As a peer educator, what are your TWO most important immediate actions?</p>
+<textarea class="ar-textarea" id="q1" placeholder="Two actions..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['listen','judge','refer','adult','counsellor','nacada','professional','help','thank','confide'],'fb1',1,2,'(1) Listen without judgment — acknowledge his bravery for sharing. (2) Immediately refer to a professional: school counsellor, parent, NACADA (1192). This is beyond peer education scope — addiction requires professional intervention.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. What is the most important ethical rule a peer educator must follow when a classmate shares personal information?</p>
+<input class="ar-input" id="q2" placeholder="Name the rule...">
+<button class="ar-btn" onclick="chk('q2',['confidential','secret','private','not share','not tell'],'fb2',1,'Confidentiality — never share what a peer tells you in confidence (except in mandatory reporting situations involving abuse or immediate danger).')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Why are peer educators often MORE effective than teachers or parents for SRH topics with teenagers? Give ONE reason.</p>
+<textarea class="ar-textarea" id="q3" placeholder="Give one reason..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['trust','relate','same','age','judgment','comfortable','understand','peer','language','experience'],'fb3',1,1,'Peers share the same language, experiences, and social world. Teenagers are more comfortable discussing sensitive topics without the fear of parental punishment or teacher authority. Trust is easier to establish.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(4)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

@@ -1,0 +1,62 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">📱 Social Media & Sexual Health</div>
+<p class="ar-p">Social media platforms — Facebook, TikTok, Instagram, WhatsApp, Snapchat — have transformed how young Kenyans communicate, date, and access information. But they also carry serious SRH risks.</p>
+<table class="ar-table"><tr><th>Platform Risk</th><th>SRH Impact</th></tr>
+<tr><td>Explicit content</td><td>Normalises unrealistic and harmful sexual expectations</td></tr>
+<tr><td>Online dating apps</td><td>Casual hookup culture, increased STI risk</td></tr>
+<tr><td>Anonymity</td><td>Deception about age, identity, and intentions</td></tr>
+<tr><td>Peer pressure via likes</td><td>Pressure to post sexual content to gain validation</td></tr>
+<tr><td>Cybersex/sexting</td><td>Content can be screenshot and shared without consent</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Aisha, Mombasa (16):</strong> Befriended a "25-year-old student" on Instagram. They exchanged messages for weeks. He asked her to share intimate photos, promising he would delete them. She did. He shared them in a WhatsApp group at her school. She was devastated, missed school for 2 weeks, and needed counselling. The man was 38. This is image-based abuse and a criminal offence in Kenya.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🚫 Cyberbullying & Its Effects</div>
+<p class="ar-p">Cyberbullying uses digital technology to harass, threaten, or humiliate someone. In Kenya, it is increasingly common on WhatsApp, TikTok, and school group chats.</p>
+<table class="ar-table"><tr><th>Type</th><th>Example</th></tr>
+<tr><td>Harassment</td><td>Repeated threatening or insulting messages</td></tr>
+<tr><td>Doxing</td><td>Sharing someone's private information publicly</td></tr>
+<tr><td>Impersonation</td><td>Creating a fake account using someone's photos</td></tr>
+<tr><td>Sexting image sharing</td><td>Sharing intimate photos without consent</td></tr>
+<tr><td>Trolling</td><td>Posting inflammatory comments to provoke</td></tr></table>
+<div class="ar-warn"><strong>⚠️ Effects of Cyberbullying:</strong> Depression, anxiety, school refusal, suicidal thoughts, and social isolation. Cyberbullying is a crime in Kenya under the Computer Misuse and Cybercrimes Act 2018.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🔐 Staying Safe Online — 8 Rules</div>
+<ul class="ar-list">
+<li>Never share intimate photos — once sent, you lose control forever</li>
+<li>Never share your location, home address, or school details with strangers</li>
+<li>Use strong, unique passwords and enable 2-factor authentication</li>
+<li>Set all accounts to private; vet friend/follower requests carefully</li>
+<li>Block and report abusive users immediately; document evidence</li>
+<li>Meet online friends only in public places with a trusted adult</li>
+<li>If something makes you uncomfortable online, tell a trusted adult</li>
+<li>Avoid public Wi-Fi for sensitive activities</li></ul>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Brian (17) received a request to share intimate photos from someone on Snapchat who says "it disappears after 10 seconds." Why is this reasoning DANGEROUS?</p>
+<textarea class="ar-textarea" id="q1" placeholder="Explain the danger..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['screenshot','save','record','control','lose','disappear','false','not safe','permanent'],'fb1',1,2,'Screenshots can be taken before it disappears. Screen recording is also possible. Once an image is sent, Brian loses ALL control over where it goes. "Disappearing" is a false sense of security — intimate images have been shared from Snapchat millions of times.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Zawadi is being repeatedly sent threatening messages by a classmate on WhatsApp. What are TWO concrete steps she should take?</p>
+<textarea class="ar-textarea" id="q2" placeholder="Two concrete steps..."></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['block','report','screenshot','evidence','adult','teacher','parent','police','document','counsellor'],'fb2',2,2,'(1) Screenshot and document all threatening messages (evidence). (2) Block the person AND report them to WhatsApp. Also tell a trusted adult (parent, teacher, counsellor) and if threats are serious, report to the police — cyberbullying is a crime.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Name the Kenyan law that makes cyberbullying and non-consensual sharing of intimate images a criminal offence.</p>
+<input class="ar-input" id="q3" placeholder="Name the law...">
+<button class="ar-btn" onclick="chk('q3',['computer misuse','cybercrimes','2018','cyber'],'fb3',1,'The Computer Misuse and Cybercrimes Act 2018 — criminalises cyberbullying, unauthorised sharing of intimate images, impersonation, and online harassment in Kenya.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(5)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

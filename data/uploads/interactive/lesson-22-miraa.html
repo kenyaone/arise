@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Miraa / Khat — Culture & Consequences | ARISE Health Education</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);font-size:.8rem;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;white-space:nowrap;}
+.slides-wrap{max-width:100%;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+.teach-block{margin-bottom:16px;}
+.teach-block h3{font-size:.95rem;font-weight:700;color:var(--pri);padding-bottom:4px;border-bottom:2px solid var(--acc);margin-bottom:10px;}
+.teach-block p{font-size:.88rem;line-height:1.65;margin-bottom:8px;}
+.key-term{background:#fffbf0;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:.85rem;}
+.key-term strong{color:#6b4a00;display:block;margin-bottom:3px;font-size:.82rem;text-transform:uppercase;letter-spacing:.3px;}
+.info-table{width:100%;border-collapse:collapse;font-size:.83rem;margin:10px 0;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;font-size:.8rem;}
+.info-table td{padding:7px 10px;border-bottom:1px solid var(--border);}
+.info-table tr:nth-child(even) td{background:#f0f7f2;}
+.warn-box{background:#fff5f5;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:10px 0;font-size:.85rem;color:#7a1a1a;}
+.warn-box strong{display:block;margin-bottom:4px;color:var(--no);}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.fact-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:.82rem;}
+.fact-card .fact-icon{font-size:1.3rem;margin-bottom:4px;}
+.fact-card strong{display:block;color:var(--pri);font-size:.78rem;margin-bottom:3px;}
+.diagram-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:12px 0;text-align:center;}
+.diagram-wrap svg{max-width:100%;height:auto;}
+.example-box{background:#f0f7f2;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.85rem;}
+.example-box strong{color:var(--ok);display:block;margin-bottom:5px;}
+.pill{display:inline-block;background:var(--pri);color:#fff;border-radius:20px;padding:2px 10px;font-size:.75rem;font-weight:700;margin:2px;}
+.pill.red{background:var(--no);}
+.pill.amber{background:#e67e00;}
+/* NAV */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;z-index:300;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;}
+.nav-btn:disabled{background:#ccc;cursor:default;}
+.dot-nav{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:180px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.done{background:var(--ok);}
+/* QUIZ */
+.quiz-wrap{padding:4px 0;}
+.qpart-title{font-size:.9rem;font-weight:700;color:var(--pri);margin:14px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--acc);}
+.fill-item{margin-bottom:12px;font-size:.88rem;line-height:1.7;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;width:120px;padding:2px 6px;font-size:.88rem;color:var(--dark);outline:none;text-align:center;}
+.fill-blank:focus{border-bottom-color:var(--acc);}
+.fb-result{font-size:.78rem;font-weight:700;margin-left:6px;}
+.fb-result.ok{color:var(--ok);}
+.fb-result.no{color:var(--no);}
+.sa-item{margin-bottom:14px;}
+.sa-item p{font-size:.88rem;font-weight:600;margin-bottom:6px;color:var(--dark);}
+.sa-box{width:100%;min-height:70px;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.85rem;font-family:inherit;resize:vertical;}
+.sa-box:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:6px 16px;border-radius:6px;font-size:.8rem;font-weight:700;cursor:pointer;margin-top:4px;}
+.sa-feedback{margin-top:8px;padding:10px 12px;border-radius:8px;font-size:.82rem;line-height:1.6;display:none;}
+.sa-feedback.show{display:block;}
+.sa-feedback.ok{background:#f0f7f2;border-left:3px solid var(--ok);}
+.sa-feedback.partial{background:#fffbf0;border-left:3px solid var(--acc);}
+.sa-feedback.no{background:#fff5f5;border-left:3px solid var(--no);}
+.kw-found{color:var(--ok);font-weight:700;}
+.kw-miss{color:var(--no);font-weight:700;}
+.submit-bar{text-align:center;margin-top:16px;}
+.submit-btn{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;padding:12px 32px;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(10,94,42,.3);}
+.score-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border:2px solid var(--ok);border-radius:var(--radius);padding:20px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{font-size:1.4rem;font-weight:700;color:var(--pri);margin-bottom:6px;}
+.score-box p{font-size:.88rem;color:var(--soft);}
+.model-ans{background:#f9f9f9;border-radius:6px;padding:8px 10px;margin-top:6px;font-size:.8rem;color:#444;font-style:italic;}
+@media(max-width:600px){
+  .fact-grid{grid-template-columns:1fr;}
+  .top-bar-left .lesson-name{font-size:.85rem;}
+  .nav-btn{padding:8px 14px;font-size:.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label" id="tb-module">Drugs &amp; Substance Abuse</div>
+    <div class="lesson-name" id="tb-lesson">🌿 Miraa / Khat — Culture &amp; Consequences</div>
+  </div>
+  <div class="slide-badge" id="slide-badge">1 / 10</div>
+</div>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">Lang:</span>
+    <button class="lb-btn active" onclick="setLang('en')">EN</button>
+    <button class="lb-btn" onclick="setLang('sw')">SW</button>
+    <button class="lb-btn" onclick="setLang('sh')">Sheng</button>
+    <span class="lb-sep">|</span>
+    <span class="lb-label">Size:</span>
+    <button class="lb-size-btn active" onclick="setSize('normal')">A</button>
+    <button class="lb-size-btn" onclick="setSize('large')">A+</button>
+    <a class="lb-help" href="tel:116">🆘 116</a>
+  </div>
+</div>
+
+<!-- SLIDES -->
+<div class="slides-wrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="slide-1">
+  <div class="slide-head">🎯 <span data-en="Learning Outcomes" data-sw="Malengo ya Kujifunza" data-sh="Unaenda Kujua Nini"></span></div>
+  <div class="lo-box">
+    <h3 data-en="By the end of this lesson, you will be able to:" data-sw="Mwishowe wa somo hili, utaweza:" data-sh="Ukiisha somo hii, utaweza:"></h3>
+    <ol>
+      <li data-en="Explain what miraa (khat) is and its cultural significance in Kenya" data-sw="Eleza miraa ni nini na umuhimu wake wa kiutamaduni Kenya" data-sh="Explain miraa ni nini na why watu wanaichew Kenya"></li>
+      <li data-en="Identify the active chemicals in miraa and their effects on the body and brain" data-sw="Tambua kemikali zinazofanya kazi katika miraa na athari zake kwa mwili na ubongo" data-sh="Jua kemikali za miraa na how zinaaffect mwili na brain"></li>
+      <li data-en="Describe the short-term and long-term health consequences of chewing miraa" data-sw="Eleza madhara ya muda mfupi na mrefu ya kutafuna miraa" data-sh="Describe consequences za miraa — short term na long term"></li>
+      <li data-en="Recognise signs of miraa dependence and addiction" data-sw="Tambua dalili za utegemezi na uraibu wa miraa" data-sh="Jua signs za addiction ya miraa"></li>
+      <li data-en="Make informed decisions about miraa use and support peers to do the same" data-sw="Fanya maamuzi sahihi kuhusu matumizi ya miraa na usaidie wenzako" data-sh="Make informed decisions kuhusu miraa na usaidie friends wako"></li>
+    </ol>
+    <div class="inquiry">
+      💭 <strong data-en="Key Inquiry:" data-sw="Swali Kuu:" data-sh="Big Question:"></strong>
+      <span data-en="Miraa is part of Kenyan culture — but does culture justify harm? How do you decide what traditions to follow?" data-sw="Miraa ni sehemu ya utamaduni wa Kenya — lakini je utamaduni unahalalisha madhara? Unaamuaje mila za kufuata?" data-sh="Miraa ni culture ya Kenya — lakini does culture justify harm? How unaaamua which traditions to follow?"></span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: What is Miraa? -->
+<div class="slide" id="slide-2">
+  <div class="slide-head">🌿 <span data-en="What Is Miraa / Khat?" data-sw="Miraa / Khat ni Nini?" data-sh="Miraa ni Nini Hasa?"></span></div>
+  <div class="teach-block">
+    <h3 data-en="Origins and Overview" data-sw="Asili na Muhtasari" data-sh="Background ya Miraa"></h3>
+    <p data-en="Miraa, known internationally as khat, is a plant (Catha edulis) native to East Africa and the Arabian Peninsula. Its fresh leaves and stems are chewed for a stimulant effect. In Kenya, it is widely consumed, especially in Meru County where it is a major cash crop." data-sw="Miraa, inayojulikana kimataifa kama khat, ni mmea (Catha edulis) asilia wa Afrika Mashariki na Rasi ya Arabia. Majani yake mapya na mashina hutafunwa kwa athari ya kuchochea. Kenya, inatumiwa sana, hasa Kaunti ya Meru ambapo ni zao kuu la biashara." data-sh="Miraa, called khat internationally, ni plant (Catha edulis) kutoka East Africa. Majani yake na stems zinachewedwa kwa stimulant effect. Kenya inakuwa consumed sana, especially Meru County ambapo ni major cash crop."></p>
+  </div>
+  <div class="fact-grid">
+    <div class="fact-card">
+      <div class="fact-icon">🌍</div>
+      <strong data-en="Also called" data-sw="Pia huitwa" data-sh="Majina mengine"></strong>
+      <span data-en="Khat, Qat, Miraa, Muhimu, Murungu" data-sw="Khat, Qat, Miraa, Muhimu, Murungu" data-sh="Khat, Qat, Miraa, Muhimu, Murungu"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🏔️</div>
+      <strong data-en="Grown mainly in" data-sw="Hulimwa zaidi" data-sh="Inakuzwa"></strong>
+      <span data-en="Meru, Embu, Nyeri (Mt. Kenya region)" data-sw="Meru, Embu, Nyeri (eneo la Mlima Kenya)" data-sh="Meru, Embu, Nyeri — Mt. Kenya region"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">💰</div>
+      <strong data-en="Legal status in Kenya" data-sw="Hali ya kisheria Kenya" data-sh="Legal status Kenya"></strong>
+      <span data-en="Legal to grow and sell; banned in some countries" data-sw="Halali kulima na kuuza; imepigwa marufuku nchi nyingine" data-sh="Legal Kenya; banned places kama UK, USA"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">👥</div>
+      <strong data-en="Common users" data-sw="Watumiaji wa kawaida" data-sh="Wanaochew kawaida"></strong>
+      <span data-en="Men, youth, truck drivers, traders" data-sw="Wanaume, vijana, madereva, wafanyabiashara" data-sh="Wanaume, youth, truck drivers, wafanyabiashara"></span>
+    </div>
+  </div>
+  <div class="key-term">
+    <strong>Stimulant</strong>
+    <span data-en="A substance that speeds up the central nervous system, increasing alertness, energy, and heart rate." data-sw="Dutu inayoharakisha mfumo wa neva kuu, kuongeza uangalifu, nguvu, na mapigo ya moyo." data-sh="Kitu kinachomake brain na mwili kuwork faster — increases energy na alertness."></span>
+  </div>
+</div>
+
+<!-- SLIDE 3: Active Chemicals -->
+<div class="slide" id="slide-3">
+  <div class="slide-head">🧪 <span data-en="Chemicals Inside Miraa" data-sw="Kemikali Zilizo Ndani ya Miraa" data-sh="Chemicals za Miraa"></span></div>
+  <div class="teach-block">
+    <h3 data-en="What Makes Miraa Dangerous?" data-sw="Nini Hufanya Miraa Kuwa Hatari?" data-sh="Nini Inafanya Miraa Iwe Hatari?"></h3>
+    <p data-en="Miraa contains two main psychoactive (mind-altering) chemicals: cathinone and cathine. Cathinone is the more potent and degrades rapidly after harvest — this is why users prefer fresh miraa chewed within 48 hours." data-sw="Miraa ina kemikali mbili kuu zinazobadilisha akili: cathinone na cathine. Cathinone ina nguvu zaidi na huharibika haraka baada ya kuvunwa — hii ndiyo sababu watumiaji wanapenda miraa safi inayotafunwa ndani ya masaa 48." data-sh="Miraa ina chemicals mbili za main: cathinone na cathine. Cathinone ndio stronger na inaexpire haraka — that's why people prefer fresh miraa chewed within 48 hours."></p>
+  </div>
+  <table class="info-table">
+    <tr><th data-en="Chemical" data-sw="Kemikali" data-sh="Chemical"></th><th data-en="Effect" data-sw="Athari" data-sh="Effect"></th><th data-en="Comparison" data-sw="Ulinganisho" data-sh="Comparison"></th></tr>
+    <tr>
+      <td><strong>Cathinone</strong></td>
+      <td data-en="Releases dopamine; euphoria, energy" data-sw="Hutoa dopamine; furaha, nguvu" data-sh="Inatoa dopamine; euphoria na energy"></td>
+      <td data-en="Similar to amphetamine" data-sw="Kama amphetamine" data-sh="Kama amphetamine"></td>
+    </tr>
+    <tr>
+      <td><strong>Cathine</strong></td>
+      <td data-en="Milder stimulant effect" data-sw="Athari ndogo ya kuchochea" data-sh="Mild stimulant"></td>
+      <td data-en="Similar to ephedrine" data-sw="Kama ephedrine" data-sh="Kama ephedrine"></td>
+    </tr>
+    <tr>
+      <td><strong>Tannins</strong></td>
+      <td data-en="Constipation, dry mouth" data-sw="Kuvimbiwa, kinywa kavu" data-sh="Constipation, dry mouth"></td>
+      <td data-en="Found in tea/coffee" data-sw="Hupatikana katika chai/kahawa" data-sh="Iko pia in tea/coffee"></td>
+    </tr>
+  </table>
+  <div class="warn-box">
+    <strong>⚠️ <span data-en="WHO Classification" data-sw="Uainishaji wa WHO" data-sh="WHO Inasema"></span></strong>
+    <span data-en="The World Health Organization (WHO) classifies khat as a drug of abuse that can produce mild-to-moderate psychological dependence." data-sw="Shirika la Afya Duniani (WHO) linaainisha khat kama dawa ya kulevya inayoweza kusababisha utegemezi wa kisaikolojia wa wastani." data-sh="WHO inasema khat ni drug ya abuse inayoweza cause moderate psychological dependence."></span>
+  </div>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="160" fill="#f4f7f5" rx="8"/>
+      <text x="160" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#0a5e2a">How Miraa Affects the Brain</text>
+      <!-- Brain outline -->
+      <ellipse cx="160" cy="90" rx="70" ry="55" fill="#e8f5ec" stroke="#0a5e2a" stroke-width="2"/>
+      <text x="160" y="78" text-anchor="middle" font-size="9" fill="#0a5e2a" font-weight="700">BRAIN</text>
+      <!-- Dopamine arrow -->
+      <line x1="60" y1="60" x2="100" y2="80" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="30" y="55" font-size="8" fill="#6b4a00">Dopamine ↑</text>
+      <!-- Norepinephrine arrow -->
+      <line x1="60" y1="110" x2="100" y2="100" stroke="#c62828" stroke-width="2" marker-end="url(#arr2)"/>
+      <text x="10" y="115" font-size="8" fill="#7a1a1a">Norepinephrine ↑</text>
+      <!-- Effects right -->
+      <text x="240" y="65" font-size="8" fill="#2e7d32">✓ Energy</text>
+      <text x="240" y="80" font-size="8" fill="#2e7d32">✓ Alertness</text>
+      <text x="240" y="95" font-size="8" fill="#c62828">✗ Anxiety</text>
+      <text x="240" y="110" font-size="8" fill="#c62828">✗ Insomnia</text>
+      <text x="240" y="125" font-size="8" fill="#c62828">✗ Dependence</text>
+      <line x1="230" y1="60" x2="230" y2="130" stroke="#cde0d4" stroke-width="1"/>
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#f5a623"/>
+        </marker>
+        <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#c62828"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<!-- SLIDE 4: Short-term Effects -->
+<div class="slide" id="slide-4">
+  <div class="slide-head">⚡ <span data-en="Short-Term Effects of Miraa" data-sw="Athari za Muda Mfupi za Miraa" data-sh="Effects za Miraa — Short Term"></span></div>
+  <div class="teach-block">
+    <h3 data-en="What Happens When You Chew Miraa?" data-sw="Nini Hutokea Unapotafuna Miraa?" data-sh="Nini Inakutokea Ukichew Miraa?"></h3>
+    <p data-en="Effects begin within 15–30 minutes of chewing and may last 3–6 hours. Users experience a mix of desirable and harmful effects simultaneously." data-sw="Athari huanza ndani ya dakika 15-30 za kutafuna na zinaweza kudumu masaa 3-6. Watumiaji hupata mchanganyiko wa athari za kuhitajika na za kudhuru wakati mmoja." data-sh="Effects zinaanza ndani ya minutes 15-30 za kuchew na zinaweza kudumu masaa 3-6. Unapata mix ya good na bad effects."></p>
+  </div>
+  <table class="info-table">
+    <tr><th data-en="Desired Effects (why people use)" data-sw="Athari Zinazotakiwa (sababu ya kutumia)" data-sh="Effects Nzuri (why watu wanachew)"></th><th data-en="Harmful Effects" data-sw="Athari za Kudhuru" data-sh="Bad Effects"></th></tr>
+    <tr>
+      <td data-en="Increased energy and alertness" data-sw="Nguvu na uangalifu ulioongezeka" data-sh="More energy na alertness"></td>
+      <td data-en="Rapid heartbeat (tachycardia)" data-sw="Mapigo ya moyo yanayoharakisha" data-sh="Heart inabeatfast sana"></td>
+    </tr>
+    <tr>
+      <td data-en="Euphoria (feeling of happiness)" data-sw="Euphoria (hisia ya furaha)" data-sh="Feeling ya happiness — euphoria"></td>
+      <td data-en="High blood pressure" data-sw="Shinikizo la damu la juu" data-sh="High blood pressure"></td>
+    </tr>
+    <tr>
+      <td data-en="Reduced appetite (used to stay awake and work)" data-sw="Kupunguza hamu ya kula" data-sh="Hamu ya chakula inapotea"></td>
+      <td data-en="Insomnia — difficulty sleeping" data-sw="Usingizi — ugumu wa kulala" data-sh="Cannot sleep — insomnia"></td>
+    </tr>
+    <tr>
+      <td data-en="Increased confidence and talkativeness" data-sw="Kujiamini zaidi na mazungumzo" data-sh="Confidence inaongezeka, unasema sana"></td>
+      <td data-en="Anxiety, restlessness, irritability" data-sw="Wasiwasi, kutokutulia, hasira" data-sh="Anxiety, restlessness, bad temper"></td>
+    </tr>
+    <tr>
+      <td data-en="Reduced fatigue during long tasks" data-sw="Kupunguza uchovu kwa kazi ndefu" data-sh="Uchovu unapotea kwa kazi ndefu"></td>
+      <td data-en="Constipation and mouth sores" data-sw="Kuvimbiwa na vidonda vya mdomo" data-sh="Constipation na vidonda mdomo"></td>
+    </tr>
+  </table>
+  <div class="warn-box">
+    <strong>🚗 <span data-en="Danger: Miraa & Driving" data-sw="Hatari: Miraa na Kuendesha" data-sh="Danger: Miraa na Kuendesha Gari"></span></strong>
+    <span data-en="Miraa causes overconfidence and reduced reaction time — a leading cause of road accidents among truck drivers in Kenya." data-sw="Miraa husababisha kujiamini kupita kiasi na kupunguza muda wa majibu — sababu kuu ya ajali za barabarani kwa madereva wa lori Kenya." data-sh="Miraa inakufanya ujiamini kupita kiasi na reaction time inapungua — major cause ya accidents kwa truck drivers Kenya."></span>
+  </div>
+</div>
+
+<!-- SLIDE 5: Long-term Consequences -->
+<div class="slide" id="slide-5">
+  <div class="slide-head">📉 <span data-en="Long-Term Consequences" data-sw="Matokeo ya Muda Mrefu" data-sh="Long Term Consequences"></span></div>
+  <div class="teach-block">
+    <h3 data-en="What Happens With Regular Use?" data-sw="Nini Hutokea kwa Matumizi ya Kawaida?" data-sh="Nini Inakutokea Ukichew Kawaida?"></h3>
+    <p data-en="Regular miraa chewing causes progressive damage to multiple body systems. The effects worsen over time and are often irreversible." data-sw="Kutafuna miraa mara kwa mara husababisha uharibifu unaoendelea kwa mifumo mingi ya mwili. Athari huzidi kwa wakati na mara nyingi haziwezi kutenduliwa." data-sh="Kuchew miraa regularly inakausha na kuharibu systems nyingi za mwili. Effects zinaworsen with time na nyingine hazireverse."></p>
+  </div>
+  <div class="fact-grid">
+    <div class="fact-card">
+      <div class="fact-icon">🧠</div>
+      <strong data-en="Mental Health" data-sw="Afya ya Akili" data-sh="Mental Health"></strong>
+      <span data-en="Depression, psychosis, paranoia, hallucinations with heavy use" data-sw="Unyogovu, psychosis, wasiwasi, maono kwa matumizi makubwa" data-sh="Depression, psychosis, paranoia na hallucinations"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">❤️</div>
+      <strong data-en="Heart" data-sw="Moyo" data-sh="Moyo"></strong>
+      <span data-en="Chronic high blood pressure, risk of heart attack and stroke" data-sw="Shinikizo la damu la kudumu, hatari ya mshtuko wa moyo" data-sh="Chronic high BP, risk ya heart attack na stroke"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🦷</div>
+      <strong data-en="Oral Health" data-sw="Afya ya Mdomo" data-sh="Mdomo"></strong>
+      <span data-en="Severe tooth decay, gum disease, oral cancer risk, stained teeth" data-sw="Kuoza sana kwa meno, ugonjwa wa ufizi, hatari ya saratani ya mdomo" data-sh="Meno yanaoza, ufizi unaumia, risk ya oral cancer"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🍽️</div>
+      <strong data-en="Nutrition" data-sw="Lishe" data-sh="Lishe"></strong>
+      <span data-en="Malnutrition from appetite suppression; weight loss" data-sw="Utapiamlo kutokana na kukandamiza hamu ya kula; kupoteza uzito" data-sh="Malnutrition kutokana na appetite kupotea; weight loss"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">🫁</div>
+      <strong data-en="Liver" data-sw="Ini" data-sh="Ini"></strong>
+      <span data-en="Liver inflammation and damage with prolonged use" data-sw="Uvimbe na uharibifu wa ini kwa matumizi ya muda mrefu" data-sh="Ini inainflame na kuharibiwa over time"></span>
+    </div>
+    <div class="fact-card">
+      <div class="fact-icon">👨‍👩‍👧</div>
+      <strong data-en="Family & Social" data-sw="Familia na Jamii" data-sh="Family na Social"></strong>
+      <span data-en="Neglect of family, job loss, financial ruin, domestic violence" data-sw="Kupuuza familia, kupoteza kazi, kufilisika, ukatili wa nyumbani" data-sh="Family inapuuzwa, job loss, financial ruin, domestic violence"></span>
+    </div>
+  </div>
+  <div class="example-box">
+    <strong>📊 <span data-en="Kenya Statistics" data-sw="Takwimu za Kenya" data-sh="Stats za Kenya"></span></strong>
+    <span data-en="Studies show up to 30% of Kenyan youth in miraa-growing regions chew regularly. Mental health admissions linked to khat use have risen significantly in Meru and Nairobi counties." data-sw="Tafiti zinaonyesha hadi 30% ya vijana wa Kenya katika maeneo ya kulima miraa wanaitafuna mara kwa mara. Maombi ya afya ya akili yanayohusiana na matumizi ya khat yameongezeka sana." data-sh="Studies zinaonyesha hadi 30% ya Kenyan youth areas za miraa wanachew regularly. Mental health admissions zilizohusiana na khat zimeongezeka Meru na Nairobi."></span>
+  </div>
+</div>
+
+<!-- SLIDE 6: Addiction & Dependence -->
+<div class="slide" id="slide-6">
+  <div class="slide-head">🔗 <span data-en="Addiction & Dependence" data-sw="Uraibu na Utegemezi" data-sh="Addiction na Dependence"></span></div>
+  <div class="teach-block">
+    <h3 data-en="Can You Become Addicted to Miraa?" data-sw="Je, Unaweza Kuwa Mraibu wa Miraa?" data-sh="Je, Unaweza Kuwa Addicted kwa Miraa?"></h3>
+    <p data-en="Yes. While miraa does not cause the same severe physical withdrawal as heroin or alcohol, it causes significant psychological dependence. Users feel unable to work, socialise or feel normal without it." data-sw="Ndiyo. Ingawa miraa haisababishi uondoaji mkali wa kimwili kama heroin au pombe, husababisha utegemezi mkubwa wa kisaikolojia. Watumiaji huhisi kushindwa kufanya kazi, kushirikiana au kujisikia wa kawaida bila yake." data-sh="Yes. Miraa haisababishi severe physical withdrawal kama heroin, lakini inakusababishia psychological dependence. Hujisikia unable to work au feel normal bila yake."></p>
+  </div>
+  <div class="key-term">
+    <strong data-en="Psychological Dependence" data-sw="Utegemezi wa Kisaikolojia" data-sh="Psychological Dependence"></strong>
+    <span data-en="When a person feels emotionally and mentally unable to cope without a substance — even without severe physical withdrawal symptoms." data-sw="Wakati mtu anahisi kushindwa kihisia na kiakili bila dutu — hata bila dalili kali za uondoaji wa kimwili." data-sh="Unapohisi emotionally na mentally unable to cope bila substance — hata bila severe physical withdrawal."></span>
+  </div>
+  <div class="teach-block" style="margin-top:12px;">
+    <h3 data-en="Warning Signs of Miraa Dependence" data-sw="Ishara za Onyo za Utegemezi wa Miraa" data-sh="Signs za Miraa Dependence"></h3>
+  </div>
+  <table class="info-table">
+    <tr><th>#</th><th data-en="Warning Sign" data-sw="Ishara ya Onyo" data-sh="Warning Sign"></th></tr>
+    <tr><td>1</td><td data-en="Chewing every day — cannot skip a day without feeling unwell" data-sw="Kutafuna kila siku — haiwezekani kuruka siku bila kuhisi vibaya" data-sh="Unachew kila siku — ukiskip siku unajisikia vibaya"></td></tr>
+    <tr><td>2</td><td data-en="Spending most of income on miraa while family goes without" data-sw="Kutumia pesa nyingi kwenye miraa huku familia ikiwa na uhitaji" data-sh="Spending most ya pesa kwa miraa — familia haipati kitu"></td></tr>
+    <tr><td>3</td><td data-en="Feeling depressed, irritable or unable to concentrate without miraa" data-sw="Kuhisi msongo, hasira au kutoweza kuzingatia bila miraa" data-sh="Ukiwa depressed, irritable au unable to focus bila miraa"></td></tr>
+    <tr><td>4</td><td data-en="Chewing more and more to get the same effect (tolerance)" data-sw="Kutafuna zaidi na zaidi kupata athari ile ile (uvumilivu)" data-sh="Unachew more na more kupata same effect — tolerance"></td></tr>
+    <tr><td>5</td><td data-en="Lying to family about how much miraa you use" data-sw="Kudanganya familia kuhusu kiasi cha miraa unachotumia" data-sh="Unafanya family wasiambie kiasi unachochew"></td></tr>
+    <tr><td>6</td><td data-en="Giving up work, sports or hobbies to spend more time chewing" data-sw="Kuacha kazi, michezo au burudani kukaa kutafuna" data-sh="Unaachana na kazi, sports au hobbies kukaa uchew tu"></td></tr>
+  </table>
+</div>
+
+<!-- SLIDE 7: Cultural Context -->
+<div class="slide" id="slide-7">
+  <div class="slide-head">🏡 <span data-en="Culture, Peer Pressure & Miraa" data-sw="Utamaduni, Shinikizo la Rika na Miraa" data-sh="Culture, Peer Pressure na Miraa"></span></div>
+  <div class="teach-block">
+    <h3 data-en="Why Do Young People Start Chewing Miraa?" data-sw="Kwa Nini Vijana Huanza Kutafuna Miraa?" data-sh="Why Youth Wanaanza Kuchew Miraa?"></h3>
+    <p data-en="Understanding why people start helps you make better choices and support friends who are at risk." data-sw="Kuelewa sababu watu huanza husaidia kufanya maamuzi bora na kusaidia marafiki walio hatarini." data-sh="Kuelewa reasons za kuanza kunasaidia ufanye better choices na usaidie friends wako."></p>
+  </div>
+  <table class="info-table">
+    <tr><th data-en="Reason" data-sw="Sababu" data-sh="Reason"></th><th data-en="Reality Check" data-sw="Ukweli" data-sh="Reality Check"></th></tr>
+    <tr>
+      <td data-en="'Everyone in my area does it — it's normal'" data-sw="'Kila mtu eneo langu anafanya — ni kawaida'" data-sh="'Watu wote area yangu wanachew — ni normal'"></td>
+      <td data-en="Common does not mean safe. Normalised harm is still harm." data-sw="Kawaida haimaanishi salama. Madhara ya kawaida bado ni madhara." data-sh="Common haimaanishi safe. Harm ni harm hata ikuwe normal."></td>
+    </tr>
+    <tr>
+      <td data-en="'It helps me work longer hours without sleep'" data-sw="'Inasaidia kufanya kazi zaidi bila kulala'" data-sh="'Inasaidia nifanye kazi bila kulala'"></td>
+      <td data-en="Short-term energy gain leads to long-term health loss and burnout." data-sw="Faida ya nguvu ya muda mfupi husababisha hasara ya afya ya muda mrefu." data-sh="Short term energy leads to long term health damage na burnout."></td>
+    </tr>
+    <tr>
+      <td data-en="'My friends will reject me if I don't join'" data-sw="'Marafiki wangu wataniacha nisipoungana nao'" data-sh="'Friends zangu watanikimbia nisiojoin'"></td>
+      <td data-en="True friends respect your choices. You can socialise without chewing." data-sw="Marafiki wa kweli wanaheshimu maamuzi yako. Unaweza kushirikiana bila kutafuna." data-sh="True friends wanarespect choices zako. Unaweza socialise bila kuchew."></td>
+    </tr>
+    <tr>
+      <td data-en="'It's traditional and part of my identity'" data-sw="'Ni mila na sehemu ya utambulisho wangu'" data-sh="'Ni tradition — sehemu ya identity yangu'"></td>
+      <td data-en="You can honour your culture and still protect your health. Traditions can evolve." data-sw="Unaweza kuheshimu utamaduni wako na bado kulinda afya yako. Mila zinaweza kubadilika." data-sh="Unaweza honour culture yako na protect health yako pia. Traditions zinaweza evolve."></td>
+    </tr>
+  </table>
+  <div class="example-box">
+    <strong>💬 <span data-en="How to Refuse Miraa" data-sw="Jinsi ya Kukataa Miraa" data-sh="How ya Kurefuse Miraa"></span></strong>
+    <ul style="padding-left:18px;font-size:.85rem;line-height:1.8;">
+      <li data-en="'I'm good, thanks — I'm watching my health'" data-sw="'Mimi sawa, asante — ninaangalia afya yangu'" data-sh="'Niko poa, asante — ninawatch health yangu'"></li>
+      <li data-en="'I've got a sports match / exam / meeting tomorrow'" data-sw="'Nina mechi ya michezo / mtihani / mkutano kesho'" data-sh="'Niko na match / exam / meeting kesho'"></li>
+      <li data-en="'No thanks — I don't need it to enjoy myself'" data-sw="'Hapana asante — sihitaji kujifurahisha'" data-sh="'Hapana sawa — sihitaji ili nienjoy'"></li>
+      <li data-en="Simply walk away and stay firm" data-sw="Toka tu na ukae imara" data-sh="Toka tu — stay firm"></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 8: Seeking Help -->
+<div class="slide" id="slide-8">
+  <div class="slide-head">🤝 <span data-en="Getting Help & Recovery" data-sw="Kupata Msaada na Kupona" data-sh="Kupata Help na Recovery"></span></div>
+  <div class="teach-block">
+    <h3 data-en="Recovery Is Possible" data-sw="Kupona Kunawezekana" data-sh="Recovery Inawezekana"></h3>
+    <p data-en="Stopping miraa use can be challenging but is very achievable — especially with support. Many people have quit successfully and rebuilt their health and family life." data-sw="Kuacha matumizi ya miraa kunaweza kuwa changamoto lakini kinawezekana sana — hasa kwa msaada. Watu wengi wameacha kwa mafanikio na kujenga upya afya yao na maisha ya familia." data-sh="Kuacha miraa kunaweza be hard lakini inawezekana sana — especially ukiwa na support. Watu wengi wameacha successfully na wamerecover fully."></p>
+  </div>
+  <table class="info-table">
+    <tr><th data-en="Step" data-sw="Hatua" data-sh="Step"></th><th data-en="What to Do" data-sw="Nini cha Kufanya" data-sh="What Kufanya"></th></tr>
+    <tr><td>1</td><td data-en="Acknowledge the problem — admit you are dependent" data-sw="Kubali tatizo — kiri kwamba unategemea" data-sh="Admit unaomba — acknowledge uko dependent"></td></tr>
+    <tr><td>2</td><td data-en="Talk to a trusted adult, counsellor or health worker" data-sw="Zungumza na mtu mzima unayemwamini, mshauri au mfanyakazi wa afya" data-sh="Zungumza na trusted adult, counsellor au health worker"></td></tr>
+    <tr><td>3</td><td data-en="Visit a rehabilitation centre or government hospital" data-sw="Tembelea kituo cha ukarabati au hospitali ya serikali" data-sh="Nenda rehab centre au government hospital"></td></tr>
+    <tr><td>4</td><td data-en="Replace miraa time with sport, work, hobbies or community activities" data-sw="Badilisha muda wa miraa na michezo, kazi, burudani au shughuli za jamii" data-sh="Replace miraa time na sport, kazi, hobbies au community activities"></td></tr>
+    <tr><td>5</td><td data-en="Ask family to support and encourage your recovery" data-sw="Omba familia kukusaidia na kukuhimiza kupona" data-sh="Mwambie family wakusupport during recovery"></td></tr>
+  </table>
+  <div class="warn-box">
+    <strong>📞 <span data-en="Kenya Helplines" data-sw="Nambari za Msaada Kenya" data-sh="Kenya Helplines"></span></strong>
+    <span data-en="Befrienders Kenya: 0800 723 253 (free) | NACADA: 1192 | Childline: 116" data-sw="Befrienders Kenya: 0800 723 253 (bure) | NACADA: 1192 | Childline: 116" data-sh="Befrienders Kenya: 0800 723 253 (free) | NACADA: 1192 | Childline: 116"></span>
+  </div>
+  <div class="example-box">
+    <strong>🌟 <span data-en="NACADA — National Authority for the Campaign Against Alcohol and Drug Abuse" data-sw="NACADA — Mamlaka ya Taifa ya Kampeni Dhidi ya Pombe na Madawa ya Kulevya" data-sh="NACADA — Kenya's drug abuse authority"></span></strong>
+    <span data-en="NACADA provides free counselling and referrals for drug dependence across Kenya. Visit any county referral hospital or call 1192." data-sw="NACADA hutoa ushauri nasaha na rufaa bila malipo kwa utegemezi wa dawa Kenya. Tembelea hospitali yoyote ya rufaa ya kaunti au piga simu 1192." data-sh="NACADA inatoa free counselling na referrals kwa drug dependence Kenya yote. Nenda county hospital yoyote au piga 1192."></span>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="slide-9">
+  <div class="slide-head">✏️ <span data-en="Practice Questions" data-sw="Maswali ya Mazoezi" data-sh="Practice Questions"></span></div>
+
+  <div class="teach-block">
+    <h3 data-en="Scenario 1" data-sw="Hali ya 1" data-sh="Scenario 1"></h3>
+    <p data-en="Brian, 17, lives in Meru. His older brother chews miraa daily and earns money selling it. Brian's friends say miraa gives them energy for exams. Should Brian try it? What advice would you give him?" data-sw="Brian, 17, anaishi Meru. Kaka yake mkubwa anatafuna miraa kila siku na kupata pesa kwa kuiuza. Marafiki wa Brian wanasema miraa inawapa nguvu kwa mitihani. Je, Brian ajaribu? Ni ushauri gani ungempa?" data-sh="Brian, 17, anaishi Meru. Kaka yake anatafuna miraa kila siku na kupata pesa. Marafiki wa Brian wanasema miraa inawapa energy ya exam. Je, Brian ajaribu? Ushauri gani ungem-give?"></p>
+  </div>
+  <div class="example-box">
+    <strong data-en="Model Answer:" data-sw="Jibu la Mfano:" data-sh="Model Answer:"></strong>
+    <span data-en="Brian should not try miraa. While it may give short-term energy, cathinone disrupts normal sleep and concentration, harming exam performance long-term. The family business normalises use but does not make it safe. Brian can study effectively using sleep, nutrition, and breaks. He should politely decline his friends and explain the health risks." data-sw="Brian asiijaribu miraa. Ingawa inaweza kutoa nguvu za muda mfupi, cathinone huvuruga usingizi wa kawaida na umakini, kuathiri utendaji wa mitihani muda mrefu. Biashara ya familia inafanya iwe ya kawaida lakini haifanyi kuwa salama. Brian anaweza kusoma vizuri kwa kulala, lishe, na mapumziko. Apuuze marafiki wake kwa upole na aeleze hatari za kiafya." data-sh="Brian asiijaribu miraa. Short term energy inaonekana poa lakini cathinone inasumbua sleep na concentration — inafanya exam performance iwe worse long term. Family business inafanya iwe normal lakini haimaanishi ni safe. Brian anaweza kustudy vizuri na sleep, chakula na breaks. Akatae marafiki kwa upole na awaeleze health risks."></span>
+  </div>
+
+  <div class="teach-block" style="margin-top:14px;">
+    <h3 data-en="Scenario 2" data-sw="Hali ya 2" data-sh="Scenario 2"></h3>
+    <p data-en="Your classmate Janet tells you her father chews miraa from morning to night, has lost his job, and sometimes becomes violent. She is scared and doesn't know what to do. What should Janet do?" data-sw="Mwenzako Janet anakuambia baba yake anatafuna miraa asubuhi hadi usiku, amepoteza kazi, na wakati mwingine huwa mkali. Anaogopa na hajui la kufanya. Janet afanye nini?" data-sh="Classmate yako Janet anakuambia dad wake anachew miraa kutoka asubuhi hadi usiku, amepoteza job, na wakati mwingine anakuwa violent. Anaogopa na hajui kufanya nini. Janet afanye nini?"></p>
+  </div>
+  <div class="example-box">
+    <strong data-en="Model Answer:" data-sw="Jibu la Mfano:" data-sh="Model Answer:"></strong>
+    <span data-en="Janet should first ensure her own safety. She can talk to a trusted teacher, school counsellor or relative. She can call Childline 116 (free, confidential) for guidance. Her father needs professional help — NACADA (1192) can advise the family on accessing rehabilitation. Janet is not responsible for her father's choices but can seek help on his behalf." data-sw="Janet kwanza ahakikishe usalama wake. Anaweza kuzungumza na mwalimu anayemwamini, mshauri wa shule au ndugu. Anaweza kupiga simu Childline 116 (bila malipo, siri) kupata mwongozo. Baba yake anahitaji msaada wa kitaalamu — NACADA (1192) inaweza kushauri familia jinsi ya kupata ukarabati. Janet hana jukumu la maamuzi ya baba yake lakini anaweza kutafuta msaada kwa niaba yake." data-sh="Janet kwanza aensure safety yake. Anaweza kuzungumza na trusted teacher, school counsellor au relative. Anaweza kupiga Childline 116 (free, confidential) kupata guidance. Dad wake anahitaji professional help — NACADA (1192) inaweza advise family. Janet si responsible kwa dad's choices lakini anaweza tafuta help kwa behalf yake."></span>
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="slide-10">
+  <div class="slide-head">📝 <span data-en="Quiz — Miraa / Khat" data-sw="Jaribio — Miraa / Khat" data-sh="Quiz — Miraa / Khat"></span></div>
+  <div class="quiz-wrap">
+
+    <!-- PART A -->
+    <div class="qpart-title" data-en="Part A: Fill in the Blanks (5 marks)" data-sw="Sehemu A: Jaza Nafasi (alama 5)" data-sh="Part A: Jaza Blanks (marks 5)"></div>
+
+    <div class="fill-item">1. <span data-en="The main psychoactive chemical in fresh miraa is called" data-sw="Kemikali kuu ya kubadilisha akili katika miraa safi huitwa" data-sh="Kemikali kuu ya miraa fresh inaitwa"></span> <input class="fill-blank" id="f1" placeholder="..."> <span class="fb-result" id="fr1"></span>
+    </div>
+    <div class="fill-item">2. <span data-en="The World Health Organization (WHO) classifies miraa as a drug that can cause" data-sw="WHO inaainisha miraa kama dawa inayoweza kusababisha" data-sh="WHO inasema miraa inaweza cause"></span> <input class="fill-blank" id="f2" placeholder="..."> <span data-en="dependence." data-sw="utegemezi." data-sh="dependence."></span> <span class="fb-result" id="fr2"></span>
+    </div>
+    <div class="fill-item">3. <span data-en="Miraa effects begin within" data-sw="Athari za miraa huanza ndani ya dakika" data-sh="Effects za miraa zinaanza ndani ya minutes"></span> <input class="fill-blank" id="f3" placeholder="..." style="width:80px"> <span data-en="to 30 minutes of chewing." data-sw="hadi 30 za kutafuna." data-sh="hadi 30 za kuchew."></span> <span class="fb-result" id="fr3"></span>
+    </div>
+    <div class="fill-item">4. <span data-en="Long-term miraa chewing increases the risk of" data-sw="Kutafuna miraa kwa muda mrefu kunaongeza hatari ya" data-sh="Kuchew miraa kwa muda mrefu kunaongeza risk ya"></span> <input class="fill-blank" id="f4" placeholder="..."> <span data-en="cancer in the mouth." data-sw="saratani mdomoni." data-sh="saratani mdomoni."></span> <span class="fb-result" id="fr4"></span>
+    </div>
+    <div class="fill-item">5. <span data-en="The free Kenya drug helpline number operated by NACADA is" data-sw="Nambari ya bure ya simu ya dawa Kenya inayoendeshwa na NACADA ni" data-sh="NACADA free helpline number ni"></span> <input class="fill-blank" id="f5" placeholder="..."> <span class="fb-result" id="fr5"></span>
+    </div>
+
+    <!-- PART B -->
+    <div class="qpart-title" data-en="Part B: Short Answer (10 marks)" data-sw="Sehemu B: Jibu Fupi (alama 10)" data-sh="Part B: Short Answer (marks 10)"></div>
+
+    <div class="sa-item">
+      <p data-en="1. Explain THREE health consequences of long-term miraa chewing. (3 marks)" data-sw="1. Eleza ATHARI TATU za kiafya za kutafuna miraa kwa muda mrefu. (alama 3)" data-sh="1. Explain MATATU health consequences za kuchew miraa kwa muda mrefu. (marks 3)"></p>
+      <textarea class="sa-box" id="sa1" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa1','sf1','cfg1')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
+      <div class="sa-feedback" id="sf1"></div>
+    </div>
+
+    <div class="sa-item">
+      <p data-en="2. A friend says: 'Miraa is just a plant — it's natural and therefore safe.' How would you respond? (3 marks)" data-sw="2. Rafiki anasema: 'Miraa ni mmea tu — ni wa asili na kwa hiyo ni salama.' Ungejibu vipi? (alama 3)" data-sh="2. Rafiki anasema: 'Miraa ni plant tu — ni natural kwa hiyo ni safe.' Ungejibu vipi? (marks 3)"></p>
+      <textarea class="sa-box" id="sa2" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa2','sf2','cfg2')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
+      <div class="sa-feedback" id="sf2"></div>
+    </div>
+
+    <div class="sa-item">
+      <p data-en="3. Describe FOUR warning signs that someone may be dependent on miraa. (4 marks)" data-sw="3. Eleza ISHARA NNE za onyo kwamba mtu anaweza kutegemea miraa. (alama 4)" data-sh="3. Describe FOUR warning signs kwamba mtu anaweza kuwa dependent kwa miraa. (marks 4)"></p>
+      <textarea class="sa-box" id="sa3" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa3','sf3','cfg3')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
+      <div class="sa-feedback" id="sf3"></div>
+    </div>
+
+    <div class="submit-bar">
+      <button class="submit-btn" onclick="submitQuiz()"><span data-en="Submit Quiz" data-sw="Wasilisha Jaribio" data-sh="Submit Quiz">Submit Quiz</span></button>
+    </div>
+    <div class="score-box" id="score-box">
+      <h3 id="score-title"></h3>
+      <p id="score-detail"></p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<!-- NAV BAR -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>&#8592; <span data-en="Prev" data-sw="Nyuma" data-sh="Back"></span></button>
+  <div class="dot-nav" id="dot-nav"></div>
+  <button class="nav-btn" id="next-btn" onclick="changeSlide(1)"><span data-en="Next" data-sw="Mbele" data-sh="Next"></span> &#8594;</button>
+</div>
+
+<script>
+// ── STATE ──
+let currentSlide = 1;
+const TOTAL = 10;
+let lang = 'en';
+let visited = new Set([1]);
+let quizSubmitted = false;
+let partAScore = 0;
+
+// Fill-blank answers
+const FILL_ANSWERS = {
+  f1: ['cathinone','kathion'],
+  f2: ['psychological','psycho','kisaikolojia','mental'],
+  f3: ['15','dakika 15'],
+  f4: ['oral','mouth','mdomo'],
+  f5: ['1192']
+};
+
+// ── LANGUAGE ──
+function setLang(l) {
+  lang = l;
+  applyLang(l);
+  document.querySelectorAll('.lb-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ── FONT SIZE ──
+function setSize(s) {
+  document.body.style.fontSize = s === 'large' ? '17px' : '15px';
+  document.querySelectorAll('.lb-size-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ── SLIDE NAV ──
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById('slide-' + n).classList.add('active');
+  document.getElementById('slide-badge').textContent = n + ' / ' + TOTAL;
+  document.getElementById('prev-btn').disabled = n === 1;
+  document.getElementById('next-btn').disabled = n === TOTAL;
+  visited.add(n);
+  updateDots();
+  window.scrollTo(0, 0);
+}
+
+function changeSlide(d) {
+  const next = currentSlide + d;
+  if (next < 1 || next > TOTAL) return;
+  currentSlide = next;
+  showSlide(currentSlide);
+}
+
+function updateDots() {
+  const nav = document.getElementById('dot-nav');
+  nav.innerHTML = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === currentSlide ? ' active' : visited.has(i) && i !== currentSlide ? ' done' : '');
+    d.onclick = (function(n){ return function(){ currentSlide = n; showSlide(n); }; })(i);
+    nav.appendChild(d);
+  }
+}
+
+// ── FILL BLANK GRADING ──
+function checkFill(id, resultId) {
+  const val = document.getElementById(id).value.trim().toLowerCase();
+  const accepted = FILL_ANSWERS[id];
+  const ok = accepted.some(a => val.includes(a));
+  const el = document.getElementById(resultId);
+  el.textContent = ok ? '✓ Correct! (1 mark)' : '✗ Expected: ' + accepted[0];
+  el.className = 'fb-result ' + (ok ? 'ok' : 'no');
+  return ok ? 1 : 0;
+}
+
+// ── SHORT ANSWER GRADING ──
+const GRADE_CFGS = {
+  cfg1: {
+    keywords: ['heart','blood pressure','mental','psychosis','depression','oral','tooth','teeth','cancer','liver','malnutrition','weight','addiction','stroke','moyo','shinikizo','akili','meno','saratani','ini','uzito','uraibu'],
+    required: 3, marks: 3,
+    model: 'Three consequences: (1) Heart — chronic high blood pressure and stroke risk; (2) Mental health — depression, psychosis, paranoia; (3) Oral health — tooth decay, gum disease, oral cancer risk.'
+  },
+  cfg2: {
+    keywords: ['natural','chemical','cathinone','dopamine','dangerous','harmful','WHO','addictive','dependence','asili','kemikali','hatari','kudhuru','uraibu','utegemezi'],
+    required: 3, marks: 3,
+    model: 'Response: Being natural does not mean safe. Cathinone is a powerful chemical similar to amphetamine. Many natural substances are harmful. WHO classifies it as a drug causing psychological dependence. Long-term chewing causes serious health damage.'
+  },
+  cfg3: {
+    keywords: ['daily','every day','money','income','spend','family','irritable','depressed','concentrate','tolerance','more','lie','lying','work','hobbies','kila siku','pesa','familia','hasira','unyogovu','zaidi','kusimama','burudani'],
+    required: 4, marks: 4,
+    model: 'Four warning signs: (1) Chewing every day — cannot skip without feeling unwell; (2) Spending most income on miraa while family lacks basics; (3) Feeling irritable or depressed without miraa; (4) Needing more to get same effect (tolerance); (5) Giving up work or hobbies to chew more; (6) Lying to family about use.'
+  }
+};
+
+function gradeAnswer(saId, fbId, cfgKey) {
+  const cfg = GRADE_CFGS[cfgKey];
+  const ans = document.getElementById(saId).value.trim().toLowerCase();
+  if (!ans) { alert('Please write an answer first.'); return; }
+  const found = cfg.keywords.filter(k => ans.includes(k.toLowerCase()));
+  const missed = cfg.keywords.filter(k => !ans.includes(k.toLowerCase())).slice(0, 5);
+  const hitRate = Math.min(found.length / cfg.required, 1);
+  const marks = Math.round(hitRate * cfg.marks);
+  const cls = marks >= cfg.marks ? 'ok' : marks > 0 ? 'partial' : 'no';
+  const fb = document.getElementById(fbId);
+  fb.className = 'sa-feedback show ' + cls;
+  fb.innerHTML =
+    '<strong>' + marks + ' / ' + cfg.marks + ' marks</strong><br>' +
+    (found.length ? '<span class="kw-found">\u2713 Key points: ' + found.slice(0,6).join(', ') + '</span><br>' : '') +
+    (missed.length ? '<span class="kw-miss">\u2717 Missing: ' + missed.join(', ') + '</span><br>' : '') +
+    '<div class="model-ans"><strong>Model answer:</strong> ' + cfg.model + '</div>';
+}
+
+// ── SUBMIT QUIZ ──
+function submitQuiz() {
+  if (quizSubmitted) return;
+  partAScore = 0;
+  ['f1','f2','f3','f4','f5'].forEach(id => {
+    partAScore += checkFill(id, id.replace('f','fr'));
+  });
+  quizSubmitted = true;
+  const box = document.getElementById('score-box');
+  box.style.display = 'block';
+  document.getElementById('score-title').textContent = 'Part A Score: ' + partAScore + ' / 5';
+  document.getElementById('score-detail').textContent = 'Grade short answer questions above for full marks. Well done for completing the lesson!';
+  box.scrollIntoView({behavior:'smooth'});
+
+  // Report to ARISE LMS
+  if (window.ARISE_LESSON_ID) {
+    fetch('/arise/api/submit-score', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        lesson_id: window.ARISE_LESSON_ID,
+        score: partAScore,
+        total: 5,
+        percent: Math.round((partAScore/5)*100)
+      })
+    }).catch(()=>{});
+  }
+}
+
+// ── APPLY LANG ON LOAD ──
+function applyLang(l) {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const v = el.getAttribute('data-' + l) || el.getAttribute('data-en');
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = v;
+    } else if (el.tagName === 'BUTTON') {
+      return; // buttons use child spans
+    } else if (el.children.length === 0) {
+      el.textContent = v;
+    }
+  });
+}
+
+// ── INIT ──
+applyLang('en');
+updateDots();
+showSlide(1);
+</script>
+</body>
+</html>

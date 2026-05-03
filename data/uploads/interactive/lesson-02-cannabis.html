@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Effects of Cannabis | ARISE Health Education</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+
+/* ── TOP BAR ── */
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+
+/* ── LANG BAR ── */
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);font-size:.8rem;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;white-space:nowrap;}
+
+/* ── SLIDES ── */
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── CONTENT BLOCKS ── */
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+
+/* Content boxes */
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+
+/* Sheng box */
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.sheng-box .sheng-trans{color:rgba(255,255,255,.45);font-size:.75rem;font-style:italic;margin-top:4px;}
+
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+
+/* VIDEO SLOT */
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.video-placeholder p{color:rgba(255,255,255,.65);font-size:.85rem;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+
+/* SCENARIO */
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+
+/* JOURNAL */
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;}
+
+/* QUIZ */
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.q-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.q-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:9px;line-height:1.55;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;min-width:120px;font-size:.88rem;padding:2px 6px;outline:none;text-align:center;color:var(--dark);font-family:inherit;}
+.fill-blank.correct{border-bottom:2px solid var(--ok);background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 8px;}
+.fill-blank.wrong{border-bottom:2px solid var(--no);background:#ffebee;color:#b71c1c;border-radius:4px;padding:2px 8px;}
+.fb-box{background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.8rem;display:none;line-height:1.65;}
+.kf{color:var(--ok);font-weight:700;}
+.km{color:var(--no);font-weight:700;}
+.sa-area{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.85rem;min-height:70px;resize:vertical;font-family:inherit;color:var(--dark);}
+.sa-area:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
+.grade-btn:hover{background:var(--pri-l);}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-box.fail{background:linear-gradient(135deg,#bf360c,#e64a19);color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.cert-btn{display:inline-block;background:#fff;color:var(--pri);padding:10px 28px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:4px;}
+.retry-box{background:#fff3e0;border:2px solid var(--acc);border-radius:var(--radius);padding:16px;text-align:center;margin-top:12px;display:none;}
+.retry-box p{font-size:.88rem;color:#6b4a00;margin-bottom:10px;}
+
+/* NAV BAR */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+
+/* EN/SW toggle */
+.en{display:block;} .sw{display:none;}
+.en-inline{display:inline;} .sw-inline{display:none;}
+
+@media(max-width:600px){
+  .top-bar-left .lesson-name{font-size:.82rem;}
+  .slide{padding:13px 12px 8px;}
+  .info-table{font-size:.76rem;}
+  .nav-btn{padding:8px 14px;font-size:.78rem;}
+}
+</style>
+</head>
+<body data-lesson-id="0" data-lesson-slug="effects-of-cannabis" data-module-slug="drug-abuse">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE · Mental Health &amp; Drugs · Lesson 2 of 5</div>
+    <div class="lesson-name">🌿 Effects of Cannabis (Bhang) on the Body</div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">🌍</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')" title="Sheng">SH</button>
+    <span class="lb-sep">|</span>
+    <span class="lb-label">🔡</span>
+    <button class="lb-size-btn" id="sz-sm" onclick="setSize('sm')">A−</button>
+    <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+    <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    <a href="/arise/?p=resources" class="lb-help">🆘 Msaada / Help</a>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- ═══ SLIDE 1 — LEARNING OUTCOMES ═══ -->
+<div class="slide active">
+<div class="lo-box">
+  <h3>
+    <span class="en">📋 Learning Outcomes — By the end of this lesson:</span>
+    <span class="sw">📋 Matokeo ya Kujifunza — Mwishoni mwa somo hili:</span>
+    <span class="sh">📋 Utajua Nini — Lesson hii ikisha:</span>
+  </h3>
+  <ol>
+    <li>
+      <span class="en">Explain what cannabis is and how THC affects the brain</span>
+      <span class="sw">Eleza cannabis ni nini na jinsi THC inavyoathiri ubongo</span>
+      <span class="sh">Jua bangi ni gani na THC inafanya ubongo nini</span>
+    </li>
+    <li>
+      <span class="en">Identify the short-term and long-term effects on the body and mind</span>
+      <span class="sw">Tambua athari za muda mfupi na mrefu kwa mwili na akili</span>
+      <span class="sh">Jua effects za sasa na za baadaye — kwa body na kwa akili</span>
+    </li>
+    <li>
+      <span class="en">Explain why adolescents are especially at risk from cannabis use</span>
+      <span class="sw">Eleza kwa nini vijana wako katika hatari zaidi</span>
+      <span class="sh">Eleza kwa nini watoto wa shule wako kwa hatari zaidi kuliko mzee</span>
+    </li>
+    <li>
+      <span class="en">Confidently refuse cannabis using evidence-based arguments</span>
+      <span class="sw">Kataa bangi kwa ujasiri ukitumia hoja za kisayansi</span>
+      <span class="sh">Weza kudeny bangi bila kuonekana uko scared</span>
+    </li>
+    <li>
+      <span class="en">Know where to get help if you or someone you know is struggling</span>
+      <span class="sw">Jua wapi kupata msaada wewe au mtu unayemjua akihitaji</span>
+      <span class="sh">Jua mahali pa kupata help ukihitaji au mangi wako na shida</span>
+    </li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>🔍 Big Question:</strong> Cannabis comes from a plant — so people say it's "natural" and "safe." But does natural mean harmless? What does science actually say — especially for a brain that's still developing?</span>
+    <span class="sw"><strong>🔍 Swali Kubwa:</strong> Bangi inatoka kwa mmea — kwa hivyo watu husema ni "asili" na "salama." Lakini je, asili inamaanisha haina madhara? Sayansi inasema nini — hasa kwa ubongo unaoendelea kukua?</span>
+    <span class="sh"><strong>🔍 The Big Question:</strong> Bangi inatoka kwa mmea — so mangi husema ni natural na haina shida. Lakini natural inamaanisha salama? Science inasema nini — hasa kwa ubongo ya mtoto wa shule ambayo bado inakuwa?</span>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 2 — WHAT IS CANNABIS ═══ -->
+<div class="slide">
+<div class="slide-head">🌿
+  <span class="en">What is Cannabis? The Street Names &amp; the Science</span>
+  <span class="sw">Cannabis ni Nini? Majina ya Mtaani na Sayansi</span>
+  <span class="sh">Bangi ni Nini? Street Names na Science</span>
+</div>
+
+<p class="tp">
+  <span class="en">Cannabis sativa is a plant containing over 100 active compounds called cannabinoids. It is known by many names across Kenya.</span>
+  <span class="sw">Cannabis sativa ni mmea wenye zaidi ya kemikali 100 zinazoitwa cannabinoids. Inajulikana kwa majina mengi kote Kenya.</span>
+  <span class="sh">Cannabis sativa ni mmea ina chemicals zaidi ya 100 zinazoitwa cannabinoids. Kama unavyojua, ina jina nyingi.</span>
+</p>
+
+<div class="sheng-box">
+  <div class="sheng-head">🗣️ Street Names Unajua</div>
+  <span class="en" style="display:block;">Bhang · Bangi · Weed · Ganja · Grass · Mary Jane · Reefer · Kush · Sheng: <em>"Tumbwe" · "Nyama choma" (slang in some areas) · "Kijani"</em></span>
+  <span class="sw" style="display:block;">Bhang · Bangi · Weed · Ganja · Majani · Kijani — majina mengi, athari moja</span>
+  <span class="sh" style="display:block;">Tumbwe · Bangi · Kijani · Nyama · Weed · Grass — majina mengi, effect moja tu</span>
+  <div class="sheng-trans">
+    <span class="en">Many names, one substance, one set of risks.</span>
+    <span class="sw">Majina mengi, dutu moja, hatari moja.</span>
+    <span class="sh">Whatever unaitwa — story ni moja.</span>
+  </div>
+</div>
+
+<div class="key-term">
+  <strong>
+    <span class="en">🔑 THC (Tetrahydrocannabinol) — The Psychoactive Compound</span>
+    <span class="sw">🔑 THC — Kemikali Inayobadilisha Akili</span>
+    <span class="sh">🔑 THC — Kitu Kinachodunda Ubongo</span>
+  </strong>
+  <span class="en">THC is the chemical in cannabis that causes the "high" — altered perception, euphoria, and paranoia. It binds to cannabinoid receptors in the brain, particularly in areas controlling memory, coordination, and reward.</span>
+  <span class="sw">THC ni kemikali katika bangi inayosababisha "high" — mabadiliko ya mtazamo, furaha ya bandia, na wasiwasi. Inaunganika na vipokezi vya cannabinoid kwenye ubongo, hasa maeneo yanayodhibiti kumbukumbu na malipo.</span>
+  <span class="sh">THC ndiyo kitu kinachokufanya "fly" — ubongo inabadilika, unaona vitu tofauti, unafeel high. Inakaa kwa receptors za ubongo — hasa sehemu ya kumbukumbu na reward.</span>
+</div>
+
+<div class="key-term">
+  <strong>
+    <span class="en">🔑 CBD (Cannabidiol) — The Non-Psychoactive Compound</span>
+    <span class="sw">🔑 CBD — Kemikali Isiyobadilisha Akili</span>
+    <span class="sh">🔑 CBD — Hii Haikudund Ubongo</span>
+  </strong>
+  <span class="en">CBD does NOT cause a high. It has limited medical uses (e.g. certain epilepsy conditions) under strict prescription — but ONLY in pharmaceutical-grade form, not street cannabis which contains dangerous levels of THC.</span>
+  <span class="sw">CBD HAISABABISHI high. Ina matumizi kidogo ya kimatibabu chini ya dawa — lakini si kwa bangi ya mtaani ambayo ina THC nyingi za hatari.</span>
+  <span class="sh">CBD haikufanya high. Ina uses kidogo za dawa — lakini bangi ya mtaani si CBD. Bangi ya street ina THC mob sana.</span>
+</div>
+
+<div class="warn-box">
+  <strong>
+    <span class="en">⚠️ Illegal in Kenya:</span>
+    <span class="sw">⚠️ Haramu nchini Kenya:</span>
+    <span class="sh">⚠️ Haramu Kenya:</span>
+  </strong>
+  <span class="en"> Cannabis is a Class B controlled substance under Kenya's Narcotic Drugs and Psychotropic Substances Act Cap 245. Possession can lead to arrest and imprisonment. There are no legal cannabis dispensaries in Kenya.</span>
+  <span class="sw"> Bangi ni dawa iliyopigwa marufuku chini ya Sheria ya Dawa za Kulevya Cap 245. Umiliki unaweza kusababisha kukamatwa na kufungwa.</span>
+  <span class="sh"> Bangi ni haramu. Ukipatikana nayo Kenya unaweza kukaliwa ndani. Hakuna duka lolote la bangi legal Kenya.</span>
+</div>
+</div>
+
+<!-- ═══ SLIDE 3 — SHORT-TERM EFFECTS ═══ -->
+<div class="slide">
+<div class="slide-head">⚡
+  <span class="en">Short-Term Effects — What Happens Right Now</span>
+  <span class="sw">Athari za Muda Mfupi — Kinachotokea Sasa Hivi</span>
+  <span class="sh">Effects za Sasa — Kinachotokea Ukidunda</span>
+</div>
+
+<p class="tp">
+  <span class="en">THC reaches the brain within minutes of smoking. The effects last 1–4 hours but the decision-making impairment lasts much longer than the "high" feeling.</span>
+  <span class="sw">THC inafika ubongoni ndani ya dakika chache. Athari hudumu masaa 1–4 lakini udhaifu wa kufanya maamuzi hudumu muda mrefu zaidi.</span>
+  <span class="sh">THC inafika kwa ubongo haraka sana. Effects inadum masaa 1–4 — lakini akili bado imesimama hata high ikiisha.</span>
+</p>
+
+<table class="info-table">
+  <tr>
+    <th><span class="en">Effect</span><span class="sw">Athari</span><span class="sh">Kinachotokea</span></th>
+    <th><span class="en">What it feels like</span><span class="sw">Hisia</span><span class="sh">Unahisi nini</span></th>
+    <th><span class="en">The real risk</span><span class="sw">Hatari halisi</span><span class="sh">Hatari gani</span></th>
+  </tr>
+  <tr>
+    <td><span class="en">Euphoria</span><span class="sw">Furaha bandia</span><span class="sh">Kuhisi poa sana</span></td>
+    <td><span class="en">Happy, relaxed, giggling</span><span class="sw">Furaha, utulivu, kicheko</span><span class="sh">Uko on top of the world</span></td>
+    <td><span class="en">Creates craving — the brain wants it again</span><span class="sw">Hamu ya kutumia tena</span><span class="sh">Ubongo inataka tena na tena</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">Memory impairment</span><span class="sw">Kumbukumbu dhaifu</span><span class="sh">Kumbukumbu imekwama</span></td>
+    <td><span class="en">Cannot remember what you did hours ago</span><span class="sw">Husikumbuki ulichofanya</span><span class="sh">Usiku wote umepotea</span></td>
+    <td><span class="en">Destroys exam preparation entirely</span><span class="sw">Inabomoa maandalizi ya mtihani</span><span class="sh">KCSE unaenda chini kabisa</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">Slowed reactions</span><span class="sw">Mwendo wa polepole</span><span class="sh">Ubongo slow motion</span></td>
+    <td><span class="en">Everything feels in slow motion</span><span class="sw">Kila kitu kinaonekana polepole</span><span class="sh">Kama life iko slow-mo</span></td>
+    <td><span class="en">2× road accident risk; cannot operate machinery</span><span class="sw">Hatari mara 2 kwa ajali</span><span class="sh">Boda boda + bangi = coffin</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">Anxiety &amp; paranoia</span><span class="sw">Wasiwasi na hofu</span><span class="sh">Paranoia</span></td>
+    <td><span class="en">Intense fear, racing thoughts, panic</span><span class="sw">Hofu kali, mawazo mengi, wasiwasi</span><span class="sh">Unadhani kila mtu anakutazama</span></td>
+    <td><span class="en">Triggers psychosis in vulnerable users</span><span class="sw">Inaweza kusababisha ugonjwa wa akili</span><span class="sh">Inaweza kufungua madness kwa baadhi ya watu</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">Red eyes, dry mouth</span><span class="sw">Macho mekundu, mdomo kavu</span><span class="sh">Macho mekundu, koo kavu</span></td>
+    <td><span class="en">Blood vessels in eyes dilate</span><span class="sw">Mishipa ya damu kwenye jicho inafunguka</span><span class="sh">Macho yako inasema kila kitu</span></td>
+    <td><span class="en">Immediately obvious to teachers and parents</span><span class="sw">Mwalimu na wazazi wanaona haraka</span><span class="sh">Mwalimu anajua immediately — cannot hide</span></td>
+  </tr>
+</table>
+
+<div class="sheng-box">
+  <div class="sheng-head">💬 Ukweli wa Mtaani</div>
+  <span class="en" style="display:block;">"I only smoke on weekends so it doesn't affect school" — This is false. THC stays in the brain for 28+ days after use. Every Monday, Omondi's hippocampus (memory centre) is still impaired from Friday's session.</span>
+  <span class="sw" style="display:block;">"Navuta wikendi tu — haiaathiri shule" — Hii ni uongo. THC inakaa ubongoni kwa siku 28+. Kila Jumatatu, kumbukumbu ya Omondi bado imekuwa dhaifu.</span>
+  <span class="sh" style="display:block;">"Navuta Friday tu — Monday niko sawa" — Uongo mkubwa. THC inakaa kwa ubongo kwa wiki 4. Monday ya KCSE notes, ubongo yako bado iko na bangi ya Friday. Hakuna shortcut.</span>
+</div>
+</div>
+
+<!-- ═══ SLIDE 4 — BRAIN DEVELOPMENT ═══ -->
+<div class="slide">
+<div class="slide-head">🧠
+  <span class="en">Why Teens Are in More Danger Than Adults</span>
+  <span class="sw">Kwa Nini Vijana Wako Katika Hatari Zaidi</span>
+  <span class="sh">Kwa Nini Sisi Tuko Hatarini Zaidi Kuliko Wazee</span>
+</div>
+
+<p class="tp">
+  <span class="en">This is the most important fact in this entire lesson: <strong>your brain is not fully developed until age 25.</strong> Cannabis permanently damages a brain that is still developing in ways it does NOT damage a mature adult brain.</span>
+  <span class="sw">Hii ndiyo ukweli muhimu zaidi katika somo hili lote: <strong>ubongo wako haujakamilika hadi umri wa miaka 25.</strong> Bangi inaharibu ubongo unaokua kwa njia ambayo haiharibu ubongo wa mtu mzima.</span>
+  <span class="sh">Hii ndiyo the most important thing katika lesson yote: <strong>ubongo yako haijafika 100% hadi una miaka 25.</strong> Bangi inaharibu ubongo inayokua kwa njia tofauti kabisa na mzee.</span>
+</p>
+
+<div class="warn-box">
+  <strong>
+    <span class="en">⚠️ The Prefrontal Cortex — What's Still Being Built</span>
+    <span class="sw">⚠️ Sehemu ya Ubongo Inayoendelea Kukua</span>
+    <span class="sh">⚠️ Sehemu ya Ubongo Bado Inabuildiwa</span>
+  </strong><br>
+  <span class="en">The prefrontal cortex controls: judgment, decision-making, impulse control, memory, and emotional regulation. THC disrupts the development of this exact region. The damage is <em>permanent</em> — the brain cannot repair it later.</span>
+  <span class="sw">Prefrontal cortex inadhibiti: hukumu, kufanya maamuzi, kudhibiti msukumo, kumbukumbu, na udhibiti wa hisia. THC inazuia ukuaji wa sehemu hii hasa. Uharibifu ni wa <em>kudumu</em> — ubongo hauwezi kujitengeneza baadaye.</span>
+  <span class="sh">Prefrontal cortex inadhibiti: maamuzi, kumbukumbu, kudhibiti anger yako, emotions. THC inakatakata development ya sehemu hii. Na damage ni ya <em>maisha yote</em> — hailipiki.</span>
+</div>
+
+<table class="info-table">
+  <tr>
+    <th><span class="en">Who starts &amp; when</span><span class="sw">Anapoanza</span><span class="sh">Anaanza lini</span></th>
+    <th><span class="en">Addiction risk</span><span class="sw">Hatari ya utegemezi</span><span class="sh">Hatari ya ku-hooked</span></th>
+    <th><span class="en">Long-term brain damage</span><span class="sw">Uharibifu wa kudumu</span><span class="sh">Damage ya maisha</span></th>
+  </tr>
+  <tr><td><span class="en">Starts under 18</span><span class="sw">Anaanza chini ya 18</span><span class="sh">Anaanza primary/sec</span></td><td><span class="en"><strong>1 in 6 (17%)</strong></span><span class="sw"><strong>1 kati ya 6 (17%)</strong></span><span class="sh"><strong>1 kati ya 6 (17%)</strong></span></td><td><span class="en">Permanent IQ reduction up to 8 points, memory deficits</span><span class="sw">Kupungua kwa akili hadi pointi 8 za IQ, upungufu wa kumbukumbu</span><span class="sh">IQ inashuka pointi 8 permanently, kumbukumbu imekwenda</span></td></tr>
+  <tr><td><span class="en">Starts at 25+</span><span class="sw">Anaanza baada ya 25</span><span class="sh">Anaanza ana miaka 25+</span></td><td><span class="en">1 in 11 (9%)</span><span class="sw">1 kati ya 11 (9%)</span><span class="sh">1 kati ya 11 (9%)</span></td><td><span class="en">Less permanent damage — brain fully formed</span><span class="sw">Uharibifu mdogo — ubongo umekamilika</span><span class="sh">Damage kidogo — ubongo ilikuwa tayari complete</span></td></tr>
+  <tr><td><span class="en">Daily use (any age)</span><span class="sw">Matumizi ya kila siku</span><span class="sh">Kila siku</span></td><td><span class="en"><strong>1 in 2 (50%)</strong></span><span class="sw"><strong>1 kati ya 2 (50%)</strong></span><span class="sh"><strong>Kila mtu wa pili (50%)</strong></span></td><td><span class="en">Severe — cognitive function significantly impaired</span><span class="sw">Kali — utendaji wa akili unapungua sana</span><span class="sh">Kabisa — ubongo haikufanya kazi vizuri</span></td></tr>
+</table>
+
+<div class="example-box">
+  <strong>🇰🇪
+    <span class="en">Baraka's Story, Nairobi Eastleigh:</span>
+    <span class="sw">Hadithi ya Baraka, Eastleigh Nairobi:</span>
+    <span class="sh">Story ya Baraka, Eastleigh:</span>
+  </strong>
+  <span class="en">Started smoking bhang at Form 2 "to deal with stress before exams." By Form 4, he couldn't sit through a single lesson without drifting. Failed KCSE with a D. His four closest friends who didn't smoke all got C+ and above. "The worst part," he says, "is I studied harder than them. I just couldn't retain anything. It was like pouring water into a broken cup."</span>
+  <span class="sw">Alianza kuvuta bangi Darasa la 2 "kushughulikia msongo wa mawazo kabla ya mitihani." Kufikia Darasa la 4, hakuweza kukaa darasa mzima bila kupotea. Alishindwa KCSE na D. Marafiki wake wanne waliocheza bila kuvuta walipata C+ na zaidi. "Sehemu mbaya zaidi," anasema, "ni kwamba nilijifunza kwa bidii zaidi yao. Sikuweza kuhifadhi kitu chochote. Ilikuwa kama kumimina maji kwenye kikombe kilichovunjika."</span>
+  <span class="sh">Alianza ku-smoke bangi Form 2 "kushughulikia stress ya exams." Form 4, hakuweza kukaa lesson moja bila akili yake ikaenda. KCSE — D minus. Marafiki wake wanne hawakuvuta — wote wakapata C+ na zaidi. "Mbaya zaidi," anasema, "nilijisoma zaidi kuliko wao. Lakini sikuweza retain anything. Ilikuwa kama mimina maji kwa chombo kilichopasuka."</span>
+</div>
+</div>
+
+<!-- ═══ SLIDE 5 — MENTAL HEALTH & PSYCHOSIS ═══ -->
+<div class="slide">
+<div class="slide-head">🔴
+  <span class="en">Cannabis and Mental Health — The Hidden Risk</span>
+  <span class="sw">Bangi na Afya ya Akili — Hatari Iliyofichwa</span>
+  <span class="sh">Bangi na Mental Health — Hatari Ambayo Watu Hawasemi</span>
+</div>
+
+<p class="tp">
+  <span class="en">Most people only think about the physical effects of cannabis. The mental health risks are less talked about — but for some people, they are catastrophic.</span>
+  <span class="sw">Watu wengi wanafikiri tu kuhusu athari za kimwili za bangi. Hatari za afya ya akili hazizungumzwi sana — lakini kwa baadhi ya watu, zinaweza kuwa mbaya kabisa.</span>
+  <span class="sh">Watu wanazungumza macho mekundu na kumbukumbu mbaya. Lakini hakuna anayekuambia kuhusu mental health — na hii ndiyo hatari kubwa zaidi.</span>
+</p>
+
+<div class="key-term">
+  <strong>
+    <span class="en">🔑 Cannabis-Induced Psychosis:</span>
+    <span class="sw">🔑 Psychosis Inayosababishwa na Bangi:</span>
+    <span class="sh">🔑 Bangi-Induced Madness:</span>
+  </strong>
+  <span class="en">A serious mental health condition triggered by cannabis use — symptoms include hearing voices, paranoid delusions (strong false beliefs), disorganised thinking, and loss of contact with reality. Can occur after just a few uses in genetically vulnerable individuals. Can become <strong>permanent schizophrenia.</strong></span>
+  <span class="sw">Hali mbaya ya afya ya akili inayosababishwa na bangi — dalili ni kusikia sauti, imani za uongo, mawazo yasiyopangwa, na kupoteza uhalisia. Inaweza kutokea baada ya matumizi machache tu kwa watu wanaohusika kwa urithi. Inaweza kuwa <strong>schizophrenia ya kudumu.</strong></span>
+  <span class="sh">Ugonjwa wa akili unaosababishwa na bangi — unasikia voices, unadhani mambo ya uongo, mawazo yako yanapotea. Inaweza kutokea kwa mtu baada ya ku-smoke mara chache tu — kama DNA yake iko hivyo. Inaweza kuwa <strong>madness ya maisha yote.</strong></span>
+</div>
+
+<div class="warn-box">
+  <strong>
+    <span class="en">⚠️ You cannot know in advance if you are genetically vulnerable.</span>
+    <span class="sw">⚠️ Huwezi kujua mapema kama uko katika hatari ya urithi.</span>
+    <span class="sh">⚠️ Huwezi kujua kama uko kwa hatari — hadi inakupata.</span>
+  </strong>
+  <span class="en"> Family history of mental illness increases risk significantly. But psychosis can also occur in people with no family history. The risk is real and it is irreversible.</span>
+  <span class="sw"> Historia ya familia ya ugonjwa wa akili huongeza hatari sana. Lakini psychosis inaweza pia kutokea kwa watu wasio na historia ya familia. Hatari ni ya kweli na haiwezi kugeuzwa.</span>
+  <span class="sh"> Kama family yako ina history ya mental illness, uko hatarini zaidi. Lakini hata kama hawana — inaweza ikupata. Na hailipiki.</span>
+</div>
+
+<div class="example-box">
+  <strong>🇰🇪
+    <span class="en">Zawadi's Story, Kisumu:</span>
+    <span class="sw">Hadithi ya Zawadi, Kisumu:</span>
+    <span class="sh">Story ya Zawadi, Kisumu:</span>
+  </strong>
+  <span class="en">Started smoking bhang at 14 with school friends "just for fun." At 20, she was admitted to Mathare Hospital hearing voices telling her to hurt herself. Diagnosed with cannabis-induced psychosis. Her family spent their entire savings on treatment. She is now 24 and on permanent medication. "I was told it was harmless. The person who told me that is fine. I am not."</span>
+  <span class="sw">Alianza kuvuta bangi akiwa na miaka 14 na marafiki wa shule "kwa burudani tu." Akiwa na miaka 20, alilazwa Hospitali ya Mathare akisikia sauti zikimwambia ajidhuru. Alipata psychosis ya bangi. Familia yake ilitumia akiba yote kwa matibabu. Sasa ana miaka 24 na dawa za kudumu. "Nilikuwa naambiwa haina madhara. Yule aliyenisema bado yuko sawa. Mimi siko."</span>
+  <span class="sh">Alianza ku-smoke bangi ana miaka 14 na marafiki wa shule "just for fun." Akiwa na miaka 20, alilazwa Mathare Hospital — alikuwa akisikia voices. Diagnosed na cannabis psychosis. Family yake ilitumia savings yote kwa treatment. Sasa ana miaka 24 na dawa za maisha yote. "Waliambia haina shida. Yule aliyeniambia bado yuko sawa. Mimi siko."</span>
+</div>
+
+<div class="tip-box">
+  <strong>
+    <span class="en">💡 Cannabis smoke = 3× more tar than cigarettes.</span>
+    <span class="sw">💡 Moshi wa bangi = lami mara 3 zaidi ya sigara.</span>
+    <span class="sh">💡 Moshi wa bangi = tar mara 3 zaidi ya sigara.</span>
+  </strong>
+  <span class="en"> Most people think cannabis is safer than cigarettes because it is "natural." In fact cannabis smoke contains 3× more tar and 5× more carbon monoxide per puff — making it more damaging to lungs than cigarettes.</span>
+  <span class="sw"> Watu wengi wanadhani bangi ni salama zaidi kuliko sigara kwa sababu ni "asili." Kwa kweli moshi wa bangi una lami mara 3 zaidi na monoksidi kaboni mara 5 zaidi kwa pumzi — inafanya mapafu zaidi kuliko sigara.</span>
+  <span class="sh"> Mangi wanadhani bangi ni safer kuliko sigara. Ukweli — kila puff ya bangi ina tar mara 3 zaidi na carbon monoxide mara 5 zaidi. Mapafu yako yanachomeka zaidi kuliko unajua.</span>
+</div>
+</div>
+
+<!-- ═══ SLIDE 6 — VIDEO ═══ -->
+<div class="slide">
+<div class="slide-head">🎬
+  <span class="en">Watch: What Cannabis Actually Does to the Brain</span>
+  <span class="sw">Tazama: Bangi Inafanya Nini Ubongoni</span>
+  <span class="sh">Watch Hii: Bangi Inafanya Nini Kwa Ubongo</span>
+</div>
+
+<p class="tp" style="margin-bottom:12px;">
+  <span class="en">You've covered the science. This video shows what it looks like in real people — and real brains. Pay attention to what happens to the prefrontal cortex.</span>
+  <span class="sw">Umeshughulikia sayansi. Video hii inaonyesha kinachotokea kwa watu halisi — na ubongo halisi. Angalia kinachotokea kwa prefrontal cortex.</span>
+  <span class="sh">Umesoma science. Sasa watch real people na real brains. Watch sehemu ya prefrontal cortex inayofanywa nini.</span>
+</p>
+
+<div class="video-slot">
+  <video id="lessonVideo" controls preload="metadata" style="display:none;"></video>
+  <div class="video-placeholder" id="videoPlaceholder">
+    <div class="play-icon">🎬</div>
+    <p style="color:rgba(255,255,255,.8);font-size:.9rem;font-weight:600;">
+      <span class="en">Effects of Cannabis — Module Video</span>
+      <span class="sw">Athari za Bangi — Video ya Moduli</span>
+      <span class="sh">Bangi Effects — Module Video</span>
+    </p>
+    <p style="margin-top:6px;">
+      <span class="en">Video will appear here once your teacher uploads it.</span>
+      <span class="sw">Video itaonekana hapa mwalimu wako akiipakia.</span>
+      <span class="sh">Video itakuwa hapa teacher akiupload.</span>
+    </p>
+    <span class="upload-note">📁 /uploads/media/lesson-02-cannabis.mp4</span>
+  </div>
+  <div class="video-caption">
+    <span class="en">ARISE Health Education · Mental Health &amp; Drugs · Lesson 2</span>
+    <span class="sw">Elimu ya Afya ya ARISE · Afya ya Akili &amp; Dawa · Somo la 2</span>
+    <span class="sh">ARISE · Mental Health &amp; Drugs · Lesson 2</span>
+  </div>
+</div>
+
+<div class="key-term" style="margin-top:14px;">
+  <strong>
+    <span class="en">🔑 While watching, look for:</span>
+    <span class="sw">🔑 Unapotazama, angalia:</span>
+    <span class="sh">🔑 Unatazama, angalia:</span>
+  </strong>
+  <ul class="bl" style="margin-top:6px;">
+    <li><span class="en">How quickly THC reaches the brain after inhalation</span><span class="sw">Jinsi THC inavyofika ubongoni haraka baada ya kuvuta</span><span class="sh">Jinsi THC inavyofika ubongo haraka ukivuta</span></li>
+    <li><span class="en">The difference between a cannabis user's brain and a non-user's brain scan</span><span class="sw">Tofauti kati ya ubongo wa mvutaji na asiyevuta</span><span class="sh">Tofauti ya brain scan ya mvutaji na asiyevuta</span></li>
+    <li><span class="en">Why young brains show more damage than older brains</span><span class="sw">Kwa nini ubongo wa vijana unaonyesha uharibifu zaidi</span><span class="sh">Kwa nini ubongo ya kijana inaharibiwa zaidi kuliko ya mzee</span></li>
+  </ul>
+</div>
+</div>
+
+<!-- ═══ SLIDE 7 — SCENARIO ROLE-PLAY ═══ -->
+<div class="slide">
+<div class="slide-head">🎭
+  <span class="en">Real Talk — What Would You Do?</span>
+  <span class="sw">Mazungumzo ya Kweli — Ungefanya Nini?</span>
+  <span class="sh">Real Talk — Wewe Ungefanya Nini?</span>
+</div>
+
+<p class="tp">
+  <span class="en">These are situations that actually happen. No wrong answers for thinking — but there ARE better and worse choices. Pick what you'd do and see what happens.</span>
+  <span class="sw">Hizi ni hali zinazotokea kweli kweli. Hakuna jibu baya la kufikiria — lakini KUNA chaguzi bora na mbaya. Chagua ungependa kufanya na uone kinachotokea.</span>
+  <span class="sh">Hizi situations zinatokea kweli. Hakuna jibu baya — lakini kuna choices better na worse. Chagua yako uone kinachotokea.</span>
+</p>
+
+<!-- Scenario 1 -->
+<div class="scenario-wrap" id="sc1">
+  <div class="scenario-ctx">
+    <span class="en">📍 It's a Friday evening after school. Jayden (Form 3, Kibera) is with his boys near the stage. An older guy — maybe 20 — rolls up and offers a joint. "Ongea na sisi boss, relax kidogo kabla weekend." Two of Jayden's friends lean in.</span>
+    <span class="sw">📍 Ni jioni ya Ijumaa baada ya shule. Jayden (Darasa la 3, Kibera) yuko na marafiki wake karibu na stendi. Mvulana mkubwa — labda miaka 20 — anakuja akimpa kijiti. "Ongea na sisi boss, relax kidogo kabla weekend." Marafiki wawili wa Jayden wanaelekea.</span>
+    <span class="sh">📍 Friday jioni baada ya shule. Jayden (Form 3, Kibera) yuko na mangi wake karibu na stage. Kijana mkubwa — labda 20 — anakuja akimpa joint. "Ongea na sisi boss, relax kidogo kabla weekend." Marafiki wawili wa Jayden wanaelekea.</span>
+  </div>
+  <div class="scenario-q">
+    <span class="en">What does Jayden do?</span>
+    <span class="sw">Jayden anafanya nini?</span>
+    <span class="sh">Jayden afanye nini?</span>
+  </div>
+  <div class="choices">
+    <button class="choice" onclick="scPick(this,'sc1','bad','sc1r1')">
+      <span class="en">A) Takes it — his friends are already joining and he doesn't want to look scared</span>
+      <span class="sw">A) Anachukua — marafiki wake wanajiunga na hataki kuonekana mwoga</span>
+      <span class="sh">A) Anachukua — mangi wake wanajoin na hataki kuonekana scared</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc1','ok','sc1r2')">
+      <span class="en">B) Says nothing, steps back slightly, pretends to get a phone call and walks away</span>
+      <span class="sw">A) Hakusema chochote, anasogea nyuma kidogo, anafanya kama ana simu na kutoka</span>
+      <span class="sh">B) Hakusema kitu, anarudi nyuma, anafanya kama ana simu na kutoka polepole</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc1','good','sc1r3')">
+      <span class="en">C) Looks him in the eye and says "Niko sawa boss, si yangu" and steps aside — no explanation needed</span>
+      <span class="sw">C) Anamtazama machoni na kusema "Niko sawa boss, si yangu" na anasogea pembeni — bila maelezo</span>
+      <span class="sh">C) Anamtazama machoni: "Niko sawa boss, si yangu" — anaondoka bila explanation</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc1','ok','sc1r4')">
+      <span class="en">D) Says no, but stays with the group watching his friends smoke</span>
+      <span class="sw">D) Anakataa, lakini anakaa na kikundi akiwaangalia marafiki wake wavuta</span>
+      <span class="sh">D) Anasema hapana lakini anakaa anawaangalia mangi wake wakivuta</span>
+    </button>
+  </div>
+  <div class="s-result bad" id="sc1r1">
+    <span class="en">❌ <strong>Consequence:</strong> Jayden just took his first step into addiction. The older guy is a dealer building a customer. THC will reach his brain in 7 seconds. His friends' approval lasts one evening. The damage to his prefrontal cortex starts immediately and compounds with every subsequent use. Baraka from Eastleigh made this exact choice in Form 2.</span>
+    <span class="sw">❌ <strong>Matokeo:</strong> Jayden amechukua hatua yake ya kwanza kwenye utegemezi. Yule mvulana mkubwa ni muuzaji anayejenga mteja. THC itafika ubongoni ndani ya sekunde 7. Idhini ya marafiki wake inadumu usiku mmoja. Uharibifu wa prefrontal cortex wake unaanza mara moja.</span>
+    <span class="sh">❌ <strong>Matokeo:</strong> Jayden amefanya step ya kwanza kuelekea addiction. Yule kijana mkubwa ni dealer — anajenga customer mpya. THC itafika ubongo yake kwa sekunde 7. Marafiki wanacheka usiku mmoja. Ubongo inaumia na hailipiki.</span>
+    <button class="retry-btn" onclick="scRetry('sc1')">
+      <span class="en">↩ Try Again</span><span class="sw">↩ Jaribu Tena</span><span class="sh">↩ Jaribu Tena</span>
+    </button>
+  </div>
+  <div class="s-result ok" id="sc1r2">
+    <span class="en">⚠️ <strong>Safe this time — but:</strong> The "phone call" exit works once. But Jayden is still avoiding a direct refusal. Next time it will be a closer friend asking, and the "phone call" excuse won't feel convincing to himself. Learning to say NO directly builds a skill that protects him every time.</span>
+    <span class="sw">⚠️ <strong>Salama sasa hivi — lakini:</strong> "Simu" inafanya kazi mara moja. Lakini Jayden anaepuka kukataa moja kwa moja. Mara ya pili itakuwa rafiki wa karibu zaidi anayeomba, na usingekuwa na "simu" ya kutoa kisingizio.</span>
+    <span class="sh">⚠️ <strong>Salama leo — lakini:</strong> "Simu" inafanya kazi mara moja. Mara ya pili itakuwa rafiki wa karibu zaidi. Na hakuna simu itakayomokoa. Jifunze kusema NO direct — hiyo ndiyo skill ya maisha.</span>
+    <button class="retry-btn" onclick="scRetry('sc1')">
+      <span class="en">↩ See best answer</span><span class="sw">↩ Ona jibu bora</span><span class="sh">↩ Ona jibu bora</span>
+    </button>
+  </div>
+  <div class="s-result good" id="sc1r3">
+    <span class="en">✅ <strong>This is it.</strong> Short, direct, no apology, no long explanation. "Niko sawa" is complete. Jayden doesn't owe that older guy anything — not his time, not his attention, not his health. Walking away with confidence is what respect for yourself actually looks like. His real friends will follow.</span>
+    <span class="sw">✅ <strong>Hii ndiyo.</strong> Fupi, moja kwa moja, bila kuomba msamaha. "Niko sawa" inatosha. Jayden hana deni kwa yule mvulana — si wakati wake, si makini yake, si afya yake. Kutoka kwa ujasiri ndiyo heshima ya kweli kwa nafsi yako.</span>
+    <span class="sh">✅ <strong>Hii ndiyo answer.</strong> Fupi, direct, bila apology. "Niko sawa" inatosha kabisa. Jayden hana deni kwa yule dealer — si wakati wake, si ubongo wake. Kutoka na ujasiri ndiyo self-respect ya kweli. Marafiki wake wa kweli watamfollow.</span>
+  </div>
+  <div class="s-result ok" id="sc1r4">
+    <span class="en">⚠️ <strong>Half right:</strong> Jayden said no — good. But staying and watching normalises it for himself and puts pressure on him to join next time. Second-hand smoke also enters his lungs. The strongest move is to say no AND move away to somewhere else.</span>
+    <span class="sw">⚠️ <strong>Nusu sawa:</strong> Jayden alisema hapana — vizuri. Lakini kukaa na kuangalia kunaufanya kawaida kwake na kumweka shinikizo la kujiunga mara ya pili. Moshi wa pili unaingía mapafu yake pia.</span>
+    <span class="sh">⚠️ <strong>Half right:</strong> Jayden alisema no — poa. Lakini kukaa na kuangalia kunafanya iwe normal kwake na next time atajoin. Second-hand smoke pia inaingia mapafu yake. Best move — sema no NA uondoke.</span>
+    <button class="retry-btn" onclick="scRetry('sc1')">
+      <span class="en">↩ See best answer</span><span class="sw">↩ Ona jibu bora</span><span class="sh">↩ Ona jibu bora</span>
+    </button>
+  </div>
+</div>
+
+<!-- Scenario 2 -->
+<div class="scenario-wrap" id="sc2" style="margin-top:16px;">
+  <div class="scenario-ctx">
+    <span class="en">📍 Amina (Form 4, Mombasa) notices her best friend Sifa has been acting differently for months — easily forgetting things, missing school, becoming aggressive and then weirdly euphoric. She smells it on her sometimes. Sifa denies everything.</span>
+    <span class="sw">📍 Amina (Darasa la 4, Mombasa) anaona rafiki yake wa karibu Sifa amebadilika kwa miezi — anasahau vitu kwa urahisi, anakosa shule, anakuwa mkali kisha furaha bila sababu. Wakati mwingine Amina anamhisi harufu. Sifa anakanusha kila kitu.</span>
+    <span class="sh">📍 Amina (Form 4, Mombasa) anaona best friend wake Sifa amebadilika kwa miezi — anasahau kila kitu, anakosa shule, anakuwa aggressive kisha suddenly happy bila reason. Amina anamhisi harufu mara kwa mara. Sifa anakanusha kila kitu.</span>
+  </div>
+  <div class="scenario-q">
+    <span class="en">What should Amina do?</span>
+    <span class="sw">Amina afanye nini?</span>
+    <span class="sh">Amina afanye nini?</span>
+  </div>
+  <div class="choices">
+    <button class="choice" onclick="scPick(this,'sc2','bad','sc2r1')">
+      <span class="en">A) Mind her own business — Sifa is an adult and can make her own choices</span>
+      <span class="sw">A) Ajishughulishe na mambo yake — Sifa ni mkubwa na anaweza kufanya maamuzi yake</span>
+      <span class="sh">A) Ajishughulishe na mambo yake — Sifa ni mkubwa, achague peke yake</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc2','ok','sc2r2')">
+      <span class="en">B) Confront Sifa publicly in front of other friends to shame her into stopping</span>
+      <span class="sw">B) Mwambie Sifa hadharani mbele ya marafiki wengine ili aibu imsaidie kusimama</span>
+      <span class="sh">B) Mshame Sifa mbele ya mangi — aibu itamsaidie kusimama</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc2','good','sc2r3')">
+      <span class="en">C) Find a private moment, tell Sifa what she's noticed with care: "Nakujali — naona mabadiliko na ninajali" then ask her to speak to the school counsellor together</span>
+      <span class="sw">C) Pata wakati wa faragha, mwambie Sifa alichokiona kwa upole: "Nakujali — ninaona mabadiliko" kisha mwomba kwenda kwa mshauri wa shule pamoja</span>
+      <span class="sh">C) Mpate peke yake, amwambie kwa upole: "Nakujali — ninaona mabadiliko na ninajali" kisha mwomba waende kwa school counsellor pamoja</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'sc2','ok','sc2r4')">
+      <span class="en">D) Tell Sifa's parents immediately without talking to Sifa first</span>
+      <span class="sw">D) Mwambie wazazi wa Sifa mara moja bila kwanza kuzungumza na Sifa</span>
+      <span class="sh">D) Amwambie wazazi wa Sifa immediately bila kuongea na Sifa kwanza</span>
+    </button>
+  </div>
+  <div class="s-result bad" id="sc2r1">
+    <span class="en">❌ <strong>Dangerous silence:</strong> Sifa is showing signs of cannabis addiction and possible early psychosis. "Her choice" stops being a personal matter when someone's brain is being permanently damaged. Zawadi from Kisumu had friends who stayed silent. Those friends watched her be admitted to Mathare at 20.</span>
+    <span class="sw">❌ <strong>Ukimya wa hatari:</strong> Sifa anaonyesha dalili za utegemezi wa bangi na labda psychosis ya mapema. "Chaguo lake" inaacha kuwa jambo la kibinafsi ubongo wake unapoharibiwa kwa kudumu. Marafiki wa Zawadi walikaa kimya. Wale marafiki waliomwona akilazwa Mathare akiwa na miaka 20.</span>
+    <span class="sh">❌ <strong>Ukimya wa hatari:</strong> Sifa anaonyesha signs za addiction na labda psychosis ya mapema. "Chaguo lake" inaisha kuwa jambo lake peke yake ubongo wake unapoharibika permanently. Marafiki wa Zawadi walikaa kimya — na waliomwona akilazwa Mathare ana miaka 20.</span>
+    <button class="retry-btn" onclick="scRetry('sc2')">
+      <span class="en">↩ Try Again</span><span class="sw">↩ Jaribu Tena</span><span class="sh">↩ Jaribu Tena</span>
+    </button>
+  </div>
+  <div class="s-result ok" id="sc2r2">
+    <span class="en">⚠️ <strong>Wrong approach:</strong> Public shaming pushes Sifa deeper into hiding and damages trust. People struggling with substance use need safety, not humiliation. She will deny it more firmly and cut off Amina — her best ally.</span>
+    <span class="sw">⚠️ <strong>Mbinu mbaya:</strong> Kudharau hadharani kunamsukuma Sifa kujificha zaidi na kudhuru uaminifu. Watu wanaopambana na matumizi ya dawa wanahitaji usalama, si aibu. Atakanusha zaidi na kumkata Amina — mshirika wake bora.</span>
+    <span class="sh">⚠️ <strong>Wrong approach:</strong> Kumshame publicly kunamsukuma Sifa kujificha zaidi. Mtu ana addiction anahitaji safety — si aibu. Atakanusha zaidi na kumkata Amina — ambaye ni the only person anayeweza kumsaidia.</span>
+    <button class="retry-btn" onclick="scRetry('sc2')">
+      <span class="en">↩ See best answer</span><span class="sw">↩ Ona jibu bora</span><span class="sh">↩ Ona jibu bora</span>
+    </button>
+  </div>
+  <div class="s-result good" id="sc2r3">
+    <span class="en">✅ <strong>This is friendship:</strong> Amina uses care, not judgment. Private conversation preserves trust. "Nakujali" before anything else tells Sifa this comes from love. Offering to go together to the counsellor removes the barrier of going alone. This approach has the best chance of actually helping Sifa.</span>
+    <span class="sw">✅ <strong>Hii ndiyo urafiki:</strong> Amina anatumia upole, si hukumu. Mazungumzo ya faragha yanalinda uaminifu. "Nakujali" kabla ya kila kitu kumwambia Sifa hii inatoka kwa upendo. Kutoa kwenda pamoja kwa mshauri kunaondoa kikwazo cha kwenda peke yake.</span>
+    <span class="sh">✅ <strong>Hii ndiyo urafiki wa kweli:</strong> Amina anatumia upole, si hukumu. Private talk inabaki trust. "Nakujali" kwanza inamwambia Sifa hii ni love, si usaliti. Kutoa kwenda pamoja kwa counsellor kunaondoa fear ya kwenda peke yake. Hii approach ndiyo ina best chance ya kumsaidia Sifa.</span>
+  </div>
+  <div class="s-result ok" id="sc2r4">
+    <span class="en">⚠️ <strong>Too fast:</strong> Going straight to parents without talking to Sifa first breaks trust and may cause Sifa to deny everything and feel ambushed. The right order: talk to Sifa privately first → if she refuses help → then involve a trusted adult (counsellor or parent).</span>
+    <span class="sw">⚠️ <strong>Haraka sana:</strong> Kwenda moja kwa moja kwa wazazi bila kuzungumza na Sifa kwanza kunavunja uaminifu. Mpangilio sahihi: zungumza na Sifa faraghani kwanza → akikataa msaada → kisha mhusishe mtu mzima wa kuamini.</span>
+    <span class="sh">⚠️ <strong>Haraka sana:</strong> Kwenda kwa wazazi moja kwa moja bila kuongea na Sifa kwanza kunavunja trust. Order sahihi: ongea na Sifa faraghani kwanza → akikataa help → kisha mhusishe mtu mzima (counsellor au mzazi).</span>
+    <button class="retry-btn" onclick="scRetry('sc2')">
+      <span class="en">↩ See best answer</span><span class="sw">↩ Ona jibu bora</span><span class="sh">↩ Ona jibu bora</span>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 8 — REFUSING & GETTING HELP ═══ -->
+<div class="slide">
+<div class="slide-head">🛡️
+  <span class="en">How to Say No — And Get Help if You Need It</span>
+  <span class="sw">Jinsi ya Kusema Hapana — Na Kupata Msaada Ukihitaji</span>
+  <span class="sh">Jinsi ya Ku-Deny — Na Kupata Help Ukihitaji</span>
+</div>
+
+<p class="tp">
+  <span class="en">Knowing what to say before the moment arrives is the most effective preparation. Practice these — they work.</span>
+  <span class="sw">Kujua utasema nini kabla wakati haujafika ndiyo maandalizi bora. Zoea hizi — zinafanya kazi.</span>
+  <span class="sh">Kujua utasema nini kabla situation haijafika ndiyo prep bora. Practise hizi — zinafanya kazi.</span>
+</p>
+
+<table class="info-table">
+  <tr>
+    <th><span class="en">When they say...</span><span class="sw">Wanaposema...</span><span class="sh">Wanasema...</span></th>
+    <th><span class="en">You say...</span><span class="sw">Unasema...</span><span class="sh">Unasema...</span></th>
+  </tr>
+  <tr>
+    <td><span class="en">"It's natural — from a plant"</span><span class="sw">"Ni asili — inatoka kwa mmea"</span><span class="sh">"Ni natural — inatoka kwa mmea"</span></td>
+    <td><span class="en">"Arsenic is also from nature. Natural doesn't mean safe."</span><span class="sw">"Sumu ya arsenic pia inatoka asilini. Asili haimaanishi salama."</span><span class="sh">"Sumu pia ni natural. Natural haimaanishi salama."</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">"Just one puff — you won't get hooked"</span><span class="sw">"Pumzi moja tu — hutategemea"</span><span class="sh">"Puff moja tu — huwezi ku-hooked"</span></td>
+    <td><span class="en">"1 in 6 teens who try it get hooked. I don't like those odds."</span><span class="sw">"Kijana 1 kati ya 6 wanaojaribu wanategemea. Sijapenda nafasi hizo."</span><span class="sh">"Kijana 1 kati ya 6 wanaojaribu wanaku-hooked. Sichezi odds hizo."</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">"Everyone smokes — don't be lame"</span><span class="sw">"Kila mtu anavuta — usiwe mlemavu"</span><span class="sh">"Kila mtu anavuta — usiwe coward"</span></td>
+    <td><span class="en">"Not everyone. And I choose what enters my brain."</span><span class="sw">"Si kila mtu. Na ninachagua kinachoingia ubongoni mwangu."</span><span class="sh">"Si kila mtu. Na ninachagua kinachoingia kwa ubongo yangu."</span></td>
+  </tr>
+  <tr>
+    <td><span class="en">"It helps you concentrate / relieves stress"</span><span class="sw">"Inasaidia kuzingatia / kupunguza msongo"</span><span class="sh">"Inakusaidia ku-focus / kupunguza stress"</span></td>
+    <td><span class="en">"It stays in the brain for 28 days and kills memory. That's the opposite of focus."</span><span class="sw">"Inakaa ubongoni kwa siku 28 na inaharibu kumbukumbu. Hiyo ni kinyume cha kuzingatia."</span><span class="sh">"Inakaa kwa ubongo kwa siku 28 na inakill kumbukumbu. Hiyo si focus — ni opposite ya focus."</span></td>
+  </tr>
+</table>
+
+<div class="tip-box">
+  <strong>
+    <span class="en">💡 Getting Help — NACADA Kenya:</span>
+    <span class="sw">💡 Kupata Msaada — NACADA Kenya:</span>
+    <span class="sh">💡 Kupata Help — NACADA Kenya:</span>
+  </strong>
+  <span class="en"> Free helpline: <strong>1192</strong>. Anonymous, confidential, available 24/7. They are not police — they will not report you. They connect you to free counselling and treatment. Also: Narcotics Anonymous Kenya — free groups in Nairobi, Mombasa, Kisumu, Eldoret.</span>
+  <span class="sw"> Laini ya bure: <strong>1192</strong>. Ya siri, inapatikana 24/7. Si polisi — hawataripoti. Wanakuunganisha na ushauri na matibabu ya bure.</span>
+  <span class="sh"> Piga simu bure: <strong>1192</strong>. Siri, inapatikana saa 24. Si polisi — hawataripoti. Wanakuconnect na counselling na treatment bure. Pia kuna Narcotics Anonymous — groups bure Nairobi, Mombasa, Kisumu, Eldoret.</span>
+</div>
+</div>
+
+<!-- ═══ SLIDE 9 — PRACTICE + REFLECTION ═══ -->
+<div class="slide">
+<div class="slide-head">📝
+  <span class="en">Practice Problems &amp; Reflection</span>
+  <span class="sw">Mazoezi na Tafakari</span>
+  <span class="sh">Practice na Reflection</span>
+</div>
+
+<div class="example-box">
+  <strong>
+    <span class="en">Problem 1 — Science:</span>
+    <span class="sw">Tatizo la 1 — Sayansi:</span>
+    <span class="sh">Tatizo 1 — Science:</span>
+  </strong>
+  <span class="en">Explain why a 16-year-old who smokes bhang every weekend is at greater risk of permanent brain damage than a 28-year-old who starts smoking daily. Link your answer specifically to brain development.</span>
+  <span class="sw">Eleza kwa nini kijana wa miaka 16 anayevuta bangi kila wikendi yuko katika hatari zaidi ya uharibifu wa kudumu wa ubongo kuliko mtu wa miaka 28 anayeanza kuvuta kila siku. Unganisha jibu lako hasa na ukuaji wa ubongo.</span>
+  <span class="sh">Eleza kwa nini kijana wa miaka 16 anayevuta bangi kila weekend yuko hatarini zaidi ya damage ya kudumu ya ubongo kuliko mtu wa miaka 28 anayeanza kuvuta kila siku. Connect jibu lako na brain development.</span>
+  <br><br>
+  <span class="en"><strong>Model Answer:</strong> The brain's prefrontal cortex — controlling memory, judgment, and decision-making — is still developing until age 25. At 16, this region is actively forming connections. THC at this stage disrupts that formation permanently. A study found teens who started before 18 lost up to 8 IQ points permanently — adults who started at 25+ showed far less lasting damage because their prefrontal cortex was already fully formed.</span>
+  <span class="sw"><strong>Jibu la Mfano:</strong> Prefrontal cortex ya ubongo — inayodhibiti kumbukumbu, hukumu, na kufanya maamuzi — bado inakua hadi umri wa miaka 25. Akiwa na miaka 16, sehemu hii bado inaunda uhusiano. THC katika hatua hii inazuia uundaji huo kwa kudumu. Vijana wanaoanza kabla ya miaka 18 walipoteza hadi pointi 8 za IQ kwa kudumu.</span>
+  <span class="sh"><strong>Model Answer:</strong> Prefrontal cortex ya ubongo — inadhibiti kumbukumbu, maamuzi, judgment — bado inakua hadi miaka 25. Ana miaka 16, sehemu hii bado inaform connections. THC saa hii inazuia formation hiyo permanently. Studies zinaonyesha teens walianza kabla ya 18 walipoteza hadi IQ points 8 permanently — watu wazima walioanza baada ya 25 hawakupoteza hivyo kwa sababu prefrontal cortex ilikuwa tayari complete.</span>
+</div>
+
+<div class="example-box">
+  <strong>
+    <span class="en">Problem 2 — Critical Thinking:</span>
+    <span class="sw">Tatizo la 2 — Fikira Makini:</span>
+    <span class="sh">Tatizo 2 — Critical Thinking:</span>
+  </strong>
+  <span class="en">Your classmate says: "CBD is legal in some countries as medicine — so cannabis must be safe." Identify TWO errors in this reasoning.</span>
+  <span class="sw">Mwanafunzi wenzako anasema: "CBD ni halali katika baadhi ya nchi kama dawa — kwa hivyo bangi lazima iwe salama." Tambua MAKOSA MAWILI katika hoja hii.</span>
+  <span class="sh">Mwanafunzi wenzako anasema: "CBD ni legal kwa nchi zingine kama dawa — kwa hivyo bangi lazima iwe salama." Tafuta MAKOSA MAWILI kwa hoja hii.</span>
+  <br><br>
+  <span class="en"><strong>Model Answer:</strong> (1) CBD ≠ Cannabis: Medical CBD is pharmaceutical-grade, contains no THC, and is precisely dosed. Street cannabis contains high THC levels and uncontrolled compounds — it is a completely different product. (2) Legal ≠ Safe: Many legal substances cause serious harm (alcohol, tobacco). Legal status is a policy decision, not a safety certificate.</span>
+  <span class="sw"><strong>Jibu la Mfano:</strong> (1) CBD ≠ Bangi: CBD ya kimatibabu haina THC na inadosiwa kwa usahihi. Bangi ya mtaani ina THC nyingi — bidhaa tofauti kabisa. (2) Halali ≠ Salama: Vitu vingi halali vinasababisha madhara makubwa (pombe, sigara). Hali ya kisheria ni uamuzi wa sera, si cheti cha usalama.</span>
+  <span class="sh"><strong>Model Answer:</strong> (1) CBD ≠ Bangi: Medical CBD haina THC na inadosed precisely. Bangi ya street ina THC nyingi — ni bidhaa tofauti kabisa. (2) Legal ≠ Salama: Vitu vingi legal vinasababisha damage kubwa (pombe, sigara). Legal ni decision ya serikali — si safety certificate.</span>
+</div>
+
+<!-- REFLECTION JOURNAL -->
+<div class="journal-box">
+  <span class="journal-label">
+    <span class="en">✍️ My Reflection — Private, saved only on this device</span>
+    <span class="sw">✍️ Tafakari Yangu — Ya siri, imehifadhiwa kwenye kifaa hiki peke yake</span>
+    <span class="sh">✍️ Mawazo Yangu — Siri, imehifadhiwa kwa device hii tu</span>
+  </span>
+  <textarea class="journal-area" id="journalText" placeholder="What did you learn today? Has this changed how you think about cannabis? Umejifunza nini leo? Je, hii imebadilisha mawazo yako kuhusu bangi? / Umejifunza nini leo? Hii imebadilisha mawazo yako kuhusu bangi?"></textarea>
+  <button class="journal-save" onclick="saveJournal('effects-of-cannabis', document.getElementById('journalText'))">
+    <span class="en">💾 Save to My Journal</span>
+    <span class="sw">💾 Hifadhi kwenye Jarida Langu</span>
+    <span class="sh">💾 Save kwa Journal Yangu</span>
+  </button>
+  <div class="journal-fb" id="journalFb"></div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 10 — QUIZ ═══ -->
+<div class="slide">
+<div class="slide-head">📊
+  <span class="en">Quiz — Effects of Cannabis (25 Marks)</span>
+  <span class="sw">Jaribio — Athari za Bangi (Alama 25)</span>
+  <span class="sh">Quiz — Effects za Bangi (Marks 25)</span>
+</div>
+<p class="tp" style="font-size:.82rem;color:var(--soft);margin-bottom:6px;">
+  <span class="en">Complete all three parts. Score 15/25 (60%) to earn your certificate.</span>
+  <span class="sw">Kamilisha sehemu zote tatu. Pata alama 15/25 (60%) kupata cheti chako.</span>
+  <span class="sh">Fanya sehemu zote tatu. Pata 15/25 (60%) kupata certificate yako.</span>
+</p>
+
+<!-- PART A: MCQ -->
+<div class="quiz-part-head">
+  <span class="en">Part A: Multiple Choice <span>10 × 1 mark = 10 marks</span></span>
+  <span class="sw">Sehemu A: Chaguo Nyingi <span>10 × alama 1 = alama 10</span></span>
+  <span class="sh">Part A: MCQ <span>10 × mark 1 = marks 10</span></span>
+</div>
+
+<!-- Q1 -->
+<div class="mcq-block">
+  <div class="q-scenario">
+    <span class="en">Koech (Form 3, Eldoret) smokes bhang every Friday. By Monday, he cannot remember what the teacher taught the previous week, even though he pays attention in class.</span>
+    <span class="sw">Koech (Darasa la 3, Eldoret) anavuta bangi kila Ijumaa. Kufikia Jumatatu, hawezi kukumbuka mwalimu alichofundisha wiki iliyopita, hata kama anazingatia darasani.</span>
+    <span class="sh">Koech (Form 3, Eldoret) anavuta bangi kila Friday. Monday hawezi kukumbuka teacher alichofundisha wiki iliyopita — hata kama alikuwa anasikiliza.</span>
+  </div>
+  <div class="q-text">
+    <span class="en">1. Which specific brain region is THC most directly damaging in Koech's case?</span>
+    <span class="sw">1. Sehemu gani maalum ya ubongo inayoathiriwa zaidi na THC kwa Koech?</span>
+    <span class="sh">1. Sehemu gani ya ubongo THC inaidamage zaidi kwa Koech?</span>
+  </div>
+  <div class="options" id="mcq1">
+    <div class="opt" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span> <span class="en">The cerebellum — controls balance and coordination</span><span class="sw">Cerebellum — inadhibiti usawa na uratibu</span><span class="sh">Cerebellum — inadhibiti balance</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span> <span class="en">The hippocampus and prefrontal cortex — memory and learning</span><span class="sw">Hippocampus na prefrontal cortex — kumbukumbu na kujifunza</span><span class="sh">Hippocampus na prefrontal cortex — kumbukumbu na learning</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span> <span class="en">The brainstem — controls breathing and heart rate</span><span class="sw">Brainstem — inadhibiti kupumua na mapigo ya moyo</span><span class="sh">Brainstem — inadhibiti kupumua</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span> <span class="en">The occipital lobe — controls vision</span><span class="sw">Occipital lobe — inadhibiti maono</span><span class="sh">Occipital lobe — inadhibiti maono</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 -->
+<div class="mcq-block">
+  <div class="q-text">
+    <span class="en">2. According to research, what percentage of teenagers who start using cannabis develop addiction?</span>
+    <span class="sw">2. Kulingana na utafiti, ni asilimia ngapi ya vijana wanaoanza kutumia bangi wanategemea?</span>
+    <span class="sh">2. Kulingana na research, asilimia ngapi ya teens wanaoanza bangi wanaku-hooked?</span>
+  </div>
+  <div class="options" id="mcq2">
+    <div class="opt" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> <span class="en">2% — very rare</span><span class="sw">2% — nadra sana</span><span class="sh">2% — rare sana</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> <span class="en">9% — less than for adults who start later</span><span class="sw">9% — chini ya watu wazima wanaoanza baadaye</span><span class="sh">9% — chini ya watu wazima</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> <span class="en">17% — nearly 1 in 6 teenagers</span><span class="sw">17% — karibu 1 kati ya vijana 6</span><span class="sh">17% — karibu 1 kati ya 6 ya teens</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> <span class="en">50% — half of all users</span><span class="sw">50% — nusu ya watumiaji wote</span><span class="sh">50% — nusu ya watumiaji wote</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 -->
+<div class="mcq-block">
+  <div class="q-scenario">
+    <span class="en">Wanjiku (17, Nakuru) tells her friend: "I only use CBD oil I buy online — it's medical so it's safe and legal."</span>
+    <span class="sw">Wanjiku (17, Nakuru) anamwambia rafiki yake: "Natumia mafuta ya CBD tu nianunuaye mtandaoni — ni ya kimatibabu kwa hivyo ni salama na halali."</span>
+    <span class="sh">Wanjiku (17, Nakuru) anamwambia rafiki: "Natumia CBD oil tu nununuayo online — ni medical kwa hivyo ni salama na legal."</span>
+  </div>
+  <div class="q-text">
+    <span class="en">3. Which statement best evaluates Wanjiku's claim?</span>
+    <span class="sw">3. Kauli ipi inayotathmini vizuri dai la Wanjiku?</span>
+    <span class="sh">3. Statement ipi inayoevaluate vizuri claim ya Wanjiku?</span>
+  </div>
+  <div class="options" id="mcq3">
+    <div class="opt" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span> <span class="en">She is correct — CBD is completely safe for all ages</span><span class="sw">Yuko sahihi — CBD ni salama kabisa kwa umri wote</span><span class="sh">Yuko sahihi — CBD ni salama kwa umri wote</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span> <span class="en">Partially correct — CBD doesn't cause a high, but unregulated online products may contain THC and are not legally approved in Kenya</span><span class="sw">Sahihi kwa sehemu — CBD haisababishi high, lakini bidhaa zisizodhibitiwa mtandaoni zinaweza kuwa na THC na hazijaidhinishwa kisheria nchini Kenya</span><span class="sh">Sahihi kiasi — CBD haikufanya high, lakini products za online zinaweza kuwa na THC na hazijaidhinishwa Kenya</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span> <span class="en">Completely wrong — CBD and cannabis are the same thing</span><span class="sw">Makosa kabisa — CBD na bangi ni kitu kimoja</span><span class="sh">Makosa kabisa — CBD na bangi ni kitu kimoja</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span> <span class="en">It doesn't matter as long as she feels fine</span><span class="sw">Haihusiani kwa kuwa anahisi vizuri</span><span class="sh">Haihusiani kama anahisi sawa</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 -->
+<div class="mcq-block">
+  <div class="q-text">
+    <span class="en">4. How many times more tar does cannabis smoke contain compared to cigarette smoke per puff?</span>
+    <span class="sw">4. Moshi wa bangi una lami mara ngapi zaidi kuliko sigara kwa pumzi moja?</span>
+    <span class="sh">4. Moshi wa bangi una tar mara ngapi zaidi kuliko sigara kwa puff moja?</span>
+  </div>
+  <div class="options" id="mcq4">
+    <div class="opt" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> <span class="en">Same amount as cigarettes</span><span class="sw">Kiasi sawa na sigara</span><span class="sh">Same na sigara</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> <span class="en">Twice as much (2×)</span><span class="sw">Mara mbili zaidi (2×)</span><span class="sh">Mara mbili (2×)</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> <span class="en">Three times as much (3×)</span><span class="sw">Mara tatu zaidi (3×)</span><span class="sh">Mara tatu (3×)</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> <span class="en">Half as much — cannabis is safer to smoke</span><span class="sw">Nusu tu — bangi ni salama zaidi kuvuta</span><span class="sh">Nusu — bangi ni safer kuvuta</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 -->
+<div class="mcq-block">
+  <div class="q-scenario">
+    <span class="en">Omondi (Form 4, Kisumu) smokes bhang on Fridays. He says: "I study harder on Saturdays to make up for it — so it doesn't affect my KCSE results."</span>
+    <span class="sw">Omondi (Darasa la 4, Kisumu) anavuta bangi Ijumaa. Anasema: "Najisomea zaidi Jumamosi kufidia — kwa hivyo haiaathiri matokeo yangu ya KCSE."</span>
+    <span class="sh">Omondi (Form 4, Kisumu) anavuta bangi Friday. Anasema: "Najisomea zaidi Saturday ku-compensate — kwa hivyo haiathiri KCSE yangu."</span>
+  </div>
+  <div class="q-text">
+    <span class="en">5. Why is Omondi's reasoning scientifically flawed?</span>
+    <span class="sw">5. Kwa nini hoja ya Omondi ina kasoro ya kisayansi?</span>
+    <span class="sh">5. Kwa nini reasoning ya Omondi ni flawed kisayansi?</span>
+  </div>
+  <div class="options" id="mcq5">
+    <div class="opt" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span> <span class="en">He is correct — studying more compensates for cannabis effects</span><span class="sw">Yuko sahihi — kusoma zaidi kunalipa athari za bangi</span><span class="sh">Yuko sahihi — kusoma zaidi kunalipa effects za bangi</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span> <span class="en">THC stays in the brain for up to 28 days — his Saturday studying is still done on a THC-impaired brain, so retention is reduced regardless of effort</span><span class="sw">THC inakaa ubongoni kwa siku 28 — kujisomea kwake Jumamosi bado kunafanywa na ubongo ulioathiriwa na THC</span><span class="sh">THC inakaa kwa ubongo hadi siku 28 — Saturday studying yake bado inafanywa na ubongo iliyoathiriwa na THC — effort inabaki lakini retention inashuka</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span> <span class="en">Cannabis only affects memory for 24 hours so Saturday studying is fine</span><span class="sw">Bangi inaathiri kumbukumbu kwa masaa 24 tu hivyo kujisomea Jumamosi ni sawa</span><span class="sh">Bangi inaathiri kumbukumbu kwa saa 24 tu — Saturday studying ni sawa</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span> <span class="en">The only problem is that bhang is illegal, not that it affects studying</span><span class="sw">Tatizo pekee ni kwamba bangi ni haramu, si kwamba inaathiri masomo</span><span class="sh">Tatizo pekee ni kwamba bangi ni haramu — si kwamba inaathiri masomo</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 -->
+<div class="mcq-block">
+  <div class="q-text">
+    <span class="en">6. Cannabis-induced psychosis is most likely to become permanent if it is not treated. What is the name of this permanent condition?</span>
+    <span class="sw">6. Psychosis inayosababishwa na bangi ina uwezekano mkubwa wa kuwa ya kudumu bila matibabu. Jina la hali hii ya kudumu ni nini?</span>
+    <span class="sh">6. Cannabis-induced psychosis inaweza kuwa permanent bila treatment. Jina la hali hii ya kudumu ni nini?</span>
+  </div>
+  <div class="options" id="mcq6">
+    <div class="opt" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> <span class="en">Depression</span><span class="sw">Unyogovu</span><span class="sh">Depression</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> <span class="en">Schizophrenia</span><span class="sw">Schizophrenia</span><span class="sh">Schizophrenia</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> <span class="en">Epilepsy</span><span class="sw">Kifafa</span><span class="sh">Epilepsy</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> <span class="en">Anxiety disorder</span><span class="sw">Ugonjwa wa wasiwasi</span><span class="sh">Anxiety disorder</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 -->
+<div class="mcq-block">
+  <div class="q-text">
+    <span class="en">7. What is the free, confidential NACADA drug helpline number in Kenya?</span>
+    <span class="sw">7. Nambari ya bure ya ushauri ya NACADA nchini Kenya ni ipi?</span>
+    <span class="sh">7. NACADA helpline number ya bure Kenya ni ipi?</span>
+  </div>
+  <div class="options" id="mcq7">
+    <div class="opt" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span> 999</div>
+    <div class="opt" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span> 1192</div>
+    <div class="opt" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span> 1195</div>
+    <div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span> 0800 723 253</div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 -->
+<div class="mcq-block">
+  <div class="q-scenario">
+    <span class="en">Jayden's friend says: "My older brother smokes weed every day and he's fine — he's even a mechanic now."</span>
+    <span class="sw">Rafiki wa Jayden anasema: "Kaka yangu mkubwa anavuta bangi kila siku na yuko sawa — hata ni fundi wa magari sasa."</span>
+    <span class="sh">Rafiki wa Jayden anasema: "Kaka yangu mkubwa anavuta bangi kila siku na yuko sawa — hata ni mechanic sasa."</span>
+  </div>
+  <div class="q-text">
+    <span class="en">8. What reasoning error is Jayden's friend making?</span>
+    <span class="sw">8. Kosa gani la mantiki rafiki wa Jayden anafanya?</span>
+    <span class="sh">8. Reasoning error gani rafiki wa Jayden anafanya?</span>
+  </div>
+  <div class="options" id="mcq8">
+    <div class="opt" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> <span class="en">No error — if one person is fine, cannabis is safe</span><span class="sw">Hakuna kosa — kama mtu mmoja yuko sawa, bangi ni salama</span><span class="sh">Hakuna kosa — kama mtu mmoja yuko sawa, bangi ni salama</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> <span class="en">Anecdotal fallacy — using one person's experience to dismiss scientific evidence affecting many people</span><span class="sw">Kasoro ya hadithi — kutumia uzoefu wa mtu mmoja kupinga ushahidi wa kisayansi unaohusika watu wengi</span><span class="sh">Anecdotal fallacy — kutumia experience ya mtu mmoja kupinga scientific evidence ya watu wengi</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> <span class="en">Correct reasoning — mechanics don't need brain function</span><span class="sw">Hoja sahihi — mafundi hawahitaji utendaji wa ubongo</span><span class="sh">Reasoning sahihi — mechanics hawahitaji brain function</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> <span class="en">The brother started as an adult so there is no risk at all</span><span class="sw">Kaka alianza akiwa mtu mzima kwa hivyo hakuna hatari kabisa</span><span class="sh">Kaka alianza akiwa mzima kwa hivyo hakuna hatari</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 -->
+<div class="mcq-block">
+  <div class="q-text">
+    <span class="en">9. The brain region that controls judgment, decision-making, and impulse control — disrupted by THC during adolescence — is the:</span>
+    <span class="sw">9. Sehemu ya ubongo inayodhibiti hukumu, kufanya maamuzi, na udhibiti wa msukumo — inayoathiriwa na THC wakati wa ujana — ni:</span>
+    <span class="sh">9. Sehemu ya ubongo inayodhibiti judgment, maamuzi, na kudhibiti impulses — inayodisrupted na THC wakati wa ujana — ni:</span>
+  </div>
+  <div class="options" id="mcq9">
+    <div class="opt" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span> <span class="en">Amygdala</span><span class="sw">Amygdala</span><span class="sh">Amygdala</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span> <span class="en">Cerebellum</span><span class="sw">Cerebellum</span><span class="sh">Cerebellum</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span> <span class="en">Prefrontal Cortex</span><span class="sw">Prefrontal Cortex</span><span class="sh">Prefrontal Cortex</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span> <span class="en">Occipital Lobe</span><span class="sw">Occipital Lobe</span><span class="sh">Occipital Lobe</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 -->
+<div class="mcq-block">
+  <div class="q-scenario">
+    <span class="en">Amina notices her friend Sifa has mood swings, memory problems, and smells of bhang. Sifa denies it. Amina cares about her friend and wants to help.</span>
+    <span class="sw">Amina anaona rafiki yake Sifa ana mabadiliko ya hisia, matatizo ya kumbukumbu, na harufu ya bangi. Sifa anakanusha. Amina anamjali rafiki yake na anataka kusaidia.</span>
+    <span class="sh">Amina anaona rafiki yake Sifa ana mood swings, memory problems, na harufu ya bangi. Sifa anakanusha. Amina anamjali na anataka kumsaidia.</span>
+  </div>
+  <div class="q-text">
+    <span class="en">10. What is the BEST first step Amina should take?</span>
+    <span class="sw">10. Hatua bora ya KWANZA Amina afanye ni ipi?</span>
+    <span class="sh">10. Step bora ya KWANZA Amina afanye ni ipi?</span>
+  </div>
+  <div class="options" id="mcq10">
+    <div class="opt" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> <span class="en">Tell all their mutual friends so Sifa feels pressure to stop</span><span class="sw">Mwambie marafiki wao wote ili Sifa ahisi shinikizo la kusimama</span><span class="sh">Mwambie marafiki wao wote ili Sifa ahisi pressure ya kusimama</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> <span class="en">Have a private, caring conversation with Sifa first — then suggest the school counsellor together</span><span class="sw">Ongea na Sifa faraghani kwa upole kwanza — kisha pendekeza mshauri wa shule pamoja</span><span class="sh">Ongea na Sifa peke yake kwa upole kwanza — kisha suggest school counsellor pamoja</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> <span class="en">Mind her own business — Sifa will stop when she's ready</span><span class="sw">Ajishughulishe na mambo yake — Sifa atasimama atakapokuwa tayari</span><span class="sh">Ajishughulishe na mambo yake — Sifa atasimama ready akiwa</span></div>
+    <div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> <span class="en">Call the police immediately</span><span class="sw">Piga polisi mara moja</span><span class="sh">Piga polisi immediately</span></div>
+  </div>
+  <div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button class="check-btn" onclick="checkAllMCQ()">
+  <span class="en">✓ Check All MCQ Answers</span>
+  <span class="sw">✓ Angalia Majibu Yote ya MCQ</span>
+  <span class="sh">✓ Check Majibu Yote ya MCQ</span>
+</button>
+
+<!-- PART B: FILL IN BLANK -->
+<div class="quiz-part-head" style="margin-top:20px;">
+  <span class="en">Part B: Fill in the Blanks <span>5 × 1 mark = 5 marks</span></span>
+  <span class="sw">Sehemu B: Jaza Nafasi <span>5 × alama 1 = alama 5</span></span>
+  <span class="sh">Part B: Fill in the Blanks <span>5 × mark 1 = marks 5</span></span>
+</div>
+
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">1. The psychoactive compound in cannabis that causes the "high" is called <input class="fill-blank" id="f1" placeholder="___">.</span>
+    <span class="sw">1. Kemikali inayobadilisha akili katika bangi inayosababisha "high" inaitwa <input class="fill-blank" id="f1" placeholder="___">.</span>
+    <span class="sh">1. Kemikali katika bangi inayofanya "high" inaitwa <input class="fill-blank" id="f1" placeholder="___">.</span>
+  </p>
+  <div class="fb-box" id="fb1"></div>
+</div>
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">2. Cannabis smoke contains <input class="fill-blank" id="f2" placeholder="___"> times more tar than cigarette smoke per puff.</span>
+    <span class="sw">2. Moshi wa bangi una lami mara <input class="fill-blank" id="f2" placeholder="___"> zaidi kuliko sigara kwa pumzi moja.</span>
+    <span class="sh">2. Moshi wa bangi una tar mara <input class="fill-blank" id="f2" placeholder="___"> zaidi kuliko sigara kwa puff moja.</span>
+  </p>
+  <div class="fb-box" id="fb2"></div>
+</div>
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">3. The human brain does not fully develop until age <input class="fill-blank" id="f3" placeholder="___">.</span>
+    <span class="sw">3. Ubongo wa binadamu haukamiliki hadi umri wa miaka <input class="fill-blank" id="f3" placeholder="___">.</span>
+    <span class="sh">3. Ubongo ya binadamu haijafika 100% hadi umri wa miaka <input class="fill-blank" id="f3" placeholder="___">.</span>
+  </p>
+  <div class="fb-box" id="fb3"></div>
+</div>
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">4. THC remains in the brain for up to <input class="fill-blank" id="f4" placeholder="___"> days after use.</span>
+    <span class="sw">4. THC inakaa ubongoni kwa siku hadi <input class="fill-blank" id="f4" placeholder="___"> baada ya matumizi.</span>
+    <span class="sh">4. THC inakaa kwa ubongo kwa siku hadi <input class="fill-blank" id="f4" placeholder="___"> baada ya kutumia.</span>
+  </p>
+  <div class="fb-box" id="fb4"></div>
+</div>
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">5. Cannabis is classified as illegal in Kenya under the Narcotic Drugs and Psychotropic Substances Act Cap <input class="fill-blank" id="f5" placeholder="___">.</span>
+    <span class="sw">5. Bangi ni haramu nchini Kenya chini ya Sheria ya Dawa za Kulevya Cap <input class="fill-blank" id="f5" placeholder="___">.</span>
+    <span class="sh">5. Bangi ni haramu Kenya chini ya Narcotic Drugs Act Cap <input class="fill-blank" id="f5" placeholder="___">.</span>
+  </p>
+  <div class="fb-box" id="fb5"></div>
+</div>
+<button class="check-btn" onclick="checkFills()">
+  <span class="en">✓ Check Fill-in-Blank Answers</span>
+  <span class="sw">✓ Angalia Majibu ya Kujaza Nafasi</span>
+  <span class="sh">✓ Check Fill-in-Blank Answers</span>
+</button>
+
+<!-- PART C: SHORT ANSWER -->
+<div class="quiz-part-head" style="margin-top:20px;">
+  <span class="en">Part C: Short Answer <span>3 questions = 10 marks</span></span>
+  <span class="sw">Sehemu C: Jibu Fupi <span>Maswali 3 = alama 10</span></span>
+  <span class="sh">Part C: Short Answer <span>Maswali 3 = marks 10</span></span>
+</div>
+
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">6. Zawadi started smoking bhang at 14. At 20, she was admitted to hospital with cannabis-induced psychosis. Explain: (a) what cannabis-induced psychosis is, (b) why starting at 14 increased her risk significantly. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(3 marks)</span></span>
+    <span class="sw">6. Zawadi alianza kuvuta bangi akiwa na miaka 14. Akiwa na miaka 20, alilazwa hospitalini na psychosis ya bangi. Eleza: (a) psychosis ya bangi ni nini, (b) kwa nini kuanza akiwa na miaka 14 kuliongeza hatari yake sana. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(alama 3)</span></span>
+    <span class="sh">6. Zawadi alianza kuvuta bangi ana miaka 14. Ana miaka 20, alilazwa hospital na cannabis psychosis. Eleza: (a) cannabis-induced psychosis ni nini, (b) kwa nini kuanza ana miaka 14 kuliongeza risk yake sana. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(marks 3)</span></span>
+  </p>
+  <textarea class="sa-area" id="sa1" placeholder="Write your answer here... / Andika jibu lako hapa... / Andika jibu lako hapa..."></textarea>
+  <button class="grade-btn" onclick="gradeKw('sa1','sfb1',['psychosis','voices','hallucination','delusion','reality','prefrontal','brain','developing','permanent','14','young','vulnerable','genetic'],3,3,'(a) Cannabis-induced psychosis: a serious mental health condition where the person hears voices, has delusions (false beliefs), and loses contact with reality — triggered by THC disrupting brain chemistry. (b) Starting at 14 meant her prefrontal cortex was in a critical development phase. THC disruption at this age is permanent — adult brains (25+) are already formed and show far less lasting damage.')">
+    <span class="en">✓ Grade My Answer</span><span class="sw">✓ Angalia Jibu Langu</span><span class="sh">✓ Grade Jibu Langu</span>
+  </button>
+  <div class="fb-box" id="sfb1"></div>
+</div>
+
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">7. Your classmate says: "Bangi ni natural — inatoka kwa mmea, kwa hivyo haina madhara." Write a response using THREE specific pieces of scientific evidence to challenge this claim. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(4 marks)</span></span>
+    <span class="sw">7. Mwanafunzi wenzako anasema: "Bangi ni asili — inatoka kwa mmea, kwa hivyo haina madhara." Andika jibu ukitumia USHAHIDI TATU maalum wa kisayansi kupinga dai hili. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(alama 4)</span></span>
+    <span class="sh">7. Mwanafunzi wenzako anasema: "Bangi ni natural — inatoka kwa mmea, kwa hivyo haina madhara." Andika response ukitumia USHAHIDI TATU wa kisayansi kupinga claim hii. <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(marks 4)</span></span>
+  </p>
+  <textarea class="sa-area" id="sa2" placeholder="Write your answer here... / Andika jibu lako hapa..."></textarea>
+  <button class="grade-btn" onclick="gradeKw('sa2','sfb2',['tar','3 times','brain','prefrontal','iq','psychosis','memory','28 days','addiction','17','illegal','arsenic','natural'],4,4,'Three strong pieces of evidence: (1) Cannabis smoke contains 3× more tar per puff than cigarettes — natural does not mean safe for lungs. (2) THC permanently reduces IQ by up to 8 points in teens — a natural compound causing brain damage. (3) 17% of teen users develop addiction — natural does not mean non-addictive. (4) Can trigger permanent schizophrenia/psychosis. (5) THC stays in brain 28 days impairing memory. Bonus: arsenic is also natural but toxic.')">
+    <span class="en">✓ Grade My Answer</span><span class="sw">✓ Angalia Jibu Langu</span><span class="sh">✓ Grade Jibu Langu</span>
+  </button>
+  <div class="fb-box" id="sfb2"></div>
+</div>
+
+<div class="q-block">
+  <p class="q-text">
+    <span class="en">8. Baraka (Form 4, Eastleigh) wants to stop smoking bhang before KCSE. He has tried twice but says the cravings are too strong. What TWO specific steps would you advise him to take, and why? <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(3 marks)</span></span>
+    <span class="sw">8. Baraka (Darasa la 4, Eastleigh) anataka kuacha kuvuta bangi kabla ya KCSE. Amejaribu mara mbili lakini anasema tamaa ni kali sana. Hatua MBILI maalum ungempendekeza, na kwa nini? <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(alama 3)</span></span>
+    <span class="sh">Baraka (Form 4, Eastleigh) anataka kuacha bangi kabla ya KCSE. Amejaribu mara mbili lakini cravings ni strong sana. Steps MBILI maalum ungempendekeza, na kwa nini? <span style="font-weight:400;font-size:.76rem;color:var(--soft);">(marks 3)</span></span>
+  </p>
+  <textarea class="sa-area" id="sa3" placeholder="Write your answer here... / Andika jibu lako hapa..."></textarea>
+  <button class="grade-btn" onclick="gradeKw('sa3','sfb3',['nacada','1192','counsellor','treatment','withdrawal','cravings','support','friends','environment','trigger','medical','professional','group','narcotics anonymous'],3,3,'(1) Contact NACADA (1192) — free, confidential. Cravings are a medical withdrawal symptom, not weakness. A counsellor can provide coping strategies and possibly medication-assisted support. (2) Change the environment — identify and avoid the triggers (people, places, times) associated with smoking. If he smokes with specific friends on specific days, avoid those situations. (3) Narcotics Anonymous — free peer support group, others who have succeeded in stopping can mentor him.')">
+    <span class="en">✓ Grade My Answer</span><span class="sw">✓ Angalia Jibu Langu</span><span class="sh">✓ Grade Jibu Langu</span>
+  </button>
+  <div class="fb-box" id="sfb3"></div>
+</div>
+
+<button class="score-btn" onclick="showTotalScore()">
+  <span class="en">🏆 Calculate My Total Score</span>
+  <span class="sw">🏆 Hesabu Jumla ya Alama Zangu</span>
+  <span class="sh">🏆 Calculate Score Yangu Yote</span>
+</button>
+
+<div class="score-box pass" id="scoreBoxPass" style="display:none;">
+  <div class="score-num" id="scoreNumPass"></div>
+  <div class="grade-label" id="gradeLabelPass"></div>
+  <p style="font-size:.85rem;opacity:.9;margin-bottom:14px;">
+    <span class="en">Congratulations! You've earned your ARISE certificate for this lesson.</span>
+    <span class="sw">Hongera! Umepata cheti chako cha ARISE kwa somo hili.</span>
+    <span class="sh">Hongera! Umepata certificate yako ya ARISE kwa somo hili.</span>
+  </p>
+  <a id="certBtn" href="#" class="cert-btn">
+    <span class="en">🎓 Get My Certificate →</span>
+    <span class="sw">🎓 Pata Cheti Changu →</span>
+    <span class="sh">🎓 Pata Certificate Yangu →</span>
+  </a>
+</div>
+
+<div class="retry-box" id="retryBox">
+  <p>
+    <span class="en">You scored below 60%. Review the lesson and try again — you've got this!</span>
+    <span class="sw">Ulipata chini ya 60%. Rudia somo na jaribu tena — unaweza!</span>
+    <span class="sh">Ulipata chini ya 60%. Rudia lesson na jaribu tena — unaweza!</span>
+  </p>
+  <p style="font-size:.8rem;color:var(--soft);margin-top:4px;" id="retryScore"></p>
+  <button class="retry-btn" onclick="resetQuiz()">
+    <span class="en">🔄 Retry Quiz</span>
+    <span class="sw">🔄 Jaribu Tena</span>
+    <span class="sh">🔄 Jaribu Tena</span>
+  </button>
+</div>
+
+<a href="/?p=modules" style="display:block;text-align:center;padding:12px;background:linear-gradient(135deg,var(--pri),var(--acc));color:#fff;border-radius:var(--radius);font-size:.92rem;font-weight:700;text-decoration:none;margin-top:14px;">
+  <span class="en">📚 Back to All Modules →</span>
+  <span class="sw">📚 Rudi kwa Moduli Zote →</span>
+  <span class="sh">📚 Rudi kwa Modules Zote →</span>
+</a>
+</div><!-- /slide 10 -->
+
+</div><!-- /slides-wrap -->
+
+<!-- NAV BAR -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+// ── LANGUAGE TOGGLE ──────────────────────────────────────────
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c){
+    document.querySelectorAll('.'+c).forEach(function(el){ el.style.display = l===c ? 'block' : 'none'; });
+    document.querySelectorAll('.'+c+'-inline').forEach(function(el){ el.style.display = l===c ? 'inline' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+  try {
+    fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});
+  } catch(e){}
+}
+setLang(lang);
+
+// ── TEXT SIZE ─────────────────────────────────────────────────
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k){ var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+var savedSize = window.ARISE_TEXTSIZE || localStorage.getItem('arise_textsize') || 'md';
+setSize(savedSize);
+
+// ── NAVIGATION ────────────────────────────────────────────────
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  // Video setup
+  var vid = document.getElementById('lessonVideo');
+  var ph = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source');
+    src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function(){ if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.addEventListener('error', function(){ if(ph) ph.style.display='flex'; vid.style.display='none'; });
+    vid.style.display = 'none';
+  } else {
+    if(ph) ph.style.display = 'flex';
+    if(vid) vid.style.display = 'none';
+  }
+  // Resume slide
+  var slug = document.body.dataset.lessonSlug;
+  var resumeSlide = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (resumeSlide > 0 && resumeSlide < 9) { setTimeout(function(){ go(resumeSlide); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  // Save progress
+  var lid = document.body.dataset.lessonId;
+  var slug2 = document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  if(lid && lid!=='0') {
+    fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+  }
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+
+// ── SCENARIO LOGIC ────────────────────────────────────────────
+function scPick(btn, scId, type, resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){ b.disabled=true; });
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res){ res.className='s-result '+type; res.style.display='block'; }
+}
+function scRetry(scId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){ b.disabled=false; b.className='choice'; });
+  document.querySelectorAll('#'+scId+' .s-result').forEach(function(r){ r.style.display='none'; });
+}
+
+// ── MCQ LOGIC ─────────────────────────────────────────────────
+var mcqAnswers = {mcq1:'B',mcq2:'C',mcq3:'B',mcq4:'C',mcq5:'B',mcq6:'B',mcq7:'B',mcq8:'B',mcq9:'C',mcq10:'B'};
+var mcqExplain = {
+  mcq1:'B — The hippocampus encodes new memories; the prefrontal cortex manages learning and retention. Both are disrupted by THC, explaining Koech\'s inability to retain lessons even when paying attention.',
+  mcq2:'C — 17% (1 in 6) of teenagers who try cannabis develop addiction, compared to 9% of adults who start later. The developing brain is significantly more susceptible.',
+  mcq3:'B — CBD from unregulated online sources is not pharmaceutical-grade, may contain THC, and has no legal status in Kenya. Medical CBD requires strict prescription — it is not the same as street cannabis.',
+  mcq4:'C — Cannabis smoke contains 3× more tar and 5× more carbon monoxide per puff than cigarette smoke. "Natural" does not mean safer to inhale.',
+  mcq5:'B — THC stays in the brain for up to 28 days after use, continuously impairing memory consolidation. Omondi\'s Saturday studying is still done on a THC-compromised brain regardless of how hard he tries.',
+  mcq6:'B — Cannabis-induced psychosis can become permanent schizophrenia — a lifelong condition requiring permanent medication. This occurs in genetically vulnerable individuals and cannot always be predicted in advance.',
+  mcq7:'B — NACADA (National Authority for the Campaign Against Alcohol and Drug Abuse) free helpline: 1192. Available 24/7, confidential, not police.',
+  mcq8:'B — Anecdotal fallacy: using one person\'s experience (the brother) to dismiss statistical evidence affecting thousands. Individual variation exists but does not change population-level risk.',
+  mcq9:'C — The prefrontal cortex controls executive function: judgment, decision-making, impulse control, and working memory. It is the last brain region to fully develop (age 25) and the primary target of THC damage in adolescents.',
+  mcq10:'B — Private conversation with care ("Nakujali") preserves trust and creates a safe space for Sifa to be honest. Public confrontation drives denial. Going straight to parents without talking to Sifa first breaks the trust needed for real help.'
+};
+var mcqScore = 0, mcqChecked = false;
+function selectOpt(el, group, letter) {
+  if(mcqChecked) return;
+  document.querySelectorAll('#'+group+' .opt').forEach(function(o){ o.classList.remove('selected'); });
+  el.classList.add('selected'); el.dataset.chosen = letter;
+}
+function checkAllMCQ() {
+  mcqScore = 0; mcqChecked = true;
+  Object.keys(mcqAnswers).forEach(function(group) {
+    var correct = mcqAnswers[group];
+    var opts = document.querySelectorAll('#'+group+' .opt');
+    var chosen = null;
+    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen = o.dataset.chosen || o.querySelector('.opt-letter').textContent.trim(); });
+    opts.forEach(function(o){
+      var letter = o.querySelector('.opt-letter').textContent.trim();
+      if(letter===correct) o.classList.add('correct');
+      else if(o.classList.contains('selected') && letter!==correct) o.classList.add('wrong');
+    });
+    var fb = document.getElementById('fb_'+group);
+    if(chosen===correct){ mcqScore++; fb.innerHTML='<span class="kf">✓ Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
+    else { fb.innerHTML='<span class="km">✗ Incorrect.</span> Correct: <strong>'+correct+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
+    fb.style.display='block';
+  });
+}
+
+// ── FILL-IN-BLANK ─────────────────────────────────────────────
+var fbAns = {f1:['thc','tetrahydrocannabinol'],f2:['3','three','tatu'],f3:['25','twenty five'],f4:['28','twenty eight'],f5:['245']};
+var fbModels = {
+  f1:'THC (Tetrahydrocannabinol) — the psychoactive compound that binds to cannabinoid receptors in the brain causing euphoria, memory impairment, and paranoia.',
+  f2:'3 times — making cannabis smoke significantly more damaging to lung tissue than cigarette smoke per puff.',
+  f3:'25 years — the prefrontal cortex is the last brain region to complete development. Cannabis use before 25 disrupts this critical development permanently.',
+  f4:'28 days — THC is fat-soluble and stays stored in brain tissue for up to 4 weeks, continuously impairing memory even after the high has ended.',
+  f5:'Cap 245 — Narcotic Drugs and Psychotropic Substances Act. Cannabis possession is a criminal offence with potential imprisonment.'
+};
+var fillScore = 0, fillChecked = false;
+function checkFills() {
+  fillScore = 0; fillChecked = true;
+  Object.keys(fbAns).forEach(function(id){
+    var el = document.getElementById(id);
+    var val = el.value.toLowerCase().trim();
+    var ok = fbAns[id].some(function(a){ return val===a||val.includes(a); });
+    el.classList.toggle('correct',ok); el.classList.toggle('wrong',!ok);
+    if(ok) fillScore++;
+    var fb = document.getElementById('fb'+id.slice(1));
+    fb.innerHTML = ok ? '<span class="kf">✓ Correct! (1 mark)</span> '+fbModels[id] : '<span class="km">✗ Expected: <strong>'+fbAns[id][0]+'</strong></span> — '+fbModels[id];
+    fb.style.display='block';
+  });
+}
+
+// ── SHORT ANSWER ──────────────────────────────────────────────
+var saScores = {};
+function showFb(id,html){ var e=document.getElementById(id); e.innerHTML=html; e.style.display='block'; }
+function gradeKw(qid,fbid,kws,req,pts,model){
+  var val=document.getElementById(qid).value.toLowerCase();
+  var found=kws.filter(function(k){ return val.includes(k); });
+  var awarded=Math.round((Math.min(found.length,req)/req)*pts);
+  saScores[qid]=awarded;
+  var grade=awarded>=pts?'Excellent 🎉':awarded>0?'Good attempt 👍':'Needs improvement 📖';
+  var fs=found.length?'<br><span class="kf">✓ Key points: '+found.join(', ')+'</span>':'';
+  var miss=kws.filter(function(k){ return !val.includes(k); }).slice(0,5);
+  var ms=miss.length?'<br><span class="km">✗ Missing: '+miss.join(', ')+'</span>':'';
+  showFb(fbid,'<strong>'+awarded+'/'+pts+' — '+grade+'</strong>'+fs+ms+'<br><em style="font-size:.78rem;color:var(--soft);">Model: '+model+'</em>');
+}
+
+// ── JOURNAL ───────────────────────────────────────────────────
+function saveJournal(slug, textarea) {
+  var text = textarea.value.trim();
+  if(!text) return;
+  var key = 'arise_journal_'+slug;
+  var entries = JSON.parse(localStorage.getItem(key)||'[]');
+  entries.unshift({text:text, date: new Date().toLocaleDateString('en-KE')});
+  if(entries.length>10) entries=entries.slice(0,10);
+  localStorage.setItem(key, JSON.stringify(entries));
+  textarea.value='';
+  var fb=document.getElementById('journalFb');
+  if(fb){ fb.textContent='✓ Saved to your private journal / Imehifadhiwa kwa jarida lako'; fb.style.color='#2e7d32'; }
+}
+
+// ── TOTAL SCORE & CERTIFICATE ─────────────────────────────────
+function showTotalScore() {
+  if(!mcqChecked) checkAllMCQ();
+  if(!fillChecked) checkFills();
+  var saTotal=Object.values(saScores).reduce(function(a,b){ return a+b; },0);
+  var total=mcqScore+fillScore+saTotal;
+  var max=25;
+  var pct=Math.round((total/max)*100);
+  var grade=pct>=80?'Exceeds Expectation 🎉':pct>=60?'Meets Expectation 👍':pct>=40?'Approaches Expectation 📖':'Below Expectation 💪';
+  var slug=document.body.dataset.lessonSlug||'effects-of-cannabis';
+  var mslug=document.body.dataset.moduleSlug||'drug-abuse';
+  // Save score
+  fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:slug,module_slug:mslug,score:total,total:max,percent:pct})}).catch(function(){});
+  if(pct>=60){
+    document.getElementById('scoreBoxPass').style.display='block';
+    document.getElementById('scoreNumPass').textContent=total+' / '+max+' ('+pct+'%)';
+    document.getElementById('gradeLabelPass').textContent=grade;
+    document.getElementById('certBtn').href='/?p=certificate&module='+mslug+'&score='+pct;
+    document.getElementById('retryBox').style.display='none';
+  } else {
+    document.getElementById('retryBox').style.display='block';
+    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). You need 15/25 (60%) to pass.';
+    document.getElementById('scoreBoxPass').style.display='none';
+  }
+}
+function resetQuiz(){
+  mcqChecked=false; mcqScore=0; fillScore=0; fillChecked=false; saScores={};
+  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected','correct','wrong'); });
+  document.querySelectorAll('.mcq-fb').forEach(function(f){ f.style.display='none'; });
+  document.querySelectorAll('.fill-blank').forEach(function(f){ f.value=''; f.classList.remove('correct','wrong'); });
+  document.querySelectorAll('.fb-box').forEach(function(f){ f.style.display='none'; });
+  document.querySelectorAll('.sa-area').forEach(function(f){ f.value=''; });
+  document.getElementById('retryBox').style.display='none';
+  document.getElementById('scoreBoxPass').style.display='none';
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

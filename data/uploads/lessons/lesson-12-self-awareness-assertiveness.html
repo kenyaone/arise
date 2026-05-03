@@ -1,0 +1,54 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🪞 Self-Awareness — Knowing Yourself</div>
+<p class="ar-p">Self-awareness is the ability to honestly recognise your own emotions, thoughts, strengths, weaknesses, and the impact your behaviour has on others. It is the foundation of all personal growth.</p>
+<div class="ar-key"><strong>🔑 Self-Awareness includes:</strong> Emotional awareness (recognising your feelings) | Accurate self-assessment (knowing your true strengths and weaknesses) | Self-confidence (trusting your own worth).</div>
+<table class="ar-table"><tr><th>Low Self-Awareness</th><th>High Self-Awareness</th></tr>
+<tr><td>Blames others for everything</td><td>Takes responsibility for own actions</td></tr>
+<tr><td>Doesn't know their triggers</td><td>Knows what makes them angry/anxious and why</td></tr>
+<tr><td>Overestimates or underestimates abilities</td><td>Has realistic view of strengths and weaknesses</td></tr>
+<tr><td>Reacts impulsively</td><td>Pauses, reflects, then responds</td></tr></table>
+<p class="ar-p"><strong>How to build self-awareness:</strong> Keep a journal. Ask trusted people for honest feedback. Practise mindfulness — pause before reacting. Reflect on what went well and what didn't each day.</p>
+<div class="ar-scenario"><strong>🇰🇪 Mwende, Machakos:</strong> Always got into arguments in class. Through journaling, she realised she got angry when she felt her ideas weren't respected. Once she understood her trigger, she started raising her hand calmly instead of snapping — and people actually started listening more.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">🦁 Assertiveness — Speaking Up Respectfully</div>
+<p class="ar-p">Assertiveness means expressing your needs, feelings, and boundaries <strong>directly, honestly, and respectfully</strong> — without aggression and without being a pushover.</p>
+<table class="ar-table"><tr><th>Style</th><th>How They Act</th><th>Result</th></tr>
+<tr><td>Passive</td><td>Never says what they need; agrees to everything</td><td>Resentment, stress, others take advantage</td></tr>
+<tr><td>Aggressive</td><td>Demands, shouts, threatens to get their way</td><td>Conflict, damaged relationships</td></tr>
+<tr><td><strong>Assertive ✓</strong></td><td>States needs calmly and clearly; listens to others</td><td>Respect, healthy relationships, reduced stress</td></tr></table>
+<div class="ar-key"><strong>🔑 Assertive Formula:</strong> "I feel [emotion] when [situation] because [reason]. I need [specific request]."<br>Example: "I feel uncomfortable when you touch my hair without asking. Please ask first."</div>
+<div class="ar-scenario"><strong>🇰🇪 Baraka, Mombasa:</strong> His uncle kept asking him to skip school to help at the shop. He used to say yes even though he wanted to go to school. Learning assertiveness, he said: "Uncle, I value helping you but I need to attend school every day — my future depends on it. Can we arrange weekend help instead?" His uncle agreed and respected him more for it.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Pendo's group leader assigned her to present a section she knows nothing about. She sits quietly feeling panicked but says nothing. Which communication style is Pendo displaying? What should she do instead?</p>
+<textarea class="ar-textarea" id="q1" placeholder="Style? What should she do?"></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['passive','assertive','speak','say','ask','tell','leader','different','swap','help','section'],'fb1',1,2,'Pendo is being passive. She should be assertive: "I appreciate the assignment but I'm not confident with this section. Could I present [different section] instead, or can we have time to discuss it?"')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Write the assertive formula and complete it for this situation: A classmate keeps copying your answers during exams.</p>
+<textarea class="ar-textarea" id="q2" placeholder="Use the formula: I feel... when... because... I need..."></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['i feel','when','because','i need','uncomfortable','unfair','stop','copy','own'],'fb2',1,2,'Example: "I feel uncomfortable and at risk when you copy my answers during exams because it could get us both in trouble. I need you to do your own work." — Calm, specific, no aggression.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. Juma responds to every request from friends by saying yes even when he's overwhelmed. He never expresses his own needs. What is this communication style called, and what is one long-term consequence?</p>
+<textarea class="ar-textarea" id="q3" placeholder="Style and consequence?"></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['passive','pushover','resentment','stress','burnout','exploited','taken advantage'],'fb3',1,2,'Passive communication style. Long-term consequences include: resentment (anger building inside), burnout, being taken advantage of, and losing your own sense of identity and boundaries.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. Name TWO practical ways to build self-awareness.</p>
+<input class="ar-input" id="q4" placeholder="Two methods...">
+<button class="ar-btn" onclick="chk('q4',['journal','feedback','mindful','reflect','meditat','pause'],'fb4',1,'Methods include: keeping a journal, seeking honest feedback from trusted people, practising mindfulness/meditation, and daily reflection on your actions and reactions.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(6)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Shisha / Hookah — Myths, Chemicals & Real Risks | ARISE Health Education</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+
+/* ── TOP BAR ── */
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+
+/* ── LANG BAR ── */
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);font-size:.8rem;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;white-space:nowrap;}
+
+/* ── SLIDES ── */
+.slides-wrap{max-width:100%;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── CONTENT BLOCKS ── */
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+
+/* Content boxes */
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+
+/* Sheng box */
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.sheng-box .sheng-trans{color:rgba(255,255,255,.45);font-size:.75rem;font-style:italic;margin-top:4px;}
+
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+
+/* VIDEO SLOT */
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.video-placeholder p{color:rgba(255,255,255,.65);font-size:.85rem;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+
+/* SCENARIO */
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+
+/* JOURNAL */
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;}
+
+/* QUIZ */
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.q-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.q-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:9px;line-height:1.55;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;min-width:120px;font-size:.88rem;padding:2px 6px;outline:none;text-align:center;color:var(--dark);font-family:inherit;}
+.fill-blank.correct{border-bottom:2px solid var(--ok);background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 8px;}
+.fill-blank.wrong{border-bottom:2px solid var(--no);background:#ffebee;color:#b71c1c;border-radius:4px;padding:2px 8px;}
+.fb-box{background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.8rem;display:none;line-height:1.65;}
+.kf{color:var(--ok);font-weight:700;}
+.km{color:var(--no);font-weight:700;}
+.sa-area{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.85rem;min-height:70px;resize:vertical;font-family:inherit;color:var(--dark);}
+.sa-area:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
+.grade-btn:hover{background:var(--pri-l);}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-box.fail{background:linear-gradient(135deg,#bf360c,#e64a19);color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.cert-btn{display:inline-block;background:#fff;color:var(--pri);padding:10px 28px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:4px;}
+.retry-box{background:#fff3e0;border:2px solid var(--acc);border-radius:var(--radius);padding:16px;text-align:center;margin-top:12px;display:none;}
+.retry-box p{font-size:.88rem;color:#6b4a00;margin-bottom:10px;}
+
+/* NAV BAR */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+
+/* EN/SW toggle */
+.en{display:block;} .sw{display:none;}
+.en-inline{display:inline;} .sw-inline{display:none;}
+
+@media(max-width:600px){
+  .top-bar-left .lesson-name{font-size:.82rem;}
+  .slide{padding:13px 12px 8px;}
+  .info-table{font-size:.76rem;}
+  .nav-btn{padding:8px 14px;font-size:.78rem;}
+}
+
+/* === ARISE FULLSCREEN READABILITY === */
+.slides-wrap{max-width:100%!important;padding:0!important;}
+.slide{padding:28px 6vw 20px!important;}
+.slide-head{font-size:1.15rem!important;padding:10px 18px!important;margin-bottom:18px!important;}
+body{font-size:16px!important;}
+p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!important;}
+.lo-box{padding:20px 24px!important;}
+.lo-box ol li{font-size:.95rem!important;line-height:1.7!important;margin-bottom:8px!important;}
+.lo-box h3{font-size:1rem!important;margin-bottom:12px!important;}
+.inquiry{font-size:.95rem!important;padding:14px 18px!important;margin-top:12px!important;}
+.key-term{padding:14px 18px!important;font-size:.93rem!important;margin-bottom:10px!important;}
+.warn-box{padding:14px 18px!important;font-size:.93rem!important;margin-bottom:10px!important;}
+.example-box{padding:16px 20px!important;font-size:.93rem!important;}
+.info-table{font-size:.88rem!important;width:100%!important;}
+.info-table th,.info-table td{padding:11px 14px!important;}
+.mcq-block{padding:18px 20px!important;margin-bottom:14px!important;}
+.q-text{font-size:.97rem!important;line-height:1.7!important;margin-bottom:12px!important;}
+.opt{font-size:.93rem!important;padding:11px 14px!important;margin-bottom:8px!important;}
+.mcq-fb{font-size:.88rem!important;padding:12px 16px!important;}
+.fill-blank{font-size:.95rem!important;padding:9px 14px!important;}
+.sa-area{min-height:100px!important;font-size:.95rem!important;padding:12px!important;}
+.grade-btn,.check-btn{font-size:.88rem!important;padding:10px 20px!important;margin-top:10px!important;}
+.score-btn{max-width:520px!important;margin:16px auto!important;display:block!important;font-size:1.05rem!important;padding:16px!important;}
+.nav-bar{padding:12px 6vw!important;}
+.nav-inner{max-width:100%!important;}
+.top-bar{padding:10px 6vw!important;}
+.lang-bar{padding:8px 6vw!important;}
+.scenario-wrap{padding:18px 20px!important;margin-bottom:16px!important;}
+.scenario-ctx,.scenario-q{font-size:.95rem!important;line-height:1.75!important;}
+.choice{font-size:.92rem!important;padding:12px 16px!important;margin-bottom:8px!important;}
+.s-result{font-size:.9rem!important;padding:14px 18px!important;}
+.score-box{padding:24px!important;}
+.score-num{font-size:2.2rem!important;}
+.cert-btn{padding:14px 28px!important;font-size:1rem!important;}
+.sheng-box{padding:16px 20px!important;font-size:.93rem!important;}
+.quiz-part-head{font-size:.95rem!important;padding:10px 16px!important;margin:20px 0 12px!important;}
+
+</style>
+</head>
+<body data-lesson-id="0" data-lesson-slug="shisha-hookah" data-module-slug="shisha">
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- ═══ SLIDE 1 — LEARNING OUTCOMES ═══ -->
+<div class="slide active">
+<div class="slide-head">🎯 <span class="en">Learning Outcomes</span><span class="sw">Matokeo ya Kujifunza</span><span class="sh">Learning Outcomes</span></div>
+<div class="lo-box">
+<h3><span class="en">By the end of this lesson, you will be able to:</span><span class="sw">Mwisho wa somo hili, utaweza:</span><span class="sh">Mwisho wa lesson hii, utaweza:</span></h3>
+<ol>
+<li><span class="en">Explain what shisha is and how it is produced and consumed</span><span class="sw">Eleza shisha ni nini na jinsi inavyotengenezwa na kutumiwa</span><span class="sh">Explain shisha ni nini na jinsi inatengenezwa na kutumiwa</span></li>
+<li><span class="en">Debunk the top myths about shisha being safer than cigarettes using scientific evidence</span><span class="sw">Pinga hadithi kuu za shisha kuwa salama zaidi kuliko sigara kwa kutumia ushahidi wa kisayansi</span><span class="sh">Debunk myths za shisha kuwa safer than cigarettes kwa kutumia scientific evidence</span></li>
+<li><span class="en">Identify the specific chemicals in shisha smoke and their health effects</span><span class="sw">Tambua kemikali maalum katika moshi wa shisha na athari zake za kiafya</span><span class="sh">Identify specific chemicals kwa shisha smoke na health effects zao</span></li>
+<li><span class="en">Explain how shisha creates nicotine addiction and the social normalisation risk</span><span class="sw">Eleza jinsi shisha inavyosababisha uraibu wa nikotini na hatari ya kawaida ya kijamii</span><span class="sh">Explain jinsi shisha inasababisha nicotine addiction na social normalisation risk</span></li>
+<li><span class="en">Apply refusal skills to shisha peer pressure situations in Kenya</span><span class="sw">Tumia ujuzi wa kukataa katika hali za shinikizo la shisha Kenya</span><span class="sh">Apply refusal skills kwa shisha peer pressure situations Kenya</span></li>
+</ol>
+<div class="inquiry"><strong><span class="en">Big Question:</span><span class="sw">Swali Kuu:</span><span class="sh">Big Question:</span></strong> <span class="en">Your friends at the Nairobi hookah lounge say "Shisha is just flavoured steam — it's not even a real drug." Is this true? What do you say?</span><span class="sw">Marafiki wako katika baa ya shisha ya Nairobi wanasema "Shisha ni mvuke wa ladha tu — si dawa hata." Je, hii ni kweli? Unasema nini?</span><span class="sh">Marafiki wako kwa hookah lounge ya Nairobi wanasema "Shisha ni flavoured steam tu — si drug hata." Je, hii ni kweli? Unasema nini?</span></div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 2 ═══ -->
+<div class="slide">
+<div class="slide-head">💨 <span class="en">What Is Shisha? — The Truth Behind the Smoke</span><span class="sw">Shisha ni Nini? — Ukweli Nyuma ya Moshi</span><span class="sh">What Is Shisha? — Truth Behind the Smoke</span></div>
+<p class="tp"><span class="en">Shisha (also called hookah, water pipe, narghile or hubble bubble) is a device for smoking specially prepared tobacco called maassel. Charcoal heats the tobacco, and smoke passes through water before being inhaled.</span><span class="sw">Shisha (pia inaitwa hookah, bomba la maji, narghile) ni kifaa cha kuvuta tumbaku iliyoandaliwa maalum inayoitwa maassel. Mkaa huipasha joto tumbaku, na moshi hupita kwenye maji kabla ya kuvutwa.</span><span class="sh">Shisha (also called hookah, water pipe, narghile or hubble bubble) is a device for smoking specially prepared tobacco called maassel. Charcoal heats the tobacco, and smoke passes through water before being inhaled.</span></p>
+<div class="warn-box"><strong>⚠️ </strong><span class="en">The water does NOT filter out harmful chemicals — this is the biggest shisha myth. Water cools the smoke (making it feel smoother) but dangerous toxins pass through unchanged.</span><span class="sw">Maji HAYAFILTRI kemikali hatari — hii ni hadithi kubwa zaidi ya shisha. Maji hupoza moshi lakini sumu hatari hupita bila kubadilika.</span></div>
+<table class="info-table"><tr><th><span class="en">Shisha Fact EN</span><span class="sw">Ukweli</span></th><th><span class="en">Reality EN</span><span class="sw">Ukweli Halisi</span></th></tr>
+<tr><td><span class="en">One shisha session lasts</span><span class="sw">Kipindi kimoja cha shisha</span></td><td><span class="en">45–60 minutes on average</span><span class="sw">Dakika 45–60 kwa wastani</span></td></tr>
+<tr><td><span class="en">Smoke inhaled per session</span><span class="sw">Moshi unaovutwa kwa kipindi</span></td><td><span class="en">Up to 200 puffs vs 20 for a cigarette</span><span class="sw">Hadi mapigo 200 vs 20 kwa sigara</span></td></tr>
+<tr><td><span class="en">Tar per session</span><span class="sw">Lami kwa kipindi</span></td><td><span class="en">36× more than one cigarette</span><span class="sw">Mara 36 zaidi ya sigara moja</span></td></tr>
+<tr><td><span class="en">Carbon monoxide</span><span class="sw">Monoksidi kaboni</span></td><td><span class="en">Up to 40× more than one cigarette</span><span class="sw">Hadi mara 40 zaidi ya sigara</span></td></tr>
+<tr><td><span class="en">Nicotine per session</span><span class="sw">Nikotini kwa kipindi</span></td><td><span class="en">Equivalent to smoking 10 cigarettes</span><span class="sw">Sawa na kuvuta sigara 10</span></td></tr>
+</table>
+<div class="key-term"><strong><span class="en">🔑 Maassel</span><span class="sw">🔑 Maassel</span></strong> <span class="en">The tobacco used in shisha — soaked in molasses, honey, fruit flavours and glycerine. The sweet taste and fruity smell hide the tobacco and nicotine.</span><span class="sw">Tumbaku inayotumiwa katika shisha — iliyolowekwa katika molasi, asali, ladha za matunda na glycerine.</span></div>
+
+</div>
+
+<!-- ═══ SLIDE 3 ═══ -->
+<div class="slide">
+<div class="slide-head">🧪 <span class="en">Chemicals in Shisha Smoke — What You're Really Inhaling</span><span class="sw">Kemikali katika Moshi wa Shisha — Unachovuta Kweli</span><span class="sh">Chemicals za Shisha Smoke — Unachovuta Kweli</span></div>
+<table class="info-table"><tr><th><span class="en">Chemical EN</span><span class="sw">Kemikali</span></th><th><span class="en">Source EN</span><span class="sw">Chanzo</span></th><th><span class="en">Health Effect EN</span><span class="sw">Athari za Kiafya</span></th></tr>
+<tr><td><span class="en">Nicotine</span><span class="sw">Nikotini</span></td><td><span class="en">Tobacco leaf</span><span class="sw">Jani la tumbaku</span></td><td><span class="en">Highly addictive — rewires brain reward system</span><span class="sw">Uraibu sana — inabadilisha mfumo wa tuzo wa ubongo</span></td></tr>
+<tr><td><span class="en">Carbon monoxide</span><span class="sw">CO</span></td><td><span class="en">Charcoal combustion</span><span class="sw">Mwako wa mkaa</span></td><td><span class="en">Blocks oxygen — causes heart disease and hypoxia</span><span class="sw">Inazuia oksijeni — ugonjwa wa moyo</span></td></tr>
+<tr><td><span class="en">Tar</span><span class="sw">Lami</span></td><td><span class="en">Burning tobacco</span><span class="sw">Tumbaku inayowaka</span></td><td><span class="en">Coats lung tissue — causes cancer</span><span class="sw">Inafunika tishu za mapafu — saratani</span></td></tr>
+<tr><td><span class="en">Heavy metals</span><span class="sw">Metali nzito</span></td><td><span class="en">Hookah hose and bowl</span><span class="sw">Bomba na bakuli la hookah</span></td><td><span class="en">Lead, arsenic, chromium — organ damage</span><span class="sw">Risasi, arseniki — uharibifu wa viungo</span></td></tr>
+<tr><td><span class="en">Formaldehyde</span><span class="sw">Formaldehyde</span></td><td><span class="en">Combustion byproduct</span><span class="sw">Bidhaa ya mwako</span></td><td><span class="en">Known carcinogen — causes cancer</span><span class="sw">Kansajeni inayojulikana — inasababisha saratani</span></td></tr>
+<tr><td><span class="en">Benzene</span><span class="sw">Benzeni</span></td><td><span class="en">Charcoal combustion</span><span class="sw">Mwako wa mkaa</span></td><td><span class="en">Causes leukaemia — blood cancer</span><span class="sw">Inasababisha lukemia — saratani ya damu</span></td></tr>
+</table>
+<div class="warn-box"><strong>⚠️ </strong><span class="en">Sharing a shisha pipe directly transmits tuberculosis (TB), herpes, hepatitis, COVID-19 and other respiratory infections. Mouthpieces do NOT fully prevent transmission even when new.</span><span class="sw">Kushiriki bomba la shisha kunapelekea moja kwa moja kifua kikuu (TB), herpes, hepatitis na maambukizi mengine ya kupumua.</span></div>
+<p class="tp"><span class="en">The charcoal used in shisha produces its own toxic smoke separate from the tobacco. Even herbal/tobacco-free shisha uses charcoal — meaning carbon monoxide and benzene are still inhaled.</span><span class="sw">Mkaa unaotumika katika shisha unazalisha moshi wake wenye sumu tofauti na tumbaku. Hata shisha ya mimea/isiyo na tumbaku hutumia mkaa — ikimaanisha CO na benzeni bado zinapumuzwa.</span><span class="sh">The charcoal used in shisha produces its own toxic smoke separate from the tobacco. Even herbal/tobacco-free shisha uses charcoal — meaning carbon monoxide and benzene are still inhaled.</span></p>
+
+</div>
+
+<!-- ═══ SLIDE 4 ═══ -->
+<div class="slide">
+<div class="slide-head">🚫 <span class="en">Busting the Shisha Myths</span><span class="sw">Kupiga Hadithi za Shisha</span><span class="sh">Busting Shisha Myths</span></div>
+<table class="info-table"><tr><th><span class="en">Myth EN</span><span class="sw">Hadithi</span></th><th><span class="en">Scientific Reality EN</span><span class="sw">Ukweli wa Kisayansi</span></th></tr>
+<tr><td><span class="en">"The water filters toxins"</span><span class="sw">"Maji hufiltri sumu"</span></td><td><span class="en">FALSE. Water cools smoke but does NOT remove tar, CO, nicotine, or heavy metals.</span><span class="sw">UONGO. Maji hupoza moshi lakini HAYAONDOI lami, CO, nikotini, au metali nzito.</span></td></tr>
+<tr><td><span class="en">"It's just flavoured steam"</span><span class="sw">"Ni mvuke wa ladha tu"</span></td><td><span class="en">FALSE. Shisha smoke contains all the same carcinogens as cigarettes plus charcoal toxins.</span><span class="sw">UONGO. Moshi wa shisha una kansajeni zote kama sigara pamoja na sumu ya mkaa.</span></td></tr>
+<tr><td><span class="en">"No tobacco — no harm"</span><span class="sw">"Bila tumbaku — bila madhara"</span></td><td><span class="en">FALSE. Herbal shisha still uses charcoal producing CO and benzene. Addiction risk remains.</span><span class="sw">UONGO. Shisha ya mimea bado hutumia mkaa ikitoa CO na benzeni.</span></td></tr>
+<tr><td><span class="en">"One session is no big deal"</span><span class="sw">"Kipindi kimoja si tatizo"</span></td><td><span class="en">FALSE. One session = 200 puffs, 36× more tar, 40× more CO than one cigarette.</span><span class="sw">UONGO. Kipindi kimoja = mapigo 200, mara 36 zaidi ya lami, mara 40 zaidi ya CO.</span></td></tr>
+<tr><td><span class="en">"It's less addictive"</span><span class="sw">"Ni uraibu mdogo"</span></td><td><span class="en">FALSE. One session delivers nicotine equivalent to 10 cigarettes — high addiction potential.</span><span class="sw">UONGO. Kipindi kimoja kinatoa nikotini sawa na sigara 10 — hatari kubwa ya uraibu.</span></td></tr>
+<tr><td><span class="en">"It's a social activity, not a drug"</span><span class="sw">"Ni shughuli ya kijamii, si dawa"</span></td><td><span class="en">FALSE. Nicotine is classified as a drug. Social settings are how most addictions begin.</span><span class="sw">UONGO. Nikotini ni dawa. Mazingira ya kijamii ndiyo jinsi uraibu mwingi unavyoanza.</span></td></tr>
+</table>
+<div class="example-box"><strong><span class="en">The Kenya Shisha Scene</span><span class="sw">Hali ya Shisha Kenya</span></strong><span class="en">Shisha lounges are increasingly common in Nairobi, Mombasa, Nakuru and other Kenyan towns, often targeting youth through attractive settings, music, and fruity flavours. Some are unregulated. Kenya's Tobacco Control Act 2007 applies to shisha — smoking is banned in public places and sale to under-18s is illegal.</span><span class="sw">Baa za shisha zinaenea zaidi Nairobi, Mombasa na miji mingine ya Kenya, mara nyingi ikilenga vijana kupitia mazingira ya kuvutia na ladha za matunda.</span></div>
+
+</div>
+
+<!-- ═══ SLIDE 5 ═══ -->
+<div class="slide">
+<div class="slide-head">🔗 <span class="en">Addiction & Social Normalisation</span><span class="sw">Uraibu na Kawaida ya Kijamii</span><span class="sh">Addiction na Social Normalisation</span></div>
+<p class="tp"><span class="en">Nicotine addiction from shisha develops faster than most people expect. Because sessions are long and social, the brain receives repeated high-dose nicotine — training it to associate relaxation and social bonding with nicotine.</span><span class="sw">Uraibu wa nikotini kutoka kwa shisha hukua haraka zaidi kuliko watu wengi wanavyotarajia. Kwa sababu vipindi ni virefu na vya kijamii, ubongo hupokea nikotini ya dozi nyingi mara kwa mara.</span><span class="sh">Nicotine addiction from shisha develops faster than most people expect. Because sessions are long and social, the brain receives repeated high-dose nicotine — training it to associate relaxation and social bonding with nicotine.</span></p>
+<table class="info-table"><tr><th><span class="en">Week EN</span><span class="sw">Wiki</span></th><th><span class="en">Typical Experience EN</span><span class="sw">Uzoefu wa Kawaida</span></th><th><span class="en">Warning Sign EN</span><span class="sw">Ishara ya Onyo</span></th></tr>
+<tr><td><span class="en">Week 1</span><span class="sw">Wiki 1</span></td><td><span class="en">First session — pleasant, relaxed, curious</span><span class="sw">Kipindi cha kwanza — kupendeza</span></td><td><span class="en">Brain notes dopamine reward</span><span class="sw">Ubongo hurekodia tuzo ya dopamine</span></td></tr>
+<tr><td><span class="en">Week 2–4</span><span class="sw">Wiki 2–4</span></td><td><span class="en">Regular sessions with friends — "part of the vibe"</span><span class="sw">Vipindi vya kawaida — "sehemu ya mazingira"</span></td><td><span class="en">Cravings between sessions start</span><span class="sw">Tamaa kati ya vipindi zinaanza</span></td></tr>
+<tr><td><span class="en">Month 2–3</span><span class="sw">Mwezi 2–3</span></td><td><span class="en">Going to the lounge even when you didn't plan to</span><span class="sw">Kwenda baa hata bila mpango</span></td><td><span class="en">Tolerance building — needing more to feel relaxed</span><span class="sw">Kuhitaji zaidi kuhisi utulivu</span></td></tr>
+<tr><td><span class="en">Month 4+</span><span class="sw">Mwezi 4+</span></td><td><span class="en">Irritable without shisha, thinking about it often</span><span class="sw">Hasira bila shisha, ukifikiria mara kwa mara</span></td><td><span class="en">Nicotine dependence — medical condition</span><span class="sw">Utegemezi wa nikotini — hali ya kiafya</span></td></tr>
+</table>
+<div class="sheng-box"><div class="sheng-head">🗣️ SHENG</div>"Watu wanasema 'tunaenda kushisha' kana kwamba ni kawaida kama chai. Lakini nikotini inakufanya 'addicted' bila hata kujua."<div class="sheng-trans">People say "let's go shisha" as casually as tea. But nicotine is addicting you without you noticing.</div></div>
+
+</div>
+
+<!-- ═══ SLIDE 6 ═══ -->
+<div class="slide">
+<div class="slide-head">🎬 <span class="en">Video: The Truth About Shisha</span><span class="sw">Video: Ukweli Kuhusu Shisha</span><span class="sh">Video: Truth About Shisha</span></div>
+<div class="video-slot">
+  <video id="lessonVideo" controls playsinline style="display:none;width:100%;max-height:340px;background:#000;"></video>
+  <div class="video-placeholder" id="videoPlaceholder">
+    <div class="play-icon">🎬</div>
+    <p><span class="en">Video will appear here when uploaded by your teacher.</span><span class="sw">Video itaonekana hapa ikipakiwa na mwalimu wako.</span></p>
+    <span class="upload-note"><span class="en">Admin: Upload a video lesson to this module</span></span>
+  </div>
+</div>
+
+</div>
+
+<!-- ═══ SLIDE 7 ═══ -->
+<div class="slide">
+<div class="slide-head">🎭 <span class="en">Scenario: Handling Shisha Pressure</span><span class="sw">Hali: Kushughulikia Shinikizo la Shisha</span><span class="sh">Scenario: Kushughulikia Shisha Pressure</span></div>
+<div class="scenario-wrap" id="sc1">
+<div class="scenario-ctx"><span class="en">Grace, 18, is out with her university friends at a Nairobi hookah lounge. Everyone is sharing a pipe. Her friend says "Just try it — it's only flavours, not a real drug."</span></div>
+<div class="scenario-q"><span class="en">What should Grace do?</span></div>
+<div class="choices">
+<button class="choice" onclick="scPick(this,'sc1','good','sc1_r0')">
+<span class="en">"Actually, shisha delivers more nicotine than 10 cigarettes and has 36x more tar than a cigarette. I'll stick with my drink." Then she doesn't touch the pipe.</span></button>
+<div class="s-result good" id="sc1_r0" style="display:none;"><span class="en">✅ Grace uses real facts confidently. She corrects the myth without being preachy, and makes her decision clear. This is the ideal response.</span></div>
+<button class="choice" onclick="scPick(this,'sc1','bad','sc1_r1')">
+<span class="en">Try one puff to be polite, then stop</span></button>
+<div class="s-result bad" id="sc1_r1" style="display:none;"><span class="en">❌ "Just one" with nicotine is how addiction begins. The brain rewards the first exposure — creating a craving for the next one. There is no polite amount of addiction.</span></div>
+<button class="choice" onclick="scPick(this,'sc1','ok','sc1_r2')">
+<span class="en">Leave the lounge immediately without explaining</span></button>
+<div class="s-result ok" id="sc1_r2" style="display:none;"><span class="en">⚠️ Leaving is a valid choice, but speaking up helps her friends too. Silent departure misses an opportunity to share the facts.</span></div>
+</div>
+<button class="retry-btn" onclick="scRetry('sc1')">🔄 Try again</button>
+</div>
+<div class="scenario-wrap" id="sc2">
+<div class="scenario-ctx"><span class="en">Peter sees his younger sister (15) posting photos on Instagram at a shisha lounge with older students.</span></div>
+<div class="scenario-q"><span class="en">What is the BEST response from Peter?</span></div>
+<div class="choices">
+<button class="choice" onclick="scPick(this,'sc2','ok','sc2_r0')">
+<span class="en">Report her to parents immediately without talking to her</span></button>
+<div class="s-result ok" id="sc2_r0" style="display:none;"><span class="en">⚠️ Going straight to parents without talking to her first can damage trust and push her away. Better to start with a private conversation.</span></div>
+<button class="choice" onclick="scPick(this,'sc2','good','sc2_r1')">
+<span class="en">Talk to her privately — share the health facts, express concern, not judgment. Then suggest alternatives. Mention it to a parent if she refuses to listen.</span></button>
+<div class="s-result good" id="sc2_r1" style="display:none;"><span class="en">✅ Private conversation first. Share facts without lecturing. Express care. If she's resistant, then involve a trusted adult — she's under 18 and this is a legal and health issue.</span></div>
+<button class="choice" onclick="scPick(this,'sc2','bad','sc2_r2')">
+<span class="en">Like her photo and ignore it</span></button>
+<div class="s-result bad" id="sc2_r2" style="display:none;"><span class="en">❌ Normalising the behaviour by engaging positively sends the wrong message. She is 15, below legal age, and being exposed to a health risk. Silence is not support.</span></div>
+</div>
+<button class="retry-btn" onclick="scRetry('sc2')">🔄 Try again</button>
+</div>
+
+</div>
+
+<!-- ═══ SLIDE 8 ═══ -->
+<div class="slide">
+<div class="slide-head">🛡️ <span class="en">Saying No to Shisha & Getting Help</span><span class="sw">Kusema Hapana kwa Shisha na Kupata Msaada</span><span class="sh">Kusema No kwa Shisha na Kupata Help</span></div>
+<p class="tp"><span class="en">You have the right to say no in any social setting. Use facts — they are more powerful than excuses:</span><span class="sw">Una haki ya kusema hapana katika mazingira yoyote ya kijamii. Tumia ukweli — una nguvu zaidi kuliko udhuru:</span><span class="sh">You have the right to say no in any social setting. Use facts — they are more powerful than excuses:</span></p>
+<table class="info-table"><tr><th><span class="en">If They Say EN</span><span class="sw">Wakisema</span></th><th><span class="en">You Say EN</span><span class="sw">Unasema</span></th><th><span class="en">Why It Works EN</span><span class="sw">Kwa Nini Inafanya Kazi</span></th></tr>
+<tr><td><span class="en">"It's just steam"</span><span class="sw">"Ni mvuke tu"</span></td><td><span class="en">"Actually, shisha has 36x more tar than a cigarette."</span><span class="sw">"Ukweli, shisha ina lami mara 36 zaidi ya sigara."</span></td><td><span class="en">Facts shut down myths instantly</span><span class="sw">Ukweli unafunga hadithi mara moja</span></td></tr>
+<tr><td><span class="en">"One session won't hurt"</span><span class="sw">"Kipindi kimoja"</span></td><td><span class="en">"One session = 10 cigarettes of nicotine. I'm good."</span><span class="sw">"Kipindi kimoja = nikotini ya sigara 10. Niko sawa."</span></td><td><span class="en">Specific number is persuasive</span><span class="sw">Nambari maalum ina nguvu</span></td></tr>
+<tr><td><span class="en">"Everyone does it"</span><span class="sw">"Kila mtu anafanya"</span></td><td><span class="en">"I make my own health decisions."</span><span class="sw">"Ninafanya maamuzi yangu ya kiafya."</span></td><td><span class="en">Asserts autonomy without argument</span><span class="sw">Inadai uhuru bila ugomvi</span></td></tr>
+<tr><td><span class="en">"You're boring"</span><span class="sw">"Una boring"</span></td><td><span class="en">"I'd rather be boring than have lung cancer."</span><span class="sw">"Nipendelee kuwa boring kuliko kuwa na saratani."</span></td><td><span class="en">Humor deflects mockery</span><span class="sw">Ucheshi unapinga dharau</span></td></tr>
+</table>
+<p class="tp"><span class="en">If you or someone you know is already addicted to shisha/nicotine:</span><span class="sw">Kama wewe au mtu unayemjua tayari ana uraibu wa shisha/nikotini:</span><span class="sh">If you or someone you know is already addicted to shisha/nicotine:</span></p>
+<table class="info-table"><tr><th><span class="en">Resource EN</span><span class="sw">Rasilimali</span></th><th><span class="en">Contact EN</span><span class="sw">Wasiliano</span></th></tr>
+<tr><td><span class="en">NACADA Helpline</span><span class="sw">NACADA</span></td><td><span class="en">0800 723 253 (Free 24/7)</span><span class="sw">0800 723 253</span></td></tr>
+<tr><td><span class="en">Kenya Tobacco-Free Initiative</span><span class="sw">Mpango wa Kenya bila Tumbaku</span></td><td><span class="en">Ministry of Health Kenya</span><span class="sw">Wizara ya Afya</span></td></tr>
+<tr><td><span class="en">School counsellor</span><span class="sw">Mshauri wa shule</span></td><td><span class="en">First step — free and confidential</span><span class="sw">Hatua ya kwanza — ya siri</span></td></tr>
+</table>
+
+</div>
+
+<!-- ═══ SLIDE 9 ═══ -->
+<div class="slide">
+<div class="slide-head">📝 <span class="en">Reflection & Practice</span><span class="sw">Tafakari na Mazoezi</span><span class="sh">Reflection na Practice</span></div>
+<div class="journal-box">
+<span class="journal-label">📓 <span class="en">Personal Reflection</span><span class="sw">Tafakari ya Kibinafsi</span></span>
+<p style="font-size:.85rem;margin-bottom:8px;color:var(--soft);"><span class="en">Have you ever seen shisha being used as a "normal" social activity? What myths did people believe? What would you say now that you know the facts?</span><span class="sw">Je, umewahi kuona shisha ikitumika kama shughuli ya kawaida ya kijamii? Ni hadithi zipi ambazo watu waliamini? Ungesema nini sasa ukijua ukweli?</span></p>
+<textarea class="journal-area" id="journalEntry" placeholder="Write here..."></textarea>
+<button class="journal-save" onclick="saveJournal('shisha', document.getElementById('journalEntry'))">💾 Save</button>
+<div class="journal-fb" id="journalFb"></div>
+</div>
+<div class="example-box"><strong><span class="en">Quick Check</span><span class="sw">Quick Check</span></strong><span class="en">Before the quiz: (1) How many times more tar does one shisha session produce vs one cigarette? (2) Name THREE chemicals in shisha smoke. (3) Why is sharing a shisha pipe a health risk beyond nicotine? (4) What is the NACADA helpline number?</span><span class="sw">Before the quiz: (1) How many times more tar does one shisha session produce vs one cigarette? (2) Name THREE chemicals in shisha smoke. (3) Why is sharing a shisha pipe a health risk beyond nicotine? (4) What is the NACADA helpline number?</span></div>
+
+</div>
+
+<!-- ═══ SLIDE 10 — QUIZ ═══ -->
+<div class="slide">
+<div class="slide-head">📊 <span class="en">Quiz — 25 Marks</span><span class="sw">Jaribio — Alama 25</span><span class="sh">Quiz — Marks 25</span></div>
+<p class="tp" style="font-size:.82rem;color:var(--soft);"><span class="en">Complete all parts. 15/25 (60%) to earn your certificate.</span><span class="sw">Kamilisha sehemu zote. 15/25 kupata cheti.</span><span class="sh">Fanya sehemu zote. 15/25 kupata certificate.</span></p>
+
+<div class="quiz-part-head"><span class="en">Part A: MCQ — 10 marks</span><span class="sw">Sehemu A: MCQ</span><span class="sh">Part A: MCQ</span></div>
+<div class="mcq-block"><div class="q-text"><span class="en">1. How much MORE tar does one shisha session produce compared to smoking one cigarette?</span><span class="sw">1. Lami NGAPI ZAIDI kipindi kimoja cha shisha hutoa ikilinganishwa na kuvuta sigara moja?</span><span class="sh">1. Tar ngapi MORE one shisha session hutoa compared na smoking one cigarette?</span></div>
+<div class="options" id="mcq1">
+<div class="opt" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span><span class="en">5 times more</span><span class="sw">Mara 5 zaidi</span><span class="sh">Mara 5 zaidi</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span><span class="en">10 times more</span><span class="sw">Mara 10 zaidi</span><span class="sh">Mara 10 zaidi</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span><span class="en">36 times more</span><span class="sw">Mara 36 zaidi</span><span class="sh">Mara 36 zaidi</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span><span class="en">Same amount as a cigarette</span><span class="sw">Kiasi sawa na sigara</span><span class="sh">Same amount kama sigara</span></div>
+</div><div class="mcq-fb" id="fb_mcq1"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">2. Why does the water in a shisha pipe NOT make it safer?</span><span class="sw">2. Kwa nini maji katika bomba la shisha HAYAFANYI kuwa salama zaidi?</span><span class="sh">2. Kwa nini maji kwa shisha pipe HAYAFANYI kuwa safer?</span></div>
+<div class="options" id="mcq2">
+<div class="opt" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span><span class="en">The water evaporates before filtering anything</span><span class="sw">Maji hupuka kabla ya kuchuja chochote</span><span class="sh">Maji huvuka kabla ya kuchuja kitu chochote</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span><span class="en">Water only cools the smoke — toxins like CO, nicotine and tar still pass through unchanged</span><span class="sw">Maji hupoza moshi tu — sumu kama CO, nikotini na lami bado hupita bila kubadilika</span><span class="sh">Maji hupoza smoke tu — toxins kama CO, nikotini na tar bado hupita unchanged</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span><span class="en">Water turns chemicals into harmless vapour</span><span class="sw">Maji hubadilisha kemikali kuwa mvuke usio na madhara</span><span class="sh">Maji hubadilisha chemicals kuwa harmless vapour</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span><span class="en">The flavouring in the tobacco cancels out toxins</span><span class="sw">Ladha katika tumbaku huondoa sumu</span><span class="sh">Flavouring katika tumbaku huondoa toxins</span></div>
+</div><div class="mcq-fb" id="fb_mcq2"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">3. Sharing a shisha pipe can transmit which of the following infections?</span><span class="sw">3. Kushiriki bomba la shisha kunaweza kupelekea maambukizi gani kati ya yafuatayo?</span><span class="sh">3. Kushiriki shisha pipe inaweza kupelekea maambukizi gani?</span></div>
+<div class="options" id="mcq3">
+<div class="opt" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span><span class="en">Only herpes simplex virus</span><span class="sw">Herpes simplex tu</span><span class="sh">Herpes simplex tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span><span class="en">Only tuberculosis</span><span class="sw">Kifua kikuu tu</span><span class="sh">TB tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span><span class="en">Only COVID-19</span><span class="sw">COVID-19 tu</span><span class="sh">COVID-19 tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span><span class="en">Tuberculosis, herpes, hepatitis and respiratory infections</span><span class="sw">Kifua kikuu, herpes, hepatitis na maambukizi ya kupumua</span><span class="sh">TB, herpes, hepatitis na respiratory infections</span></div>
+</div><div class="mcq-fb" id="fb_mcq3"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">4. One shisha session delivers approximately how much nicotine?</span><span class="sw">4. Kipindi kimoja cha shisha hutoa nikotini kiasi gani takriban?</span><span class="sh">4. One shisha session hutoa takriban nikotini kiasi gani?</span></div>
+<div class="options" id="mcq4">
+<div class="opt" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span><span class="en">Equivalent to half a cigarette</span><span class="sw">Sawa na nusu sigara</span><span class="sh">Sawa na nusu sigara</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span><span class="en">Equivalent to 2 cigarettes</span><span class="sw">Sawa na sigara 2</span><span class="sh">Sawa na sigara 2</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span><span class="en">Equivalent to 10 cigarettes</span><span class="sw">Sawa na sigara 10</span><span class="sh">Sawa na sigara 10</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span><span class="en">No measurable nicotine</span><span class="sw">Nikotini yoyote inayopimika</span><span class="sh">Hakuna nikotini inayopimika</span></div>
+</div><div class="mcq-fb" id="fb_mcq4"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">5. Under Kenya's Tobacco Control Act 2007, shisha:</span><span class="sw">5. Chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007, shisha:</span><span class="sh">5. Chini ya Kenya Tobacco Control Act 2007, shisha:</span></div>
+<div class="options" id="mcq5">
+<div class="opt" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span><span class="en">Is completely unregulated and legal for all ages</span><span class="sw">Haidhibitiwa kabisa na ni halali kwa umri wote</span><span class="sh">Haidhibitiwa na ni legal kwa umri wote</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span><span class="en">Is covered under tobacco law — sale to under-18s is illegal and smoking in public is banned</span><span class="sw">Inashughulikiwa chini ya sheria ya tumbaku — mauzo kwa chini ya miaka 18 ni haramu</span><span class="sh">Inashughulikiwa chini ya tobacco law — mauzo kwa under-18s ni illegal</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span><span class="en">Is legal for people over 16</span><span class="sw">Ni halali kwa watu zaidi ya miaka 16</span><span class="sh">Ni legal kwa watu zaidi ya miaka 16</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span><span class="en">Is only banned in schools and hospitals</span><span class="sw">Inakatazwa tu shuleni na hospitalini</span><span class="sh">Inakatazwa tu shuleni na hospitalini</span></div>
+</div><div class="mcq-fb" id="fb_mcq5"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">6. Which toxic metal found in shisha smoke comes primarily from the hookah equipment itself?</span><span class="sw">6. Metali gani yenye sumu inayopatikana katika moshi wa shisha inatoka hasa kutoka kwa vifaa vya hookah yenyewe?</span><span class="sh">6. Toxic metal gani inayopatikana kwa shisha smoke inatoka hasa kutoka kwa hookah equipment yenyewe?</span></div>
+<div class="options" id="mcq6">
+<div class="opt" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span><span class="en">Lead and arsenic from the metal pipes and fittings</span><span class="sw">Risasi na arseniki kutoka kwa mabomba ya chuma</span><span class="sh">Lead na arsenic kutoka kwa metal pipes</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span><span class="en">Nicotine from the tobacco</span><span class="sw">Nikotini kutoka kwa tumbaku</span><span class="sh">Nicotine kutoka kwa tumbaku</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span><span class="en">Tar from the flavouring chemicals</span><span class="sw">Lami kutoka kwa kemikali za ladha</span><span class="sh">Tar kutoka kwa flavouring chemicals</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span><span class="en">Carbon monoxide from the fruit flavours</span><span class="sw">Monoksidi kaboni kutoka kwa ladha za matunda</span><span class="sh">Carbon monoxide kutoka kwa fruit flavours</span></div>
+</div><div class="mcq-fb" id="fb_mcq6"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">7. The MOST accurate description of herbal (tobacco-free) shisha is:</span><span class="sw">7. Maelezo SAHIHI ZAIDI ya shisha ya mimea (isiyo na tumbaku) ni:</span><span class="sh">7. Description ACCURATE ZAIDI ya herbal (tobacco-free) shisha ni:</span></div>
+<div class="options" id="mcq7">
+<div class="opt" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span><span class="en">Completely safe because it contains no tobacco</span><span class="sw">Salama kabisa kwa sababu haina tumbaku</span><span class="sh">Completely safe kwa sababu haina tumbaku</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span><span class="en">Slightly less harmful but still contains some nicotine</span><span class="sw">Kidogo pungufu ya madhara lakini bado ina nikotini kidogo</span><span class="sh">Kidogo less harmful lakini bado ina nicotine kidogo</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span><span class="en">Still harmful because charcoal combustion produces CO, benzene and other toxins regardless of tobacco</span><span class="sw">Bado ni hatari kwa sababu mwako wa mkaa hutoa CO, benzeni na sumu zingine bila kujali tumbaku</span><span class="sh">Bado ni harmful kwa sababu charcoal combustion hutoa CO, benzene na toxins bila kujali tumbaku</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span><span class="en">Safe for people with asthma as it does not contain tar</span><span class="sw">Salama kwa watu wenye pumu kwa sababu haina lami</span><span class="sh">Safe kwa watu wenye asthma kwa sababu haina tar</span></div>
+</div><div class="mcq-fb" id="fb_mcq7"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">8. When Achieng's friend says "Shisha is just flavoured steam — not a real drug," the BEST factual response is:</span><span class="sw">8. Wakati rafiki wa Achieng anasema "Shisha ni mvuke wa ladha tu — si dawa halisi," jibu BORA la ukweli ni:</span><span class="sh">8. Wakati rafiki wa Achieng anasema "Shisha ni flavoured steam tu — si real drug," best factual response ni:</span></div>
+<div class="options" id="mcq8">
+<div class="opt" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span><span class="en">Agree and try it once to be polite</span><span class="sw">Kubali na ujaribu mara moja kwa heshima</span><span class="sh">Kubali na ujaribu mara moja kuwa polite</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span><span class="en">Ignore them and walk away without explanation</span><span class="sw">Waache na uende bila kueleza</span><span class="sh">Ignore na uende bila kueleza</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span><span class="en">Say it is haram and refuse on religious grounds only</span><span class="sw">Sema ni haramu na kukataa kwa sababu za kidini tu</span><span class="sh">Sema ni haram na kukataa kwa sababu za kidini tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span><span class="en">Say: "Actually, shisha smoke contains nicotine, tar, and carbon monoxide — one session equals 10 cigarettes of nicotine and 36 cigarettes of tar."</span><span class="sw">Sema: "Ukweli, moshi wa shisha una nikotini, lami, na CO — kipindi kimoja = nikotini ya sigara 10 na lami ya sigara 36."</span><span class="sh">Sema: "Actually, shisha smoke ina nicotine, tar, na CO — one session = nikotini ya cigarettes 10 na tar ya cigarettes 36."</span></div>
+</div><div class="mcq-fb" id="fb_mcq8"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">9. Benzene found in shisha smoke is particularly dangerous because it:</span><span class="sw">9. Benzeni inayopatikana katika moshi wa shisha ni hatari hasa kwa sababu:</span><span class="sh">9. Benzene inayopatikana kwa shisha smoke ni hatari sana kwa sababu:</span></div>
+<div class="options" id="mcq9">
+<div class="opt" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span><span class="en">Is a known cause of leukaemia (blood cancer)</span><span class="sw">Ni sababu inayojulikana ya lukemia (saratani ya damu)</span><span class="sh">Ni known cause ya leukaemia (blood cancer)</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span><span class="en">Makes the smoke smell unpleasant</span><span class="sw">Inafanya moshi kunuka vibaya</span><span class="sh">Inafanya smoke kunuka vibaya</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span><span class="en">Causes immediate respiratory failure</span><span class="sw">Inasababisha kushindwa kupumua mara moja</span><span class="sh">Inasababisha immediate respiratory failure</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span><span class="en">Reacts with nicotine to create a more addictive compound</span><span class="sw">Inafanya kazi na nikotini kuunda kiwanja chenye uraibu zaidi</span><span class="sh">Inareact na nicotine kuunda more addictive compound</span></div>
+</div><div class="mcq-fb" id="fb_mcq9"></div></div>
+<div class="mcq-block"><div class="q-text"><span class="en">10. A hookah lounge in Nairobi advertises "nicotine-free, organic fruit shisha." This product:</span><span class="sw">10. Baa ya hookah Nairobi inatangaza "shisha ya matunda ya kikaboni, isiyo na nikotini." Bidhaa hii:</span><span class="sh">10. Hookah lounge Nairobi inatangaza "nicotine-free, organic fruit shisha." Bidhaa hii:</span></div>
+<div class="options" id="mcq10">
+<div class="opt" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span><span class="en">Is completely safe as it contains no nicotine or tobacco</span><span class="sw">Ni salama kabisa kwani haina nikotini wala tumbaku</span><span class="sh">Ni completely safe kwani haina nicotine wala tumbaku</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span><span class="en">Still exposes users to charcoal toxins including CO, benzene and heavy metals from equipment</span><span class="sw">Bado yanadhuru kwa sumu ya mkaa ikiwemo CO, benzeni na metali nzito kutoka kwa vifaa</span><span class="sh">Bado inaexpose users kwa charcoal toxins ikiwemo CO, benzene na heavy metals kutoka kwa equipment</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span><span class="en">Is legal to sell to under-18s because it has no tobacco</span><span class="sw">Ni halali kuuza kwa chini ya miaka 18 kwa sababu haina tumbaku</span><span class="sh">Ni legal kuuza kwa under-18s kwa sababu haina tumbaku</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span><span class="en">Has been approved by Kenya Bureau of Standards as safe</span><span class="sw">Imeidhinishwa na Shirika la Viwango la Kenya kama salama</span><span class="sh">Imeidhinishwa na KEBS kama safe</span></div>
+</div><div class="mcq-fb" id="fb_mcq10"></div></div>
+<button class="check-btn" onclick="checkAllMCQ()"><span class="en">✓ Check MCQ Answers</span><span class="sw">✓ Angalia Majibu</span></button>
+
+<div class="quiz-part-head"><span class="en">Part B: Fill in the Blanks — 5 marks</span><span class="sw">Sehemu B: Jaza Nafasi</span><span class="sh">Part B: Fill Blanks</span></div>
+<div class="q-block">
+<p class="q-text"><span class="en">One shisha session produces approximately ______ times more tar than a single cigarette.</span><span class="sw">Kipindi kimoja cha shisha hutoa takriban mara ______ zaidi ya lami kuliko sigara moja.</span><span class="sh">One shisha session hutoa approximately mara ______ zaidi ya tar kuliko single cigarette.</span></p>
+<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f1" autocomplete="off" placeholder="Type your answer..."></p>
+<div class="fb-box" id="fb1"></div>
+<p class="q-text"><span class="en">The charcoal in shisha produces a gas called ______ that blocks oxygen in the blood and causes heart disease.</span><span class="sw">Mkaa katika shisha hutoa gesi inayoitwa ______ inayozuia oksijeni katika damu na kusababisha ugonjwa wa moyo.</span><span class="sh">Mkaa kwa shisha hutoa gas inayoitwa ______ inayozuia oxygen kwa damu na kusababisha heart disease.</span></p>
+<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f2" autocomplete="off" placeholder="Type your answer..."></p>
+<div class="fb-box" id="fb2"></div>
+<p class="q-text"><span class="en">Under Kenya's Tobacco Control Act 2007, selling shisha to anyone under ______ years old is illegal.</span><span class="sw">Chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007, kuuza shisha kwa mtu yeyote chini ya miaka ______ ni haramu.</span><span class="sh">Chini ya Kenya Tobacco Control Act 2007, kuuza shisha kwa mtu yeyote chini ya miaka ______ ni illegal.</span></p>
+<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f3" autocomplete="off" placeholder="Type your answer..."></p>
+<div class="fb-box" id="fb3"></div>
+<p class="q-text"><span class="en">The highly addictive chemical found in shisha tobacco that rewires the brain's reward system is called ______.</span><span class="sw">Kemikali yenye uraibu mkubwa inayopatikana katika tumbaku ya shisha inayobadilisha mfumo wa tuzo wa ubongo inaitwa ______.</span><span class="sh">Highly addictive chemical inayopatikana kwa shisha tobacco inayorewire brain reward system inaitwa ______.</span></p>
+<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f4" autocomplete="off" placeholder="Type your answer..."></p>
+<div class="fb-box" id="fb4"></div>
+<p class="q-text"><span class="en">Benzene in shisha smoke is a known cause of ______ cancer (blood cancer).</span><span class="sw">Benzeni katika moshi wa shisha ni sababu inayojulikana ya saratani ya ______ (saratani ya damu).</span><span class="sh">Benzene kwa shisha smoke ni known cause ya ______ cancer (blood cancer).</span></p>
+<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f5" autocomplete="off" placeholder="Type your answer..."></p>
+<div class="fb-box" id="fb5"></div>
+<button class="check-btn" onclick="checkFills()"><span class="en">✓ Check Answers</span><span class="sw">✓ Angalia</span></button>
+</div>
+
+<div class="quiz-part-head"><span class="en">Part C: Short Answer — 10 marks</span><span class="sw">Sehemu C: Majibu Mafupi</span><span class="sh">Part C: Short Answer</span></div>
+<div class="q-block"><p class="q-text"><span class="en">A friend tells you "Shisha is safer than cigarettes because the water filters the smoke." Using specific facts, explain why this is false. (4 marks)</span><span class="sw">Rafiki anakuambia "Shisha ni salama zaidi kuliko sigara kwa sababu maji huchuja moshi." Kwa kutumia ukweli maalum, eleza kwa nini hii ni uongo. (alama 4)</span><span class="sh">Friend anakuambia "Shisha ni safer than cigarettes kwa sababu water hufilter smoke." Kwa kutumia specific facts, explain kwa nini hii ni false. (marks 4)</span></p>
+<textarea class="sa-area" id="sa1" placeholder="Write your answer here..."></textarea>
+<button class="grade-btn" data-qid="sa1" data-fbid="sfb1" data-kws="[&quot;water&quot;, &quot;filter&quot;, &quot;cool&quot;, &quot;tar&quot;, &quot;carbon monoxide&quot;, &quot;nicotine&quot;, &quot;benzene&quot;, &quot;36&quot;, &quot;10&quot;, &quot;toxin&quot;, &quot;chemical&quot;, &quot;false&quot;, &quot;myth&quot;]" data-req="4" data-pts="4" data-model="The water myth is false for these reasons: 1) Water only COOLS the smoke making it feel smoother — it does not remove any toxins. 2) One session produces 36x more tar than one cigarette — deposited directly in lungs. 3) Carbon monoxide: up to 40x more than one cigarette — causes heart disease. 4) Nicotine: equivalent to 10 cigarettes per session — highly addictive. 5) Benzene and heavy metals also pass through unchanged. The smooth feeling from cooler smoke actually encourages deeper and longer inhalation — making it MORE harmful." onclick="gradeFromData(this)">&#10003; Grade</button>
+<div class="fb-box" id="sfb1"></div></div>
+<div class="q-block"><p class="q-text"><span class="en">Describe THREE specific health risks of sharing a shisha pipe, other than nicotine addiction. (3 marks)</span><span class="sw">Eleza HATARI TATU maalum za kiafya za kushiriki bomba la shisha, zaidi ya uraibu wa nikotini. (alama 3)</span><span class="sh">Describe HATARI TATU specific za kiafya za kushiriki shisha pipe, zaidi ya nicotine addiction. (marks 3)</span></p>
+<textarea class="sa-area" id="sa2" placeholder="Write your answer here..."></textarea>
+<button class="grade-btn" data-qid="sa2" data-fbid="sfb2" data-kws="[&quot;tuberculosis&quot;, &quot;tb&quot;, &quot;herpes&quot;, &quot;hepatitis&quot;, &quot;covid&quot;, &quot;respiratory&quot;, &quot;infection&quot;, &quot;mouthpiece&quot;, &quot;saliva&quot;, &quot;oral&quot;, &quot;transmission&quot;]" data-req="3" data-pts="3" data-model="1) Tuberculosis (TB) — a bacterial respiratory infection transmitted through shared oral contact; high prevalence in Kenya. 2) Herpes simplex virus — transmitted through saliva/oral contact on the mouthpiece. 3) Hepatitis B and C — bloodborne viruses transmissible through small cuts in the mouth. 4) COVID-19 and influenza — respiratory viruses transmitted through shared air and surfaces. New mouthpieces reduce but do not eliminate risk." onclick="gradeFromData(this)">&#10003; Grade</button>
+<div class="fb-box" id="sfb2"></div></div>
+<div class="q-block"><p class="q-text"><span class="en">Explain the concept of social normalisation and why it makes shisha particularly dangerous for Kenyan youth. (3 marks)</span><span class="sw">Eleza dhana ya kawaida ya kijamii na kwa nini inafanya shisha kuwa hatari hasa kwa vijana wa Kenya. (alama 3)</span><span class="sh">Explain concept ya social normalisation na kwa nini inafanya shisha kuwa particularly dangerous kwa Kenyan youth. (marks 3)</span></p>
+<textarea class="sa-area" id="sa3" placeholder="Write your answer here..."></textarea>
+<button class="grade-btn" data-qid="sa3" data-fbid="sfb3" data-kws="[&quot;normal&quot;, &quot;social&quot;, &quot;lounge&quot;, &quot;friends&quot;, &quot;peer&quot;, &quot;pressure&quot;, &quot;addiction&quot;, &quot;casual&quot;, &quot;trendy&quot;, &quot;marketing&quot;, &quot;youth&quot;, &quot;nairobi&quot;, &quot;identity&quot;]" data-req="3" data-pts="3" data-model="Social normalisation means shisha is presented as a normal, trendy, social activity (like going for coffee) rather than drug use. This is dangerous for youth because: 1) It removes the &quot;drug&quot; stigma that normally creates caution. 2) Social settings (with friends, music, attractive lounges) create strong psychological associations between relaxation/belonging and nicotine intake. 3) Marketing uses flavours, aesthetics, and influencers to target young people specifically. 4) By the time addiction develops, the behaviour feels completely normal — making it harder to recognise as a problem and seek help." onclick="gradeFromData(this)">&#10003; Grade</button>
+<div class="fb-box" id="sfb3"></div></div>
+<button class="score-btn" onclick="showTotalScore()">🏆 <span class="en">Get My Score</span><span class="sw">Pata Alama Zangu</span><span class="sh">Pata Score Yangu</span></button>
+<div class="score-box pass" id="scoreBoxPass" style="display:none;">
+<div class="score-num" id="scoreNumPass"></div>
+<div class="grade-label" id="gradeLabelPass"></div>
+<p style="font-size:.85rem;opacity:.9;margin-bottom:14px;"><span class="en">Congratulations! You passed.</span><span class="sw">Hongera! Umefaulu.</span><span class="sh">Hongera! Umepita.</span></p>
+<a id="certBtn" href="#" class="cert-btn">🎓 Get Certificate</a>
+<a href="/arise/uploads/pdfs/shisha-hookah.pdf" target="_blank" style="display:block;text-align:center;padding:10px 28px;background:rgba(255,255,255,.15);color:#fff;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:10px;border:2px solid rgba(255,255,255,.4);">📄 Download Study Guide (PDF)</a>
+</div>
+<div class="retry-box" id="retryBox"><p><span class="en">Below 60% — try again!</span><span class="sw">Chini ya 60%!</span><span class="sh">Chini ya 60%!</span></p><p id="retryScore" style="font-size:.8rem;color:var(--soft);"></p><button class="retry-btn" onclick="resetQuiz()">🔄 Retry</button></div>
+<a href="/?p=modules" style="display:block;text-align:center;padding:12px;background:linear-gradient(135deg,var(--pri),var(--acc));color:#fff;border-radius:var(--radius);font-size:.92rem;font-weight:700;text-decoration:none;margin-top:14px;">📚 Back to Modules</a>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner">
+<button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Back</span><span class="sw">Nyuma</span></button>
+<div class="dots" id="dotsWrap"></div>
+<button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span> &#8594;</button>
+</div></div>
+
+<script>
+// ── INIT ──────────────────────────────────────────────────────
+var slides, cur = 0;
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var wrap = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'dot' + (i===0?' active':'');
+    d.title = 'Slide '+(i+1);
+    d.onclick = function(){ go(i); };
+    wrap.appendChild(d);
+  });
+  // Video
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var videoUrl = window.ARISE_VIDEO_URL || '';
+  if (vid && videoUrl) {
+    vid.src = videoUrl; vid.style.display='block';
+    if(ph) ph.style.display='none';
+  } else {
+    if(ph) ph.style.display='flex';
+    if(vid) vid.style.display='none';
+  }
+  var slug2 = document.body.dataset.lessonSlug;
+  var resumeSlide = window.ARISE_RESUME_SLIDE || (slug2 ? parseInt(localStorage.getItem('arise_slide_'+slug2)||'0') : 0);
+  if (resumeSlide > 0 && resumeSlide < slides.length-1) { setTimeout(function(){ go(resumeSlide); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var lid = document.body.dataset.lessonId;
+  var slug3 = document.body.dataset.lessonSlug;
+  if(slug3) localStorage.setItem('arise_slide_'+slug3, n);
+  if(lid && lid!=='0') {
+    fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+  }
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function setLang(l) {
+  ['en','sw','sh'].forEach(function(x){ document.querySelectorAll('.'+x).forEach(function(e){ e.style.display=x===l?'block':'none'; }); });
+  ['enBtn','swBtn','shBtn'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
+  document.getElementById(l+'Btn').classList.add('active');
+  fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:l})}).catch(function(){});
+}
+function setSize(s) {
+  document.body.style.fontSize = s==='sm'?'13px':s==='lg'?'17px':'15px';
+  ['sm','md','lg'].forEach(function(x){ document.getElementById('sz-'+x).classList.toggle('active',x===s); });
+}
+function scPick(btn, scId, type, resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){ b.disabled=true; });
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res){ res.className='s-result '+type; res.style.display='block'; }
+}
+function scRetry(scId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){ b.disabled=false; b.className='choice'; });
+  document.querySelectorAll('#'+scId+' .s-result').forEach(function(r){ r.style.display='none'; });
+}
+function saveJournal(slug4, textarea) {
+  var text=textarea.value.trim(); if(!text) return;
+  var key='arise_journal_'+slug4;
+  var entries=JSON.parse(localStorage.getItem(key)||'[]');
+  entries.unshift({text:text,date:new Date().toLocaleDateString('en-KE')});
+  if(entries.length>10) entries=entries.slice(0,10);
+  localStorage.setItem(key,JSON.stringify(entries));
+  textarea.value='';
+  var fb=document.getElementById('journalFb');
+  if(fb){ fb.textContent='✓ Saved / Imehifadhiwa'; fb.style.color='#2e7d32'; }
+}
+// ── MCQ ──────────────────────────────────────────────────────
+var mcqAnswers = {mcq1:'C', mcq2:'B', mcq3:'D', mcq4:'C', mcq5:'B', mcq6:'A', mcq7:'C', mcq8:'D', mcq9:'A', mcq10:'B'};
+var mcqExplain = {
+  mcq1:'C — One shisha session (45-60 minutes, ~200 puffs) produces 36 times more tar than smoking one cigarette. The water pipe format allows much more smoke to be inhaled per session.',
+  mcq2:'B — This is the most important shisha myth to debunk. Water cools the smoke (making it feel smoother and easier to inhale large quantities) but does NOT filter out tar, carbon monoxide, nicotine, heavy metals, or benzene.',
+  mcq3:'D — The shared mouthpiece transmits oral and respiratory infections including TB, herpes simplex, hepatitis B and C, COVID-19, and influenza. Even "disposable" or "new" mouthpieces do not eliminate all transmission risk.',
+  mcq4:'C — One shisha session delivers nicotine equivalent to smoking approximately 10 cigarettes, due to the long duration (45-60 min) and high number of puffs (~200). This is why nicotine addiction from shisha develops faster than most users expect.',
+  mcq5:'B — Kenya\'s Tobacco Control Act 2007 covers all tobacco products including shisha. It bans smoking in public places, prohibits sale to under-18s, and requires health warnings. Many shisha lounges operate in violation of this law.',
+  mcq6:'A — Heavy metals including lead, chromium, and arsenic leach from the metal hose, bowl, and fittings of the hookah device itself as they heat up. This is in addition to toxins from the tobacco and charcoal.',
+  mcq7:'C — Even tobacco-free herbal shisha uses charcoal to heat the herbs, and charcoal combustion produces carbon monoxide, benzene (a cause of leukaemia), and other carcinogens. "Herbal" is a marketing term that does not make shisha safe.',
+  mcq8:'D — Facts are the most powerful response to myths. Specific numbers (36x tar, 10 cigarettes of nicotine) are more persuasive than general statements. This corrects the myth while showing knowledge, which commands respect.',
+  mcq9:'A — Benzene is classified by the WHO as a Group 1 carcinogen — meaning there is definitive evidence it causes cancer in humans. It is a known cause of leukaemia (blood cancer) and is produced by burning charcoal.',
+  mcq10:'B — "Nicotine-free" shisha still uses charcoal heating, which produces carbon monoxide (heart disease), benzene (leukaemia), and heavy metals leach from the equipment. "Organic" and "fruit" are marketing terms that do not make the product safe.'
+};
+var mcqScore=0, mcqChecked=false;
+function selectOpt(el,group,letter){
+  if(mcqChecked) return;
+  document.querySelectorAll('#'+group+' .opt').forEach(function(o){ o.classList.remove('selected'); });
+  el.classList.add('selected'); el.dataset.chosen=letter;
+}
+function checkAllMCQ(){
+  mcqScore=0; mcqChecked=true;
+  Object.keys(mcqAnswers).forEach(function(group){
+    var correct=mcqAnswers[group];
+    var opts=document.querySelectorAll('#'+group+' .opt');
+    var chosen=null;
+    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen=o.dataset.chosen||o.querySelector('.opt-letter').textContent.trim(); });
+    opts.forEach(function(o){
+      var letter=o.querySelector('.opt-letter').textContent.trim();
+      if(letter===correct) o.classList.add('correct');
+      else if(o.classList.contains('selected')&&letter!==correct) o.classList.add('wrong');
+    });
+    var fb=document.getElementById('fb_'+group);
+    if(chosen===correct){ mcqScore++; fb.innerHTML='<span class="kf">✓ Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
+    else { fb.innerHTML='<span class="km">✗ Incorrect.</span> Correct: <strong>'+correct+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
+    fb.style.display='block';
+  });
+}
+
+// ── FILL BLANKS ───────────────────────────────────────────────
+var fbAns = {f1:['36', 'thirty six', 'thirty-six'], f2:['carbon monoxide', 'co'], f3:['18', 'eighteen'], f4:['nicotine', 'nikotini'], f5:['leukaemia', 'leukemia', 'blood', 'lukemia']};
+var fbModels = {
+  f1:'36 — one shisha session (200 puffs, 45-60 minutes) deposits 36 times more tar in the lungs than one cigarette.',
+  f2:'Carbon monoxide (CO) — produced by charcoal combustion. It binds to haemoglobin more strongly than oxygen, reducing blood oxygen levels and increasing heart disease risk.',
+  f3:'18 — Kenya\'s Tobacco Control Act 2007 prohibits sale of tobacco products (including shisha) to persons under 18 years.',
+  f4:'Nicotine — a drug that triggers dopamine release in the brain\'s reward system. One shisha session delivers equivalent nicotine to 10 cigarettes, making addiction development rapid.',
+  f5:'Leukaemia (blood cancer) — benzene is a Group 1 WHO carcinogen produced by charcoal combustion. It is found in every shisha session regardless of tobacco content.'
+};
+var fillScore=0, fillChecked=false;
+function checkFills(){
+  fillScore=0; fillChecked=true;
+  Object.keys(fbAns).forEach(function(id){
+    var el=document.getElementById(id);
+    var val=el.value.toLowerCase().trim();
+    var ok=fbAns[id].some(function(a){ return val===a||val.includes(a); });
+    el.classList.toggle('correct',ok); el.classList.toggle('wrong',!ok);
+    if(ok) fillScore++;
+    var fb=document.getElementById('fb'+id.slice(1));
+    fb.innerHTML=ok?'<span class="kf">✓ Correct! (1 mark)</span> '+fbModels[id]:'<span class="km">✗ Expected: <strong>'+fbAns[id][0]+'</strong></span> — '+fbModels[id];
+    fb.style.display='block';
+  });
+}
+
+// ── SHORT ANSWER ──────────────────────────────────────────────
+var saScores={};
+function showFb(id,html){ var e=document.getElementById(id); e.innerHTML=html; e.style.display='block'; }
+
+function showTotalScore(){
+  if(!mcqChecked) checkAllMCQ();
+  if(!fillChecked) checkFills();
+  var saTotal=Object.values(saScores).reduce(function(a,b){ return a+b; },0);
+  var total=mcqScore+fillScore+saTotal;
+  var max=25;
+  var pct=Math.round((total/max)*100);
+  var grade=pct>=80?'Exceeds Expectation 🎉':pct>=60?'Meets Expectation 👍':pct>=40?'Approaches Expectation 📖':'Below Expectation 💪';
+  var slug=document.body.dataset.lessonSlug||'shisha-hookah';
+  var mslug=document.body.dataset.moduleSlug||'shisha';
+  fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:slug,module_slug:mslug,score:total,total:max,percent:pct})}).catch(function(){});
+  if(pct>=60){
+    document.getElementById('scoreBoxPass').style.display='block';
+    document.getElementById('scoreNumPass').textContent=total+' / '+max+' ('+pct+'%)';
+    document.getElementById('gradeLabelPass').textContent=grade;
+    document.getElementById('certBtn').href='/?p=certificate&module='+mslug+'&score='+pct;
+    document.getElementById('retryBox').style.display='none';
+  } else {
+    document.getElementById('retryBox').style.display='block';
+    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). Need 15/25 (60%) to pass.';
+    document.getElementById('scoreBoxPass').style.display='none';
+  }
+}
+function resetQuiz(){
+  mcqChecked=false; mcqScore=0; fillScore=0; fillChecked=false; saScores={};
+  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected','correct','wrong'); });
+  document.querySelectorAll('.mcq-fb').forEach(function(f){ f.style.display='none'; });
+  document.querySelectorAll('.fill-blank').forEach(function(f){ f.value=''; f.classList.remove('correct','wrong'); });
+  document.querySelectorAll('.fb-box').forEach(function(f){ f.style.display='none'; });
+  document.querySelectorAll('.sa-area').forEach(function(f){ f.value=''; });
+  document.getElementById('retryBox').style.display='none';
+  document.getElementById('scoreBoxPass').style.display='none';
+}
+window.addEventListener('DOMContentLoaded', init);
+
+
+
+
+function gradeFromData(btn){var qid=btn.dataset.qid,fbid=btn.dataset.fbid,kws=JSON.parse(btn.dataset.kws),req=parseInt(btn.dataset.req),pts=parseInt(btn.dataset.pts),model=btn.dataset.model;gradeKw(qid,fbid,kws,req,pts,model);}
+function gradeKw(qid,fbid,kws,req,pts,model){
+  var val=document.getElementById(qid).value.toLowerCase();
+  var found=kws.filter(function(k){return val.includes(k);});
+  var awarded=Math.round((Math.min(found.length,req)/req)*pts);
+  saScores[qid]=awarded;
+  var grade=awarded>=pts?'Excellent!':awarded>0?'Good attempt':'Needs improvement';
+  var fs=found.length?'<br><span class="kf">Found: '+found.join(', ')+'</span>':'';
+  var miss=kws.filter(function(k){return !val.includes(k);}).slice(0,5);
+  var ms=miss.length?'<br><span class="km">Missing: '+miss.join(', ')+'</span>':'';
+  var fb=document.getElementById(fbid);
+  fb.innerHTML='<strong>'+awarded+'/'+pts+' - '+grade+'</strong>'+fs+ms+(model?'<br><em style="font-size:.78rem;color:#888;">Model: '+model+'</em>':'');
+  fb.style.display='block';
+}
+
+</script>
+</body>
+</html>

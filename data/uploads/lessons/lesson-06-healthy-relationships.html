@@ -1,0 +1,65 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🤝 What Makes a Relationship Healthy?</div>
+<p class="ar-p">Healthy relationships — with friends, family, or partners — are built on a foundation of respect, trust, and open communication. They help you grow; unhealthy relationships drain and harm you.</p>
+<table class="ar-table"><tr><th>Pillar</th><th>What it Looks Like</th><th>What it Does NOT Look Like</th></tr>
+<tr><td>Respect</td><td>Valuing each other's opinions and boundaries</td><td>Belittling, mocking, controlling</td></tr>
+<tr><td>Communication</td><td>Honest, open conversations; listening actively</td><td>Shouting, stonewalling, lying</td></tr>
+<tr><td>Trust</td><td>Keeping promises, being reliable, not checking their phone</td><td>Jealousy, surveillance, suspicion</td></tr>
+<tr><td>Independence</td><td>Each person keeps their own friends and interests</td><td>Isolation from everyone else</td></tr>
+<tr><td>Equality</td><td>Both people's needs matter equally</td><td>One person always decides everything</td></tr>
+<tr><td>Safety</td><td>You feel emotionally and physically safe</td><td>Fear, threats, violence</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Wanjiku & Kamau, Thika:</strong> Have been together since Form 3. They argue sometimes, but always talk it out calmly. Kamau still plays football with his friends; Wanjiku still goes to debate club. They encourage each other's dreams. Their friends describe them as a "healthy couple."</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">⚠️ Signs of an Unhealthy Relationship</div>
+<div class="ar-warn"><strong>⚠️ Warning signs you should never ignore:</strong></div>
+<ul class="ar-list">
+<li>Your partner checks your phone or controls who you talk to</li>
+<li>You feel afraid to express your opinion</li>
+<li>They put you down in front of others</li>
+<li>They threaten you when you want to end the relationship</li>
+<li>They isolate you from family and friends</li>
+<li>Physical violence — even "just once"</li></ul>
+<div class="ar-scenario"><strong>🇰🇪 Akinyi, Kisumu:</strong> Her boyfriend Kevin demanded her phone password, deleted her male friends' contacts, and showed up at her school to "check on her." She mistook this for love. A school counsellor helped her understand these were signs of controlling, abusive behaviour — not love.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">💬 Maintaining Healthy Peer Relationships</div>
+<ul class="ar-list">
+<li><strong>Active listening:</strong> Give full attention; don't plan your reply while they're still speaking</li>
+<li><strong>Empathy:</strong> Try to understand their feelings, not just their words</li>
+<li><strong>Conflict resolution:</strong> Address issues calmly and privately; avoid public confrontations</li>
+<li><strong>Boundaries:</strong> It is okay to say "I need some space" or "That makes me uncomfortable"</li>
+<li><strong>Positive influence:</strong> Build each other up; refuse to participate in gossip or bullying</li></ul>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Otieno's girlfriend Amina recently told him he cannot attend his cousin's wedding because she wants them to spend the day together. She also checks his WhatsApp daily. From the lesson, name TWO specific warning signs of an unhealthy relationship you observe.</p>
+<textarea class="ar-textarea" id="q1" placeholder="Name two warning signs..."></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['control','isolat','check','phone','independence','jealous','surveil'],'fb1',2,2,'(1) Controlling behaviour: telling him he cannot attend a family event. (2) Surveillance: checking his WhatsApp daily. Both violate the pillars of trust, respect, and independence in healthy relationships.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Your two best friends, Zawadi and Baraka, had a major fight and both come to you wanting you to "take sides." What is the most healthy response?</p>
+<textarea class="ar-textarea" id="q2" placeholder="What would you do?"></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['neutral','side','listen','both','talk','help','resolve','mediate'],'fb2',1,2,'The healthiest response is to remain neutral, listen to both sides with empathy, and encourage them to talk to each other directly. Offer to help mediate if they want — but do not become the judge.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. In one sentence, what is the difference between TRUST and CONTROL in a relationship?</p>
+<textarea class="ar-textarea" id="q3" placeholder="Explain the difference..."></textarea>
+<button class="ar-btn" onclick="chkKw('q3',['trust','control','freedom','restrict','fear','respect','believe'],'fb3',1,2,'Trust allows your partner freedom because you believe in them. Control restricts your partner's freedom out of insecurity or a desire for power. Trust builds love; control destroys it.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. Name the communication skill that involves giving your full attention to someone without planning your reply while they are still speaking.</p>
+<input class="ar-input" id="q4" placeholder="Name the skill...">
+<button class="ar-btn" onclick="chk('q4',['active listening','active'],'fb4',1,'Active Listening — giving full, undivided attention to the speaker, processing their message before formulating a response.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(7)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>

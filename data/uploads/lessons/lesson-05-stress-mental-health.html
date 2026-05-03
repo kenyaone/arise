@@ -1,0 +1,65 @@
+<style>SHARED_CSS</style>
+<div class="ar-lesson">
+<div class="ar-section">
+<div class="ar-h2">🧠 Understanding Stress & Mental Health in Kenya</div>
+<p class="ar-p">According to the Kenya National Adolescent Mental Health Survey (K-NAMHS), <strong>44.3%</strong> of Kenyan adolescents experienced a mental health problem in the past 12 months, and <strong>12.2%</strong> met criteria for a mental disorder.</p>
+<div class="ar-key"><strong>🔑 Stress:</strong> The body's natural response to any demand or challenge. It can be positive (eustress — e.g., preparing for a competition) or negative (distress — e.g., an abusive home situation).</div>
+<table class="ar-table"><tr><th>Cause of Stress</th><th>How it Affects Kenyan Teens</th></tr>
+<tr><td>Academic Pressure</td><td>KCSE/KCPE pressure, teacher expectations, exam fear</td></tr>
+<tr><td>Family Issues</td><td>Parental conflict, divorce, financial instability</td></tr>
+<tr><td>Peer Pressure</td><td>Bullying, need to fit in, social media comparisons</td></tr>
+<tr><td>Economic Hardship</td><td>Pressure to support family, worrying about fees</td></tr>
+<tr><td>Future Uncertainty</td><td>Career anxiety, fear of failing exams</td></tr>
+<tr><td>Trauma</td><td>Physical/emotional abuse, exposure to violence</td></tr></table>
+<div class="ar-scenario"><strong>🇰🇪 Mercy, Kisii:</strong> A Form 3 student whose parents are going through a bitter divorce. She stopped eating properly, failed her mid-term exams, and started isolating herself. Her teacher referred her to the school counsellor who confirmed she was experiencing clinical depression from family stress.</div>
+</div>
+<div class="ar-section">
+<div class="ar-h2">⚡ Physical Signs of Stress</div>
+<p class="ar-p">Stress triggers the body's "fight or flight" response — flooding the body with adrenaline and cortisol. Short-term this is helpful, but chronic stress causes physical damage.</p>
+<ul class="ar-list">
+<li>Headaches and migraines</li><li>Stomach problems, nausea, ulcers</li>
+<li>Chest tightness, rapid heartbeat</li><li>Insomnia or sleeping too much</li>
+<li>Weakened immune system — getting sick more often</li>
+<li>Skin problems (acne, rashes)</li></ul>
+</div>
+<div class="ar-section">
+<div class="ar-h2">💪 Managing Stress — Healthy Coping Strategies</div>
+<table class="ar-table"><tr><th>Strategy</th><th>How to Apply in Daily Life</th></tr>
+<tr><td>Physical Exercise</td><td>30 mins of football, running, or dancing releases stress hormones</td></tr>
+<tr><td>Deep Breathing</td><td>Breathe in 4 counts, hold 4, out 4 — resets your nervous system</td></tr>
+<tr><td>Time Management</td><td>Break large tasks into small steps; use a timetable</td></tr>
+<tr><td>Talk to Someone</td><td>A trusted friend, parent, teacher, or counsellor</td></tr>
+<tr><td>Limit Social Media</td><td>Comparison on Instagram/TikTok intensifies stress</td></tr>
+<tr><td>Sleep</td><td>8–10 hours for teens — sleep deprivation multiplies stress</td></tr></table>
+<div class="ar-tip"><strong>💡 When to Seek Help:</strong> If stress lasts more than 2 weeks, affects your eating/sleeping/schoolwork, or you feel hopeless — talk to a counsellor. Mental health is health.</div>
+</div>
+<div class="ar-quiz">
+<h3>✅ Scenario-Based Quiz</h3>
+<div class="ar-q"><p>1. Kevin (Form 2, Nyeri) has not slept well in 3 weeks because of KCSE fears, has headaches daily, and snaps at his siblings. Is Kevin experiencing eustress or distress? Explain.</p>
+<textarea class="ar-textarea" id="q1" placeholder="Eustress or distress? Why?"></textarea>
+<button class="ar-btn" onclick="chkKw('q1',['distress','negative','harmful','chronic','week','health','symptom'],'fb1',1,2,'Distress — negative stress that is prolonged (3 weeks) and causing physical symptoms (insomnia, headaches) and behavioural changes (irritability). Eustress is short-term and motivating; distress is harmful and persistent.')">Check</button>
+<div class="ar-fb" id="fb1"></div></div>
+<div class="ar-q"><p>2. Aisha says she handles stress by scrolling TikTok for 4 hours when she feels anxious. Why is this NOT a healthy coping strategy? Name a better alternative.</p>
+<textarea class="ar-textarea" id="q2" placeholder="Why not healthy? Better alternative?"></textarea>
+<button class="ar-btn" onclick="chkKw('q2',['comparison','worse','delay','avoid','not solve','exercise','breathe','talk','sleep','counsell'],'fb2',1,2,'Social media scrolling does not address the source of stress and social comparison on TikTok often increases anxiety. Better alternatives: exercise, deep breathing, talking to a trusted person, or journaling.')">Check</button>
+<div class="ar-fb" id="fb2"></div></div>
+<div class="ar-q"><p>3. According to the Kenya National Adolescent Mental Health Survey, approximately what percentage of Kenyan adolescents experienced a mental health problem in the past year?</p>
+<input class="ar-input" id="q3" placeholder="Write the percentage...">
+<button class="ar-btn" onclick="chk('q3',['44','44.3'],'fb3',1,'44.3% — nearly half of all Kenyan adolescents reported experiencing a mental health problem in the past 12 months, highlighting the scale of the crisis.')">Check</button>
+<div class="ar-fb" id="fb3"></div></div>
+<div class="ar-q"><p>4. Name TWO physical symptoms of chronic (long-term) stress on the body.</p>
+<input class="ar-input" id="q4" placeholder="Two physical symptoms...">
+<button class="ar-btn" onclick="chk('q4',['headache','stomach','ulcer','heart','insomnia','sleep','skin','immune','chest'],'fb4',1,'Physical symptoms of chronic stress include: headaches, stomach problems/ulcers, chest tightness, insomnia, weakened immunity, and skin conditions.')">Check</button>
+<div class="ar-fb" id="fb4"></div></div>
+<button class="ar-btn ar-btn-full" onclick="showScore(6)">🏆 See My Score</button>
+<div class="ar-score" id="scoreBox"><h3 id="scoreTxt"></h3><p id="gradeText"></p></div>
+</div>
+<a class="ar-next" href="?p=modules">📚 Back to All Modules →</a>
+</div>
+<script>
+var sc={};
+function show(id,h){var e=document.getElementById(id);e.innerHTML=h;e.style.display='block';}
+function chk(qid,accept,fbid,pts,model){var v=document.getElementById(qid).value.toLowerCase().trim();var ok=accept.some(function(a){return v.includes(a);});sc[qid]=ok?pts:0;show(fbid,ok?'<span class="ar-correct">✓ Correct!</span> '+model:'<span class="ar-wrong">✗</span> Model answer: <strong>'+model+'</strong>');}
+function chkKw(qid,kws,fbid,required,pts,model){var v=document.getElementById(qid).value.toLowerCase();var found=kws.filter(function(k){return v.includes(k);});var awarded=found.length>=required?pts:found.length>=1?1:0;sc[qid]=awarded;show(fbid,found.length>=required?'<span class="ar-correct">✓ Good!</span> '+model:'<span class="ar-wrong">✗ Needs more detail.</span> '+model);}
+function showScore(max){var total=Object.values(sc).reduce(function(a,b){return a+b;},0);var pct=Math.round((total/max)*100);var g=pct>=80?'🎉 Excellent!':pct>=60?'👍 Good effort!':pct>=40?'📖 Review the lesson.':'💪 Go back and try again.';document.getElementById('scoreTxt').textContent='Score: '+total+'/'+max+' ('+pct+'%)';document.getElementById('gradeText').textContent=g;document.getElementById('scoreBox').style.display='block';}
+</script>
