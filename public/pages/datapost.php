@@ -175,81 +175,95 @@ if ($action === 'post') {
     }
 
     $data    = json_decode($last['data_snapshot'], true);
-    $school  = $cfg['school_name'] ?? 'ARISE';
-    $subject = "ARISE Data Report — " . date('Y-m-d');
+    $subject = "ARISE — Performance Report — " . date('d/m/Y');
 
-    // Build CSV-style email for M&E team
-    $lines = [
-        "ARISE PLATFORM — M&E DATA REPORT",
-        "Report Date: " . date('d/m/Y H:i'),
-        "Data Synced: " . ($data['timestamp'] ?? $last['sync_timestamp']),
-        "",
-        "=== PLATFORM SUMMARY ===",
-    ];
+    // Get date range (first learner to today)
+    $firstLearner = db()->querySingle("SELECT registered_at FROM students WHERE is_active=1 AND deleted_at IS NULL ORDER BY registered_at ASC LIMIT 1");
+    $periodStart = $firstLearner ? date('d/m/Y', strtotime($firstLearner)) : date('d/m/Y');
+    $periodEnd = date('d/m/Y');
+    $reportDate = date('d/m/Y H:i');
 
-    $lines[] = "Total Learners," . $data['learners'];
-    $lines[] = "Active Modules," . $data['modules'];
-    $lines[] = "Quiz Attempts," . $data['quizzes'];
-    $lines[] = "Pre-Tests," . $data['pretests'];
-    $lines[] = "Post-Tests," . $data['posttests'];
-    $lines[] = "Certificates Issued," . $data['certs'];
-    $lines[] = "Forum Posts," . $data['forum'];
-    $lines[] = "Questions Asked," . $data['questions'];
-
-    // School breakdown as CSV
-    $lines[] = "";
-    $lines[] = "=== SCHOOL PERFORMANCE DATA ===";
-    $lines[] = "School Name,Total Learners,Quiz Takers,% Took Quiz,Avg Quiz Score,Learners Certified,Certification Rate %";
-
-    $result = db()->query("SELECT s.school_name, COUNT(DISTINCT s.id) as learners, COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers, ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.percentage ELSE NULL END), 1) as avg_score, COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified, ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate FROM students s LEFT JOIN quiz_attempts qa ON s.id = qa.student_id LEFT JOIN certificates c ON s.id = c.student_id WHERE s.is_active=1 AND s.deleted_at IS NULL GROUP BY s.school_name ORDER BY learners DESC");
+    // Build visual report for M&E team - send separate emails per school
+    $schools = [];
+    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL ORDER BY school_name ASC");
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $quiz_pct = $row['learners'] > 0 ? round(100.0 * $row['quiz_takers'] / $row['learners'], 1) : 0;
-        $lines[] = sprintf("\"%s\",%d,%d,%.1f,%.1f,%d,%.1f",
-            $row['school_name'],
-            $row['learners'],
-            $row['quiz_takers'],
-            $quiz_pct,
-            $row['avg_score'],
-            $row['certified'],
-            $row['cert_rate']
-        );
+        $schools[] = $row['school_name'];
     }
 
-    $lines[] = "";
-    $lines[] = "=== TOP MODULES ===";
-    $lines[] = "Module Name,Quiz Attempts,Average Score %,Pass Rate %";
+    // Send one email per school/project
+    foreach ($schools as $schoolName) {
+        $lines = [
+            "ARISE — Performance Report",
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "",
+            "📍 PROJECT: " . $schoolName,
+            "📅 Report Date: " . $reportDate,
+            "📊 Data Period: " . $periodStart . " — " . $periodEnd,
+            "",
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "KEY METRICS",
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        ];
 
-    $result = db()->query("SELECT m.title, COUNT(qa.id) as attempts, ROUND(AVG(qa.percentage), 1) as avg_score, ROUND(100.0 * SUM(CASE WHEN qa.percentage >= 60 THEN 1 ELSE 0 END) / COUNT(qa.id), 1) as pass_rate FROM modules m LEFT JOIN quiz_attempts qa ON m.id = qa.module_id WHERE m.is_active=1 GROUP BY m.id ORDER BY attempts DESC LIMIT 8");
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        if ((int)$row['attempts'] > 0) {
-            $lines[] = sprintf("\"%s\",%d,%.1f,%.1f",
-                $row['title'],
-                $row['attempts'],
-                $row['avg_score'],
-                $row['pass_rate']
-            );
+        // School-specific metrics
+        $learners = (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='" . SQLite3::escapeString($schoolName) . "' AND is_active=1 AND deleted_at IS NULL");
+        $quizzes = (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='" . SQLite3::escapeString($schoolName) . "'");
+        $avgScore = round((float)db()->querySingle("SELECT AVG(qa.percentage) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='" . SQLite3::escapeString($schoolName) . "'") ?? 0, 1);
+        $certs = (int)db()->querySingle("SELECT COUNT(c.id) FROM certificates c JOIN students s ON s.id=c.student_id WHERE s.school_name='" . SQLite3::escapeString($schoolName) . "'");
+        $forum = (int)db()->querySingle("SELECT COUNT(fp.id) FROM forum_posts fp JOIN students s ON s.id=fp.student_id WHERE s.school_name='" . SQLite3::escapeString($schoolName) . "' AND fp.is_hidden=0");
+
+        // Bar function for visual representation
+        $barLen = 20;
+        $avgBar = str_repeat("█", max(1, (int)($avgScore / 5))) . str_repeat("░", max(0, $barLen - (int)($avgScore / 5)));
+        $certBar = $learners > 0 ? str_repeat("█", max(1, (int)(($certs / $learners) * $barLen))) . str_repeat("░", max(0, $barLen - (int)(($certs / $learners) * $barLen))) : str_repeat("░", $barLen);
+
+        $lines[] = "✓ Total Learners: " . $learners;
+        $lines[] = "✓ Quiz Attempts: " . $quizzes;
+        $lines[] = "✓ Avg Quiz Score: " . $avgScore . "%  [" . $avgBar . "]";
+        $lines[] = "✓ Certificates: " . $certs . " (" . ($learners > 0 ? round(100.0 * $certs / $learners, 1) : 0) . "%)  [" . $certBar . "]";
+        $lines[] = "✓ Forum Posts: " . $forum;
+        $lines[] = "";
+        $lines[] = "━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+        $lines[] = "MODULE PERFORMANCE";
+        $lines[] = "━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+
+        // Get modules for this school
+        $moduleResult = db()->query("SELECT m.title, COUNT(qa.id) as attempts, ROUND(AVG(qa.percentage), 1) as avg_score FROM modules m LEFT JOIN quiz_attempts qa ON m.id=qa.module_id LEFT JOIN students s ON s.id=qa.student_id WHERE m.is_active=1 AND (s.school_name='" . SQLite3::escapeString($schoolName) . "' OR qa.id IS NULL) GROUP BY m.id ORDER BY attempts DESC LIMIT 10");
+
+        while ($mod = $moduleResult->fetchArray(SQLITE3_ASSOC)) {
+            if ((int)$mod['attempts'] > 0) {
+                $modBar = str_repeat("█", max(1, (int)($mod['avg_score'] / 5))) . str_repeat("░", max(0, $barLen - (int)($mod['avg_score'] / 5)));
+                $lines[] = substr($mod['title'], 0, 35) . str_repeat(" ", max(1, 35 - strlen(substr($mod['title'], 0, 35)))) . "  " . $mod['avg_score'] . "%  [" . $modBar . "]";
+            }
+        }
+
+        $lines[] = "";
+        $lines[] = "━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+        $lines[] = "Platform: http://192.168.0.10/arise/";
+        $lines[] = "DataPost: http://192.168.0.10/arise/?p=datapost";
+
+        // Send email for this school
+        $result = smtp_send($emailTo, $subject . " — " . $schoolName, implode("\n", $lines), [
+            'host' => $cfg['smtp_host'] ?? 'smtp.gmail.com',
+            'port' => (int)($cfg['smtp_port'] ?? 587),
+            'user' => $smtpUser,
+            'pass' => $smtpPass,
+            'from' => $cfg['smtp_from'] ?? $smtpUser,
+        ]);
+
+        if (!$result['ok']) {
+            echo json_encode(['status'=>'error','message'=>'Failed to send for ' . $schoolName . ': ' . $result['error']]);
+            exit;
         }
     }
 
-    $lines[] = "";
-    $lines[] = "Platform: http://192.168.0.10/arise/";
-    $lines[] = "DataPost: http://192.168.0.10/arise/?p=datapost";
-
-    $result = smtp_send($emailTo, $subject, implode("\n", $lines), [
-        'host' => $cfg['smtp_host'] ?? 'smtp.gmail.com',
-        'port' => (int)($cfg['smtp_port'] ?? 587),
-        'user' => $smtpUser,
-        'pass' => $smtpPass,
-        'from' => $cfg['smtp_from'] ?? $smtpUser,
-    ]);
-
-    if ($result['ok']) {
+    // Mark as posted
+    if (count($schools) > 0) {
         db()->exec("UPDATE datapost_sync_log SET posted_at='" . date('Y-m-d H:i:s') . "' WHERE id=" . (int)$last['id']);
-        echo json_encode(['status'=>'success','message'=>"Report sent to $emailTo"]);
+        echo json_encode(['status'=>'success','message'=>"Reports sent for " . count($schools) . " school(s) to $emailTo"]);
     } else {
-        echo json_encode(['status'=>'error','message'=>'SMTP failed: ' . $result['error']]);
+        echo json_encode(['status'=>'error','message'=>'No schools found']);
     }
-    exit;
 }
 
 if ($action === 'test_email') {
