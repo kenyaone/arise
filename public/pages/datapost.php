@@ -89,17 +89,104 @@ function smtp_send(string $to, string $subject, string $body, array $smtp): arra
 }
 
 function snap(): array {
-    return [
-        'learners'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
-        'modules'   => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
-        'lessons'   => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
-        'quizzes'   => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
-        'pretests'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
-        'posttests' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
-        'certs'     => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
-        'forum'     => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
-        'questions' => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+    // Platform totals
+    $summary = [
+        'timestamp'  => date('Y-m-d H:i:s'),
+        'learners'   => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
+        'modules'    => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
+        'lessons'    => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
+        'quizzes'    => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
+        'pretests'   => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
+        'posttests'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
+        'certs'      => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
+        'forum'      => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
+        'questions'  => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+        'avg_quiz_score' => round((float)db()->querySingle("SELECT AVG(score_percent) FROM quiz_attempts") ?? 0, 1),
     ];
+
+    // School-level breakdown
+    $schools = db()->query(
+        "SELECT
+            s.school_name as school,
+            COUNT(DISTINCT s.id) as learners,
+            COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers,
+            ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.score_percent ELSE NULL END), 1) as avg_score,
+            COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified,
+            ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate
+        FROM students s
+        LEFT JOIN quiz_attempts qa ON s.id = qa.student_id
+        LEFT JOIN certificates c ON s.id = c.student_id
+        WHERE s.is_active=1 AND s.deleted_at IS NULL
+        GROUP BY s.school_name
+        ORDER BY learners DESC"
+    )->fetchAll(SQLITE3_ASSOC);
+
+    $summary['schools'] = [];
+    foreach ($schools as $row) {
+        $summary['schools'][] = [
+            'name' => $row['school'],
+            'learners' => (int)$row['learners'],
+            'quiz_takers' => (int)$row['quiz_takers'],
+            'avg_score' => (float)$row['avg_score'],
+            'certified' => (int)$row['certified'],
+            'cert_rate' => (float)$row['cert_rate'],
+        ];
+    }
+
+    // Top modules by engagement
+    $modules = db()->query(
+        "SELECT
+            m.title as module,
+            COUNT(qa.id) as attempts,
+            ROUND(AVG(qa.score_percent), 1) as avg_score,
+            ROUND(100.0 * SUM(CASE WHEN qa.score_percent >= 60 THEN 1 ELSE 0 END) / COUNT(qa.id), 1) as pass_rate
+        FROM modules m
+        LEFT JOIN quiz_attempts qa ON m.id = qa.module_id
+        WHERE m.is_active=1
+        GROUP BY m.id
+        ORDER BY attempts DESC
+        LIMIT 10"
+    )->fetchAll(SQLITE3_ASSOC);
+
+    $summary['top_modules'] = [];
+    foreach ($modules as $row) {
+        if ((int)$row['attempts'] > 0) {
+            $summary['top_modules'][] = [
+                'name' => $row['module'],
+                'attempts' => (int)$row['attempts'],
+                'avg_score' => (float)$row['avg_score'],
+                'pass_rate' => (float)$row['pass_rate'],
+            ];
+        }
+    }
+
+    // Knowledge gain (if pre/post data exists)
+    $gains = db()->query(
+        "SELECT
+            m.title as module,
+            ROUND(AVG(CASE WHEN pa.test_type='pre' THEN pa.percentage ELSE NULL END), 1) as avg_pre,
+            ROUND(AVG(CASE WHEN pa.test_type='post' THEN pa.percentage ELSE NULL END), 1) as avg_post,
+            ROUND(AVG(CASE WHEN pa.test_type='post' THEN pa.percentage ELSE NULL END) -
+                  AVG(CASE WHEN pa.test_type='pre' THEN pa.percentage ELSE NULL END), 1) as gain
+        FROM modules m
+        LEFT JOIN pretest_attempts pa ON m.id = pa.module_id
+        WHERE m.is_active=1
+        GROUP BY m.id
+        HAVING COUNT(CASE WHEN pa.test_type='pre' THEN 1 END) > 0
+        AND COUNT(CASE WHEN pa.test_type='post' THEN 1 END) > 0"
+    )->fetchAll(SQLITE3_ASSOC);
+
+    $summary['knowledge_gain'] = [];
+    foreach ($gains as $row) {
+        $summary['knowledge_gain'][] = [
+            'module' => $row['module'],
+            'pre_avg' => (float)$row['avg_pre'],
+            'post_avg' => (float)$row['avg_post'],
+            'gain' => (float)$row['gain'],
+        ];
+    }
+
+    return $summary;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -179,18 +266,80 @@ if ($action === 'post') {
     $subject = "ARISE Data Report — {$school} — " . date('Y-m-d');
 
     $lines = [
-        "ARISE Platform — Data Report",
-        str_repeat("=", 40),
-        "School  : $school",
-        "Synced  : " . $last['sync_timestamp'],
+        "ARISE PLATFORM — DATA REPORT",
+        str_repeat("=", 60),
+        "Synced  : " . ($data['timestamp'] ?? $last['sync_timestamp']),
         "Sent    : " . date('Y-m-d H:i:s'),
         "",
-        "--- Snapshot ---",
+        "PLATFORM SUMMARY",
+        str_repeat("-", 60),
     ];
-    foreach ($data as $k => $v) $lines[] = sprintf("%-12s: %s", ucfirst($k), $v);
+
+    // Add top-level metrics
+    $topKeys = ['learners', 'modules', 'lessons', 'quizzes', 'certs', 'avg_quiz_score', 'forum', 'questions'];
+    foreach ($topKeys as $k) {
+        if (isset($data[$k]) && !is_array($data[$k])) {
+            $lines[] = sprintf("%-20s: %s", ucfirst(str_replace('_', ' ', $k)), $data[$k]);
+        }
+    }
+
+    // School breakdown
+    if (!empty($data['schools'])) {
+        $lines[] = "";
+        $lines[] = "SCHOOL BREAKDOWN";
+        $lines[] = str_repeat("-", 60);
+        $lines[] = sprintf("%-30s | %8s | %8s | %10s | %5s", "School", "Learners", "Quizzed", "Avg Score", "Cert %");
+        $lines[] = str_repeat("-", 60);
+        foreach ($data['schools'] as $s) {
+            $lines[] = sprintf("%-30s | %8d | %8d | %9.1f%% | %5.1f%%",
+                substr($s['name'], 0, 29),
+                $s['learners'],
+                $s['quiz_takers'],
+                $s['avg_score'],
+                $s['cert_rate']
+            );
+        }
+    }
+
+    // Top modules
+    if (!empty($data['top_modules'])) {
+        $lines[] = "";
+        $lines[] = "TOP MODULES BY ENGAGEMENT";
+        $lines[] = str_repeat("-", 60);
+        $lines[] = sprintf("%-30s | %8s | %10s | %8s", "Module", "Attempts", "Avg Score", "Pass %");
+        $lines[] = str_repeat("-", 60);
+        foreach (array_slice($data['top_modules'], 0, 5) as $m) {
+            $lines[] = sprintf("%-30s | %8d | %9.1f%% | %7.1f%%",
+                substr($m['name'], 0, 29),
+                $m['attempts'],
+                $m['avg_score'],
+                $m['pass_rate']
+            );
+        }
+    }
+
+    // Knowledge gain
+    if (!empty($data['knowledge_gain'])) {
+        $lines[] = "";
+        $lines[] = "KNOWLEDGE GAIN ANALYSIS";
+        $lines[] = str_repeat("-", 60);
+        $lines[] = sprintf("%-30s | %8s | %8s | %8s", "Module", "Pre Avg", "Post Avg", "Gain");
+        $lines[] = str_repeat("-", 60);
+        foreach ($data['knowledge_gain'] as $g) {
+            $lines[] = sprintf("%-30s | %7.1f%% | %7.1f%% | %7.1f%%",
+                substr($g['module'], 0, 29),
+                $g['pre_avg'],
+                $g['post_avg'],
+                $g['gain']
+            );
+        }
+    }
+
     $lines[] = "";
-    $lines[] = "Platform : http://192.168.0.10/arise/";
-    $lines[] = "DataPost : http://192.168.0.10/data";
+    $lines[] = "VIEW FULL REPORT";
+    $lines[] = "Visual reports: http://192.168.0.10/arise/?p=donor_report";
+    $lines[] = "DataPost: http://192.168.0.10/data";
+    $lines[] = "Platform: http://192.168.0.10/arise/";
 
     $result = smtp_send($emailTo, $subject, implode("\n", $lines), [
         'host' => $cfg['smtp_host'] ?? 'smtp.gmail.com',

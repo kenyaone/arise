@@ -115,7 +115,7 @@ $navGroups = [
         ['p'=>'reports',  'icon'=>'📋','label'=>'Reports',   'perm'=>'students_view'],
     ],
     'Resources' => [
-        ['url'=>'/data','icon'=>'💾','label'=>'DataPost API','perm'=>'dashboard','target'=>'_blank'],
+        ['url'=>'/arise/?p=datapost','icon'=>'💾','label'=>'DataPost API','perm'=>'dashboard','target'=>'_blank'],
         ['url'=>'/arise/?p=manual_user','icon'=>'📖','label'=>'User Manual','perm'=>'dashboard','target'=>'_blank'],
         ['url'=>'/arise/?p=manual_tech','icon'=>'⚙','label'=>'Tech Docs','perm'=>'setup','target'=>'_blank'],
         ['url'=>'/arise/?p=manual_impact','icon'=>'📊','label'=>'Impact Guide','perm'=>'students_view','target'=>'_blank'],
@@ -331,7 +331,7 @@ if ($page === 'dashboard'):
             </a>
         </div>
         <div class="url-label" style="margin-top:14px;">&#128240; DataPost API</div>
-        <code>http://arise.local/data</code>
+        <code>http://192.168.0.10/arise/?p=datapost</code>
         <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:4px;">Full data export &middot; learner names anonymised</div>
         <div class="url-label" style="margin-top:14px;">&#128218; Platform Manuals</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">

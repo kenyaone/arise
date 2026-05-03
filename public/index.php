@@ -9,6 +9,10 @@ if ($_early_page === 'datapost') {
     include __DIR__.'/pages/datapost.php';
     exit;
 }
+if ($_early_page === 'donor_report') {
+    include __DIR__.'/pages/donor_report.php';
+    exit;
+}
 if ($_early_page === 'lesson') {
     $_slug = $_GET['slug'] ?? '';
     if ($_slug) {
