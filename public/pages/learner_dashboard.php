@@ -3,8 +3,17 @@
  * Learner Dashboard — rich student home page
  * Route: ?p=dashboard
  */
+// TEST: Flush any buffered output
+if (ob_get_level()) ob_end_clean();
+echo "<!-- DASHBOARD LOADED -->";
+
 $student = getStudentBySession();
-if (!$student) { header('Location: /arise/?p=login'); exit; }
+if (!$student) {
+    echo "<!-- NO STUDENT SESSION -->";
+    header('Location: /arise/?p=login');
+    exit;
+}
+echo "<!-- STUDENT: " . htmlspecialchars($student['full_name']) . " -->";
 $sid = $student['id'];
 
 // Notifications
