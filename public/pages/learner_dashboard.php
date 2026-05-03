@@ -420,9 +420,9 @@ trackPageView('dashboard');
     </div>
 
     <!-- ── Recent Quiz Scores ────────────────────────────────────── -->
-    <?php if (!empty($recentQuizzes)): ?>
     <div class="dp-card" style="margin-bottom:24px;">
         <h2 class="section-title" style="margin-bottom:14px;">🧠 Recent Quiz Scores</h2>
+        <?php if (!empty($recentQuizzes)): ?>
         <div style="overflow-x:auto;">
             <table class="quiz-table arise-table">
                 <thead>
@@ -458,8 +458,15 @@ trackPageView('dashboard');
                 </tbody>
             </table>
         </div>
+        <?php else: ?>
+        <div class="empty-state">
+            <div class="e-icon">🎯</div>
+            <p>Take your first quiz to see your scores here!</p>
+            <p style="font-size:.85rem;color:var(--mid);margin-top:4px;">Complete a lesson and take the quiz to start tracking your progress.</p>
+            <a href="/arise/?p=modules" class="btn btn-primary" style="margin-top:10px;">📚 Browse Modules</a>
+        </div>
+        <?php endif; ?>
     </div>
-    <?php endif; ?>
 
     <!-- ── Certificates Earned ───────────────────────────────────── -->
     <div class="dp-card" style="margin-bottom:24px;">
