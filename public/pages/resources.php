@@ -58,9 +58,4 @@
         <p class="mt-1"><strong>Remember:</strong> Asking for help is a sign of strength, not weakness. You deserve support.</p>
     </div>
 
-    <!-- Ask Anonymous -->
-    <div class="text-center mt-3">
-        <p class="text-muted mb-1">Have a question you'd rather not ask out loud?</p>
-        <a href="?p=ask" class="btn btn-primary btn-lg">🔒 Ask Anonymously</a>
-    </div>
 </div>

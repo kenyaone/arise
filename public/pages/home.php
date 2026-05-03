@@ -6,80 +6,47 @@ $totalCerts    = db()->querySingle("SELECT COUNT(*) FROM certificates") ?? 0;
 $interactives  = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='interactive' AND is_active=1") ?? 0;
 $videos        = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='video' AND is_active=1") ?? 0;
 $pdfs          = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='pdf' AND is_active=1") ?? 0;
-
-// ── LEARNER PROGRESS DATA ──
-if ($student) {
-    $sid = intval($student['id']);
-    $firstName = explode(' ', $student['full_name'])[0];
-
-    // XP & level
-    $xp = db()->querySingle("SELECT * FROM student_xp WHERE student_id=$sid", true);
-    $xpPoints  = $xp ? intval($xp['xp_points']) : 0;
-    $level     = $xp ? intval($xp['level']) : 1;
-    $streak    = $xp ? intval($xp['streak_days']) : 0;
-    $lessonsD  = $xp ? intval($xp['total_lessons_completed']) : 0;
-    $quizzesP  = $xp ? intval($xp['total_quizzes_passed']) : 0;
-
-    // Fallback counts from actual tables if xp table is empty
-    if ($lessonsD === 0)
-        $lessonsD = db()->querySingle("SELECT COUNT(*) FROM lesson_scores WHERE student_id=$sid") ?? 0;
-    if ($quizzesP === 0)
-        $quizzesP = db()->querySingle("SELECT COUNT(*) FROM lesson_scores WHERE student_id=$sid AND passed=1") ?? 0;
-
-    // Certificates
-    $myCerts = db()->querySingle("SELECT COUNT(*) FROM certificates WHERE student_id=$sid") ?? 0;
-
-    // Recent lessons (last 3)
-    $recentStmt = db()->prepare("SELECT ls.lesson_slug, ls.score, ls.total, ls.percent, ls.passed, ls.saved_at, m.title as module FROM lesson_scores ls LEFT JOIN modules m ON ls.module_slug=m.slug WHERE ls.student_id=:sid ORDER BY ls.saved_at DESC LIMIT 3");
-    $recentStmt->bindValue(':sid', $sid);
-    $recentRes = $recentStmt->execute();
-    $recentLessons = [];
-    while ($row = $recentRes->fetchArray(SQLITE3_ASSOC)) $recentLessons[] = $row;
-
-    // Badges earned
-    $badgeStmt = db()->prepare("SELECT b.name, b.icon, b.description, sb.earned_at FROM student_badges sb JOIN badges b ON sb.badge_id=b.id WHERE sb.student_id=:sid ORDER BY sb.earned_at DESC");
-    $badgeStmt->bindValue(':sid', $sid);
-    $badgeRes = $badgeStmt->execute();
-    $myBadges = [];
-    while ($row = $badgeRes->fetchArray(SQLITE3_ASSOC)) $myBadges[] = $row;
-
-    // All badges for "locked" display
-    $allBadgesRes = db()->query("SELECT * FROM badges ORDER BY id");
-    $allBadges = [];
-    while ($row = $allBadgesRes->fetchArray(SQLITE3_ASSOC)) $allBadges[] = $row;
-    $earnedIds = array_column($myBadges, 'name');
-
-    // XP to next level (every 200 XP = 1 level)
-    $xpForNext   = $level * 200;
-    $xpInLevel   = $xpPoints - (($level - 1) * 200);
-    $xpProgress  = $xpForNext > 0 ? min(100, round(($xpInLevel / 200) * 100)) : 0;
-
-    // Modules progress
-    $modProgressStmt = db()->prepare("SELECT module_slug, COUNT(*) as cnt, AVG(percent) as avg_pct, MAX(passed) as has_pass FROM lesson_scores WHERE student_id=:sid GROUP BY module_slug");
-    $modProgressStmt->bindValue(':sid', $sid);
-    $modRes = $modProgressStmt->execute();
-    $modProgress = [];
-    while ($row = $modRes->fetchArray(SQLITE3_ASSOC)) $modProgress[$row['module_slug']] = $row;
-
-    // Greeting by time
-    $hour = intval(date('H'));
-    $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
-
-    // Motivational message
-    $motivations = [
-        'Every lesson is a step toward a healthier, brighter future. Keep going! 💪',
-        'Knowledge is power — and you\'re building it every day. 🌟',
-        'You\'re doing amazing! Keep learning and growing. 🚀',
-        'Each quiz you pass brings you closer to your certificate. 🎓',
-        'Your health knowledge today shapes your tomorrow. ✨',
-    ];
-    $motivation = $motivations[$sid % count($motivations)];
-}
 ?>
 
-<?php if ($student): ?>
+<?php if ($student):
+    $firstName = explode(' ', $student['full_name'])[0];
+?>
 <style>
-/* ── PROGRESS DASHBOARD ── */
+.welcome-banner {
+    background: linear-gradient(135deg, #052e16, #0a5e2a);
+    color: #fff;
+    padding: 24px 20px;
+    border-radius: 12px;
+    margin: 0 auto 24px;
+    max-width: 720px;
+    text-align: center;
+}
+.welcome-banner h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+.welcome-banner .cta-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+.welcome-banner .cta-group a {
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: .9rem;
+    transition: .2s;
+    border: 1px solid rgba(255,255,255,.2);
+}
+.welcome-banner .cta-group a:hover {
+    background: rgba(255,255,255,.25);
+}
 .pdash {
     background: linear-gradient(145deg, #052e16, #0a5e2a, #166534);
     border-radius: 24px;
@@ -87,6 +54,7 @@ if ($student) {
     margin-bottom: 24px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(10,94,42,.3);
+    display: none;
 }
 .pdash-top {
     padding: 24px 22px 18px;
@@ -418,133 +386,16 @@ if ($student) {
 }
 </style>
 
-<!-- ══════════════ PROGRESS DASHBOARD ══════════════ -->
-<div style="max-width:720px;margin:0 auto;padding:0 16px;">
-
-    <!-- Main card -->
-    <div class="pdash">
-        <div class="pdash-top">
-            <div class="pdash-greeting"><?= $greeting ?>, welcome back 👋</div>
-            <div class="pdash-name"><?= e($firstName) ?> <?= $streak >= 3 ? '🔥' : '' ?></div>
-            <div class="pdash-motivation"><?= $motivation ?></div>
-
-            <!-- XP Bar -->
-            <div class="xp-section">
-                <div class="xp-row">
-                    <span class="xp-label">⚡ Level <?= $level ?> Learner</span>
-                    <span class="xp-level"><?= $xpPoints ?> XP</span>
-                </div>
-                <div class="xp-bar-wrap">
-                    <div class="xp-bar-fill" style="width:<?= $xpProgress ?>%"></div>
-                </div>
-                <div class="xp-pts"><?= $xpPoints ?> / <?= $xpForNext ?> XP to Level <?= $level + 1 ?></div>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="pdash-stats">
-            <div class="pdash-stat">
-                <div class="ps-num"><?= $lessonsD ?></div>
-                <div class="ps-lbl">Lessons Done</div>
-            </div>
-            <div class="pdash-stat">
-                <div class="ps-num"><?= $quizzesP ?></div>
-                <div class="ps-lbl">Quizzes Passed</div>
-            </div>
-            <div class="pdash-stat">
-                <div class="ps-num"><?= $myCerts ?></div>
-                <div class="ps-lbl">Certificates</div>
-            </div>
-            <div class="pdash-stat">
-                <div class="ps-num"><?= $streak ?>🔥</div>
-                <div class="ps-lbl">Day Streak</div>
-            </div>
-        </div>
+<!-- ══════════════ WELCOME BANNER ══════════════ -->
+<div class="welcome-banner">
+    <h3>👋 Welcome back, <?= e($firstName) ?>!</h3>
+    <p style="margin-bottom: 0; font-size: .95rem; opacity: .95;">Pick up where you left off or start a new module.</p>
+    <div class="cta-group">
+        <a href="/arise/?p=dashboard">📊 My Dashboard</a>
+        <a href="/arise/?p=modules">▶ Browse Modules</a>
     </div>
-
-    <!-- Continue Learning CTA -->
-    <a href="/arise/?p=modules" class="continue-cta">
-        <span style="font-size:2rem;flex-shrink:0;">📚</span>
-        <div class="continue-cta-text">
-            <div class="t1"><?= $lessonsD > 0 ? 'Continue Learning →' : 'Start Your First Lesson →' ?></div>
-            <div class="t2"><?= $totalModules ?> modules available · <?= $totalLessons ?> total lessons · Earn certificates</div>
-        </div>
-    </a>
-
-    <!-- Badges -->
-    <div class="badges-section">
-        <div class="badges-title">
-            🏅 My Badges
-            <span class="badges-count"><?= count($myBadges) ?> / <?= count($allBadges) ?> earned</span>
-        </div>
-        <div class="badges-grid">
-            <?php
-            $earnedNames = array_column($myBadges, 'name');
-            // Show earned first, then locked
-            $earnedBadgeData = [];
-            $lockedBadgeData = [];
-            foreach ($allBadges as $ab) {
-                if (in_array($ab['name'], $earnedNames)) $earnedBadgeData[] = $ab;
-                else $lockedBadgeData[] = $ab;
-            }
-            $isNew = function($name) use ($myBadges) {
-                foreach ($myBadges as $mb) {
-                    if ($mb['name'] === $name) {
-                        return strtotime($mb['earned_at']) > strtotime('-24 hours');
-                    }
-                }
-                return false;
-            };
-            foreach (array_merge($earnedBadgeData, $lockedBadgeData) as $ab):
-                $earned = in_array($ab['name'], $earnedNames);
-                $new = $earned && $isNew($ab['name']);
-            ?>
-            <div class="badge-item <?= $earned ? 'earned' : 'locked' ?>" title="<?= e($ab['description'] ?? $ab['name']) ?>">
-                <?php if ($new): ?><span class="badge-new">New!</span><?php endif; ?>
-                <div class="badge-icon"><?= $earned ? $ab['icon'] : '🔒' ?></div>
-                <div class="badge-name"><?= e($ab['name']) ?></div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <!-- Badge collection progress bar -->
-        <div class="badges-progress-bar">
-            <div class="badges-progress-label">
-                <span>🎯 Badge Collection Progress</span>
-                <span><?= count($myBadges) ?> of <?= count($allBadges) ?> badges</span>
-            </div>
-            <div class="badges-bar-wrap">
-                <div class="badges-bar-fill" style="width:<?= count($allBadges) > 0 ? round((count($myBadges)/count($allBadges))*100) : 0 ?>%"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <?php if (count($recentLessons) > 0): ?>
-    <div class="recent-section">
-        <div class="recent-title">⚡ Recent Activity</div>
-        <?php foreach ($recentLessons as $r):
-            $slug = str_replace(['-lesson','-'],[' ',' '], $r['lesson_slug']);
-            $passed = $r['passed'];
-            $pct = round($r['percent']);
-            $when = date('M j', strtotime($r['saved_at']));
-        ?>
-        <div class="recent-item">
-            <div class="recent-score <?= $passed ? 'pass' : 'fail' ?>"><?= $pct ?>%</div>
-            <div class="recent-info">
-                <div class="recent-slug"><?= e(ucwords($slug)) ?></div>
-                <div class="recent-meta">📅 <?= $when ?> · <?= $r['score'] ?>/<?= $r['total'] ?> marks</div>
-            </div>
-            <span class="recent-badge <?= $passed ? 'pass' : 'fail' ?>"><?= $passed ? '✓ Passed' : 'Try again' ?></span>
-        </div>
-        <?php endforeach; ?>
-        <div style="text-align:center;margin-top:12px;">
-            <a href="/arise/?p=my_progress" style="font-size:.8rem;font-weight:700;color:#0a5e2a;text-decoration:none;">View full progress →</a>
-        </div>
-    </div>
-    <?php endif; ?>
-
 </div>
-<!-- ══════════════ END DASHBOARD ══════════════ -->
+<!-- ══════════════ END WELCOME BANNER ══════════════ -->
 <?php endif; ?>
 
 <!-- HERO (shown to all, adapted for logged-in users) -->
@@ -695,34 +546,6 @@ if ($student) {
         </div>
     </div>
 
-    <!-- MODULES -->
-    <h2 class="page-title text-center mt-3" style="margin-bottom:6px;">📚 Available Modules</h2>
-    <p class="text-center text-muted" style="margin-bottom:20px;font-size:.9rem;">Tap any topic to start learning</p>
-
-    <?php if (count($modules) > 0): ?>
-    <div class="topic-pills">
-        <?php foreach ($modules as $m):
-            $lc = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND is_active=1") ?? 0;
-            $hi = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND lesson_type='interactive' AND is_active=1");
-            $hv = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND lesson_type='video' AND is_active=1");
-        ?>
-        <a href="/arise/?p=module&slug=<?= e($m['slug']) ?>" class="topic-pill">
-            <?= $m['icon'] ?> <?= e($m['title']) ?>
-            <?php if ($lc > 0): ?>
-                <span style="font-size:.7rem;background:var(--green-light);color:var(--green-dark);padding:2px 8px;border-radius:50px;margin-left:4px;font-weight:700;">
-                    <?= $lc ?> lesson<?= $lc!=1?'s':'' ?><?= $hi?' 🎮':'' ?><?= $hv?' 🎬':'' ?>
-                </span>
-            <?php endif; ?>
-        </a>
-        <?php endforeach; ?>
-    </div>
-    <?php else: ?>
-    <div class="dp-card text-center" style="padding:40px;border:2px dashed var(--border);">
-        <div style="font-size:3rem;margin-bottom:12px;">📚</div>
-        <h3 style="color:var(--green-dark);margin-bottom:8px;">Modules Coming Soon</h3>
-        <p class="text-muted">Your teacher is uploading lessons. Check back shortly!</p>
-    </div>
-    <?php endif; ?>
 
     <!-- ABOUT -->
     <div class="dp-card mt-3" style="text-align:center;border:2px solid var(--green-light);background:linear-gradient(135deg,#fff,var(--green-light));">

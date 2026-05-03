@@ -375,58 +375,6 @@ trackPageView('dashboard');
         </div>
     </div>
 
-    <!-- ── XP Leaderboard ───────────────────────────────────────── -->
-    <?php if (!empty($leaderboard)): ?>
-    <div class="dp-card" style="margin-bottom:24px;">
-        <h2 class="section-title" style="margin-bottom:4px;">🏆 Top Learners</h2>
-        <p style="font-size:.78rem;color:var(--mid,#6b7280);margin:0 0 14px;">
-            Names are anonymised to protect privacy.
-            <?php if ($myLeaderboardRank !== null): ?>
-                You are <strong>Rank #<?= $myLeaderboardRank ?></strong> — highlighted below.
-            <?php else: ?>
-                Keep earning XP to appear on the board!
-            <?php endif; ?>
-        </p>
-        <div style="overflow-x:auto;">
-            <table class="lb-table">
-                <thead>
-                    <tr>
-                        <th style="width:48px;">Rank</th>
-                        <th>Learner</th>
-                        <th>Level</th>
-                        <th>XP Points</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($leaderboard as $entry):
-                        $isMe   = intval($entry['id']) === intval($sid);
-                        $rank   = $entry['rank'];
-                        $medal  = $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : ($rank === 3 ? '🥉' : ''));
-                        $xpDisp = number_format(intval($entry['xp_points']));
-                        $lvl    = intval($entry['level']);
-                    ?>
-                    <tr class="<?= $isMe ? 'lb-me' : '' ?>">
-                        <td>
-                            <span class="lb-rank">
-                                <?= $medal ?: ('#' . $rank) ?>
-                            </span>
-                        </td>
-                        <td>
-                            <?php if ($isMe): ?>
-                                <span style="color:#7c3aed;">⭐ You (Learner #<?= $rank ?>)</span>
-                            <?php else: ?>
-                                Learner #<?= $rank ?>
-                            <?php endif; ?>
-                        </td>
-                        <td><span class="lb-level">⚡ Lvl <?= $lvl ?></span></td>
-                        <td><span class="lb-xp"><?= $xpDisp ?> XP</span></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <?php endif; ?>
 
     <!-- ── Module Progress ───────────────────────────────────────── -->
     <div class="dp-card" style="margin-bottom:24px;">
@@ -547,12 +495,5 @@ trackPageView('dashboard');
         <?php endif; ?>
     </div>
 
-    <!-- ── Quick Actions ────────────────────────────────────────── -->
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;margin-bottom:32px;">
-        <a href="/arise/?p=modules"      class="btn btn-primary">📚 Browse Modules</a>
-        <a href="/arise/?p=my_progress"  class="btn btn-secondary">⚡ XP &amp; Badges</a>
-        <a href="/arise/?p=certificates" class="btn btn-secondary">🎓 All Certificates</a>
-        <a href="/arise/?p=forum"        class="btn btn-secondary">💬 Forum</a>
-    </div>
 
 </div>

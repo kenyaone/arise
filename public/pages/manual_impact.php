@@ -47,7 +47,6 @@ tr:nth-child(even) td{background:#fff7ed}
   <div style="display:flex;gap:20px;align-items:center;">
     <span style="color:#fed7aa;font-weight:700;">📊 Impact Guide</span>
     <a href="/arise/?p=manual_user" style="color:#fed7aa;text-decoration:none;font-size:.9rem;padding:6px 12px;border-radius:6px;border:1px solid #78350f;transition:.2s">📖 User Manual</a>
-    <a href="/arise/?p=manual_tech" style="color:#fed7aa;text-decoration:none;font-size:.9rem;padding:6px 12px;border-radius:6px;border:1px solid #78350f;transition:.2s">⚙ Technical Docs</a>
     <a href="/arise/?p=datapost" style="color:#fed7aa;text-decoration:none;font-size:.9rem;padding:6px 12px;border-radius:6px;border:1px solid #78350f;transition:.2s">💾 DataPost</a>
   </div>
   <button onclick="window.print()" style="background:#f97316;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;font-size:.9rem;">

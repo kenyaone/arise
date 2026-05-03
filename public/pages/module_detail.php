@@ -587,19 +587,6 @@ $interactiveCount = $counts['interactive'];
     </div>
     <?php endif; ?>
 
-    <?php if ($hasQuestions && $_pretestDone): ?>
-    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:14px;padding:16px 20px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div>
-        <div style="font-weight:700;font-size:.9rem;color:#166534;">Step 3 of 3 &mdash; Take the Post-Test</div>
-        <div style="font-size:.8rem;color:#6b7280;margin-top:2px;">You have completed the lessons. See how much you have learned!</div>
-      </div>
-      <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=post"
-         class="btn btn-primary"
-         style="<?= $_postestDone ? 'opacity:.7;' : '' ?>">
-        &#128200; Post-Test <?= $_postestDone ? '&#10003; Done' : '&rarr; Take Now' ?>
-      </a>
-    </div>
-    <?php endif; ?>
 
     <a href="/arise/?p=modules" class="back-btn" style="margin-top:14px;display:inline-flex;">&#8592; Back to All Modules</a>
 

@@ -117,7 +117,6 @@ $navGroups = [
     'Resources' => [
         ['url'=>'/arise/?p=datapost','icon'=>'💾','label'=>'DataPost API','perm'=>'dashboard','target'=>'_blank'],
         ['url'=>'/arise/?p=manual_user','icon'=>'📖','label'=>'User Manual','perm'=>'dashboard','target'=>'_blank'],
-        ['url'=>'/arise/?p=manual_tech','icon'=>'⚙','label'=>'Tech Docs','perm'=>'setup','target'=>'_blank'],
         ['url'=>'/arise/?p=manual_impact','icon'=>'📊','label'=>'Impact Guide','perm'=>'students_view','target'=>'_blank'],
         ['url'=>'/arise/downloads/ARISE-Marketing.html','icon'=>'🎯','label'=>'Marketing PDF','perm'=>'dashboard','target'=>'_blank'],
     ],
@@ -338,10 +337,6 @@ if ($page === 'dashboard'):
             <a href="/arise/?p=manual_user" target="_blank"
                style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 12px;font-size:.77rem;font-weight:700;text-decoration:none;">
                 &#128100; User Manual
-            </a>
-            <a href="/arise/?p=manual_tech" target="_blank"
-               style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 12px;font-size:.77rem;font-weight:700;text-decoration:none;">
-                &#9881; Technical Manual
             </a>
             <a href="/arise/?p=manual_impact" target="_blank"
                style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 12px;font-size:.77rem;font-weight:700;text-decoration:none;">

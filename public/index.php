@@ -98,18 +98,15 @@ if ($student) {
         </a>
         <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
         <ul class="nav-links">
-            <li><a href="/arise/" class="<?= $page==='home'?'active':'' ?>">&#127968; <?= t('home') ?></a></li>
-            <li><a href="/arise/?p=modules" class="<?= in_array($page,['modules','module','lesson'])?'active':'' ?>">&#128218; <?= t('modules') ?></a></li>
-            <li><a href="/arise/?p=forum" class="<?= $page==='forum'?'active':'' ?>" title="Community discussion forum">💬 <?= t('forum') ?></a></li>
-            <li><a href="/arise/?p=ask" class="<?= $page==='ask'?'active':'' ?>" title="Send a private question to our educators">🙋 <?= t('ask_us') ?></a></li>
-            <li><a href="/arise/?p=resources" class="<?= $page==='resources'?'active':'' ?>">&#128222; <?= t('help') ?></a></li>
+            <li><a href="/arise/" class="<?= $page==='home'?'active':'' ?>">🏠 <?= t('home') ?></a></li>
+            <li><a href="/arise/?p=modules" class="<?= in_array($page,['modules','module','lesson'])?'active':'' ?>">📚 <?= t('modules') ?></a></li>
+            <li><a href="/arise/?p=forum" class="<?= in_array($page,['forum','ask'])?'active':'' ?>" title="Community &amp; discussions">💬 Community</a></li>
             <?php if ($studentName): ?>
-                <li><a href="/arise/?p=dashboard" class="<?= in_array($page,['dashboard','my_progress'])?'active':'' ?>" style="background:rgba(245,230,66,.15);color:var(--acc);">&#11088; <?= e(explode(' ',$studentName)[0]) ?></a></li>
-                <li><a href="/arise/?p=certificates" class="<?= $page==='certificates'?'active':'' ?>">&#127891; <?= t('certificates') ?></a></li>
+                <li><a href="/arise/?p=dashboard" class="<?= in_array($page,['dashboard','my_progress'])?'active':'' ?>" style="background:rgba(245,230,66,.15);color:var(--acc);">⭐ <?= e(explode(' ',$studentName)[0]) ?></a></li>
                 <li><a href="/arise/?logout=1" style="color:rgba(255,255,255,.5);font-size:.8rem;"><?= t('sign_out') ?></a></li>
             <?php else: ?>
                 <li><a href="/arise/?p=login" class="<?= $page==='login'?'active':'' ?>" style="color:rgba(255,255,255,.8);"><?= t('sign_in') ?></a></li>
-                <li><a href="/arise/?p=register" style="background:var(--acc);color:var(--pri-deep);font-weight:800;">&#128221; <?= t('register') ?></a></li>
+                <li><a href="/arise/?p=register" style="background:var(--acc);color:var(--pri-deep);font-weight:800;">✍️ <?= t('register') ?></a></li>
             <?php endif; ?>
             <li>
               <a href="/arise/?p=set_lang&lang=<?= ($_SESSION['arise_lang']??'en')==='sw'?'en':'sw' ?>"
@@ -150,7 +147,6 @@ switch ($page) {
     case 'retention':       include __DIR__.'/pages/retention_test.php'; break;
     case 'facilitator':     include __DIR__.'/pages/facilitator_dashboard.php'; exit;
     case 'manual_user':     include __DIR__.'/pages/manual_user.php';           exit;
-    case 'manual_tech':     include __DIR__.'/pages/manual_tech.php';           exit;
     case 'manual_impact':   include __DIR__.'/pages/manual_impact.php';         exit;
     case 'set_lang':        include __DIR__.'/pages/set_lang.php'; exit;
     default:                include __DIR__.'/pages/home.php';
