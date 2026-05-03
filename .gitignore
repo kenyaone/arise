@@ -1,0 +1,5 @@
+data/arise.db
+data/uploads/
+data/backups/
+*.log
+.env

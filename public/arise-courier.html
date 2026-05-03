@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>ARISE DataPost Courier</title>
+<style>
+:root{
+  --pri:#9333EA;--pri-d:#7E22CE;--acc:#FDE68A;--acc-d:#F59E0B;
+  --ok:#10B981;--err:#EF4444;--warn:#F59E0B;--bg:#F5F3FF;
+  --card:#fff;--border:#E5E7EB;--dark:#1E1B4B;--muted:#6B7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--dark);min-height:100vh;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--pri-d),var(--pri));color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(147,51,234,.3);}
+.header-brand{font-size:1.1rem;font-weight:900;color:var(--acc);letter-spacing:1px;}
+.header-sub{font-size:.7rem;opacity:.7;margin-top:1px;}
+.btn-settings{background:rgba(255,255,255,.15);border:1.5px solid rgba(253,230,138,.4);color:var(--acc);padding:7px 14px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;}
+
+/* SERVER BAR */
+.server-bar{background:#fff;border-bottom:2px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:10px;font-size:.82rem;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dot.green{background:var(--ok);box-shadow:0 0 6px var(--ok);}
+.dot.red{background:var(--err);}
+.dot.grey{background:#D1D5DB;}
+#serverStatus{font-weight:600;color:var(--dark);}
+.server-url{color:var(--muted);font-size:.75rem;margin-left:4px;}
+
+/* MAIN */
+.main{padding:20px;max-width:480px;margin:0 auto;}
+
+/* STATUS CARD */
+.status-card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(147,51,234,.1);border:1.5px solid var(--border);margin-bottom:16px;}
+.status-card h3{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.stat-item{text-align:center;padding:10px 6px;background:var(--bg);border-radius:10px;}
+.stat-item .val{font-size:1.6rem;font-weight:900;color:var(--pri);line-height:1;}
+.stat-item .lbl{font-size:.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-top:2px;}
+
+/* PENDING BADGE */
+.pending-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.3);border-radius:20px;padding:5px 12px;font-size:.78rem;font-weight:700;color:#92400e;margin-top:10px;}
+
+/* ACTION BUTTONS */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.action-btn{padding:0;border:none;border-radius:14px;cursor:pointer;transition:all .18s;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.1);}
+.action-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.action-btn:active{transform:translateY(0);}
+.action-btn.pickup{background:linear-gradient(135deg,var(--pri),#A855F7);}
+.action-btn.post{background:linear-gradient(135deg,var(--ok),#059669);}
+.action-btn.dropoff{background:linear-gradient(135deg,var(--acc-d),#D97706);}
+.action-btn.backup{background:linear-gradient(135deg,#0EA5E9,#0284C7);}
+.action-btn-inner{padding:18px 14px;text-align:center;}
+.action-btn .icon{font-size:1.8rem;margin-bottom:6px;}
+.action-btn .label{font-size:.88rem;font-weight:800;color:#fff;}
+.action-btn .desc{font-size:.7rem;color:rgba(255,255,255,.75);margin-top:2px;}
+
+/* FULL WIDTH BUTTON */
+.btn-full{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:all .18s;margin-bottom:10px;}
+.btn-purple{background:var(--pri);color:#fff;box-shadow:0 4px 14px rgba(147,51,234,.35);}
+.btn-purple:hover{background:var(--pri-d);}
+.btn-outline{background:#fff;color:var(--pri);border:1.5px solid var(--pri);}
+.btn-outline:hover{background:var(--bg);}
+
+/* LOG */
+.log-card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(147,51,234,.08);border:1.5px solid var(--border);}
+.log-card h3{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.log-clear{font-size:.68rem;color:var(--pri);cursor:pointer;font-weight:600;}
+#logList{max-height:220px;overflow-y:auto;}
+.log-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.8rem;}
+.log-item:last-child{border-bottom:none;}
+.log-icon{flex-shrink:0;font-size:.9rem;}
+.log-msg{flex:1;line-height:1.4;}
+.log-time{font-size:.68rem;color:var(--muted);white-space:nowrap;}
+.log-empty{text-align:center;padding:20px;color:var(--muted);font-size:.82rem;}
+
+/* PROGRESS BAR */
+.progress-wrap{display:none;background:var(--card);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 2px 12px rgba(147,51,234,.08);border:1.5px solid var(--border);}
+.progress-label{font-size:.82rem;font-weight:600;margin-bottom:8px;color:var(--dark);}
+.progress-bar{height:10px;background:var(--bg);border-radius:20px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--pri),var(--acc-d));border-radius:20px;width:0%;transition:width .4s ease;}
+.progress-sub{font-size:.72rem;color:var(--muted);margin-top:5px;}
+
+/* SETTINGS MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;align-items:flex-end;justify-content:center;}
+.modal{background:#fff;border-radius:20px 20px 0 0;padding:24px 20px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;}
+.modal h2{font-size:1rem;font-weight:800;margin-bottom:4px;}
+.modal p{font-size:.8rem;color:var(--muted);margin-bottom:18px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.field input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:.88rem;}
+.field input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(147,51,234,.1);}
+.field-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+.modal-btns{display:flex;gap:10px;margin-top:4px;}
+.modal-btns button{flex:1;padding:12px;border-radius:10px;border:none;font-size:.88rem;font-weight:700;cursor:pointer;}
+.btn-save{background:var(--pri);color:#fff;}
+.btn-cancel{background:var(--bg);color:var(--muted);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--dark);color:#fff;padding:10px 22px;border-radius:20px;font-size:.84rem;font-weight:600;z-index:9999;transition:transform .3s ease;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.ok{background:var(--ok);}
+.toast.err{background:var(--err);}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="header-brand">&#128225; ARISE DataPost</div>
+    <div class="header-sub">Offline LMS Courier</div>
+  </div>
+  <button class="btn-settings" onclick="openSettings()">&#9881; Settings</button>
+</div>
+
+<!-- SERVER STATUS BAR -->
+<div class="server-bar">
+  <div class="dot grey" id="statusDot"></div>
+  <span id="serverStatus">Checking server...</span>
+  <span class="server-url" id="serverUrlDisplay"></span>
+  <button onclick="checkServer()" style="margin-left:auto;background:none;border:none;color:var(--pri);font-size:.75rem;font-weight:700;cursor:pointer;">Refresh</button>
+</div>
+
+<div class="main">
+
+  <!-- STATUS CARD -->
+  <div class="status-card">
+    <h3>Last Pickup Summary</h3>
+    <div class="stat-row">
+      <div class="stat-item"><div class="val" id="statStudents">0</div><div class="lbl">Students</div></div>
+      <div class="stat-item"><div class="val" id="statGrades">0</div><div class="lbl">Grades</div></div>
+      <div class="stat-item"><div class="val" id="statCerts">0</div><div class="lbl">Certs</div></div>
+    </div>
+    <div id="pendingBadge" style="display:none;">
+      <div class="pending-badge">&#128225; <span id="pendingCount">0</span> entries ready to POST</div>
+    </div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label" id="progressLabel">Working...</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-sub" id="progressSub"></div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-grid">
+    <button class="action-btn pickup" onclick="doPickup()">
+      <div class="action-btn-inner">
+        <div class="icon">&#128229;</div>
+        <div class="label">PICKUP</div>
+        <div class="desc">Collect from server</div>
+      </div>
+    </button>
+    <button class="action-btn post" onclick="doPost()">
+      <div class="action-btn-inner">
+        <div class="icon">&#128228;</div>
+        <div class="label">POST</div>
+        <div class="desc">Send to Google Sheets</div>
+      </div>
+    </button>
+    <button class="action-btn dropoff" onclick="doDropoff()">
+      <div class="action-btn-inner">
+        <div class="icon">&#128233;</div>
+        <div class="label">DROPOFF</div>
+        <div class="desc">Push commands to LMS</div>
+      </div>
+    </button>
+    <button class="action-btn backup" onclick="doBackup()">
+      <div class="action-btn-inner">
+        <div class="icon">&#128190;</div>
+        <div class="label">BACKUP</div>
+        <div class="desc">Download DB snapshot</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- QUICK PICKUP+POST -->
+  <button class="btn-full btn-purple" onclick="doPickupAndPost()">&#9889; Quick Sync (Pickup + Post)</button>
+  <button class="btn-full btn-outline" onclick="clearData()">&#128465; Clear Cached Data</button>
+
+  <!-- LOG -->
+  <div class="log-card">
+    <h3>Activity Log <span class="log-clear" onclick="clearLog()">Clear</span></h3>
+    <div id="logList"><div class="log-empty">No activity yet</div></div>
+  </div>
+
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h2>&#9881; Courier Settings</h2>
+    <p>Configure your server and Google Sheets webhook.</p>
+
+    <div class="field">
+      <label>ARISE Server URL</label>
+      <input type="url" id="cfgServer" placeholder="http://192.168.0.118/arise">
+      <div class="field-hint">The offline LMS server address (school WiFi)</div>
+    </div>
+
+    <div class="field">
+      <label>Google Sheets Webhook URL</label>
+      <input type="url" id="cfgWebhook" placeholder="https://script.google.com/macros/s/...">
+      <div class="field-hint">From Apps Script deployment (Step 10 in guide)</div>
+    </div>
+
+    <div class="field">
+      <label>School / Site Name</label>
+      <input type="text" id="cfgSchool" placeholder="ARISE Health Education">
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn-save" onclick="saveSettings()">Save Settings</button>
+      <button class="btn-cancel" onclick="closeSettings()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+const DEFAULT_SERVER = 'http://192.168.0.118/arise';
+
+function cfg() {
+  return {
+    server:  localStorage.getItem('dp_server')  || DEFAULT_SERVER,
+    webhook: localStorage.getItem('dp_webhook') || '',
+    school:  localStorage.getItem('dp_school')  || 'ARISE',
+  };
+}
+
+// ── LOG ──────────────────────────────────────────────────
+var logs = JSON.parse(localStorage.getItem('dp_logs') || '[]');
+
+function addLog(icon, msg, type) {
+  var now = new Date();
+  var time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  logs.unshift({icon, msg, time, type: type||'info'});
+  if (logs.length > 50) logs = logs.slice(0,50);
+  localStorage.setItem('dp_logs', JSON.stringify(logs));
+  renderLog();
+}
+
+function renderLog() {
+  var el = document.getElementById('logList');
+  if (!logs.length) { el.innerHTML = '<div class="log-empty">No activity yet</div>'; return; }
+  el.innerHTML = logs.map(function(l) {
+    var col = l.type==='ok'?'#065f46':l.type==='err'?'#991b1b':'var(--dark)';
+    return '<div class="log-item"><span class="log-icon">'+l.icon+'</span><span class="log-msg" style="color:'+col+'">'+l.msg+'</span><span class="log-time">'+l.time+'</span></div>';
+  }).join('');
+}
+
+function clearLog() { logs=[]; localStorage.removeItem('dp_logs'); renderLog(); }
+
+// ── TOAST ───────────────────────────────────────────────
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + (type||'');
+  setTimeout(function(){ el.className = 'toast'; }, 3000);
+}
+
+// ── PROGRESS ────────────────────────────────────────────
+function showProgress(label, pct, sub) {
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('progressLabel').textContent = label;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressSub').textContent = sub || '';
+}
+function hideProgress() { document.getElementById('progressWrap').style.display = 'none'; }
+
+// ── SERVER CHECK ─────────────────────────────────────────
+function checkServer() {
+  var c = cfg();
+  var dot = document.getElementById('statusDot');
+  var st = document.getElementById('serverStatus');
+  document.getElementById('serverUrlDisplay').textContent = c.server;
+  dot.className = 'dot grey'; st.textContent = 'Checking...';
+
+  fetch(c.server + '/?p=api_lesson&action=ping', {method:'GET', signal: AbortSignal.timeout(5000)})
+    .then(function(r){ return r.ok ? r.json() : Promise.reject('HTTP '+r.status); })
+    .then(function(d){
+      dot.className = 'dot green';
+      st.textContent = 'Server online';
+      addLog('&#9989;', 'Server online: ' + c.server, 'ok');
+    })
+    .catch(function(e){
+      // Try plain fetch to see if server is reachable at all
+      fetch(c.server + '/', {method:'HEAD', signal: AbortSignal.timeout(4000)})
+        .then(function(){ dot.className='dot green'; st.textContent='Server reachable'; })
+        .catch(function(){ dot.className='dot red'; st.textContent='Server offline'; addLog('&#10060;','Cannot reach: '+c.server,'err'); });
+    });
+}
+
+// ── PICKUP ───────────────────────────────────────────────
+async function doPickup() {
+  var c = cfg();
+  if (!c.server) { toast('Set server URL in Settings', 'err'); return; }
+
+  addLog('&#128229;', 'Starting PICKUP from ' + c.server, 'info');
+  showProgress('Connecting to server...', 10, '');
+
+  try {
+    // Pickup students
+    showProgress('Collecting students...', 20, '');
+    var r1 = await fetch(c.server + '/?p=datapost&action=pickup&table=students');
+    var d1 = await r1.json();
+
+    showProgress('Collecting grades...', 45, '');
+    var r2 = await fetch(c.server + '/?p=datapost&action=pickup&table=grades');
+    var d2 = await r2.json();
+
+    showProgress('Collecting progress...', 65, '');
+    var r3 = await fetch(c.server + '/?p=datapost&action=pickup&table=progress');
+    var d3 = await r3.json();
+
+    showProgress('Collecting certificates...', 80, '');
+    var r4 = await fetch(c.server + '/?p=datapost&action=pickup&table=certificates');
+    var d4 = await r4.json();
+
+    showProgress('Collecting analytics...', 90, '');
+    var r5 = await fetch(c.server + '/?p=datapost&action=pickup&table=analytics');
+    var d5 = await r5.json();
+
+    // Store everything
+    var payload = {
+      picked_at: new Date().toISOString(),
+      server: c.server,
+      students:     d1.data || [],
+      grades:       d2.data || [],
+      progress:     d3.data || [],
+      certificates: d4.data || [],
+      analytics:    d5.data || [],
+    };
+    localStorage.setItem('dp_payload', JSON.stringify(payload));
+
+    var total = payload.students.length + payload.grades.length + payload.progress.length + payload.certificates.length;
+
+    // Update stats
+    document.getElementById('statStudents').textContent = payload.students.length;
+    document.getElementById('statGrades').textContent = payload.grades.length;
+    document.getElementById('statCerts').textContent = payload.certificates.length;
+    document.getElementById('pendingBadge').style.display = 'block';
+    document.getElementById('pendingCount').textContent = total;
+
+    showProgress('Pickup complete!', 100, total + ' entries collected');
+    setTimeout(hideProgress, 2000);
+    addLog('&#128229;', 'Pickup complete: ' + total + ' entries (' + payload.students.length + ' students, ' + payload.grades.length + ' grades, ' + payload.certificates.length + ' certs)', 'ok');
+    toast('Pickup complete: ' + total + ' entries', 'ok');
+
+  } catch(e) {
+    hideProgress();
+    addLog('&#10060;', 'Pickup failed: ' + e.message, 'err');
+    toast('Pickup failed — are you on school WiFi?', 'err');
+  }
+}
+
+// ── POST ─────────────────────────────────────────────────
+async function doPost() {
+  var c = cfg();
+  if (!c.webhook) { toast('Set Google Sheets webhook in Settings', 'err'); openSettings(); return; }
+
+  var raw = localStorage.getItem('dp_payload');
+  if (!raw) { toast('No data — do a PICKUP first', 'err'); return; }
+
+  var payload = JSON.parse(raw);
+  var tables = [
+    { name:'students',     data:payload.students,     headers:['ID','Name','School','Class','Registered','Status'] },
+    { name:'grades',       data:payload.grades,       headers:['ID','Student','Module','Score','Percentage','Passed','Date'] },
+    { name:'progress',     data:payload.progress,     headers:['ID','Student','Lesson','Module','Completed','School'] },
+    { name:'certificates', data:payload.certificates, headers:['ID','Student','Module','Score','Issued','Code'] },
+    { name:'analytics',    data:payload.analytics,    headers:['Date','Page','Count'] },
+  ];
+
+  addLog('&#128228;', 'Posting to Google Sheets...', 'info');
+
+  var pct = 10;
+  for (var i = 0; i < tables.length; i++) {
+    var t = tables[i];
+    if (!t.data || !t.data.length) continue;
+    showProgress('Posting ' + t.name + '...', pct, t.data.length + ' rows');
+    pct += 18;
+
+    try {
+      var resp = await fetch(c.webhook, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          sheet: t.name,
+          action: 'clear_and_write',
+          headers: t.headers,
+          rows: t.data
+        })
+      });
+      var result = await resp.json();
+      addLog('&#9989;', 'Posted ' + t.name + ': ' + (result.rows||t.data.length) + ' rows', 'ok');
+    } catch(e) {
+      addLog('&#10060;', 'Failed posting ' + t.name + ': ' + e.message, 'err');
+    }
+  }
+
+  // Update sync time
+  localStorage.setItem('dp_last_post', new Date().toISOString());
+  document.getElementById('pendingBadge').style.display = 'none';
+  showProgress('Post complete!', 100, 'Google Sheets updated');
+  setTimeout(hideProgress, 2000);
+  toast('Posted to Google Sheets!', 'ok');
+}
+
+// ── DROPOFF ──────────────────────────────────────────────
+async function doDropoff() {
+  var c = cfg();
+  if (!c.server) { toast('Set server URL in Settings', 'err'); return; }
+  if (!c.webhook) { toast('Set Google Sheets webhook in Settings', 'err'); openSettings(); return; }
+
+  addLog('&#128233;', 'Fetching commands from Google Sheets...', 'info');
+  showProgress('Fetching commands...', 20, '');
+
+  try {
+    // Fetch commands from Google Sheets
+    var resp = await fetch(c.webhook + '?sheet=commands');
+    var rows = await resp.json();
+
+    if (!rows || rows.length <= 1) {
+      hideProgress();
+      addLog('&#128203;', 'No commands to execute', 'info');
+      toast('No commands found in Google Sheets', '');
+      return;
+    }
+
+    // Skip header row
+    var commands = rows.slice(1).filter(function(r){ return r[0] && (!r[3] || r[3]===''); });
+
+    if (!commands.length) {
+      hideProgress();
+      addLog('&#128203;', 'No pending commands (all already executed)', 'info');
+      toast('No pending commands', '');
+      return;
+    }
+
+    showProgress('Executing ' + commands.length + ' commands...', 50, '');
+    addLog('&#128233;', 'Executing ' + commands.length + ' commands on server...', 'info');
+
+    var resp2 = await fetch(c.server + '/?p=datapost&action=dropoff', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({commands: commands})
+    });
+    var result = await resp2.json();
+
+    showProgress('Dropoff complete!', 100, result.executed + ' commands executed');
+    setTimeout(hideProgress, 2000);
+    addLog('&#128233;', 'Dropoff complete: ' + result.executed + ' executed, ' + (result.errors||0) + ' errors', result.errors?'err':'ok');
+    toast('Dropoff complete: ' + result.executed + ' commands', 'ok');
+
+  } catch(e) {
+    hideProgress();
+    addLog('&#10060;', 'Dropoff failed: ' + e.message, 'err');
+    toast('Dropoff failed', 'err');
+  }
+}
+
+// ── BACKUP ───────────────────────────────────────────────
+async function doBackup() {
+  var c = cfg();
+  if (!c.server) { toast('Set server URL in Settings', 'err'); return; }
+
+  addLog('&#128190;', 'Requesting DB backup from server...', 'info');
+  showProgress('Requesting backup...', 30, '');
+
+  try {
+    var resp = await fetch(c.server + '/?p=datapost&action=backup');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var blob = await resp.blob();
+
+    // Trigger download
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'arise-backup-' + new Date().toISOString().slice(0,10) + '.db';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    hideProgress();
+    addLog('&#128190;', 'Backup downloaded: arise-backup-' + new Date().toISOString().slice(0,10) + '.db', 'ok');
+    toast('Backup downloaded!', 'ok');
+  } catch(e) {
+    hideProgress();
+    addLog('&#10060;', 'Backup failed: ' + e.message, 'err');
+    toast('Backup failed', 'err');
+  }
+}
+
+// ── QUICK SYNC ───────────────────────────────────────────
+async function doPickupAndPost() {
+  await doPickup();
+  var raw = localStorage.getItem('dp_payload');
+  if (raw) {
+    setTimeout(doPost, 1000);
+  }
+}
+
+// ── CLEAR DATA ───────────────────────────────────────────
+function clearData() {
+  if (!confirm('Clear all cached data?')) return;
+  localStorage.removeItem('dp_payload');
+  localStorage.removeItem('dp_last_post');
+  document.getElementById('statStudents').textContent = '0';
+  document.getElementById('statGrades').textContent = '0';
+  document.getElementById('statCerts').textContent = '0';
+  document.getElementById('pendingBadge').style.display = 'none';
+  toast('Cache cleared', '');
+  addLog('&#128465;', 'Cache cleared', 'info');
+}
+
+// ── SETTINGS ────────────────────────────────────────────
+function openSettings() {
+  var c = cfg();
+  document.getElementById('cfgServer').value  = c.server;
+  document.getElementById('cfgWebhook').value = c.webhook;
+  document.getElementById('cfgSchool').value  = c.school;
+  document.getElementById('settingsModal').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('open');
+}
+
+function saveSettings() {
+  var server  = document.getElementById('cfgServer').value.trim().replace(/\/$/, '');
+  var webhook = document.getElementById('cfgWebhook').value.trim();
+  var school  = document.getElementById('cfgSchool').value.trim();
+
+  if (!server) { alert('Server URL is required'); return; }
+
+  localStorage.setItem('dp_server',  server);
+  localStorage.setItem('dp_webhook', webhook);
+  localStorage.setItem('dp_school',  school);
+
+  closeSettings();
+  toast('Settings saved', 'ok');
+  addLog('&#9881;', 'Settings updated: ' + server, 'info');
+  checkServer();
+}
+
+// ── INIT ─────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  // Restore cached stats
+  var raw = localStorage.getItem('dp_payload');
+  if (raw) {
+    try {
+      var p = JSON.parse(raw);
+      document.getElementById('statStudents').textContent = (p.students||[]).length;
+      document.getElementById('statGrades').textContent   = (p.grades||[]).length;
+      document.getElementById('statCerts').textContent    = (p.certificates||[]).length;
+      var total = (p.students||[]).length + (p.grades||[]).length + (p.progress||[]).length + (p.certificates||[]).length;
+      if (total > 0) {
+        document.getElementById('pendingBadge').style.display = 'block';
+        document.getElementById('pendingCount').textContent = total;
+      }
+    } catch(e) {}
+  }
+
+  renderLog();
+
+  // Auto-check server
+  setTimeout(checkServer, 500);
+});
+</script>
+</body>
+</html>

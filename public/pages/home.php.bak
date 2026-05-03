@@ -1,0 +1,139 @@
+<?php
+$totalModules  = db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1") ?? 0;
+$totalLessons  = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1") ?? 0;
+$totalStudents = db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1") ?? 0;
+$totalCerts    = db()->querySingle("SELECT COUNT(*) FROM certificates") ?? 0;
+$interactives  = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='interactive' AND is_active=1") ?? 0;
+$videos        = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='video' AND is_active=1") ?? 0;
+$pdfs          = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_type='pdf' AND is_active=1") ?? 0;
+?>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">🌟 Adolescent Health Education Platform</div>
+
+    <h2>Your Health.<br><span>Your Future. Your Power.</span></h2>
+    <p>Interactive lessons, videos, quizzes and certificates — all offline, in English, Kiswahili and Sheng. Built for you.</p>
+
+    <div class="hero-btns">
+        <a href="/arise/?p=modules" class="btn-hero-primary">📚 Start Learning →</a>
+        <?php if (!$student): ?>
+        <a href="/arise/?p=register" class="btn-hero-secondary">📝 Register Free</a>
+        <?php else: ?>
+        <a href="/arise/?p=certificates" class="btn-hero-secondary">🎓 My Certificates</a>
+        <?php endif; ?>
+    </div>
+
+    <div class="hero-stats">
+        <?php foreach([
+            [$totalModules, 'Modules'],
+            [$totalLessons, 'Lessons'],
+            [$interactives, 'Interactive'],
+            [$videos,       'Videos'],
+            [$pdfs,         'PDFs'],
+            [$totalCerts,   'Certificates'],
+        ] as [$n,$lb]): ?>
+        <div class="hero-stat">
+            <div class="num"><?= $n ?></div>
+            <div class="lbl"><?= $lb ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- WHAT'S INSIDE -->
+    <div style="text-align:center;margin-bottom:8px;">
+        <span class="badge badge-purple" style="font-size:.82rem;padding:6px 16px;">Everything You Need</span>
+    </div>
+    <h2 class="page-title text-center" style="margin-bottom:6px;">What's Inside ARISE</h2>
+    <p class="text-center text-muted" style="margin-bottom:28px;">One platform. All your health education needs. Works offline.</p>
+
+    <div class="features-grid">
+        <?php foreach([
+            ['🎮','Interactive Lessons','10-slide lessons with scenarios, smart quizzes and instant feedback. Switch between English, Kiswahili and Sheng.'],
+            ['🎬','Video Lessons','Watch health education videos uploaded by your teacher. Plays fully offline.'],
+            ['📄','PDF Resources','Reference documents, notes and study guides. Read anytime, no internet needed.'],
+            ['📝','Built-in Quizzes','MCQ, fill-in-blanks, and short answer questions with auto-grading and explanations.'],
+            ['🎓','Earn Certificates','Score 60%+ on a module and earn a printable certificate with a unique verification code.'],
+            ['🔒','Ask Anonymously','Too shy to ask in person? Submit health questions anonymously. Educators answer privately.'],
+            ['💬','Community Forum','Share ideas, ask questions, and support classmates in the open discussion board.'],
+            ['🌍','3 Languages','Every interactive lesson toggles between English, Kiswahili and Sheng with one tap.'],
+            ['📶','100% Offline','No internet required. Connect to school WiFi and everything works instantly.'],
+        ] as [$ic,$t,$d]): ?>
+        <div class="feature-card">
+            <div class="feat-icon"><?= $ic ?></div>
+            <h3><?= $t ?></h3>
+            <p><?= $d ?></p>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="dp-card mt-3" style="background:linear-gradient(135deg,var(--green-light),var(--orange-pale));border:2px solid var(--border);">
+        <h2 class="section-title text-center" style="margin-bottom:24px;font-size:1.3rem;">✨ How It Works</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;text-align:center;">
+            <?php foreach([
+                ['1️⃣','Register','Name, school, class — 10 seconds. No password needed.'],
+                ['2️⃣','Browse Modules','Pick any health topic that interests you.'],
+                ['3️⃣','Open a Lesson','Interactive, video, or PDF — all in one place.'],
+                ['4️⃣','Take the Quiz','Instant feedback on every answer with explanations.'],
+                ['5️⃣','Get Certified','Score 60%+ and earn your printable certificate.'],
+            ] as [$n,$t,$d]): ?>
+            <div>
+                <div style="font-size:1.9rem;margin-bottom:8px;"><?= $n ?></div>
+                <div style="font-weight:800;font-size:.92rem;margin-bottom:4px;color:var(--green-dark);"><?= $t ?></div>
+                <div style="font-size:.8rem;color:var(--mid);"><?= $d ?></div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- MODULES -->
+    <h2 class="page-title text-center mt-3" style="margin-bottom:6px;">📚 Available Modules</h2>
+    <p class="text-center text-muted" style="margin-bottom:20px;font-size:.9rem;">Tap any topic to start learning</p>
+
+    <?php if (count($modules) > 0): ?>
+    <div class="topic-pills">
+        <?php foreach ($modules as $m):
+            $lc = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND is_active=1") ?? 0;
+            $hi = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND lesson_type='interactive' AND is_active=1");
+            $hv = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE module_id={$m['id']} AND lesson_type='video' AND is_active=1");
+        ?>
+        <a href="/arise/?p=module&slug=<?= e($m['slug']) ?>" class="topic-pill">
+            <?= $m['icon'] ?> <?= e($m['title']) ?>
+            <?php if ($lc > 0): ?>
+                <span style="font-size:.7rem;background:var(--green-light);color:var(--green-dark);padding:2px 8px;border-radius:50px;margin-left:4px;font-weight:700;">
+                    <?= $lc ?> lesson<?= $lc!=1?'s':'' ?><?= $hi?' 🎮':'' ?><?= $hv?' 🎬':'' ?>
+                </span>
+            <?php endif; ?>
+        </a>
+        <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+    <div class="dp-card text-center" style="padding:40px;border:2px dashed var(--border);">
+        <div style="font-size:3rem;margin-bottom:12px;">📚</div>
+        <h3 style="color:var(--green-dark);margin-bottom:8px;">Modules Coming Soon</h3>
+        <p class="text-muted">Your teacher is uploading lessons. Check back shortly!</p>
+    </div>
+    <?php endif; ?>
+
+    <!-- ABOUT -->
+    <div class="dp-card mt-3" style="text-align:center;border:2px solid var(--green-light);background:linear-gradient(135deg,#fff,var(--green-light));">
+        <div style="font-size:3rem;margin-bottom:12px;">💜</div>
+        <h2 class="section-title" style="font-size:1.3rem;margin-bottom:6px;">About ARISE</h2>
+        <p class="gradient-text" style="font-size:1rem;font-weight:800;margin-bottom:10px;font-style:normal;">
+            Adolescent Reproductive Health Information Support and Empowerment
+        </p>
+        <p class="text-muted" style="max-width:600px;margin:0 auto 20px;line-height:1.7;">
+            ARISE delivers comprehensive health education to adolescents through interactive digital lessons — designed for Kenyan students, available in three languages, working fully offline on any device.
+        </p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="/arise/?p=modules" class="btn btn-primary">📚 Browse Modules</a>
+            <a href="/arise/?p=forum" class="btn btn-secondary">💬 Join the Forum</a>
+            <a href="/arise/?p=ask" class="btn btn-secondary">🔒 Ask Anonymously</a>
+        </div>
+    </div>
+
+</div>

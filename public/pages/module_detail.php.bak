@@ -1,0 +1,226 @@
+<?php
+$slug = $_GET['slug'] ?? '';
+$module = getModule($slug);
+
+if (!$module) {
+    echo '<div class="container"><div class="alert alert-danger">Module not found.</div><a href="/arise/?p=modules" class="btn btn-secondary">← Back to Modules</a></div>';
+    return;
+}
+
+trackPageView('module', $slug, $module['id']);
+$lessons = getLessons($module['id']);
+
+$counts = ['interactive'=>0,'video'=>0,'pdf'=>0,'text'=>0];
+foreach($lessons as $l) $counts[$l['lesson_type']] = ($counts[$l['lesson_type']]??0)+1;
+
+// Colorful card themes per lesson type
+$typeInfo = [
+    'interactive' => [
+        'icon'   => '🎮',
+        'label'  => 'Interactive Lesson',
+        'desc'   => 'Tap through slides, answer questions & get your score instantly',
+        'grad'   => 'linear-gradient(135deg,#7C3AED,#A855F7)',
+        'light'  => '#F5F3FF',
+        'border' => '#C4B5FD',
+        'text'   => '#5B21B6',
+        'badge'  => '#EDE9FE',
+        'time'   => '~15 min',
+        'tip'    => '✓ Earn XP + Certificate',
+    ],
+    'video' => [
+        'icon'   => '🎬',
+        'label'  => 'Video Lesson',
+        'desc'   => 'Watch a short video — plays fully offline on any device',
+        'grad'   => 'linear-gradient(135deg,#EA580C,#F97316)',
+        'light'  => '#FFF7ED',
+        'border' => '#FED7AA',
+        'text'   => '#C2410C',
+        'badge'  => '#FFEDD5',
+        'time'   => '~10 min',
+        'tip'    => '▶ Watch anytime offline',
+    ],
+    'pdf' => [
+        'icon'   => '📄',
+        'label'  => 'Reading Material',
+        'desc'   => 'A PDF document with notes and information to read at your own pace',
+        'grad'   => 'linear-gradient(135deg,#1D4ED8,#3B82F6)',
+        'light'  => '#EFF6FF',
+        'border' => '#BFDBFE',
+        'text'   => '#1E40AF',
+        'badge'  => '#DBEAFE',
+        'time'   => '~5 min',
+        'tip'    => '📖 Save & read later',
+    ],
+    'text' => [
+        'icon'   => '📝',
+        'label'  => 'Study Notes',
+        'desc'   => 'Key notes and summaries — great for revision',
+        'grad'   => 'linear-gradient(135deg,#16A34A,#22C55E)',
+        'light'  => '#F0FDF4',
+        'border' => '#BBF7D0',
+        'text'   => '#15803D',
+        'badge'  => '#DCFCE7',
+        'time'   => '~5 min',
+        'tip'    => '📌 Quick read',
+    ],
+];
+?>
+
+<style>
+.mod-hero{background:linear-gradient(135deg,#1E3209,#2D4A12,#3D6318);border-radius:20px;padding:32px 28px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(61,99,24,.3);}
+.mod-hero::after{content:'<?= addslashes($module['icon']) ?>';position:absolute;right:-10px;bottom:-20px;font-size:120px;opacity:.08;line-height:1;pointer-events:none;}
+.mod-icon{width:72px;height:72px;background:rgba(255,255,255,.12);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:2px solid rgba(255,151,0,.5);flex-shrink:0;}
+.mod-info-bar{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);}
+.mod-info-item{display:flex;align-items:center;gap:7px;font-size:.82rem;opacity:.88;}
+
+.lesson-card{display:block;border-radius:16px;padding:0;margin-bottom:14px;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);}
+.lesson-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15);}
+.lesson-card-inner{display:flex;align-items:stretch;}
+.lesson-card-stripe{width:6px;flex-shrink:0;border-radius:16px 0 0 16px;}
+.lesson-card-body{display:flex;align-items:center;gap:16px;padding:18px 20px;background:#fff;flex:1;border:1.5px solid;border-left:none;border-radius:0 16px 16px 0;}
+.lesson-num{width:52px;height:52px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.lesson-num .n{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:900;line-height:1;color:#fff;}
+.lesson-num .of{font-size:.58rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.3px;}
+.lesson-content{flex:1;min-width:0;}
+.lesson-title{font-weight:800;font-size:1rem;margin-bottom:4px;color:#1A2E08;}
+.lesson-desc{font-size:.82rem;color:#6B7280;line-height:1.5;margin-bottom:8px;}
+.lesson-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lesson-tag{padding:3px 11px;border-radius:20px;font-size:.72rem;font-weight:700;}
+.lesson-arrow{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;flex-shrink:0;}
+
+.legend-box{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.legend-item{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+.cert-cta{background:linear-gradient(135deg,#FF9700,#FFB830);border-radius:16px;padding:20px 22px;margin-top:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 6px 24px rgba(255,151,0,.3);}
+
+.count-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:20px;padding:5px 14px;font-size:.78rem;font-weight:700;color:#fff;}
+</style>
+
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/arise/">🏠 Home</a> <span class="sep">›</span>
+        <a href="/arise/?p=modules">📚 Modules</a> <span class="sep">›</span>
+        <span><?= e($module['title']) ?></span>
+    </div>
+
+    <!-- Module Hero -->
+    <div class="mod-hero">
+        <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
+            <div class="mod-icon"><?= $module['icon'] ?></div>
+            <div style="flex:1;min-width:200px;">
+                <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Health Module</div>
+                <h1 style="font-size:1.7rem;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.3px;"><?= e($module['title']) ?></h1>
+                <?php if($module['description']): ?>
+                    <p style="opacity:.88;font-size:.95rem;line-height:1.65;margin-bottom:14px;max-width:600px;"><?= e($module['description']) ?></p>
+                <?php endif; ?>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <?php if($counts['interactive']): ?>
+                        <span class="count-pill">🎮 <?= $counts['interactive'] ?> Interactive<?= $counts['interactive']>1?'s':'' ?></span>
+                    <?php endif; ?>
+                    <?php if($counts['video']): ?>
+                        <span class="count-pill" style="background:rgba(255,151,0,.25);border-color:rgba(255,151,0,.5);">🎬 <?= $counts['video'] ?> Video<?= $counts['video']>1?'s':'' ?></span>
+                    <?php endif; ?>
+                    <?php if($counts['pdf']): ?>
+                        <span class="count-pill">📄 <?= $counts['pdf'] ?> PDF<?= $counts['pdf']>1?'s':'' ?></span>
+                    <?php endif; ?>
+                    <span class="count-pill">📚 <?= count($lessons) ?> Lesson<?= count($lessons)!=1?'s':'' ?></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mod-info-bar">
+            <div class="mod-info-item">🏆 Score 60%+ to earn a <strong style="color:#FF9700;margin-left:3px;">Certificate</strong></div>
+            <div class="mod-info-item">📱 Works 100% offline</div>
+            <div class="mod-info-item">🌍 English · Kiswahili · Sheng</div>
+            <div class="mod-info-item">⚡ Free to learn</div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <?php
+    $activeTypes = array_keys(array_filter($counts));
+    if (count($activeTypes) > 1):
+    ?>
+    <div class="legend-box">
+        <?php foreach($activeTypes as $t):
+            $info = $typeInfo[$t] ?? $typeInfo['text']; ?>
+        <div class="legend-item">
+            <div class="legend-dot" style="background:<?= $info['text'] ?>;"></div>
+            <span style="font-size:1rem;"><?= $info['icon'] ?></span>
+            <div>
+                <div style="font-weight:700;font-size:.82rem;color:var(--dark);"><?= $info['label'] ?></div>
+                <div style="font-size:.68rem;color:var(--muted);"><?= $info['time'] ?></div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <!-- Lessons -->
+    <?php if (count($lessons) > 0): ?>
+    <h2 style="font-size:1.1rem;font-weight:800;color:var(--dark);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+        📖 Lessons in this Module
+        <span style="background:var(--green-light);color:var(--green-dark);padding:3px 12px;border-radius:20px;font-size:.75rem;"><?= count($lessons) ?> total</span>
+    </h2>
+
+    <?php foreach ($lessons as $i => $lesson):
+        $type = $lesson['lesson_type'];
+        $info = $typeInfo[$type] ?? $typeInfo['text'];
+        $desc = $lesson['content']
+            ? e(substr(strip_tags($lesson['content']),0,110)).(strlen(strip_tags($lesson['content']))>110?'...':'')
+            : $info['desc'];
+    ?>
+    <a href="/arise/?p=lesson&slug=<?= e($lesson['slug']) ?>" class="lesson-card">
+        <div class="lesson-card-inner">
+            <!-- Color stripe -->
+            <div class="lesson-card-stripe" style="background:<?= $info['grad'] ?>;"></div>
+            <!-- Body -->
+            <div class="lesson-card-body" style="border-color:<?= $info['border'] ?>;">
+                <!-- Number circle -->
+                <div class="lesson-num" style="background:<?= $info['grad'] ?>;">
+                    <span class="n"><?= $i+1 ?></span>
+                    <span class="of">of <?= count($lessons) ?></span>
+                </div>
+                <!-- Content -->
+                <div class="lesson-content">
+                    <div class="lesson-title"><?= e($lesson['title']) ?></div>
+                    <div class="lesson-desc"><?= $desc ?></div>
+                    <div class="lesson-tags">
+                        <span class="lesson-tag" style="background:<?= $info['badge'] ?>;color:<?= $info['text'] ?>;">
+                            <?= $info['icon'] ?> <?= $info['label'] ?>
+                        </span>
+                        <span style="font-size:.72rem;color:var(--muted);">⏱ <?= $info['time'] ?></span>
+                        <?php if($type==='interactive'): ?>
+                            <span style="font-size:.72rem;font-weight:700;color:var(--green);">🏆 Earn certificate</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <!-- Arrow -->
+                <div style="flex-shrink:0;background:var(--green);color:#fff;padding:7px 16px;border-radius:20px;font-size:.78rem;font-weight:800;white-space:nowrap;">Start →</div>
+            </div>
+        </div>
+    </a>
+    <?php endforeach; ?>
+
+    <!-- Certificate CTA -->
+    <?php if($counts['interactive'] > 0): ?>
+    <div class="cert-cta">
+        <span style="font-size:2.5rem;">🎓</span>
+        <div style="flex:1;">
+            <div style="font-weight:900;font-size:1rem;color:#fff;margin-bottom:3px;">Complete this module → Earn your Certificate!</div>
+            <div style="font-size:.82rem;color:rgba(255,255,255,.85);">Finish all lessons and score 60%+ on the quiz. Print & share your achievement.</div>
+        </div>
+        <?php $fi=null; foreach($lessons as $l){ if($l['lesson_type']==='interactive'){$fi=$l;break;} } ?>
+        
+    </div>
+    <?php endif; ?>
+
+    <?php else: ?>
+    <div class="alert alert-info">📚 Lessons are being uploaded for this module. Check back soon!</div>
+    <?php endif; ?>
+
+    <div style="margin-top:24px;">
+        <a href="/arise/?p=modules" class="btn btn-secondary">← Back to All Modules</a>
+    </div>
+</div>
