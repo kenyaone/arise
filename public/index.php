@@ -43,6 +43,10 @@ if ($_early_page === 'certificate') {
     include __DIR__.'/pages/certificate.php';
     exit;
 }
+if ($_early_page === 'map') {
+    include __DIR__.'/pages/map.php';
+    exit;
+}
 
 trackSession();
 try { runAutoBackup(); } catch (Exception $e) {}
