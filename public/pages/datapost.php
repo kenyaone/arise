@@ -176,41 +176,61 @@ if ($action === 'post') {
 
     $data    = json_decode($last['data_snapshot'], true);
     $school  = $cfg['school_name'] ?? 'ARISE';
-    $subject = "ARISE Data Report — {$school} — " . date('Y-m-d');
+    $subject = "ARISE Data Report — " . date('Y-m-d');
 
+    // Build CSV-style email for M&E team
     $lines = [
-        "ARISE PLATFORM — DATA REPORT",
-        str_repeat("=", 60),
-        "Synced  : " . ($data['timestamp'] ?? $last['sync_timestamp']),
-        "Sent    : " . date('Y-m-d H:i:s'),
+        "ARISE PLATFORM — M&E DATA REPORT",
+        "Report Date: " . date('d/m/Y H:i'),
+        "Data Synced: " . ($data['timestamp'] ?? $last['sync_timestamp']),
         "",
-        "PLATFORM SUMMARY",
-        str_repeat("-", 60),
+        "=== PLATFORM SUMMARY ===",
     ];
 
-    foreach ($data as $k => $v) $lines[] = sprintf("%-20s: %s", ucfirst($k), $v);
+    $lines[] = "Total Learners," . $data['learners'];
+    $lines[] = "Active Modules," . $data['modules'];
+    $lines[] = "Quiz Attempts," . $data['quizzes'];
+    $lines[] = "Pre-Tests," . $data['pretests'];
+    $lines[] = "Post-Tests," . $data['posttests'];
+    $lines[] = "Certificates Issued," . $data['certs'];
+    $lines[] = "Forum Posts," . $data['forum'];
+    $lines[] = "Questions Asked," . $data['questions'];
 
-    // Add school breakdown to email
+    // School breakdown as CSV
     $lines[] = "";
-    $lines[] = "SCHOOL BREAKDOWN";
-    $lines[] = str_repeat("-", 60);
-    $lines[] = sprintf("%-30s | %8s | %8s | %10s | %5s", "School", "Learners", "Quizzed", "Avg Score", "Cert %");
-    $lines[] = str_repeat("-", 60);
+    $lines[] = "=== SCHOOL PERFORMANCE DATA ===";
+    $lines[] = "School Name,Total Learners,Quiz Takers,% Took Quiz,Avg Quiz Score,Learners Certified,Certification Rate %";
 
     $result = db()->query("SELECT s.school_name, COUNT(DISTINCT s.id) as learners, COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers, ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.percentage ELSE NULL END), 1) as avg_score, COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified, ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate FROM students s LEFT JOIN quiz_attempts qa ON s.id = qa.student_id LEFT JOIN certificates c ON s.id = c.student_id WHERE s.is_active=1 AND s.deleted_at IS NULL GROUP BY s.school_name ORDER BY learners DESC");
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $lines[] = sprintf("%-30s | %8d | %8d | %9.1f%% | %5.1f%%",
-            substr($row['school_name'], 0, 29),
+        $quiz_pct = $row['learners'] > 0 ? round(100.0 * $row['quiz_takers'] / $row['learners'], 1) : 0;
+        $lines[] = sprintf("\"%s\",%d,%d,%.1f,%.1f,%d,%.1f",
+            $row['school_name'],
             $row['learners'],
             $row['quiz_takers'],
+            $quiz_pct,
             $row['avg_score'],
+            $row['certified'],
             $row['cert_rate']
         );
     }
 
     $lines[] = "";
-    $lines[] = "SEE FULL REPORT WITH CHARTS & MODULE ANALYSIS:";
-    $lines[] = "http://192.168.0.10/arise/?p=donor_report";
+    $lines[] = "=== TOP MODULES ===";
+    $lines[] = "Module Name,Quiz Attempts,Average Score %,Pass Rate %";
+
+    $result = db()->query("SELECT m.title, COUNT(qa.id) as attempts, ROUND(AVG(qa.percentage), 1) as avg_score, ROUND(100.0 * SUM(CASE WHEN qa.percentage >= 60 THEN 1 ELSE 0 END) / COUNT(qa.id), 1) as pass_rate FROM modules m LEFT JOIN quiz_attempts qa ON m.id = qa.module_id WHERE m.is_active=1 GROUP BY m.id ORDER BY attempts DESC LIMIT 8");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        if ((int)$row['attempts'] > 0) {
+            $lines[] = sprintf("\"%s\",%d,%.1f,%.1f",
+                $row['title'],
+                $row['attempts'],
+                $row['avg_score'],
+                $row['pass_rate']
+            );
+        }
+    }
+
     $lines[] = "";
     $lines[] = "Platform: http://192.168.0.10/arise/";
     $lines[] = "DataPost: http://192.168.0.10/arise/?p=datapost";
