@@ -370,6 +370,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 .btn:hover{background:#059669}.btn.sec{background:#1f2937;color:#9ca3af}.btn.sec:hover{background:#374151;color:#fff}
 .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.72rem;font-weight:700}
 .badge.yes{background:#064e3b;color:#6ee7b7}.badge.no{background:#450a0a;color:#fca5a5}
+.tab{background:#0d1117;border:1px solid #374151;color:#9ca3af;padding:7px 13px;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer}
+.tab:hover{border-color:#0ea271;color:#6ee7b7}
+.active-tab{background:rgba(14,162,113,.15);border-color:#0ea271;color:#6ee7b7}
 </style>
 </head>
 <body>
@@ -447,27 +450,71 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 <!-- ── Settings Modal ─────────────────────────────────────────────────── -->
 <div class="modal" id="settingsModal">
   <div class="mbox">
-    <h3>⚙️ DataPost Settings</h3>
-    <p class="sub">Configure where reports go and how to send them via Gmail SMTP.</p>
+    <h3>⚙️ Email Settings</h3>
+
+    <!-- Provider tabs -->
+    <div style="display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap">
+      <button onclick="setProvider('brevo')"   id="tab-brevo"   class="tab active-tab">Brevo (Recommended)</button>
+      <button onclick="setProvider('gmail')"   id="tab-gmail"   class="tab">Gmail</button>
+      <button onclick="setProvider('custom')"  id="tab-custom"  class="tab">Custom SMTP</button>
+    </div>
+
+    <!-- Brevo instructions -->
+    <div id="provider-brevo">
+      <div style="background:#0d1117;border:1px solid #1f2937;border-radius:8px;padding:12px;margin-bottom:14px;font-size:.8rem;color:#9ca3af;line-height:1.7">
+        <strong style="color:#6ee7b7">Free — 300 emails/day, no credit card:</strong><br>
+        1. Go to <strong>brevo.com</strong> → Sign up free<br>
+        2. Settings → SMTP &amp; API → SMTP tab<br>
+        3. Copy your <strong>Login</strong> and <strong>Master password</strong> below<br>
+        SMTP Host: <strong>smtp-relay.brevo.com</strong>, Port: <strong>587</strong>
+      </div>
+    </div>
+
+    <!-- Gmail instructions -->
+    <div id="provider-gmail" style="display:none">
+      <div style="background:#0d1117;border:1px solid #1f2937;border-radius:8px;padding:12px;margin-bottom:14px;font-size:.8rem;color:#9ca3af;line-height:1.7">
+        <strong style="color:#fbbf24">Requires 2-Step Verification to be ON:</strong><br>
+        1. myaccount.google.com → Security → 2-Step Verification (turn on)<br>
+        2. Then: Security → <strong>App passwords</strong> → create "ARISE"<br>
+        3. Use the 16-char code as your password below<br>
+        SMTP Host: <strong>smtp.gmail.com</strong>, Port: <strong>587</strong>
+      </div>
+    </div>
+
+    <!-- Custom SMTP instructions -->
+    <div id="provider-custom" style="display:none">
+      <div style="background:#0d1117;border:1px solid #1f2937;border-radius:8px;padding:12px;margin-bottom:14px;font-size:.8rem;color:#9ca3af;line-height:1.7">
+        Enter the SMTP details from any email provider (Mailgun, SMTP2GO, Zoho, Office 365, etc.)
+      </div>
+    </div>
 
     <div class="frow">
-      <label>Recipient Email</label>
+      <label>Recipient Email (where reports go)</label>
       <input type="email" id="sEmail" placeholder="musilwabonface@gmail.com" value="<?= esc($emailCfg) ?>">
-      <div class="hint">The address that receives data reports when you click POST.</div>
     </div>
     <div class="frow">
-      <label>Gmail Address (Sender)</label>
-      <input type="email" id="sSmtpUser" placeholder="yourname@gmail.com" value="<?= esc($cfg['smtp_user']??'') ?>">
-      <div class="hint">Your Gmail address — used to send the report.</div>
+      <label>SMTP Host</label>
+      <input type="text" id="sSmtpHost" value="<?= esc($cfg['smtp_host']??'smtp-relay.brevo.com') ?>" placeholder="smtp-relay.brevo.com">
     </div>
     <div class="frow">
-      <label>Gmail App Password</label>
-      <input type="password" id="sSmtpPass" placeholder="xxxx xxxx xxxx xxxx" value="<?= esc($cfg['smtp_pass']??'') ?>">
-      <div class="hint">Not your Gmail password. Go to <strong>Google Account → Security → App passwords</strong> → create one for "ARISE".</div>
+      <label>SMTP Port</label>
+      <input type="number" id="sSmtpPort" value="<?= esc((string)($cfg['smtp_port']??'587')) ?>" placeholder="587">
+    </div>
+    <div class="frow">
+      <label>SMTP Username / Login</label>
+      <input type="text" id="sSmtpUser" value="<?= esc($cfg['smtp_user']??'') ?>" placeholder="your-login@email.com">
+    </div>
+    <div class="frow">
+      <label>SMTP Password / Key</label>
+      <input type="password" id="sSmtpPass" value="<?= esc($cfg['smtp_pass']??'') ?>" placeholder="SMTP password or API key">
+    </div>
+    <div class="frow">
+      <label>From Email (optional — defaults to SMTP user)</label>
+      <input type="text" id="sSmtpFrom" value="<?= esc($cfg['smtp_from']??'') ?>" placeholder="arise@yourdomain.com">
     </div>
 
     <button class="btn" onclick="saveSettings()">💾 Save Settings</button>
-    <button class="btn" style="background:#0d9488" onclick="testEmail()">📧 Test — Send Test Email Now</button>
+    <button class="btn" style="background:#0d9488" onclick="testEmail()">📧 Send Test Email Now</button>
     <button class="btn sec" onclick="closeModal('settingsModal')">Cancel</button>
   </div>
 </div>
@@ -562,15 +609,25 @@ function connectGitHub(){
   }).catch(e=>show('❌ '+e.message,'err'));
 }
 
+function getSmtpFields(){
+  return {
+    email:     document.getElementById('sEmail').value.trim(),
+    smtp_host: document.getElementById('sSmtpHost').value.trim(),
+    smtp_port: document.getElementById('sSmtpPort').value.trim(),
+    smtp_user: document.getElementById('sSmtpUser').value.trim(),
+    smtp_pass: document.getElementById('sSmtpPass').value.trim(),
+    smtp_from: document.getElementById('sSmtpFrom').value.trim(),
+  };
+}
+
 function saveSettings(){
-  const email=document.getElementById('sEmail').value.trim();
-  const smtpUser=document.getElementById('sSmtpUser').value.trim();
-  const smtpPass=document.getElementById('sSmtpPass').value.trim();
-  if(!email){show('❌ Enter recipient email','err');return;}
-  api('config_email',{email,smtp_user:smtpUser,smtp_pass:smtpPass,smtp_host:'smtp.gmail.com',smtp_port:587}).then(d=>{
+  const f=getSmtpFields();
+  if(!f.email){show('❌ Enter recipient email','err');return;}
+  if(!f.smtp_user||!f.smtp_pass){show('❌ Enter SMTP username and password','err');return;}
+  api('config_email',f).then(d=>{
     if(d.status==='success'){
       show('✅ Settings saved');
-      document.getElementById('emailVal').textContent=email;
+      document.getElementById('emailVal').textContent=f.email;
       document.getElementById('emailVal').className='sv';
       closeModal('settingsModal');
     } else show('❌ '+d.message,'err');
@@ -578,16 +635,31 @@ function saveSettings(){
 }
 
 function testEmail(){
-  const smtpUser=document.getElementById('sSmtpUser').value.trim();
-  const smtpPass=document.getElementById('sSmtpPass').value.trim();
-  const email=document.getElementById('sEmail').value.trim();
-  if(!email||!smtpUser||!smtpPass){show('❌ Fill in all fields first','err');return;}
-  // Save first, then test
-  api('config_email',{email,smtp_user:smtpUser,smtp_pass:smtpPass,smtp_host:'smtp.gmail.com',smtp_port:587})
-  .then(()=>api('test_email'))
-  .then(d=>{
-    show(d.status==='success'?'✅ '+d.message:'❌ '+d.message,d.status==='success'?'ok':'err');
-  }).catch(e=>show('❌ '+e.message,'err'));
+  const f=getSmtpFields();
+  if(!f.email||!f.smtp_user||!f.smtp_pass){show('❌ Fill all required fields','err');return;}
+  show('⏳ Saving settings and sending test email...');
+  api('config_email',f)
+    .then(()=>api('test_email'))
+    .then(d=>{
+      show(d.status==='success'?'✅ '+d.message:'❌ '+d.message, d.status==='success'?'ok':'err');
+    }).catch(e=>show('❌ '+e.message,'err'));
+}
+
+// Provider tab switcher
+const providerDefaults = {
+  brevo:  {host:'smtp-relay.brevo.com', port:'587'},
+  gmail:  {host:'smtp.gmail.com',       port:'587'},
+  custom: {host:'',                     port:'587'},
+};
+function setProvider(p){
+  ['brevo','gmail','custom'].forEach(t=>{
+    document.getElementById('provider-'+t).style.display = t===p ? '' : 'none';
+    document.getElementById('tab-'+t).className = 'tab' + (t===p?' active-tab':'');
+  });
+  if(providerDefaults[p]){
+    document.getElementById('sSmtpHost').value = providerDefaults[p].host;
+    document.getElementById('sSmtpPort').value = providerDefaults[p].port;
+  }
 }
 
 function openSettings(){document.getElementById('settingsModal').classList.add('show');}
