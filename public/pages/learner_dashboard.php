@@ -90,7 +90,7 @@ while ($r = $mpRes->fetchArray(SQLITE3_ASSOC)) {
 
 // Which modules have a quiz?
 $modulesWithQuiz = [];
-$mqRes = db()->query("SELECT DISTINCT module_id FROM quiz_questions WHERE is_active=1");
+$mqRes = db()->query("SELECT DISTINCT module_id FROM quiz_questions");
 while ($r = $mqRes->fetchArray(SQLITE3_ASSOC)) {
     $modulesWithQuiz[] = $r['module_id'];
 }
