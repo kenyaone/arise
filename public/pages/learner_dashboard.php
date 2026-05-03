@@ -8,6 +8,8 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', '/tmp/php_dashboard_error.log');
 
+echo "<h1 style='color: red; padding: 20px;'>DASHBOARD LOADING...</h1>";
+
 $student = getStudentBySession();
 if (!$student) { header('Location: /arise/?p=login'); exit; }
 $sid = $student['id'];
