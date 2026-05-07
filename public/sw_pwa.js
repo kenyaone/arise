@@ -1,14 +1,22 @@
-const CACHE_VERSION = 'arise-pwa-v1';
+const CACHE_VERSION = 'arise-datapost-v2';
 const CACHE_FILES = [
+  '/arise/?p=datapost',
   '/arise/pwa_datapost',
-  '/arise/css/style.css'
+  '/arise/css/style.css',
+  '/arise/js/app.js',
+  '/arise/pwa_manifest.json'
 ];
 
 // Install service worker
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_VERSION).then((cache) => {
-      return cache.addAll(CACHE_FILES).catch(() => {});
+      return cache.addAll(CACHE_FILES).catch(() => {
+        // Add files individually if batch fails
+        CACHE_FILES.forEach(file => {
+          cache.add(file).catch(() => {});
+        });
+      });
     })
   );
   self.skipWaiting();
@@ -42,9 +50,11 @@ self.addEventListener('fetch', (e) => {
         return response;
       }).catch(() => {
         return caches.match(e.request).then((response) => {
-          return response || new Response('Offline - page not cached', {
-            status: 503,
-            statusText: 'Service Unavailable'
+          return response || caches.match('/arise/?p=datapost').then((fallback) => {
+            return fallback || new Response('Offline - DataPost cached page not available', {
+              status: 503,
+              statusText: 'Service Unavailable'
+            });
           });
         });
       })
