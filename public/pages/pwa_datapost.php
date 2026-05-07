@@ -642,12 +642,29 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
         // Sync local data
         async function doSync() {
-            const btn = event.target;
+            const btn = event?.target || document.querySelector('button[onclick="doSync()"]');
+            if (!btn) return;
+
             btn.disabled = true;
             btn.textContent = '⏳ Syncing...';
 
             try {
-                const res = await fetch('/arise/?p=datapost&action=sync', { method: 'POST' });
+                const res = await fetch('/arise/?p=datapost&action=sync', {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const contentType = res.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await res.text();
+                    console.error('Expected JSON but got:', text.substring(0, 100));
+                    showResult('syncResult', `❌ Server error: received ${contentType}`, true);
+                    log('❌ Invalid response type', 'error');
+                    btn.disabled = false;
+                    btn.textContent = '📥 Sync Local Data';
+                    return;
+                }
+
                 const data = await res.json();
 
                 if (data.status === 'synced') {
@@ -659,6 +676,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                     log('❌ Sync failed', 'error');
                 }
             } catch (e) {
+                console.error('Sync error:', e);
                 showResult('syncResult', `❌ Error: ${e.message}`, true);
                 log(`❌ ${e.message}`, 'error');
             }
@@ -740,12 +758,28 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
         // Send report
         async function sendReport() {
-            const btn = event.target;
+            const btn = event?.target || document.querySelector('button:contains("Send Report")');
+            if (!btn) return;
+
             btn.disabled = true;
             btn.textContent = '⏳ Sending...';
 
             try {
-                const res = await fetch('/arise/?p=datapost&action=post', { method: 'POST' });
+                const res = await fetch('/arise/?p=datapost&action=post', {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const contentType = res.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await res.text();
+                    console.error('Expected JSON but got:', text.substring(0, 100));
+                    showResult('reportResult', `❌ Server error: received ${contentType}`, true);
+                    btn.disabled = false;
+                    btn.textContent = '📧 Send Report to Email';
+                    return;
+                }
+
                 const data = await res.json();
 
                 if (data.status === 'success') {
@@ -756,6 +790,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                     log('❌ Send report failed', 'error');
                 }
             } catch (e) {
+                console.error('Report error:', e);
                 showResult('reportResult', `❌ ${e.message}`, true);
                 log(`❌ ${e.message}`, 'error');
             }
@@ -766,26 +801,47 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
         // Cloud sync
         async function cloudSync() {
-            const btn = event.target;
+            const btn = event?.target || document.querySelector('button:contains("Sync to Cloud")');
+            if (!btn) return;
+
             btn.disabled = true;
             btn.textContent = '⏳ Syncing...';
 
             try {
-                const res = await fetch('/arise/?p=datapost&action=cloud_sync', { method: 'POST' });
+                const res = await fetch('/arise/?p=datapost&action=cloud_sync', {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const contentType = res.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await res.text();
+                    console.error('Expected JSON but got:', text.substring(0, 100));
+                    const resultId = document.getElementById('cloudResult') ? 'cloudResult' : 'cloudResult2';
+                    showResult(resultId, `❌ Server error: received ${contentType}`, true);
+                    btn.disabled = false;
+                    btn.textContent = '☁️ Sync to Cloud';
+                    return;
+                }
+
                 const data = await res.json();
 
                 if (data.status === 'success') {
                     showResult('cloudResult', '✅ ' + data.message, false);
-                    showResult('cloudResult2', '✅ ' + data.message, false);
+                    const el2 = document.getElementById('cloudResult2');
+                    if (el2) showResult('cloudResult2', '✅ ' + data.message, false);
                     log('✅ Cloud sync success', 'success');
                 } else {
                     showResult('cloudResult', `❌ ${data.message}`, true);
-                    showResult('cloudResult2', `❌ ${data.message}`, true);
+                    const el2 = document.getElementById('cloudResult2');
+                    if (el2) showResult('cloudResult2', `❌ ${data.message}`, true);
                     log('❌ Cloud sync failed', 'error');
                 }
             } catch (e) {
+                console.error('Cloud sync error:', e);
                 showResult('cloudResult', `❌ ${e.message}`, true);
-                showResult('cloudResult2', `❌ ${e.message}`, true);
+                const el2 = document.getElementById('cloudResult2');
+                if (el2) showResult('cloudResult2', `❌ ${e.message}`, true);
                 log(`❌ ${e.message}`, 'error');
             }
 
