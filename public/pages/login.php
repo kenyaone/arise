@@ -42,8 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['teacher_login'])) {
         );
         if ($teacher && password_verify($pass, $teacher['password_hash'])) {
             if (session_status() === PHP_SESSION_NONE) session_start();
-            $_SESSION['arise_student_id'] = $teacher['id'];
-            $_SESSION['arise_student_role'] = 'teacher';
+            // Set admin panel session (not student session)
+            $_SESSION['arise_admin_id']   = $teacher['id'];
+            $_SESSION['arise_admin_name'] = $teacher['full_name'];
+            $_SESSION['arise_admin_role'] = 'teacher';
+            $_SESSION['arise_permissions'] = ['content_view', 'content_manage', 'students_view', 'dashboard'];
             $hash = getSessionHash();
             if ($hash) {
                 $stmt = db()->prepare('UPDATE students SET session_hash=:h WHERE id=:id');
