@@ -4,8 +4,23 @@
  * Teachers can publish/unpublish lessons and quizzes for their students
  */
 
-$student = getStudentBySession();
-if (!$student || !in_array($student['role'] ?? '', ['teacher', 'admin'])) {
+// Check if logged in as teacher/admin (via admin panel OR student portal)
+$isTeacher = false;
+
+// Check admin session (for admin panel logins)
+if (isset($_SESSION['arise_admin_id']) && isset($_SESSION['arise_admin_role'])) {
+    $isTeacher = in_array($_SESSION['arise_admin_role'], ['teacher', 'admin']);
+}
+
+// Check student session with teacher role (for student portal logins)
+if (!$isTeacher) {
+    $student = getStudentBySession();
+    if ($student && in_array($student['role'] ?? '', ['teacher', 'admin'])) {
+        $isTeacher = true;
+    }
+}
+
+if (!$isTeacher) {
     echo '<div class="container"><div class="alert alert-danger">Teachers only.</div></div>';
     return;
 }
