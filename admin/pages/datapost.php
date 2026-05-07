@@ -808,10 +808,41 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             btn.textContent = '⏳ Syncing...';
 
             try {
-                const res = await fetch('/arise/?p=datapost&action=cloud_sync', {
-                    method: 'POST',
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                });
+                // Try to reach local server with short timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                let res;
+                try {
+                    res = await fetch('/arise/admin/?p=datapost&action=cloud_sync', {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                } catch (fetchErr) {
+                    clearTimeout(timeoutId);
+
+                    // Server unreachable - use cached data for cloud sync
+                    if (!navigator.onLine) {
+                        log('📡 Offline - using cached data', 'info');
+                        showResult('cloudResult', 'ℹ️ Offline - cached data queued for sync when online', false);
+                        const el2 = document.getElementById('cloudResult2');
+                        if (el2) showResult('cloudResult2', 'ℹ️ Offline - cached data queued', false);
+                        btn.disabled = false;
+                        btn.textContent = '☁️ Sync to Cloud';
+                        return;
+                    }
+
+                    // On mobile network - local server unreachable
+                    log('⚠️ ARISE server unreachable - ensure you synced data while on LAN first', 'error');
+                    showResult('cloudResult', '⚠️ ARISE server unavailable. Make sure you ran "Sync Local Data" while on LAN.', true);
+                    const el2 = document.getElementById('cloudResult2');
+                    if (el2) showResult('cloudResult2', '⚠️ ARISE server unavailable', true);
+                    btn.disabled = false;
+                    btn.textContent = '☁️ Sync to Cloud';
+                    return;
+                }
 
                 const contentType = res.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
