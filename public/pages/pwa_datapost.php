@@ -444,6 +444,16 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
     </style>
 </head>
 <body>
+    <!-- PWA INSTALL BANNER -->
+    <div id="installBanner" style="display:none;position:fixed;top:0;left:0;right:0;background:#10b981;color:white;padding:12px;z-index:9999;flex-direction:column;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div><strong>📱 Install DataPost App?</strong> Quick access from home screen</div>
+            <button class="btn btn-primary" onclick="installPWA()" style="margin:0;padding:8px 16px;font-size:.85rem;width:auto;flex:none;">Install</button>
+            <button onclick="document.getElementById('installBanner').style.display='none'" style="background:none;border:none;color:white;cursor:pointer;font-size:1.2rem;padding:0;width:auto;flex:none;">✕</button>
+        </div>
+        <div id="installResult"></div>
+    </div>
+
     <div class="header">
         <h1>📊 ARISE DataPost</h1>
         <div class="subtext">Sync data, send reports, manage schools</div>
@@ -1005,6 +1015,38 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                 recordAutoSync();
             }
         }
+
+        // PWA Install Prompt Handler
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const banner = document.getElementById('installBanner');
+            if (banner) {
+                banner.style.display = 'flex';
+            }
+            log('💡 App ready to install', 'info');
+        });
+
+        async function installPWA() {
+            if (!deferredPrompt) {
+                log('❌ Install not available on this device', 'error');
+                return;
+            }
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                log('✅ App installed! Check your home screen', 'success');
+                document.getElementById('installBanner').style.display = 'none';
+            } else {
+                log('⚠️ Install cancelled', 'info');
+            }
+            deferredPrompt = null;
+        }
+
+        window.addEventListener('appinstalled', () => {
+            log('✅ DataPost successfully installed to home screen', 'success');
+        });
 
         // Initialize
         window.addEventListener('online', updateConnectionStatus);
