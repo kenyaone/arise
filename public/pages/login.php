@@ -37,23 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['teacher_login'])) {
     $pass = trim($_POST['teacher_pass'] ?? '');
     if ($user && $pass) {
         $teacher = db()->querySingle(
-            "SELECT * FROM students WHERE username='".SQLite3::escapeString($user)."' AND role='teacher' AND is_active=1",
+            "SELECT * FROM admin_users WHERE username='".SQLite3::escapeString($user)."' AND role='teacher' AND is_active=1",
             true
         );
         if ($teacher && password_verify($pass, $teacher['password_hash'])) {
             if (session_status() === PHP_SESSION_NONE) session_start();
-            // Set admin panel session (not student session)
+            // Set admin panel session
             $_SESSION['arise_admin_id']   = $teacher['id'];
             $_SESSION['arise_admin_name'] = $teacher['full_name'];
             $_SESSION['arise_admin_role'] = 'teacher';
             $_SESSION['arise_permissions'] = ['content_view', 'content_manage', 'students_view', 'dashboard'];
-            $hash = getSessionHash();
-            if ($hash) {
-                $stmt = db()->prepare('UPDATE students SET session_hash=:h WHERE id=:id');
-                $stmt->bindValue(':h', $hash);
-                $stmt->bindValue(':id', $teacher['id']);
-                $stmt->execute();
-            }
             header('Location: /arise/admin/dashboard');
             exit;
         } else {
