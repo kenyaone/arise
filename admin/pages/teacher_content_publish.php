@@ -98,17 +98,19 @@ if (!$module) {
       <?php else: ?>
         <div style="display:grid;gap:10px">
           <?php foreach ($lessons as $lesson): ?>
-            <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+            <div data-lesson-id="<?=$lesson['id']?>" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;display:flex;justify-content:space-between;align-items:center;transition:.2s;hover-effect">
               <div>
-                <div style="font-weight:600;color:#111"><?=e($lesson['title'])?></div>
+                <div style="font-weight:600;color:#111;margin-bottom:3px"><?=e($lesson['title'])?></div>
                 <div style="font-size:.8rem;color:#6b7280"><?=ucfirst($lesson['lesson_type'])?></div>
               </div>
-              <div style="display:flex;gap:8px;align-items:center">
-                <span style="font-size:.85rem;color:<?=$lesson['is_published']?'#10b981':'#ef4444'?>;font-weight:600">
-                  <?=$lesson['is_published']?'Published':'Unpublished'?>
-                </span>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="text-align:right;min-width:90px">
+                  <span data-status-display style="font-size:.85rem;color:<?=$lesson['is_published']?'#10b981':'#ef4444'?>;font-weight:700;display:block;margin-bottom:6px">
+                    <?=$lesson['is_published']?'📤 Published':'🔒 Unpublished'?>
+                  </span>
+                </div>
                 <button class="lesson-toggle" data-id="<?=$lesson['id']?>" data-status="<?=$lesson['is_published']?'0':'1'?>"
-                  style="padding:6px 12px;border:1px solid <?=$lesson['is_published']?'#ef4444':'#10b981'?>;background:transparent;color:<?=$lesson['is_published']?'#ef4444':'#10b981'?>;border-radius:6px;cursor:pointer;font-weight:600;font-size:.85rem">
+                  style="padding:8px 14px;border:2px solid <?=$lesson['is_published']?'#ef4444':'#10b981'?>;background:transparent;color:<?=$lesson['is_published']?'#ef4444':'#10b981'?>;border-radius:6px;cursor:pointer;font-weight:600;font-size:.85rem;transition:.2s;">
                   <?=$lesson['is_published']?'Unpublish':'Publish'?>
                 </button>
               </div>
@@ -167,16 +169,47 @@ document.querySelectorAll('.lesson-toggle').forEach(btn => {
   btn.addEventListener('click', function() {
     const id = this.dataset.id;
     const newStatus = this.dataset.status;
+    const btn = this;
     const formData = new FormData();
     formData.append('action', 'toggle');
     formData.append('type', 'lesson');
     formData.append('id', id);
     formData.append('status', newStatus);
 
-    fetch('?p=teacher_content_publish', { method: 'POST', body: formData })
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    fetch('/arise/admin/teacher_content_publish', { method: 'POST', body: formData })
       .then(r => r.json())
       .then(d => {
-        if (d.status === 'ok') location.reload();
+        if (d.status === 'ok') {
+          // Update UI immediately without reload
+          const card = btn.closest('[data-lesson-id]');
+          const statusSpan = card.querySelector('[data-status-display]');
+          const newStatusText = newStatus === '1' ? 'Published' : 'Unpublished';
+          const newStatusColor = newStatus === '1' ? '#10b981' : '#ef4444';
+          statusSpan.textContent = newStatusText;
+          statusSpan.style.color = newStatusColor;
+
+          btn.dataset.status = newStatus === '1' ? '0' : '1';
+          btn.textContent = newStatus === '1' ? 'Unpublish' : 'Publish';
+          btn.style.borderColor = newStatus === '1' ? '#ef4444' : '#10b981';
+          btn.style.color = newStatus === '1' ? '#ef4444' : '#10b981';
+          btn.disabled = false;
+
+          // Show success toast
+          showToast('✅ ' + d.message);
+        } else {
+          showToast('❌ Failed to update');
+          btn.disabled = false;
+          btn.textContent = newStatus === '1' ? 'Publish' : 'Unpublish';
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        showToast('❌ Error: ' + e.message);
+        btn.disabled = false;
+        btn.textContent = newStatus === '1' ? 'Publish' : 'Unpublish';
       });
   });
 });
@@ -184,17 +217,47 @@ document.querySelectorAll('.lesson-toggle').forEach(btn => {
 document.querySelectorAll('.quiz-toggle').forEach(btn => {
   btn.addEventListener('click', function() {
     const newStatus = this.dataset.status;
+    const btn = this;
     const formData = new FormData();
     formData.append('action', 'toggle');
     formData.append('type', 'quiz');
-    formData.append('id', <?=intval($module['id'])?>>);
+    formData.append('id', <?=intval($module['id'])?>);
     formData.append('status', newStatus);
 
-    fetch('?p=teacher_content_publish', { method: 'POST', body: formData })
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    fetch('/arise/admin/teacher_content_publish', { method: 'POST', body: formData })
       .then(r => r.json())
       .then(d => {
-        if (d.status === 'ok') location.reload();
+        if (d.status === 'ok') {
+          // Update UI immediately
+          const newStatusText = newStatus === '1' ? 'Unpublish All' : 'Publish All';
+          btn.textContent = newStatusText;
+          btn.style.background = newStatus === '1' ? '#ef4444' : '#10b981';
+          btn.dataset.status = newStatus === '1' ? '0' : '1';
+          btn.disabled = false;
+          showToast('✅ ' + d.message);
+        } else {
+          showToast('❌ Failed to update');
+          btn.disabled = false;
+          btn.textContent = newStatus === '1' ? 'Unpublish All' : 'Publish All';
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        showToast('❌ Error: ' + e.message);
+        btn.disabled = false;
+        btn.textContent = newStatus === '1' ? 'Unpublish All' : 'Publish All';
       });
   });
 });
+
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.textContent = msg;
+  toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#111;color:#fff;padding:12px 16px;border-radius:8px;z-index:9999;font-size:0.9rem;max-width:300px;';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
 </script>
