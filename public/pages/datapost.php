@@ -15,6 +15,9 @@ foreach ([
     "ALTER TABLE datapost_config ADD COLUMN smtp_user TEXT DEFAULT ''",
     "ALTER TABLE datapost_config ADD COLUMN smtp_pass TEXT DEFAULT ''",
     "ALTER TABLE datapost_config ADD COLUMN smtp_from TEXT DEFAULT ''",
+    "ALTER TABLE datapost_config ADD COLUMN cloud_sync_url TEXT DEFAULT 'https://ariseci.org/arise-sync.php'",
+    "ALTER TABLE datapost_config ADD COLUMN cloud_last_synced_at TEXT DEFAULT NULL",
+    "ALTER TABLE datapost_config ADD COLUMN cloud_last_sync_count INTEGER DEFAULT 0",
 ] as $sql) { try { db()->exec($sql); } catch(Exception $e) {} }
 
 try { db()->exec("CREATE TABLE IF NOT EXISTS datapost_sync_log (
@@ -359,6 +362,80 @@ if ($action === 'git_push') {
     exit;
 }
 
+if ($action === 'get_schools') {
+    header('Content-Type: application/json');
+    $schools = [];
+    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $sn = $row['school_name'];
+        $sne = SQLite3::escapeString($sn);
+        $meta = db()->querySingle("SELECT county, lat, lng FROM schools WHERE name='$sne' LIMIT 1", true) ?: [];
+        $schools[] = [
+            'name'       => $sn,
+            'county'     => $meta['county'] ?? '',
+            'lat'        => isset($meta['lat']) && $meta['lat'] !== '' ? (float)$meta['lat'] : null,
+            'lng'        => isset($meta['lng']) && $meta['lng'] !== '' ? (float)$meta['lng'] : null,
+            'learners'   => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
+            'quizzes'    => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
+            'avg_score'  => round((float)(db()->querySingle("SELECT AVG(qa.percentage) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'") ?? 0), 1),
+            'certs'      => (int)db()->querySingle("SELECT COUNT(c.id) FROM certificates c JOIN students s ON s.id=c.student_id WHERE s.school_name='$sne'"),
+        ];
+    }
+    echo json_encode($schools);
+    exit;
+}
+
+if ($action === 'cloud_sync') {
+    header('Content-Type: application/json');
+    $schoolRows = [];
+    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $sn  = $row['school_name'];
+        $sne = SQLite3::escapeString($sn);
+        $meta = db()->querySingle("SELECT county, lat, lng FROM schools WHERE name='$sne' LIMIT 1", true);
+        $schoolRows[] = [
+            'school_name'    => $sn,
+            'county'         => $meta['county'] ?? ($cfg['county'] ?? ''),
+            'lat'            => isset($meta['lat']) && $meta['lat'] !== '' ? (float)$meta['lat'] : null,
+            'lng'            => isset($meta['lng']) && $meta['lng'] !== '' ? (float)$meta['lng'] : null,
+            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
+            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
+            'avg_score'      => round((float)(db()->querySingle("SELECT AVG(qa.percentage) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'") ?? 0), 1),
+            'cert_count'     => (int)db()->querySingle("SELECT COUNT(c.id) FROM certificates c JOIN students s ON s.id=c.student_id WHERE s.school_name='$sne'"),
+            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
+            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+        ];
+    }
+    if (empty($schoolRows)) {
+        echo json_encode(['status'=>'error','message'=>'No active schools found — register students first']); exit;
+    }
+    $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows]);
+    $syncUrl  = $cfg['cloud_sync_url'] ?? 'https://ariseci.org/arise-sync.php';
+    $response = false; $httpCode = 0; $curlErr = '';
+    if (function_exists('curl_init')) {
+        $ch = curl_init($syncUrl);
+        curl_setopt_array($ch, [CURLOPT_POST=>true,CURLOPT_POSTFIELDS=>$payload,CURLOPT_RETURNTRANSFER=>true,CURLOPT_HTTPHEADER=>['Content-Type: application/json'],CURLOPT_TIMEOUT=>20,CURLOPT_CONNECTTIMEOUT=>8,CURLOPT_SSL_VERIFYPEER=>true]);
+        $response = curl_exec($ch); $httpCode = (int)curl_getinfo($ch,CURLINFO_HTTP_CODE); $curlErr = curl_error($ch); curl_close($ch);
+    } else {
+        $ctx = stream_context_create(['http'=>['method'=>'POST','header'=>"Content-Type: application/json\r\n",'content'=>$payload,'timeout'=>20,'ignore_errors'=>true]]);
+        $response = @file_get_contents($syncUrl,false,$ctx); $httpCode = $response !== false ? 200 : 0;
+    }
+    if (!$response) { echo json_encode(['status'=>'error','message'=>'Could not reach ariseci.org: '.$curlErr]); exit; }
+    $decoded = json_decode($response, true);
+    if (!is_array($decoded)) { echo json_encode(['status'=>'error','message'=>"Unexpected response (HTTP $httpCode)"]); exit; }
+    if ($httpCode < 300 && ($decoded['status']??'') === 'ok') {
+        $count = $decoded['upserted'] ?? count($schoolRows);
+        $ts = date('Y-m-d H:i:s'); $tsE = SQLite3::escapeString($ts);
+        db()->exec("UPDATE datapost_config SET cloud_last_synced_at='$tsE',cloud_last_sync_count=$count WHERE id=".(int)$cfg['id']);
+        $snap = SQLite3::escapeString(json_encode(['cloud_sync'=>true,'schools_synced'=>$count]));
+        db()->exec("INSERT INTO datapost_sync_log (sync_timestamp,data_snapshot,posted_at) VALUES ('$tsE','$snap','$tsE')");
+        echo json_encode(['status'=>'success','message'=>"Synced $count school(s) to ariseci.org",'timestamp'=>$ts,'count'=>$count]);
+    } else {
+        echo json_encode(['status'=>'error','message'=>'Remote: '.($decoded['message']??"HTTP $httpCode")]);
+    }
+    exit;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // HTML DASHBOARD
 // ─────────────────────────────────────────────────────────────────────────────
@@ -376,6 +453,7 @@ $isGit    = is_dir('/var/www/arise/.git');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARISE DataPost</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;min-height:100vh;padding:24px}
@@ -393,7 +471,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 .sl{color:#9ca3af;font-size:.87rem}
 .sv{font-weight:700;font-size:.9rem;color:#6ee7b7}
 .sv.warn{color:#fbbf24}.sv.bad{color:#f87171}
-.arow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.arow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
 @media(max-width:580px){.arow{grid-template-columns:1fr}}
 .ab{background:#111827;border:2px solid #1f2937;border-radius:10px;padding:20px 14px;text-align:center;cursor:pointer;transition:.15s;border-left:4px solid #1f2937}
 .ab:hover{border-color:#0ea271;background:rgba(14,162,113,.07)}
@@ -430,6 +508,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 .tab{background:#0d1117;border:1px solid #374151;color:#9ca3af;padding:7px 13px;border-radius:7px;font-size:.8rem;font-weight:600;cursor:pointer}
 .tab:hover{border-color:#0ea271;color:#6ee7b7}
 .active-tab{background:rgba(14,162,113,.15);border-color:#0ea271;color:#6ee7b7}
+#liveMap{height:400px;width:100%;border-radius:8px;background:#0d1117;margin:0}
+.leaflet-container{font-family:'Segoe UI',Arial,sans-serif}
+.live-popup{font-size:.85rem;min-width:220px}
+.live-popup h4{color:#0ea271;margin-bottom:8px;font-size:.95rem}
+.live-popup p{margin:4px 0;color:#9ca3af}
+.live-popup .val{color:#6ee7b7;font-weight:600}
 </style>
 </head>
 <body>
@@ -457,6 +541,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
   <div class="srow"><span class="sl">Recipient Email</span><span class="sv <?= $emailCfg ? '' : 'warn' ?>" id="emailVal"><?= $emailCfg ? esc($emailCfg) : '⚠ Not set — click Settings' ?></span></div>
   <div class="srow"><span class="sl">SMTP (Gmail)</span><span class="sv <?= $smtpOk ? '' : 'warn' ?>"><?= $smtpOk ? '✓ Configured' : '⚠ Not configured' ?></span></div>
   <div class="srow"><span class="sl">GitHub</span><span class="sv"><span class="badge <?= $isGit ? 'yes' : 'no' ?>"><?= $isGit ? '✓ Connected' : '✗ Not connected' ?></span></span></div>
+  <div class="srow"><span class="sl">☁️ Cloud Sync</span><span class="sv <?= $cfg['cloud_last_synced_at'] ? '' : 'warn' ?>" id="cloudSyncVal"><?= $cfg['cloud_last_synced_at'] ? esc($cfg['cloud_last_synced_at']).' ('.(int)$cfg['cloud_last_sync_count'].' schools)' : 'Never synced' ?></span></div>
 </div>
 
 <!-- 3 main actions -->
@@ -476,6 +561,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
     <div class="at">UPDATE</div>
     <div class="ad">Pull from GitHub<br>(needs internet)</div>
   </div>
+  <div class="ab" style="border-left-color:#a855f7" onclick="doCloudSync()">
+    <div class="ai">☁️</div>
+    <div class="at">CLOUD SYNC</div>
+    <div class="ad">Push stats to<br>ariseci.org map</div>
+  </div>
 </div>
 
 <!-- Latest snapshot -->
@@ -490,14 +580,22 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0f1e;color:#e2e8f0;mi
 </div>
 <?php endif; ?>
 
-<!-- Reports -->
+<!-- Live Project Map -->
 <div class="card">
-  <h2>📊 Donor & Impact Reports</h2>
-  <div class="gbtns">
-    <a href="/arise/?p=donor_report" target="_blank" style="background:#d97706;color:#fff;text-decoration:none;padding:9px 18px;border-radius:8px;font-weight:700;font-size:.84rem;cursor:pointer;border:none;display:inline-block">📈 View Full Impact Report</a>
-    <button class="gbtn pull" style="background:#10b981" onclick="openDonorGuide()">📋 Reporting Guide</button>
+  <h2>🗺️ Live Project Locations</h2>
+  <div style="display:grid;grid-template-columns:280px 1fr;gap:16px;height:580px">
+    <!-- Sidebar -->
+    <div style="background:#0d1117;border:1px solid #1f2937;border-radius:8px;display:flex;flex-direction:column">
+      <input type="text" id="projectSearch" placeholder="🔍 Search projects..."
+        style="padding:10px 12px;background:#111827;border:none;border-bottom:1px solid #1f2937;color:#e2e8f0;border-radius:8px 8px 0 0;font-size:.9rem">
+      <div id="projectList" style="flex:1;overflow-y:auto;font-size:.85rem">
+        <div style="padding:16px;color:#6b7280;text-align:center">Loading projects...</div>
+      </div>
+    </div>
+    <!-- Map -->
+    <div id="liveMap" style="border-radius:8px;background:#0d1117"></div>
   </div>
-  <p style="font-size:.8rem;color:#6b7280;margin-top:12px">✓ Professional, printable reports aggregated by school and module<br>✓ Knowledge gain analysis, completion funnels, and engagement metrics</p>
+  <p style="font-size:.8rem;color:#6b7280;margin-top:12px">Real-time project locations. Search to filter. Click any project to highlight on map.</p>
 </div>
 
 <!-- GitHub -->
@@ -637,6 +735,17 @@ function doSync(){
   }).catch(e=>show('❌ '+e.message,'err'));
 }
 
+function doCloudSync(){
+  show('⏳ Syncing to ariseci.org...');
+  api('cloud_sync').then(d=>{
+    if(d.status==='success'){
+      show('✅ '+d.message);
+      document.getElementById('cloudSyncVal').textContent=d.timestamp+' ('+d.count+' schools)';
+      document.getElementById('cloudSyncVal').className='sv';
+    } else show('❌ '+(d.message||'Cloud sync failed'),'err');
+  }).catch(e=>show('❌ '+e.message,'err'));
+}
+
 function doPost(){
   show('⏳ Sending report via email...');
   api('post').then(d=>{
@@ -731,14 +840,99 @@ function setProvider(p){
 
 function openSettings(){document.getElementById('settingsModal').classList.add('show');}
 function openGitHub(){document.getElementById('githubModal').classList.add('show');}
-function openDonorGuide(){alert('📊 Donor Report Features:\n\n✓ Full impact metrics aggregated by school\n✓ Module performance with quiz scores\n✓ Knowledge gain (pre/post test analysis)\n✓ Completion funnel visualization\n✓ Daily activity tracking\n✓ Professional PDF export\n\nClick "View Full Impact Report" to access the complete report.');}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 
 document.addEventListener('click',e=>{
   ['settingsModal','githubModal'].forEach(id=>{if(e.target===document.getElementById(id))closeModal(id);});
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')['settingsModal','githubModal'].forEach(closeModal);});
+
+// Live map initialization
+let mapInstance=null;
+let schoolsData=[];
+let markerMap={};
+
+setTimeout(initLiveMap, 500);
+
+function initLiveMap(){
+  if(typeof L==='undefined') return;
+  const mapDiv=document.getElementById('liveMap');
+  if(!mapDiv) return;
+
+  mapInstance=L.map(mapDiv).setView([-0.023559,37.906193],5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,attribution:'© OpenStreetMap'
+  }).addTo(mapInstance);
+
+  // Fetch schools
+  fetch('/arise/public/pages/datapost.php?action=get_schools')
+    .then(r=>r.json()).catch(e=>{console.log('Map error');return [];})
+    .then(schools=>{
+      schoolsData=schools;
+      renderProjectList(schools);
+      renderMapMarkers(schools);
+    });
+
+  // Search functionality
+  document.getElementById('projectSearch').addEventListener('keyup',e=>{
+    const query=e.target.value.toLowerCase();
+    renderProjectList(schoolsData.filter(s=>
+      s.name.toLowerCase().includes(query)||
+      (s.county||'').toLowerCase().includes(query)
+    ));
+  });
+}
+
+function renderProjectList(schools){
+  const list=document.getElementById('projectList');
+  if(schools.length===0){
+    list.innerHTML='<div style="padding:16px;color:#6b7280;text-align:center">No projects found</div>';
+    return;
+  }
+  list.innerHTML=schools.map((s,i)=>`
+    <div data-idx="${i}" style="padding:10px 12px;border-bottom:1px solid #1f2937;cursor:pointer;transition:.15s" onmouseover="this.style.background='rgba(14,162,113,.1)'" onmouseout="this.style.background=''" onclick="focusProject(${i})">
+      <div style="font-weight:700;color:#6ee7b7">${s.name}</div>
+      <div style="color:#6b7280;font-size:.75rem">${s.county||'Unknown county'}</div>
+      <div style="color:#9ca3af;font-size:.75rem;margin-top:4px">
+        👩‍🎓 ${s.learners} learners &nbsp;·&nbsp; 📝 ${s.quizzes} quizzes &nbsp;·&nbsp; 🎓 ${s.certs} certs
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMapMarkers(schools){
+  Object.keys(markerMap).forEach(k=>mapInstance.removeLayer(markerMap[k]));
+  markerMap={};
+
+  schools.forEach((s,i)=>{
+    if(!s.lat||!s.lng) return;
+    const popup=`
+      <div class="live-popup">
+        <h4>${s.name}</h4>
+        <p>📌 <span class="val">${s.county||'—'}</span></p>
+        <p>👩‍🎓 Learners: <span class="val">${s.learners}</span></p>
+        <p>📝 Quizzes: <span class="val">${s.quizzes}</span></p>
+        <p>Avg Score: <span class="val">${s.avg_score>0?s.avg_score+'%':'N/A'}</span></p>
+        <p>🎓 Certificates: <span class="val">${s.certs}</span></p>
+      </div>
+    `;
+    const marker=L.circleMarker([s.lat,s.lng],{
+      radius:12,fillColor:'#0ea271',color:'#059669',weight:2.5,
+      opacity:0.9,fillOpacity:0.7
+    }).bindPopup(popup).addTo(mapInstance);
+    marker._ariseIdx=i;
+    markerMap[i]=marker;
+  });
+}
+
+function focusProject(idx){
+  const s=schoolsData[idx];
+  if(!s.lat||!s.lng) return;
+  mapInstance.flyTo([s.lat,s.lng],9,{duration:1});
+  if(markerMap[idx]) markerMap[idx].openPopup();
+}
 </script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </body>
 </html>
 <?php

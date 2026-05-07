@@ -100,6 +100,7 @@ $navGroups = [
     ],
     'Content' => [
         ['p'=>'content',    'icon'=>'📚','label'=>'Modules',     'perm'=>'content_view'],
+        ['p'=>'teacher_content_publish','icon'=>'📤','label'=>'Publish Content', 'perm'=>'content_manage'],
         ['p'=>'quiz',       'icon'=>'🧠','label'=>'Quiz Builder', 'perm'=>'content_manage'],
         ['p'=>'admin_question_difficulty','icon'=>'📊','label'=>'Question Performance', 'perm'=>'dashboard'],
         ['p'=>'challenges', 'icon'=>'💪','label'=>'Challenges',  'perm'=>'content_manage'],
@@ -259,7 +260,7 @@ function canSee($perm) {
 <div class="topbar">
     <div class="topbar-title">
         <?php
-        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
+        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','teacher_content_publish'=>'Publish Content','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
         echo htmlspecialchars($pageLabels[$page] ?? ucfirst($page));
         ?>
     </div>
@@ -1065,6 +1066,9 @@ elseif ($page === 'quiz'):
 
 elseif ($page === 'admin_question_difficulty'):
     include __DIR__.'/pages/admin_question_difficulty.php';
+
+elseif ($page === 'teacher_content_publish'):
+    include __DIR__.'/pages/teacher_content_publish.php';
 
 elseif ($page === 'challenges'):
     include __DIR__.'/pages/admin_challenges.php';
