@@ -73,7 +73,7 @@ if (!$module) {
   <!-- Module Tabs -->
   <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;border-bottom:2px solid #e5e7eb;padding-bottom:12px">
     <?php foreach ($modules as $m): ?>
-      <a href="?p=teacher_content_publish&module=<?=e($m['slug'])?>"
+      <a href="/arise/admin/teacher_content_publish?module=<?=e($m['slug'])?>"
          style="padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:<?=($module && $module['id']==$m['id'])?'700':'500'?>;background:<?=($module && $module['id']==$m['id'])?'#dbeafe':'transparent'?>;color:<?=($module && $module['id']==$m['id'])?'#0284c7':'#6b7280'?>;cursor:pointer;border:<?=($module && $module['id']==$m['id'])?'2px solid #0284c7':'2px solid transparent'?>">
         <?=e($m['title'])?>
       </a>
