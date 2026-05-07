@@ -25,32 +25,31 @@ if (!$isTeacher) {
     return;
 }
 
-$action = $_GET['action'] ?? '';
-$type = $_GET['type'] ?? '';  // 'lesson' or 'quiz'
-$id = intval($_GET['id'] ?? 0);
+// Handle publish/unpublish toggle (AJAX)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
+    if ($action === 'toggle') {
+        $newStatus = intval($_POST['status'] ?? 0);
+        $type = $_POST['type'] ?? '';
+        $id = intval($_POST['id'] ?? 0);
 
-// Handle publish/unpublish toggle
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'toggle') {
-    $newStatus = intval($_POST['status'] ?? 0);
-    $type = $_POST['type'] ?? '';
-    $id = intval($_POST['id'] ?? 0);
+        if ($type === 'lesson') {
+            $st = db()->prepare("UPDATE lessons SET is_published = :s WHERE id = :id");
+            $st->bindValue(':s', $newStatus);
+            $st->bindValue(':id', $id);
+            $st->execute();
+            $msg = 'Lesson ' . ($newStatus ? 'published' : 'unpublished');
+        } elseif ($type === 'quiz') {
+            $st = db()->prepare("UPDATE quiz_questions SET is_published = :s WHERE id = :id");
+            $st->bindValue(':s', $newStatus);
+            $st->bindValue(':id', $id);
+            $st->execute();
+            $msg = 'Quiz questions ' . ($newStatus ? 'published' : 'unpublished');
+        }
 
-    if ($type === 'lesson') {
-        $st = db()->prepare("UPDATE lessons SET is_published = :s WHERE id = :id");
-        $st->bindValue(':s', $newStatus);
-        $st->bindValue(':id', $id);
-        $st->execute();
-        $msg = 'Lesson ' . ($newStatus ? 'published' : 'unpublished');
-    } elseif ($type === 'quiz') {
-        $st = db()->prepare("UPDATE quiz_questions SET is_published = :s WHERE id = :id");
-        $st->bindValue(':s', $newStatus);
-        $st->bindValue(':id', $id);
-        $st->execute();
-        $msg = 'Quiz questions ' . ($newStatus ? 'published' : 'unpublished');
+        echo json_encode(['status' => 'ok', 'message' => $msg]);
+        exit;
     }
-
-    echo json_encode(['status' => 'ok', 'message' => $msg]);
-    exit;
 }
 
 // Get all modules for tabs
