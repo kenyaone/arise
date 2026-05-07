@@ -57,6 +57,45 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         $aq->execute();
     }
 
+    // Auto-issue certificate after post-test if score >= 60%
+    if ($testType === 'post' && $pct >= 60 && $sid) {
+        $student = getStudentBySession();
+        if ($student) {
+            $existing = db()->querySingle(
+                "SELECT id FROM certificates
+                 WHERE student_id = $sid AND module_id = ".intval($module['id'])
+            );
+            if (!$existing) {
+                do {
+                    $certNum = 'ARISE-' . date('Y') . '-' . str_pad(mt_rand(10000,99999), 5, '0', STR_PAD_LEFT);
+                } while (db()->querySingle("SELECT id FROM certificates WHERE cert_number = '" . SQLite3::escapeString($certNum) . "'"));
+
+                $stmt2 = db()->prepare(
+                    'INSERT INTO certificates
+                     (cert_number, student_id, student_name, module_id, module_title, score, percentage)
+                     VALUES (:cert, :sid, :name, :mid, :mtitle, :score, :pct)'
+                );
+                $stmt2->bindValue(':cert',   $certNum);
+                $stmt2->bindValue(':sid',    $sid);
+                $stmt2->bindValue(':name',   $student['full_name']);
+                $stmt2->bindValue(':mid',    intval($module['id']));
+                $stmt2->bindValue(':mtitle', $module['title']);
+                $stmt2->bindValue(':score',  $score);
+                $stmt2->bindValue(':pct',    $pct);
+                $stmt2->execute();
+            }
+        }
+        // Redirect to certificate
+        header("Location: /arise/?p=certificate&module=".urlencode($moduleSlug)."&score=$pct");
+        exit;
+    }
+
+    // Auto-redirect to survey after post-test if score < 60 (collect qualitative data)
+    if ($testType === 'post' && $pct < 60) {
+        header("Location: /arise/?p=survey&module=".urlencode($moduleSlug)."&from=post_test");
+        exit;
+    }
+
     // Show result
     $prePct = null;
     if ($testType === 'post') {
@@ -177,6 +216,17 @@ $prev = db()->querySingle("SELECT * FROM pretest_attempts WHERE session_hash='".
 ?>
 <div class="container">
   <div class="breadcrumb"><a href="/arise/">Home</a> <span class="sep">&#8250;</span> <a href="/arise/?p=module&slug=<?=e($moduleSlug)?>"><?=e($module['title'])?></a> <span class="sep">&#8250;</span> <span><?=$testType==='pre'?'Pre-Test':'Post-Test'?></span></div>
+
+  <?php if (($_GET['cert'] ?? '') === '1'): ?>
+  <div style="background:#dbeafe;border:2px solid #0284c7;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;gap:12px;align-items:center;">
+    <span style="font-size:1.5rem">🎓</span>
+    <div>
+      <div style="font-weight:700;color:#0c4a6e;font-size:.95rem">Almost there!</div>
+      <div style="font-size:.82rem;color:#075985">Complete this post-test with 60% or higher to unlock your certificate.</div>
+    </div>
+  </div>
+  <?php endif; ?>
+
   <div class="dp-card" style="margin-bottom:16px">
     <span class="test-type-badge <?=$testType==='pre'?'badge-pre':'badge-post'?>"><?=$testType==='pre'?'Pre-Test':'Post-Test'?></span>
     <h2 style="font-size:1.05rem;font-weight:800;margin-bottom:4px"><?=$module['icon']?> <?=e($module['title'])?></h2>

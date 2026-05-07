@@ -101,6 +101,7 @@ $navGroups = [
     'Content' => [
         ['p'=>'content',    'icon'=>'📚','label'=>'Modules',     'perm'=>'content_view'],
         ['p'=>'quiz',       'icon'=>'🧠','label'=>'Quiz Builder', 'perm'=>'content_manage'],
+        ['p'=>'admin_question_difficulty','icon'=>'📊','label'=>'Question Performance', 'perm'=>'dashboard'],
         ['p'=>'challenges', 'icon'=>'💪','label'=>'Challenges',  'perm'=>'content_manage'],
         ['p'=>'bulk_upload','icon'=>'📦','label'=>'Bulk Upload',  'perm'=>'content_manage'],
     ],
@@ -258,7 +259,7 @@ function canSee($perm) {
 <div class="topbar">
     <div class="topbar-title">
         <?php
-        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
+        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
         echo htmlspecialchars($pageLabels[$page] ?? ucfirst($page));
         ?>
     </div>
@@ -1061,6 +1062,9 @@ elseif ($page === 'analytics'):
 
 elseif ($page === 'quiz'):
     include __DIR__.'/pages/admin_quiz.php';
+
+elseif ($page === 'admin_question_difficulty'):
+    include __DIR__.'/pages/admin_question_difficulty.php';
 
 elseif ($page === 'challenges'):
     include __DIR__.'/pages/admin_challenges.php';

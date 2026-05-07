@@ -24,6 +24,20 @@ if (!$module || $scorePct < 60) {
     exit;
 }
 
+// M&E Gate: Require post-test if module has require_posttest=1
+if ($student && $module && ($module['require_posttest'] ?? 1)) {
+    $sessionHash = getSessionHash();
+    $postTestDone = $sessionHash ? db()->querySingle(
+        "SELECT id FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($sessionHash)."'
+         AND module_id=".intval($module['id'])." AND test_type='post' LIMIT 1"
+    ) : false;
+
+    if (!$postTestDone) {
+        header("Location: /arise/?p=pre_test&module=".urlencode($moduleSlug)."&type=post&cert=1");
+        exit;
+    }
+}
+
 // 4. Get certificate record — use URL params if provided (admin print)
 $urlCert = isset($_GET['cert']) ? urldecode($_GET['cert']) : null;
 $urlDate = isset($_GET['date']) ? urldecode($_GET['date']) : null;

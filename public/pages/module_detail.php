@@ -1,4 +1,10 @@
 <?php
+// Schema migrations for M&E gates (safe, idempotent)
+foreach ([
+    "ALTER TABLE modules ADD COLUMN require_pretest INTEGER DEFAULT 1",
+    "ALTER TABLE modules ADD COLUMN require_posttest INTEGER DEFAULT 1",
+] as $sql) { try { db()->exec($sql); } catch(Exception $e) {} }
+
 $slug = $_GET['slug'] ?? '';
 $module = getModule($slug);
 
@@ -507,6 +513,19 @@ $interactiveCount = $counts['interactive'];
     <!-- Lessons -->
     <?php if ($totalLessons > 0): ?>
 
+    <?php if ($hasQuestions && !$_pretestDone && ($module['require_pretest'] ?? 1)): ?>
+    <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:12px;align-items:center;justify-content:space-between;">
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span style="font-size:1.3rem;">🔒</span>
+        <div>
+          <strong style="color:#92400e;">Lessons Locked</strong>
+          <div style="color:#8b5cf6;font-size:.8rem;">Complete the pre-test above to unlock</div>
+        </div>
+      </div>
+      <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=pre" style="background:#fcd34d;color:#92400e;padding:6px 12px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap;">Start Pre-Test →</a>
+    </div>
+    <?php endif; ?>
+
     <div class="section-header">
         <div class="section-title">
             &#128214; Lessons
@@ -522,8 +541,14 @@ $interactiveCount = $counts['interactive'];
         $desc = $lesson['content']
             ? e(substr(strip_tags($lesson['content']),0,80)).(strlen(strip_tags($lesson['content']))>80?'…':'')
             : ($type === 'interactive' ? 'Slides · questions · instant score' : ($type === 'video' ? 'Watch offline anytime' : 'Read at your own pace'));
+
+        // M&E Gate: Lock lesson if pre-test required but not done
+        $lessonLocked = $hasQuestions && !$_pretestDone && ($module['require_pretest'] ?? 1);
+        $lessonHref = $lessonLocked
+            ? "/arise/?p=pre_test&module=".e($module['slug'])."&type=pre"
+            : "/arise/?p=lesson&slug=".e($lesson['slug']);
     ?>
-    <a href="/arise/?p=lesson&slug=<?= e($lesson['slug']) ?>" class="lc">
+    <a href="<?= $lessonHref ?>" class="lc" style="<?= $lessonLocked ? 'opacity:0.6;' : '' ?>" title="<?= $lessonLocked ? '🔒 Take the pre-test first to unlock' : '' ?>">
         <div class="lc-inner">
             <!-- stripe -->
             <div class="lc-stripe" style="background:<?= $info['grad'] ?>;"></div>
@@ -563,6 +588,15 @@ $interactiveCount = $counts['interactive'];
                 <div class="lc-arrow" style="background:<?= $info['grad'] ?>;box-shadow:0 4px 14px <?= $info['glow'] ?>;">→</div>
                 <?php endif; ?>
             </div>
+
+            <!-- Lock Overlay -->
+            <?php if ($lessonLocked): ?>
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);border-radius:12px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
+              <div style="background:#fff;color:#92400e;padding:12px 16px;border-radius:8px;font-weight:700;font-size:.95rem;text-align:center;">
+                🔒<br>Locked
+              </div>
+            </div>
+            <?php endif; ?>
         </div>
     </a>
     <?php endforeach; ?>
