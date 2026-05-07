@@ -565,8 +565,34 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                 <div id="cloudResult"></div>
             </div>
 
+            <div class="card">
+                <h3>⏰ Auto-Sync Schedule</h3>
+                <p style="font-size:.9rem; color:#6b7280; margin-bottom:12px;">Automatically sync to cloud every 2 weeks when phone has internet.</p>
+
+                <div class="form-group">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:normal;">
+                        <input type="checkbox" id="autoSyncEnabled" style="width:18px;height:18px;cursor:pointer;">
+                        <span>Enable Auto-Sync (every 14 days)</span>
+                    </label>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Last Auto-Sync</span>
+                    <span class="stat-value" id="lastAutoSync">Never</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Next Auto-Sync</span>
+                    <span class="stat-value" id="nextAutoSync">-</span>
+                </div>
+
+                <div class="button-group" style="margin-top:16px;">
+                    <button class="btn btn-primary" onclick="saveAutoSyncSettings()">💾 Save Auto-Sync</button>
+                </div>
+                <div id="autoSyncResult"></div>
+            </div>
+
             <div class="info-box">
-                💡 <strong>For Gmail:</strong> Use an "App Password" not your regular password. <a href="https://support.google.com/accounts/answer/185833" target="_blank">Generate one here</a>.
+                💡 <strong>How it works:</strong> When enabled, your phone will automatically upload data to cloud every 14 days (whenever it has internet). Results logged below.
             </div>
         </div>
 
@@ -895,13 +921,105 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             }
         }
 
+        // Auto-Sync Management
+        function loadAutoSyncSettings() {
+            const enabled = localStorage.getItem('autoSyncEnabled') === 'true';
+            const lastSync = localStorage.getItem('lastAutoSync');
+            document.getElementById('autoSyncEnabled').checked = enabled;
+            if (lastSync) {
+                document.getElementById('lastAutoSync').textContent = new Date(lastSync).toLocaleDateString();
+            }
+            updateNextSyncDate();
+        }
+
+        function updateNextSyncDate() {
+            const lastSync = localStorage.getItem('lastAutoSync');
+            const enabled = document.getElementById('autoSyncEnabled').checked;
+            const el = document.getElementById('nextAutoSync');
+
+            if (!enabled) {
+                el.textContent = 'Disabled';
+                return;
+            }
+
+            if (!lastSync) {
+                el.textContent = 'Next time online';
+                return;
+            }
+
+            const last = new Date(lastSync);
+            const next = new Date(last.getTime() + 14 * 24 * 60 * 60 * 1000);
+            const daysLeft = Math.max(0, Math.ceil((next - new Date()) / (1000 * 60 * 60 * 24)));
+
+            if (daysLeft === 0) {
+                el.textContent = 'Due now';
+            } else if (daysLeft === 1) {
+                el.textContent = 'Tomorrow';
+            } else {
+                el.textContent = 'In ' + daysLeft + ' days';
+            }
+        }
+
+        async function saveAutoSyncSettings() {
+            const btn = event.target;
+            const enabled = document.getElementById('autoSyncEnabled').checked;
+
+            localStorage.setItem('autoSyncEnabled', enabled);
+            showResult('autoSyncResult', enabled ? '✅ Auto-sync enabled (every 14 days)' : '✅ Auto-sync disabled', false);
+            updateNextSyncDate();
+            log(enabled ? '✅ Auto-sync enabled' : '✅ Auto-sync disabled', 'success');
+
+            // If enabled and it's time, do sync now
+            if (enabled && shouldAutoSync()) {
+                setTimeout(() => {
+                    log('⏰ Auto-sync time reached - syncing now...', 'info');
+                    cloudSync();
+                }, 1000);
+            }
+        }
+
+        function shouldAutoSync() {
+            const enabled = localStorage.getItem('autoSyncEnabled') === 'true';
+            if (!enabled) return false;
+
+            const lastSync = localStorage.getItem('lastAutoSync');
+            if (!lastSync) return true; // First time
+
+            const last = new Date(lastSync);
+            const daysPassed = (new Date() - last) / (1000 * 60 * 60 * 24);
+            return daysPassed >= 14;
+        }
+
+        function recordAutoSync() {
+            const now = new Date().toISOString();
+            localStorage.setItem('lastAutoSync', now);
+            updateNextSyncDate();
+        }
+
+        // Enhance cloudSync to record auto-sync if enabled
+        const originalCloudSync = cloudSync;
+        async function cloudSyncWithAutoRecord() {
+            const wasAutoSyncTime = shouldAutoSync();
+            await originalCloudSync();
+            if (wasAutoSyncTime && localStorage.getItem('autoSyncEnabled') === 'true') {
+                recordAutoSync();
+            }
+        }
+
         // Initialize
         window.addEventListener('online', updateConnectionStatus);
         window.addEventListener('offline', updateConnectionStatus);
 
         document.addEventListener('DOMContentLoaded', function() {
             updateConnectionStatus();
+            loadAutoSyncSettings();
             log('✅ DataPost ready', 'success');
+
+            // Auto-sync on page load if conditions met
+            if (shouldAutoSync() && navigator.onLine && localStorage.getItem('autoSyncEnabled') === 'true') {
+                log('⏰ Auto-sync triggered', 'info');
+                setTimeout(() => cloudSyncWithAutoRecord(), 2000);
+            }
 
             // Register service worker
             if ('serviceWorker' in navigator) {
