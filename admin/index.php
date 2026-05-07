@@ -19,6 +19,10 @@ if ($_api_page === 'api_toggle_content') {
     include __DIR__.'/pages/api_toggle_content.php';
     exit;
 }
+if ($_api_page === 'datapost' && isset($_GET['action'])) {
+    include __DIR__.'/pages/datapost.php';
+    exit;
+}
 
 $isLoggedIn = isset($_SESSION['arise_admin_id']);
 $page = $_GET['p'] ?? '';
@@ -270,7 +274,7 @@ function canSee($perm) {
 <div class="topbar">
     <div class="topbar-title">
         <?php
-        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','teacher_content_publish'=>'Publish Content','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
+        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','teacher_content_publish'=>'Publish Content','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','datapost'=>'DataPost & Sync','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
         echo htmlspecialchars($pageLabels[$page] ?? ucfirst($page));
         ?>
     </div>
@@ -1097,6 +1101,9 @@ elseif ($page === 'recycle'):
 
 elseif ($page === 'facilitator'):
     include __DIR__.'/pages/admin_facilitator.php';
+
+elseif ($page === 'datapost'):
+    include __DIR__.'/pages/datapost.php';
 
 elseif ($page === 'facilitator_report'):
     // ── Session Summary / Printable Report ───────────────────────────────────
