@@ -13,8 +13,12 @@ RewriteCond %{REQUEST_URI} !^/arise/index\.php
 RewriteRule ^(.*)$ index.php?p=$1 [QSA,L]
 </IfModule>
 
-# Security headers
-<FilesMatch "\.(db|sqlite|json|txt)$">
+# Security headers - block sensitive files but allow manifest.json for PWA
+<FilesMatch "\.(db|sqlite|txt)$">
     Order deny,allow
     Deny from all
+</FilesMatch>
+<FilesMatch "manifest\.json$">
+    Order deny,allow
+    Allow from all
 </FilesMatch>
