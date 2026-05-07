@@ -13,6 +13,13 @@ require_once dirname(__DIR__) . '/includes/config.php';
 
 session_start();
 
+// ── Early intercept for API endpoints ──
+$_api_page = $_GET['p'] ?? '';
+if ($_api_page === 'api_toggle_content') {
+    include __DIR__.'/pages/api_toggle_content.php';
+    exit;
+}
+
 $isLoggedIn = isset($_SESSION['arise_admin_id']);
 $page = $_GET['p'] ?? '';
 if (!$page) {

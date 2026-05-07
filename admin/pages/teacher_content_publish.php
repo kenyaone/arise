@@ -178,7 +178,7 @@ document.querySelectorAll('.lesson-toggle').forEach(btn => {
     btn.disabled = true;
     btn.textContent = 'Processing...';
 
-    fetch('/arise/admin/teacher_content_publish', { method: 'POST', body: formData })
+    fetch('/arise/admin/api_toggle_content', { method: 'POST', body: formData })
       .then(r => r.json())
       .then(d => {
         if (d.status === 'ok') {
@@ -226,7 +226,7 @@ document.querySelectorAll('.quiz-toggle').forEach(btn => {
     btn.disabled = true;
     btn.textContent = 'Processing...';
 
-    fetch('/arise/admin/teacher_content_publish', { method: 'POST', body: formData })
+    fetch('/arise/admin/api_toggle_content', { method: 'POST', body: formData })
       .then(r => r.json())
       .then(d => {
         if (d.status === 'ok') {
