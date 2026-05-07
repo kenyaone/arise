@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_login'])) {
             $pr = db()->query("SELECT permission FROM admin_permissions WHERE user_id=".$row['id']);
             while ($p = $pr->fetchArray(SQLITE3_ASSOC)) $perms[] = $p['permission'];
             $_SESSION['arise_permissions'] = $perms;
-            header('Location: /arise/admin/?p=dashboard');
+            header('Location: /arise/admin/dashboard');
             exit;
         } else {
             $error = 'Invalid admin credentials.';
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['teacher_login'])) {
                 $stmt->bindValue(':id', $teacher['id']);
                 $stmt->execute();
             }
-            header('Location: /arise/admin/?p=dashboard');
+            header('Location: /arise/admin/dashboard');
             exit;
         } else {
             $error = 'Invalid teacher credentials.';

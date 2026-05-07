@@ -14,7 +14,10 @@ require_once dirname(__DIR__) . '/includes/config.php';
 session_start();
 
 $isLoggedIn = isset($_SESSION['arise_admin_id']);
-$page = $_GET['p'] ?? ($isLoggedIn ? 'dashboard' : 'login');
+$page = $_GET['p'] ?? '';
+if (!$page) {
+    $page = $isLoggedIn ? 'dashboard' : 'login';
+}
 
 // Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
@@ -29,12 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $pr = db()->query("SELECT permission FROM admin_permissions WHERE user_id=".$row['id']);
         while ($p = $pr->fetchArray(SQLITE3_ASSOC)) $perms[] = $p['permission'];
         $_SESSION['arise_permissions'] = $perms;
-        header('Location: ?p=dashboard'); exit;
+        header('Location: /arise/admin/dashboard'); exit;
     } else { $loginError = 'Invalid username or password.'; }
 }
 
-if (isset($_GET['logout'])) { session_destroy(); header('Location: ?p=login'); exit; }
-if (!$isLoggedIn && $page !== 'login') { header('Location: ?p=login'); exit; }
+if (isset($_GET['logout'])) { session_destroy(); header('Location: /arise/login'); exit; }
+if (!$isLoggedIn && $page !== 'login') { header('Location: /arise/login'); exit; }
 
 function showMsg(string $m): string {
     if (!$m) return '';

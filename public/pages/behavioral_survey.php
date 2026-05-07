@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         $st->bindValue(':q3d',  $q3d,        SQLITE3_TEXT);
         $st->execute();
 
-        header('Location: /arise/?p=module&slug=' . urlencode($moduleSlug));
+        header('Location: /arise/module&slug=' . urlencode($moduleSlug));
         exit;
     }
     // Validation failed — fall through to show form with error

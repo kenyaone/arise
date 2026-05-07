@@ -20,7 +20,7 @@ $scorePct   = intval($_GET['score'] ?? 0);
 $module     = getModule($moduleSlug);
 
 if (!$module || $scorePct < 60) {
-    header('Location: /arise/?p=modules');
+    header('Location: /arise/modules');
     exit;
 }
 
@@ -33,7 +33,7 @@ if ($student && $module && ($module['require_posttest'] ?? 1)) {
     ) : false;
 
     if (!$postTestDone) {
-        header("Location: /arise/?p=pre_test&module=".urlencode($moduleSlug)."&type=post&cert=1");
+        header("Location: /arise/pre_test&module=".urlencode($moduleSlug)."&type=post&cert=1");
         exit;
     }
 }

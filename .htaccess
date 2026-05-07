@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /arise/
+
+# Don't rewrite existing files or directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all requests to index.php with path as 'p' parameter
+RewriteRule ^(?!index\.php)(.*)$ index.php?p=$1 [QSA,L]
+</IfModule>
+
+# Security headers
+<FilesMatch "\.(db|sqlite|json|txt)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>

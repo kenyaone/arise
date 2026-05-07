@@ -52,7 +52,7 @@ trackSession();
 try { runAutoBackup(); } catch (Exception $e) {}
 
 $modules = getModules();
-$page = $_GET['p'] ?? 'home';
+$page = $_GET['p'] ?? '';
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -60,11 +60,27 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 if (isset($_GET['logout'])) {
     unset($_SESSION['arise_student_id']);
     session_destroy();
-    header('Location: /arise/');
+    header('Location: /arise/login');
     exit;
 }
 
 $student = getStudentBySession();
+
+// Redirect to login if not logged in and page requires login
+if (!$student && !in_array($page, ['login', 'register', '', 'datapost', 'donor_report'])) {
+    header('Location: /arise/login');
+    exit;
+}
+
+// Redirect root to login or home based on login status
+if ($page === '') {
+    if ($student) {
+        $page = 'home';
+    } else {
+        header('Location: /arise/login');
+        exit;
+    }
+}
 $studentName = $student ? $student['full_name'] : null;
 if ($student) {
     $stmt = db()->prepare('UPDATE students SET last_seen=CURRENT_TIMESTAMP WHERE id=:id');

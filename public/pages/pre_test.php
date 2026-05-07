@@ -86,13 +86,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
             }
         }
         // Redirect to certificate
-        header("Location: /arise/?p=certificate&module=".urlencode($moduleSlug)."&score=$pct");
+        header("Location: /arise/certificate&module=".urlencode($moduleSlug)."&score=$pct");
         exit;
     }
 
     // Auto-redirect to survey after post-test if score < 60 (collect qualitative data)
     if ($testType === 'post' && $pct < 60) {
-        header("Location: /arise/?p=survey&module=".urlencode($moduleSlug)."&from=post_test");
+        header("Location: /arise/survey&module=".urlencode($moduleSlug)."&from=post_test");
         exit;
     }
 
