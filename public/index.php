@@ -5,11 +5,7 @@ require_once __DIR__ . '/pages/lang.php';
 
 // ── Early intercept for pages that output their own full HTML ──
 $_early_page = $_GET['p'] ?? '';
-if ($_early_page === 'datapost') {
-    include __DIR__.'/pages/datapost.php';
-    exit;
-}
-if ($_early_page === 'pwa_datapost') {
+if ($_early_page === 'datapost' || $_early_page === 'pwa_datapost') {
     include __DIR__.'/pages/pwa_datapost.php';
     exit;
 }
