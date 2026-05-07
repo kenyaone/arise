@@ -1,28 +1,23 @@
 const CACHE_VERSION = 'arise-datapost-v2';
-const CACHE_FILES = [
-  '/arise/?p=datapost',
-  '/arise/pwa_datapost',
-  '/arise/css/style.css',
-  '/arise/js/app.js',
-  '/arise/pwa_manifest.json'
-];
 
-// Install service worker
+// Install service worker - cache on first load
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_VERSION).then((cache) => {
-      return cache.addAll(CACHE_FILES).catch(() => {
-        // Add files individually if batch fails
-        CACHE_FILES.forEach(file => {
-          cache.add(file).catch(() => {});
-        });
-      });
+      // Try to cache main pages
+      Promise.all([
+        cache.add('/arise/?p=datapost').catch(() => {}),
+        cache.add('/arise/pwa_datapost').catch(() => {}),
+        cache.add('/arise/css/style.css').catch(() => {}),
+        cache.add('/arise/js/app.js').catch(() => {}),
+      ]);
+      return cache;
     })
   );
   self.skipWaiting();
 });
 
-// Activate service worker
+// Activate - clean old caches
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -38,24 +33,45 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Fetch event - network first, cache fallback
+// Fetch - CACHE FIRST for DataPost, network-first for others
 self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+  
+  // For DataPost pages - use CACHE FIRST strategy
+  if (url.pathname === '/arise/' && url.searchParams.get('p') === 'datapost') {
+    e.respondWith(
+      caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        
+        return fetch(e.request).then((response) => {
+          if (response.ok) {
+            caches.open(CACHE_VERSION).then((cache) => {
+              cache.put(e.request, response.clone());
+            });
+          }
+          return response;
+        }).catch((err) => {
+          return caches.match('/arise/?p=datapost') || 
+                 new Response('Offline - page not cached', { status: 503 });
+        });
+      })
+    );
+    return;
+  }
+  
+  // For other GET requests - network first
   if (e.request.method === 'GET') {
     e.respondWith(
       fetch(e.request).then((response) => {
         if (response.ok) {
-          const cache = caches.open(CACHE_VERSION);
-          cache.then((c) => c.put(e.request, response.clone()));
+          caches.open(CACHE_VERSION).then((cache) => {
+            cache.put(e.request, response.clone());
+          });
         }
         return response;
       }).catch(() => {
-        return caches.match(e.request).then((response) => {
-          return response || caches.match('/arise/?p=datapost').then((fallback) => {
-            return fallback || new Response('Offline - DataPost cached page not available', {
-              status: 503,
-              statusText: 'Service Unavailable'
-            });
-          });
+        return caches.match(e.request).catch(() => {
+          return new Response('Offline', { status: 503 });
         });
       })
     );
