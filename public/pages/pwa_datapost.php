@@ -215,6 +215,25 @@ if ($action === 'cloud_sync') {
     exit;
 }
 
+if ($action === 'cloud_sync_prepare') {
+    header('Content-Type: application/json');
+    $schoolRows = [];
+    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $sn  = $row['school_name'];
+        $sne = SQLite3::escapeString($sn);
+        $schoolRows[] = [
+            'school_name'    => $sn,
+            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
+            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
+            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
+            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+        ];
+    }
+    echo json_encode(['status'=>'ok','schools'=>$schoolRows]);
+    exit;
+}
+
 // HTML Response ───────────────────────────────────────────────────────────────
 header('Content-Type: text/html; charset=utf-8');
 $lastSync = db()->querySingle("SELECT sync_timestamp, data_snapshot FROM datapost_sync_log ORDER BY id DESC LIMIT 1", true);
@@ -442,6 +461,11 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             .btn { min-width: auto; }
         }
     </style>
+    <script>
+        window.ARISE_SCHOOL_ID = '<?= addslashes($cfg['school_id'] ?? '') ?>';
+        window.ARISE_SCHOOL_NAME = '<?= addslashes($cfg['school_name'] ?? '') ?>';
+    </script>
+    <script src="/arise/js/arise-sync.js" defer></script>
 </head>
 <body>
     <!-- PWA INSTALL BANNER -->
@@ -512,6 +536,26 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                 </div>
                 <div class="button-group">
                     <button class="btn btn-primary" onclick="doSync()">🔄 Sync Now</button>
+                </div>
+            </div>
+
+            <div class="card" id="queueStatusCard" style="display:none;">
+                <h3>📤 Cloud Sync Queue</h3>
+                <div class="stat-row">
+                    <span class="stat-label">Pending</span>
+                    <span class="stat-value" id="queuePending">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Failed</span>
+                    <span class="stat-value" id="queueFailed">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Last Cloud Sent</span>
+                    <span class="stat-value" id="queueLastSent">-</span>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="processQueueNow()" id="sendNowBtn">📤 Send Now</button>
+                    <button class="btn btn-secondary" onclick="retryFailedNow()" id="retryBtn" style="display:none;">🔁 Retry Failed</button>
                 </div>
             </div>
 
@@ -707,6 +751,21 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                     updateStats(data.summary);
                     showResult('syncResult', `✅ Synced at ${data.timestamp}`, false);
                     log('✅ Local data synced', 'success');
+
+                    // Queue for cloud sync via IndexedDB
+                    try {
+                        const schoolRes = await fetch('/arise/?p=datapost&action=cloud_sync_prepare', { method: 'POST' });
+                        const schoolData = await schoolRes.json();
+                        if (schoolData.schools) {
+                            if (window.AriseSyncManager && window.AriseSyncManager.queueAndSend) {
+                                await window.AriseSyncManager.queueAndSend(data.summary, schoolData.schools);
+                                log('📱 Data queued for cloud sync', 'info');
+                                if (typeof refreshQueueUI === 'function') refreshQueueUI();
+                            }
+                        }
+                    } catch (qe) {
+                        console.warn('Could not queue for cloud:', qe);
+                    }
                 } else {
                     showResult('syncResult', '❌ Sync failed', true);
                     log('❌ Sync failed', 'error');
@@ -850,7 +909,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
                 let res;
                 try {
-                    res = await fetch('/arise/admin/?p=datapost&action=cloud_sync', {
+                    res = await fetch('/arise/?p=datapost&action=cloud_sync', {
                         method: 'POST',
                         headers: { 'X-Requested-With': 'XMLHttpRequest' },
                         signal: controller.signal
@@ -929,6 +988,77 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             if (logEl.children.length > 20) {
                 logEl.removeChild(logEl.lastChild);
             }
+        }
+
+        // Queue Status UI
+        async function refreshQueueUI() {
+            if (!window.AriseSyncManager) return;
+
+            try {
+                const stats = await window.AriseSyncManager.getQueueStats();
+                const card = document.getElementById('queueStatusCard');
+                const pending = stats.pending || 0;
+                const failed = stats.failed || 0;
+
+                document.getElementById('queuePending').textContent = pending;
+                document.getElementById('queueFailed').textContent = failed;
+
+                if (stats.lastSent) {
+                    const lastDate = new Date(stats.lastSent);
+                    document.getElementById('queueLastSent').textContent = lastDate.toLocaleString();
+                } else {
+                    document.getElementById('queueLastSent').textContent = 'Never';
+                }
+
+                // Show card if there are pending or failed syncs
+                if (pending > 0 || failed > 0) {
+                    card.style.display = 'block';
+                    document.getElementById('sendNowBtn').style.display = pending > 0 ? 'block' : 'none';
+                    document.getElementById('retryBtn').style.display = failed > 0 ? 'block' : 'none';
+                } else {
+                    card.style.display = 'none';
+                }
+            } catch (e) {
+                console.warn('Error refreshing queue UI:', e);
+            }
+        }
+
+        async function processQueueNow() {
+            if (!window.AriseSyncManager) return;
+
+            const btn = document.getElementById('sendNowBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Sending...';
+
+            try {
+                await window.AriseSyncManager.processQueue();
+                log('📤 Queue processed', 'success');
+                refreshQueueUI();
+            } catch (e) {
+                log('❌ Queue process error: ' + e.message, 'error');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '📤 Send Now';
+        }
+
+        async function retryFailedNow() {
+            if (!window.AriseSyncManager) return;
+
+            const btn = document.getElementById('retryBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Retrying...';
+
+            try {
+                await window.AriseSyncManager.retryFailed();
+                log('🔁 Failed syncs retried', 'success');
+                refreshQueueUI();
+            } catch (e) {
+                log('❌ Retry error: ' + e.message, 'error');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🔁 Retry Failed';
         }
 
         // Auto-Sync Management
@@ -1057,6 +1187,12 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             loadAutoSyncSettings();
             log('✅ DataPost ready', 'success');
 
+            // Wire up queue UI refresh and set up AriseSyncManager
+            if (window.AriseSyncManager) {
+                window.AriseSyncManager.refreshQueueUI = refreshQueueUI;
+                refreshQueueUI();
+            }
+
             // Auto-sync on page load if conditions met
             if (shouldAutoSync() && navigator.onLine && localStorage.getItem('autoSyncEnabled') === 'true') {
                 log('⏰ Auto-sync triggered', 'info');
@@ -1065,7 +1201,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
             // Register service worker
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/arise/sw_pwa.js').catch(() => {});
+                navigator.serviceWorker.register('/arise/sw.js').catch(() => {});
             }
         });
     </script>

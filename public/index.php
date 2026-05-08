@@ -103,6 +103,7 @@ if ($student) {
         navigator.serviceWorker.register('/arise/js/sw.js').catch(function(){});
       }
     </script>
+    <script src="/arise/js/arise-sync.js" defer></script>
 </head>
 <body>
 <?php $logoUrl = getLogoUrl(); ?>
