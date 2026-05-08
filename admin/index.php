@@ -50,6 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 if (isset($_GET['logout'])) { session_destroy(); header('Location: /arise/login'); exit; }
 if (!$isLoggedIn && $page !== 'login') { header('Location: /arise/login'); exit; }
 
+// Prevent caching of authenticated pages
+if ($isLoggedIn) {
+    header('Cache-Control: no-cache, no-store, must-revalidate, private');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+}
+
 function showMsg(string $m): string {
     if (!$m) return '';
     $cls = str_starts_with($m,'✅') ? 'alert-success' : 'alert-danger';
@@ -231,6 +238,7 @@ function canSee($perm) {
         .progress-wrap .label{font-size:.82rem;color:#6b7280;margin-top:6px;text-align:center;}
         .admin-body{padding:0;}
     </style>
+    <script src="/arise/js/session-guard.js"></script>
 </head>
 <body>
 

@@ -66,6 +66,13 @@ if (isset($_GET['logout'])) {
 
 $student = getStudentBySession();
 
+// Prevent caching of authenticated pages
+if ($student || !empty($_SESSION['arise_admin_id'])) {
+    header('Cache-Control: no-cache, no-store, must-revalidate, private');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+}
+
 // Redirect to login if not logged in and page requires login
 if (!$student && !in_array($page, ['login', 'register', '', 'datapost', 'donor_report'])) {
     header('Location: /arise/login');
@@ -104,6 +111,7 @@ if ($student) {
       }
     </script>
     <script src="/arise/js/arise-sync.js" defer></script>
+    <script src="/arise/js/session-guard.js"></script>
 </head>
 <body>
 <?php $logoUrl = getLogoUrl(); ?>
