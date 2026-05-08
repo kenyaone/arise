@@ -177,6 +177,31 @@ $essayQuestions = array_values($essayQuestions);
     color: var(--mid);
     margin-left: 5px;
 }
+.quiz-options label {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+.quiz-options label:hover {
+    border-color: var(--primary);
+    background: rgba(108, 92, 231, 0.04);
+}
+.quiz-options input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.quiz-options input[type="checkbox"]:checked + span {
+    font-weight: 600;
+}
 </style>
 
 <script>
@@ -210,6 +235,7 @@ let currentQ = 0;
 let mcqAnswers = {};
 let essayAnswers = {};
 
+function parseCorrectAnswers(str) { return str ? str.toUpperCase().split(/[,\s]+/).filter(x => x) : []; }
 function countWords(t) { return t.trim().split(/\s+/).filter(w => w.length > 0).length; }
 
 function renderQuestion() {
@@ -220,12 +246,21 @@ function renderQuestion() {
     let html = `<div class="quiz-counter">Question ${currentQ + 1} of ${total}</div>`;
 
     if (q.type === 'mcq') {
-        html += `<span class="q-type-badge badge-mcq">Multiple Choice</span>
+        const correctAnswers = parseCorrectAnswers(q.correct);
+        const selectedAnswers = mcqAnswers[q.id] || [];
+        const isMultiSelect = correctAnswers.length > 1;
+
+        html += `<span class="q-type-badge badge-mcq">${isMultiSelect ? '✓ Select All That Apply' : 'Multiple Choice'}</span>
             <span class="marks-badge">${q.max_marks} mark${q.max_marks > 1 ? 's' : ''}</span>
             <div class="quiz-question">${q.question}</div><div class="quiz-options">`;
+
         ['A','B','C','D'].forEach(opt => {
-            const sel = mcqAnswers[q.id] === opt ? 'selected' : '';
-            html += `<button class="quiz-option ${sel}" onclick="selectMCQ(${q.id},'${opt}')">${opt}. ${q.options[opt]}</button>`;
+            const isSelected = selectedAnswers.includes(opt);
+            const checkboxId = `checkbox-${q.id}-${opt}`;
+            html += `<label style="display:flex;align-items:center;padding:12px;margin-bottom:8px;border:2px solid ${isSelected?'var(--primary)':'var(--border)'};border-radius:8px;cursor:pointer;background:${isSelected?'rgba(108,92,231,0.08)':'transparent'};transition:all 0.2s;">
+                <input type="checkbox" id="${checkboxId}" style="width:18px;height:18px;cursor:pointer;margin-right:10px;" ${isSelected?'checked':''} onchange="toggleMCQ(${q.id},'${opt}')">
+                <span style="flex:1;cursor:pointer;">${opt}. ${q.options[opt]}</span>
+            </label>`;
         });
         html += `</div>`;
     } else {
@@ -251,7 +286,13 @@ function renderQuestion() {
     document.getElementById('quiz-area').innerHTML = html;
 }
 
-function selectMCQ(id, opt) { mcqAnswers[id] = opt; renderQuestion(); }
+function toggleMCQ(id, opt) {
+    if (!mcqAnswers[id]) mcqAnswers[id] = [];
+    const idx = mcqAnswers[id].indexOf(opt);
+    if (idx >= 0) mcqAnswers[id].splice(idx, 1);
+    else mcqAnswers[id].push(opt);
+    renderQuestion();
+}
 function updateEssay(id, text) {
     essayAnswers[id] = text;
     const q = allQuestions.find(x => x.id === id);
@@ -262,9 +303,21 @@ function updateEssay(id, text) {
 function nextQ() { if (currentQ < allQuestions.length-1) { currentQ++; renderQuestion(); } }
 function prevQ() { if (currentQ > 0) { currentQ--; renderQuestion(); } }
 
+function isAnswerCorrect(selected, correctStr) {
+    const correctSet = new Set(parseCorrectAnswers(correctStr));
+    const selectedSet = new Set(selected || []);
+    if (correctSet.size === 0) return false;
+    if (correctSet.size !== selectedSet.size) return false;
+    for (let ans of correctSet) if (!selectedSet.has(ans)) return false;
+    return true;
+}
+
 function submitQuiz() {
     let mcqScore = 0, mcqTotal = 0;
-    mcqData.forEach(q => { mcqTotal += q.max_marks; if (mcqAnswers[q.id]===q.correct) mcqScore += q.max_marks; });
+    mcqData.forEach(q => {
+        mcqTotal += q.max_marks;
+        if (isAnswerCorrect(mcqAnswers[q.id], q.correct)) mcqScore += q.max_marks;
+    });
     const mcqPct = mcqTotal > 0 ? Math.round((mcqScore/mcqTotal)*100) : 0;
 
     document.getElementById('progress-bar').style.width = '100%';
@@ -288,13 +341,19 @@ function submitQuiz() {
             </div>`;
         }
 
-        html += `<h3 style="margin:20px 0 15px;">📝 MCQ Review</h3>`;
+        html += `<h3 style="margin:20px 0 15px;">📝 Quiz Review</h3>`;
         mcqData.forEach((q,i) => {
-            const ua = mcqAnswers[q.id]||'Not answered', ok = mcqAnswers[q.id]===q.correct;
-            html += `<div style="margin-bottom:12px;padding:15px;background:${ok?'#E6FFF5':'#FFF0ED'};border-radius:var(--radius);">
+            const selected = mcqAnswers[q.id] || [];
+            const correct = parseCorrectAnswers(q.correct);
+            const isCorrect = isAnswerCorrect(selected, q.correct);
+            const correctStr = correct.length > 0 ? correct.join(', ') : 'None';
+            const selectedStr = selected.length > 0 ? selected.join(', ') : 'Not answered';
+            const selectedDisplay = selected.map(opt => `${opt}. ${q.options[opt]}`).join(' • ') || '—';
+
+            html += `<div style="margin-bottom:12px;padding:15px;background:${isCorrect?'#E6FFF5':'#FFF0ED'};border-radius:var(--radius);">
                 <div style="font-weight:600;margin-bottom:5px;">${i+1}. ${q.question}</div>
-                <div style="font-size:0.9rem;">Your answer: <strong>${ua}. ${q.options[ua]||'—'}</strong></div>
-                ${!ok?`<div style="font-size:0.9rem;color:var(--success);">Correct: <strong>${q.correct}. ${q.options[q.correct]}</strong></div>`:''}
+                <div style="font-size:0.9rem;margin-bottom:4px;">Your answer${selected.length>1?'s':''}: <strong>${selectedDisplay}</strong></div>
+                ${!isCorrect?`<div style="font-size:0.9rem;color:var(--success);margin-bottom:4px;">Correct answer${correct.length>1?'s':''}: <strong>${correct.map(o => `${o}. ${q.options[o]}`).join(' • ')}</strong></div>`:''}
                 ${q.explanation?`<div class="quiz-explanation">${q.explanation}</div>`:''}
             </div>`;
         });
@@ -326,9 +385,9 @@ function submitQuiz() {
     if (mcqData.length > 0) {
         const answersJson = JSON.stringify(mcqData.map(q => ({
             question_id: q.id,
-            chosen: mcqAnswers[q.id] || '',
+            chosen: (mcqAnswers[q.id] || []).join(','),
             correct: q.correct,
-            is_correct: mcqAnswers[q.id] === q.correct ? 1 : 0
+            is_correct: isAnswerCorrect(mcqAnswers[q.id], q.correct) ? 1 : 0
         })));
         fetch('?p=quiz_submit', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
             body:`module_id=${moduleId}&score=${mcqScore}&total=${mcqTotal}&percentage=${mcqPct}&answers_json=${encodeURIComponent(answersJson)}` })

@@ -29,8 +29,7 @@ if ($moduleId > 0 && $total > 0) {
     foreach ($answers as $a) {
         $qid = intval($a['question_id'] ?? 0);
         $chosen = trim($a['chosen'] ?? '');
-        $correct = trim($a['correct'] ?? '');
-        $isCorrect = ($chosen && $correct && strtolower($chosen)===strtolower($correct)) ? 1 : 0;
+        $isCorrect = intval($a['is_correct'] ?? 0);
         $st2 = db()->prepare('INSERT INTO quiz_answers (attempt_id,question_id,chosen_option,is_correct) VALUES (:ai,:qi,:cho,:ic)');
         $st2->bindValue(':ai',$attemptId);$st2->bindValue(':qi',$qid);$st2->bindValue(':cho',$chosen);$st2->bindValue(':ic',$isCorrect);
         $st2->execute();

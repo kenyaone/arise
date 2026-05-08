@@ -6,12 +6,30 @@ if (!$module) { echo '<div class="container"><div class="alert">Module not found
 
 $hash = getSessionHash();
 
+// Helper functions for multi-select validation
+function parseCorrectAnswers($str) { return $str ? array_map('strtoupper', array_filter(array_map('trim', preg_split('/[,\s]+/', $str)))) : []; }
+function isAnswerCorrect($selected, $correctStr) {
+    $correctSet = array_flip(parseCorrectAnswers($correctStr));
+    if (empty($correctSet)) return false;
+    if (count($selected) !== count($correctSet)) return false;
+    foreach ($selected as $ans) {
+        if (!isset($correctSet[strtoupper($ans)])) return false;
+    }
+    return true;
+}
+
 // Handle POST submission — fetch questions by submitted IDs, not random
 if ($_SERVER['REQUEST_METHOD']==='POST') {
-    // Extract question IDs from POST keys (q123 => 123)
+    // Extract question IDs and their answers
     $qids = [];
+    $answers = [];
     foreach ($_POST as $k => $v) {
-        if (preg_match('/^q(\d+)$/', $k, $m)) $qids[] = intval($m[1]);
+        if (preg_match('/^q(\d+)$/', $k, $m)) {
+            $qid = intval($m[1]);
+            $qids[] = $qid;
+            // Support both single answer (string) and multi-answer (array)
+            $answers[$qid] = is_array($v) ? $v : [$v];
+        }
     }
     if (!$qids) { echo '<div class="container"><div class="alert">No answers submitted.</div></div>'; return; }
 
@@ -24,12 +42,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
     $score = 0; $total = count($qids);
     $answerRows = []; // for per-question tracking
     foreach ($qids as $qid) {
-        $ans = strtolower(trim($_POST['q'.$qid] ?? ''));
+        $ans = $answers[$qid] ?? [];
         $q   = $qMap[$qid] ?? null;
-        $correct = $q ? strtolower($q['correct_option']) : '';
-        $isCorrect = ($q && $ans === $correct) ? 1 : 0;
+        $isCorrect = $q && isAnswerCorrect($ans, $q['correct_option']) ? 1 : 0;
         if ($isCorrect) $score++;
-        $answerRows[] = ['qid'=>$qid,'chosen'=>$ans,'correct'=>$isCorrect];
+        $answerRows[] = ['qid'=>$qid,'chosen'=>implode(',', $ans),'correct'=>$isCorrect];
     }
 
     $pct = $total > 0 ? round($score / $total * 100) : 0;
@@ -117,22 +134,23 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
       <!-- Per-question review -->
       <?php foreach ($qids as $qid):
         $q = $qMap[$qid] ?? null; if (!$q) continue;
-        $chosen = strtolower(trim($_POST['q'.$qid] ?? ''));
-        $correct = strtolower($q['correct_option']);
-        $isRight = ($chosen === $correct);
+        $chosen = $answers[$qid] ?? [];
+        $correctAnswers = parseCorrectAnswers($q['correct_option']);
+        $isRight = isAnswerCorrect($chosen, $q['correct_option']);
         $opts = ['a'=>$q['option_a'],'b'=>$q['option_b'],'c'=>$q['option_c'],'d'=>$q['option_d']];
         $bg = $isRight ? '#f0fdf4' : '#fff7ed';
         $border = $isRight ? '#86efac' : '#fed7aa';
+        $chosenUpper = array_map('strtoupper', $chosen);
       ?>
       <div style="background:<?=$bg?>;border:1px solid <?=$border?>;border-radius:10px;padding:14px;margin-bottom:10px;">
         <div style="font-size:.85rem;font-weight:700;margin-bottom:8px;">
           <?=$isRight?'&#10003;':'&#10007;'?> <?=e($q['question'])?>
         </div>
-        <?php foreach ($opts as $k=>$v): if (!$v) continue; ?>
-          <div style="font-size:.8rem;padding:3px 0;color:<?= ($k===$correct)?'#166534':(($k===$chosen&&!$isRight)?'#991b1b':'#555') ?>;font-weight:<?= ($k===$correct||($k===$chosen&&!$isRight))?'700':'400' ?>;">
-            <?= strtoupper($k) ?>. <?=e($v)?>
-            <?= $k===$correct ? ' &#10003;' : '' ?>
-            <?= ($k===$chosen&&!$isRight) ? ' &larr; your answer' : '' ?>
+        <?php foreach ($opts as $k=>$v): if (!$v) continue; $kUpper = strtoupper($k); $isCorrect = in_array($kUpper, $correctAnswers); $isChosen = in_array($kUpper, $chosenUpper); ?>
+          <div style="font-size:.8rem;padding:3px 0;color:<?= $isCorrect?'#166534':($isChosen&&!$isRight?'#991b1b':'#555') ?>;font-weight:<?= ($isCorrect||($isChosen&&!$isRight))?'700':'400' ?>;">
+            <?= $kUpper ?>. <?=e($v)?>
+            <?= $isCorrect ? ' &#10003;' : '' ?>
+            <?= ($isChosen&&!$isRight) ? ' &larr; your answer' : '' ?>
           </div>
         <?php endforeach; ?>
         <?php if ($q['explanation']): ?>
@@ -235,12 +253,14 @@ $prev = db()->querySingle("SELECT * FROM pretest_attempts WHERE session_hash='".
   <form method="post">
     <?php foreach ($questions as $i => $q):
       $opts = ['a'=>$q['option_a'],'b'=>$q['option_b'],'c'=>$q['option_c'],'d'=>$q['option_d']];
+      $correctAnswers = parseCorrectAnswers($q['correct_option']);
+      $isMultiSelect = count($correctAnswers) > 1;
     ?>
     <div class="test-card">
-      <div class="qr-q"><?=$i+1?>. <?=e($q['question'])?></div>
+      <div class="qr-q"><?=$i+1?>. <?=e($q['question'])?><?=$isMultiSelect?' <span style="font-size:.8rem;color:#666;font-weight:400">(Select all that apply)</span>':''?></div>
       <?php foreach ($opts as $k=>$v): if (!$v) continue; ?>
         <label style="display:flex;align-items:center;gap:8px;padding:7px 0;cursor:pointer;font-size:.85rem">
-          <input type="radio" name="q<?=$q['id']?>" value="<?=$k?>" required style="width:16px;height:16px">
+          <input type="checkbox" name="q<?=$q['id']?>[]" value="<?=$k?>" style="width:16px;height:16px">
           <span><?=strtoupper($k)?>. <?=e($v)?></span>
         </label>
       <?php endforeach; ?>
