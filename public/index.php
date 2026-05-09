@@ -111,7 +111,7 @@ if ($student) {
       }
     </script>
     <script src="/arise/js/arise-sync.js" defer></script>
-    <script src="/arise/js/session-guard.js"></script>
+    <script src="/arise/js/session-guard.js" defer></script>
 </head>
 <body>
 <?php $logoUrl = getLogoUrl(); ?>

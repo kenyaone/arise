@@ -238,7 +238,7 @@ function canSee($perm) {
         .progress-wrap .label{font-size:.82rem;color:#6b7280;margin-top:6px;text-align:center;}
         .admin-body{padding:0;}
     </style>
-    <script src="/arise/js/session-guard.js"></script>
+    <script src="/arise/js/session-guard.js" defer></script>
 </head>
 <body>
 
