@@ -5,7 +5,8 @@
  * Language stored in $_SESSION['arise_lang'] (default 'en')
  */
 
-if (session_status() === PHP_SESSION_NONE) session_start();
+// Session is started by getSessionHash() in trackSession() — do NOT call session_start() here
+// because it would use default path=/ and break the /arise/-scoped session cookie.
 
 function t(string $key): string {
     static $translations = [
