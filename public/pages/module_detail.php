@@ -465,30 +465,42 @@ $interactiveCount = $counts['interactive'];
 
     <?php
     // Knowledge Assessment — pre/post test state
-    $_pretestDone = false; $_postestDone = false;
+    $_pretestDone = false; $_postestDone = false; $_lessonPassed = false;
     if (getStudentId()) {
         $_h = getSessionHash();
-        $_pretestDone = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($_h)."' AND module_id=".intval($module['id'])." AND test_type='pre'");
-        $_postestDone = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($_h)."' AND module_id=".intval($module['id'])." AND test_type='post'");
+        $_mid = intval($module['id']);
+        $_hEsc = SQLite3::escapeString($_h);
+        $_pretestDone  = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='pre'");
+        $_postestDone  = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='post'");
+        // Gate: learner must complete interactive lesson quiz with ≥60% before post-test
+        $_lessonPassed = (bool)db()->querySingle("SELECT id FROM quiz_attempts WHERE module_id=$_mid AND percentage>=60 AND (session_hash='$_hEsc' OR student_id=".intval(getStudentId()).")");
     }
     $hasQuestions = (bool)db()->querySingle("SELECT id FROM quiz_questions WHERE module_id=".intval($module['id'])." AND question_type='mcq' LIMIT 1");
     ?>
 
     <?php if ($hasQuestions): ?>
-    <div style="background:<?= $_pretestDone ? '#f0fdf4' : '#fffbeb' ?>;border:2px solid <?= $_pretestDone ? '#86efac' : '#fcd34d' ?>;border-radius:14px;padding:18px 20px;margin-bottom:20px;">
+    <?php
+        $_bgCol     = $_postestDone ? '#f0fdf4' : ($_lessonPassed ? '#eff6ff' : ($_pretestDone ? '#faf5ff' : '#fffbeb'));
+        $_bdCol     = $_postestDone ? '#86efac' : ($_lessonPassed ? '#93c5fd' : ($_pretestDone ? '#d8b4fe' : '#fcd34d'));
+        $_stepIcon  = $_postestDone ? '&#10003;' : ($_lessonPassed ? '&#128200;' : ($_pretestDone ? '&#127918;' : '&#128203;'));
+        $_stepColor = $_postestDone ? '#166534' : ($_lessonPassed ? '#1d4ed8' : ($_pretestDone ? '#6b21a8' : '#92400e'));
+    ?>
+    <div style="background:<?= $_bgCol ?>;border:2px solid <?= $_bdCol ?>;border-radius:14px;padding:18px 20px;margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-        <span style="font-size:1.5rem;"><?= $_pretestDone ? '&#10003;' : '&#128203;' ?></span>
+        <span style="font-size:1.5rem;"><?= $_stepIcon ?></span>
         <div>
-          <div style="font-weight:700;font-size:.95rem;color:<?= $_pretestDone ? '#166534' : '#92400e' ?>;">
+          <div style="font-weight:700;font-size:.95rem;color:<?= $_stepColor ?>;">
             <?php if (!$_pretestDone): ?>Step 1 of 3 &mdash; Take the Pre-Test First
-            <?php elseif (!$_postestDone): ?>Step 2 of 3 &mdash; Study the Lessons Below
-            <?php else: ?>Assessment Complete
+            <?php elseif (!$_lessonPassed): ?>Step 2 of 3 &mdash; Complete the Interactive Lesson (Score &ge;60%)
+            <?php elseif (!$_postestDone): ?>Step 3 of 3 &mdash; Take the Post-Test
+            <?php else: ?>Assessment Complete &#10003;
             <?php endif; ?>
           </div>
           <div style="font-size:.8rem;color:#6b7280;margin-top:2px;">
             <?php if (!$_pretestDone): ?>Do this before reading the lessons to measure your starting knowledge.
-            <?php elseif (!$_postestDone): ?>Work through all the lessons below, then come back to take the Post-Test.
-            <?php else: ?>You have completed both the pre-test and post-test for this module.
+            <?php elseif (!$_lessonPassed): ?>Open the interactive lesson below, complete all questions and score &ge;60% to unlock the post-test.
+            <?php elseif (!$_postestDone): ?>Great work! You passed the lesson. Now take the Post-Test to measure how much you have learned.
+            <?php else: ?>You have completed the pre-test, interactive lesson, and post-test for this module.
             <?php endif; ?>
           </div>
         </div>
@@ -499,12 +511,12 @@ $interactiveCount = $counts['interactive'];
            style="<?= $_pretestDone ? 'opacity:.7;' : '' ?>">
           &#128203; Pre-Test <?= $_pretestDone ? '&#10003; Done' : '&rarr; Start Here' ?>
         </a>
-        <span style="color:#9ca3af;font-size:.82rem;">then study lessons &darr;</span>
+        <span style="color:#9ca3af;font-size:.82rem;">&#8594; lesson &ge;60% &#8594;</span>
         <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=post"
            class="btn <?= $_postestDone ? 'btn-secondary' : 'btn-primary' ?>"
-           style="<?= !$_pretestDone ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>"
-           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : 'Measure how much you learned' ?>">
-          &#128200; Post-Test <?= $_postestDone ? '&#10003; Done' : ($_pretestDone ? '&rarr; After Lessons' : '') ?>
+           style="<?= (!$_pretestDone || !$_lessonPassed) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>"
+           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : (!$_lessonPassed ? 'Score ≥60% in the interactive lesson first' : 'Measure how much you learned') ?>">
+          &#128200; Post-Test <?= $_postestDone ? '&#10003; Done' : ($_lessonPassed ? '&rarr; Take Now' : '&#128274; Locked') ?>
         </a>
       </div>
     </div>

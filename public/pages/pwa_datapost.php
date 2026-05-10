@@ -177,13 +177,23 @@ if ($action === 'test_email') {
 
 if ($action === 'cloud_sync') {
     header('Content-Type: application/json');
+    // Only sync schools that are currently active in the schools table, with location
     $schoolRows = [];
-    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
+    $result = db()->query("
+        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
+        FROM students st
+        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
+        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
+        ORDER BY st.school_name
+    ");
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $sn  = $row['school_name'];
         $sne = SQLite3::escapeString($sn);
         $schoolRows[] = [
             'school_name'    => $sn,
+            'county'         => $row['county'] ?? '',
+            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
+            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
             'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
             'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
             'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
@@ -217,20 +227,30 @@ if ($action === 'cloud_sync') {
 
 if ($action === 'cloud_sync_prepare') {
     header('Content-Type: application/json');
+    // Only prepare schools that are currently active in the schools table, with location
     $schoolRows = [];
-    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
+    $result = db()->query("
+        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
+        FROM students st
+        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
+        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
+        ORDER BY st.school_name
+    ");
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
         $sn  = $row['school_name'];
         $sne = SQLite3::escapeString($sn);
         $schoolRows[] = [
             'school_name'    => $sn,
+            'county'         => $row['county'] ?? '',
+            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
+            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
             'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
             'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
             'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
             'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
         ];
     }
-    echo json_encode(['status'=>'ok','schools'=>$schoolRows]);
+    echo json_encode(['status'=>'ok','schools'=>$schoolRows,'generated_at'=>date('Y-m-d H:i:s')]);
     exit;
 }
 

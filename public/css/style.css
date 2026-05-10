@@ -281,8 +281,8 @@ label{display:block;font-size:.75rem;font-weight:700;color:var(--muted);margin-b
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr;}}
-@keyframes fadeUp{from{opacity:0;}to{opacity:1;}}
-.dp-card,.module-card,.feature-card{animation:fadeUp .2s ease both;}
+@keyframes fadeUp{from{opacity:.96;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.dp-card,.module-card,.feature-card{animation:fadeUp .15s ease both;}
 @media(max-width:768px){
   .container{padding:20px 14px;} .dp-card{padding:18px;}
   .admin-body{padding:18px 14px;} .hero{padding:52px 16px;}

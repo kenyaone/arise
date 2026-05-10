@@ -3,6 +3,7 @@
  * API endpoint to check if session is still valid
  * Returns JSON with user info or error if not logged in
  */
+require_once __DIR__ . '/../../includes/config.php';
 header('Content-Type: application/json');
 
 if (session_status() === PHP_SESSION_NONE) session_start();

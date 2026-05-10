@@ -121,7 +121,7 @@ $navGroups = [
     ],
     'Content' => [
         ['p'=>'content',    'icon'=>'📚','label'=>'Modules',     'perm'=>'content_view'],
-        ['p'=>'teacher_content_publish','icon'=>'📤','label'=>'Publish Content', 'perm'=>'content_manage'],
+        ['p'=>'teacher_content_publish','icon'=>'📤','label'=>'Publish Content', 'perm'=>'content_manage', 'role'=>'teacher'],
         ['p'=>'quiz',       'icon'=>'🧠','label'=>'Quiz Builder', 'perm'=>'content_manage'],
         ['p'=>'admin_question_difficulty','icon'=>'📊','label'=>'Question Performance', 'perm'=>'dashboard'],
         ['p'=>'challenges', 'icon'=>'💪','label'=>'Challenges',  'perm'=>'content_manage'],
@@ -236,7 +236,7 @@ function canSee($perm) {
         .progress-wrap .bar{height:10px;background:#e5e7eb;border-radius:50px;overflow:hidden;}
         .progress-wrap .fill{height:100%;background:linear-gradient(90deg,#0ea271,#f59e0b);border-radius:50px;width:0%;transition:width .3s;}
         .progress-wrap .label{font-size:.82rem;color:#6b7280;margin-top:6px;text-align:center;}
-        .admin-body{padding:0;}
+        .admin-body{max-width:none!important;width:100%!important;}
     </style>
     <script src="/arise/js/session-guard.js" defer></script>
 </head>
@@ -261,6 +261,7 @@ function canSee($perm) {
         <?php if ($groupLabel): ?><div class="nav-group-label"><?= $groupLabel ?></div><?php endif; ?>
         <?php foreach ($items as $n):
             if (!canSee($n['perm'])) continue;
+            if (isset($n['role']) && $adminRole !== $n['role']) continue;
             $href = isset($n['url']) ? $n['url'] : ('?p=' . $n['p']);
             $target = $n['target'] ?? '';
             $active = (isset($n['p']) && $page === $n['p']) ? 'active' : '';
@@ -300,8 +301,8 @@ if ($page === 'dashboard'):
     $today = date('Y-m-d');
     $week  = date('Y-m-d', strtotime('-7 days'));
     $studs      = db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1") ?? 0;
-    $dToday     = db()->querySingle("SELECT COUNT(DISTINCT session_hash) FROM page_views WHERE DATE(created_at)='$today'") ?? 0;
-    $dWeek      = db()->querySingle("SELECT COUNT(DISTINCT session_hash) FROM page_views WHERE DATE(created_at)>='$week'") ?? 0;
+    $dToday     = db()->querySingle("SELECT COUNT(DISTINCT session_hash) FROM page_views WHERE DATE(viewed_at)='$today'") ?? 0;
+    $dWeek      = db()->querySingle("SELECT COUNT(DISTINCT session_hash) FROM page_views WHERE DATE(viewed_at)>='$week'") ?? 0;
     $quizTotal  = db()->querySingle("SELECT COUNT(*) FROM quiz_attempts") ?? 0;
     $quizWeek   = db()->querySingle("SELECT COUNT(*) FROM quiz_attempts WHERE DATE(completed_at)>='$week'") ?? 0;
     $avg        = db()->querySingle("SELECT ROUND(AVG(percentage),1) FROM quiz_attempts") ?? 0;

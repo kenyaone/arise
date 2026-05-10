@@ -112,11 +112,16 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
 .mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
 .options{display:flex;flex-direction:column;gap:6px;}
-.opt{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
 .opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
 .opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
 .opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
 .opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
 .opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
 .mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
 .mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
@@ -203,6 +208,7 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 .sheng-box{padding:16px 20px!important;font-size:.93rem!important;}
 .quiz-part-head{font-size:.95rem!important;padding:10px 16px!important;margin:20px 0 12px!important;}
 
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
 </style>
 </head>
 <body data-lesson-id="0" data-lesson-slug="shisha-hookah" data-module-slug="shisha">
@@ -374,114 +380,91 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 <!-- ═══ SLIDE 10 — QUIZ ═══ -->
 <div class="slide">
 <div class="slide-head">📊 <span class="en">Quiz — 25 Marks</span><span class="sw">Jaribio — Alama 25</span><span class="sh">Quiz — Marks 25</span></div>
-<p class="tp" style="font-size:.82rem;color:var(--soft);"><span class="en">Complete all parts. 15/25 (60%) to earn your certificate.</span><span class="sw">Kamilisha sehemu zote. 15/25 kupata cheti.</span><span class="sh">Fanya sehemu zote. 15/25 kupata certificate.</span></p>
+<p class="tp" style="font-size:.82rem;color:var(--soft);"><span class="en">Complete all parts. 6/10 (60%) to earn your certificate.</span><span class="sw">Kamilisha sehemu zote. 15/25 kupata cheti.</span><span class="sh">Fanya sehemu zote. 15/25 kupata certificate.</span></p>
 
 <div class="quiz-part-head"><span class="en">Part A: MCQ — 10 marks</span><span class="sw">Sehemu A: MCQ</span><span class="sh">Part A: MCQ</span></div>
-<div class="mcq-block"><div class="q-text"><span class="en">1. How much MORE tar does one shisha session produce compared to smoking one cigarette?</span><span class="sw">1. Lami NGAPI ZAIDI kipindi kimoja cha shisha hutoa ikilinganishwa na kuvuta sigara moja?</span><span class="sh">1. Tar ngapi MORE one shisha session hutoa compared na smoking one cigarette?</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">1. Which of the following are TRUE about how much tar one shisha session produces compared to smoking one cigarette?</span><span class="sw">1. Yapi kati ya yafuatayo ni KWELI kuhusu kiasi cha lami kinachotolewa na kipindi kimoja cha shisha ikilinganishwa na sigara moja?</span><span class="sh">1. Which of the following ni TRUE kuhusu kiasi cha tar one shisha session hutoa compared na smoking one cigarette?</span></div>
 <div class="options" id="mcq1">
 <div class="opt" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span><span class="en">5 times more</span><span class="sw">Mara 5 zaidi</span><span class="sh">Mara 5 zaidi</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span><span class="en">10 times more</span><span class="sw">Mara 10 zaidi</span><span class="sh">Mara 10 zaidi</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span><span class="en">36 times more</span><span class="sw">Mara 36 zaidi</span><span class="sh">Mara 36 zaidi</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span><span class="en">Same amount as a cigarette</span><span class="sw">Kiasi sawa na sigara</span><span class="sh">Same amount kama sigara</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span><span class="en">A single shisha session also delivers far more carbon monoxide than a single cigarette</span><span class="sw">Kikao kimoja cha shisha pia hutoa monoksidi ya kaboni zaidi zaidi kuliko sigara moja</span><span class="sh">Kikao kimoja cha shisha pia hutoa monoksidi ya kaboni zaidi zaidi kuliko sigara moja</span></div>
 </div><div class="mcq-fb" id="fb_mcq1"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">2. Why does the water in a shisha pipe NOT make it safer?</span><span class="sw">2. Kwa nini maji katika bomba la shisha HAYAFANYI kuwa salama zaidi?</span><span class="sh">2. Kwa nini maji kwa shisha pipe HAYAFANYI kuwa safer?</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">2. Which of the following explain why the water in a shisha pipe does NOT make it safer?</span><span class="sw">2. Yapi kati ya yafuatayo yanaeleza kwa nini maji katika bomba la shisha HAYAFANYI kuwa salama zaidi?</span><span class="sh">2. Which of the following vinaeleza kwa nini maji kwa shisha pipe HAYAFANYI kuwa safer?</span></div>
 <div class="options" id="mcq2">
 <div class="opt" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span><span class="en">The water evaporates before filtering anything</span><span class="sw">Maji hupuka kabla ya kuchuja chochote</span><span class="sh">Maji huvuka kabla ya kuchuja kitu chochote</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span><span class="en">Water only cools the smoke — toxins like CO, nicotine and tar still pass through unchanged</span><span class="sw">Maji hupoza moshi tu — sumu kama CO, nikotini na lami bado hupita bila kubadilika</span><span class="sh">Maji hupoza smoke tu — toxins kama CO, nikotini na tar bado hupita unchanged</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span><span class="en">Water turns chemicals into harmless vapour</span><span class="sw">Maji hubadilisha kemikali kuwa mvuke usio na madhara</span><span class="sh">Maji hubadilisha chemicals kuwa harmless vapour</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span><span class="en">The flavouring in the tobacco cancels out toxins</span><span class="sw">Ladha katika tumbaku huondoa sumu</span><span class="sh">Flavouring katika tumbaku huondoa toxins</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span><span class="en">Sweet fruit flavours and pleasant smell of shisha are marketing tactics that mask toxic chemicals</span><span class="sw">Ladha tamu za matunda na harufu nzuri ya shisha ni mbinu za masoko zinazofunika kemikali zenye sumu</span><span class="sh">Ladha tamu za matunda na harufu nzuri ya shisha ni mbinu za masoko zinazofunika kemikali zenye sumu</span></div>
 </div><div class="mcq-fb" id="fb_mcq2"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">3. Sharing a shisha pipe can transmit which of the following infections?</span><span class="sw">3. Kushiriki bomba la shisha kunaweza kupelekea maambukizi gani kati ya yafuatayo?</span><span class="sh">3. Kushiriki shisha pipe inaweza kupelekea maambukizi gani?</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">3. Which of the following infections can be transmitted by sharing a shisha pipe?</span><span class="sw">3. Yapi kati ya yafuatayo ni maambukizi yanayoweza kupitishwa kwa kushiriki bomba la shisha?</span><span class="sh">3. Which of the following infections zinaweza kupitishwa kwa kushiriki shisha pipe?</span></div>
 <div class="options" id="mcq3">
 <div class="opt" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span><span class="en">Only herpes simplex virus</span><span class="sw">Herpes simplex tu</span><span class="sh">Herpes simplex tu</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span><span class="en">Only tuberculosis</span><span class="sw">Kifua kikuu tu</span><span class="sh">TB tu</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span><span class="en">Only COVID-19</span><span class="sw">COVID-19 tu</span><span class="sh">COVID-19 tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span><span class="en">Oral herpes, COVID-19, and other respiratory viruses can spread through shared mouthpieces</span><span class="sw">Herpes ya mdomo, COVID-19, na virusi vingine vya kupumua vinaweza kuenea kupitia mdomo unaoshirikiwa</span><span class="sh">Herpes ya mdomo, COVID-19, na virusi vingine vya kupumua vinaweza kuenea kupitia mdomo unaoshirikiwa</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span><span class="en">Tuberculosis, herpes, hepatitis and respiratory infections</span><span class="sw">Kifua kikuu, herpes, hepatitis na maambukizi ya kupumua</span><span class="sh">TB, herpes, hepatitis na respiratory infections</span></div>
 </div><div class="mcq-fb" id="fb_mcq3"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">4. One shisha session delivers approximately how much nicotine?</span><span class="sw">4. Kipindi kimoja cha shisha hutoa nikotini kiasi gani takriban?</span><span class="sh">4. One shisha session hutoa takriban nikotini kiasi gani?</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">4. Which of the following correctly describe how much nicotine one shisha session delivers?</span><span class="sw">4. Yapi kati ya yafuatayo yanaeleza kwa usahihi kiasi cha nikotini kinachotolewa na kipindi kimoja cha shisha?</span><span class="sh">4. Which of the following correctly describe kiasi cha nicotine one shisha session hutoa?</span></div>
 <div class="options" id="mcq4">
 <div class="opt" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span><span class="en">Equivalent to half a cigarette</span><span class="sw">Sawa na nusu sigara</span><span class="sh">Sawa na nusu sigara</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span><span class="en">Equivalent to 2 cigarettes</span><span class="sw">Sawa na sigara 2</span><span class="sh">Sawa na sigara 2</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span><span class="en">Equivalent to 10 cigarettes</span><span class="sw">Sawa na sigara 10</span><span class="sh">Sawa na sigara 10</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span><span class="en">No measurable nicotine</span><span class="sw">Nikotini yoyote inayopimika</span><span class="sh">Hakuna nikotini inayopimika</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span><span class="en">Shisha tobacco contains nicotine — regular users develop dependence just as they would with cigarettes</span><span class="sw">Tumbaku ya shisha ina nikotini — watumiaji wa kawaida wanakuza uraibu kama vile sigara</span><span class="sh">Tumbaku ya shisha ina nikotini — watumiaji wa kawaida wanakuza uraibu kama vile sigara</span></div>
 </div><div class="mcq-fb" id="fb_mcq4"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">5. Under Kenya's Tobacco Control Act 2007, shisha:</span><span class="sw">5. Chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007, shisha:</span><span class="sh">5. Chini ya Kenya Tobacco Control Act 2007, shisha:</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">5. Which of the following correctly describe shisha's status under Kenya's Tobacco Control Act 2007?</span><span class="sw">5. Yapi kati ya yafuatayo yanaeleza hali ya shisha chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007?</span><span class="sh">5. Which of the following correctly describe hali ya shisha chini ya Kenya Tobacco Control Act 2007?</span></div>
 <div class="options" id="mcq5">
 <div class="opt" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span><span class="en">Is completely unregulated and legal for all ages</span><span class="sw">Haidhibitiwa kabisa na ni halali kwa umri wote</span><span class="sh">Haidhibitiwa na ni legal kwa umri wote</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span><span class="en">Is covered under tobacco law — sale to under-18s is illegal and smoking in public is banned</span><span class="sw">Inashughulikiwa chini ya sheria ya tumbaku — mauzo kwa chini ya miaka 18 ni haramu</span><span class="sh">Inashughulikiwa chini ya tobacco law — mauzo kwa under-18s ni illegal</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span><span class="en">Is legal for people over 16</span><span class="sw">Ni halali kwa watu zaidi ya miaka 16</span><span class="sh">Ni legal kwa watu zaidi ya miaka 16</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span><span class="en">Is only banned in schools and hospitals</span><span class="sw">Inakatazwa tu shuleni na hospitalini</span><span class="sh">Inakatazwa tu shuleni na hospitalini</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span><span class="en">Shisha lounges serving minors or operating near schools face fines and closure under Kenya's tobacco law</span><span class="sw">Sehemu za shisha zinazoserve watoto wadogo au karibu na shule zinakabiliwa na faini na kufungwa</span><span class="sh">Sehemu za shisha zinazoserve watoto wadogo au karibu na shule zinakabiliwa na faini na kufungwa</span></div>
 </div><div class="mcq-fb" id="fb_mcq5"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">6. Which toxic metal found in shisha smoke comes primarily from the hookah equipment itself?</span><span class="sw">6. Metali gani yenye sumu inayopatikana katika moshi wa shisha inatoka hasa kutoka kwa vifaa vya hookah yenyewe?</span><span class="sh">6. Toxic metal gani inayopatikana kwa shisha smoke inatoka hasa kutoka kwa hookah equipment yenyewe?</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">6. Which of the following toxic metals found in shisha smoke come primarily from the hookah equipment itself?</span><span class="sw">6. Yapi kati ya yafuatayo ni metali zenye sumu zinazopatikana katika moshi wa shisha ambazo zinatoka hasa kutoka kwa vifaa vya hookah?</span><span class="sh">6. Which of the following toxic metals zinazopatikana kwa shisha smoke zinatoka hasa kutoka kwa hookah equipment?</span></div>
 <div class="options" id="mcq6">
 <div class="opt" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span><span class="en">Lead and arsenic from the metal pipes and fittings</span><span class="sw">Risasi na arseniki kutoka kwa mabomba ya chuma</span><span class="sh">Lead na arsenic kutoka kwa metal pipes</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span><span class="en">Nicotine from the tobacco</span><span class="sw">Nikotini kutoka kwa tumbaku</span><span class="sh">Nicotine kutoka kwa tumbaku</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span><span class="en">Tar from the flavouring chemicals</span><span class="sw">Lami kutoka kwa kemikali za ladha</span><span class="sh">Tar kutoka kwa flavouring chemicals</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span><span class="en">Carbon monoxide from the fruit flavours</span><span class="sw">Monoksidi kaboni kutoka kwa ladha za matunda</span><span class="sh">Carbon monoxide kutoka kwa fruit flavours</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span><span class="en">Carbon monoxide from charcoal combustion is a major toxic product — it binds haemoglobin reducing oxygen</span><span class="sw">Monoksidi ya kaboni kutoka kwa makaa ni bidhaa kubwa ya sumu — inafunga haemoglobin kupunguza oksijeni</span><span class="sh">Monoksidi ya kaboni kutoka kwa makaa ni bidhaa kubwa ya sumu — inafunga haemoglobin kupunguza oksijeni</span></div>
 </div><div class="mcq-fb" id="fb_mcq6"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">7. The MOST accurate description of herbal (tobacco-free) shisha is:</span><span class="sw">7. Maelezo SAHIHI ZAIDI ya shisha ya mimea (isiyo na tumbaku) ni:</span><span class="sh">7. Description ACCURATE ZAIDI ya herbal (tobacco-free) shisha ni:</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">7. Which of the following accurately describe herbal (tobacco-free) shisha?</span><span class="sw">7. Yapi kati ya yafuatayo yanaeleza kwa usahihi shisha ya mimea (isiyo na tumbaku)?</span><span class="sh">7. Which of the following accurately describe herbal (tobacco-free) shisha?</span></div>
 <div class="options" id="mcq7">
 <div class="opt" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span><span class="en">Completely safe because it contains no tobacco</span><span class="sw">Salama kabisa kwa sababu haina tumbaku</span><span class="sh">Completely safe kwa sababu haina tumbaku</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span><span class="en">Slightly less harmful but still contains some nicotine</span><span class="sw">Kidogo pungufu ya madhara lakini bado ina nikotini kidogo</span><span class="sh">Kidogo less harmful lakini bado ina nicotine kidogo</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span><span class="en">Still harmful because charcoal combustion produces CO, benzene and other toxins regardless of tobacco</span><span class="sw">Bado ni hatari kwa sababu mwako wa mkaa hutoa CO, benzeni na sumu zingine bila kujali tumbaku</span><span class="sh">Bado ni harmful kwa sababu charcoal combustion hutoa CO, benzene na toxins bila kujali tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span><span class="en">Safe for people with asthma as it does not contain tar</span><span class="sw">Salama kwa watu wenye pumu kwa sababu haina lami</span><span class="sh">Safe kwa watu wenye asthma kwa sababu haina tar</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span><span class="en">Herbal shisha without tobacco still burns charcoal — all CO and benzene risks fully remain</span><span class="sw">Shisha ya mimea bila tumbaku bado inachoma makaa — hatari zote za CO na benzene zinabaki</span><span class="sh">Shisha ya mimea bila tumbaku bado inachoma makaa — hatari zote za CO na benzene zinabaki</span></div>
 </div><div class="mcq-fb" id="fb_mcq7"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">8. When Achieng's friend says "Shisha is just flavoured steam — not a real drug," the BEST factual response is:</span><span class="sw">8. Wakati rafiki wa Achieng anasema "Shisha ni mvuke wa ladha tu — si dawa halisi," jibu BORA la ukweli ni:</span><span class="sh">8. Wakati rafiki wa Achieng anasema "Shisha ni flavoured steam tu — si real drug," best factual response ni:</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">8. Which of the following are accurate factual responses to the claim "Shisha is just flavoured steam — not a real drug"?</span><span class="sw">8. Yapi kati ya yafuatayo ni majibu sahihi ya ukweli kwa dai "Shisha ni mvuke wa ladha tu — si dawa halisi"?</span><span class="sh">8. Which of the following ni accurate factual responses kwa dai "Shisha ni flavoured steam tu — si real drug"?</span></div>
 <div class="options" id="mcq8">
 <div class="opt" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span><span class="en">Agree and try it once to be polite</span><span class="sw">Kubali na ujaribu mara moja kwa heshima</span><span class="sh">Kubali na ujaribu mara moja kuwa polite</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span><span class="en">Ignore them and walk away without explanation</span><span class="sw">Waache na uende bila kueleza</span><span class="sh">Ignore na uende bila kueleza</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span><span class="en">Say it is haram and refuse on religious grounds only</span><span class="sw">Sema ni haramu na kukataa kwa sababu za kidini tu</span><span class="sh">Sema ni haram na kukataa kwa sababu za kidini tu</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span><span class="en">Share a fact: "One shisha session = 10 cigarettes of smoke — I'll pass, thanks"</span><span class="sw">Shiriki ukweli: "Kikao kimoja cha shisha = sigara 10 za moshi — sitashiriki, asante"</span><span class="sh">Shiriki ukweli: "Kikao kimoja cha shisha = sigara 10 za moshi — sitashiriki, asante"</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span><span class="en">Say: "Actually, shisha smoke contains nicotine, tar, and carbon monoxide — one session equals 10 cigarettes of nicotine and 36 cigarettes of tar."</span><span class="sw">Sema: "Ukweli, moshi wa shisha una nikotini, lami, na CO — kipindi kimoja = nikotini ya sigara 10 na lami ya sigara 36."</span><span class="sh">Sema: "Actually, shisha smoke ina nicotine, tar, na CO — one session = nikotini ya cigarettes 10 na tar ya cigarettes 36."</span></div>
 </div><div class="mcq-fb" id="fb_mcq8"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">9. Benzene found in shisha smoke is particularly dangerous because it:</span><span class="sw">9. Benzeni inayopatikana katika moshi wa shisha ni hatari hasa kwa sababu:</span><span class="sh">9. Benzene inayopatikana kwa shisha smoke ni hatari sana kwa sababu:</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">9. Which of the following explain why benzene found in shisha smoke is particularly dangerous?</span><span class="sw">9. Yapi kati ya yafuatayo yanaeleza kwa nini benzeni inayopatikana katika moshi wa shisha ni hatari sana?</span><span class="sh">9. Which of the following vinaeleza kwa nini benzene inayopatikana kwa shisha smoke ni hatari sana?</span></div>
 <div class="options" id="mcq9">
 <div class="opt" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span><span class="en">Is a known cause of leukaemia (blood cancer)</span><span class="sw">Ni sababu inayojulikana ya lukemia (saratani ya damu)</span><span class="sh">Ni known cause ya leukaemia (blood cancer)</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span><span class="en">Makes the smoke smell unpleasant</span><span class="sw">Inafanya moshi kunuka vibaya</span><span class="sh">Inafanya smoke kunuka vibaya</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span><span class="en">Causes immediate respiratory failure</span><span class="sw">Inasababisha kushindwa kupumua mara moja</span><span class="sh">Inasababisha immediate respiratory failure</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span><span class="en">Reacts with nicotine to create a more addictive compound</span><span class="sw">Inafanya kazi na nikotini kuunda kiwanja chenye uraibu zaidi</span><span class="sh">Inareact na nicotine kuunda more addictive compound</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span><span class="en">Benzene from charcoal also damages bone marrow, suppressing the production of blood cells</span><span class="sw">Benzene kutoka makaa pia inaharibu uboho, ikizuia uzalishaji wa seli za damu</span><span class="sh">Benzene kutoka makaa pia inaharibu uboho, ikizuia uzalishaji wa seli za damu</span></div>
 </div><div class="mcq-fb" id="fb_mcq9"></div></div>
-<div class="mcq-block"><div class="q-text"><span class="en">10. A hookah lounge in Nairobi advertises "nicotine-free, organic fruit shisha." This product:</span><span class="sw">10. Baa ya hookah Nairobi inatangaza "shisha ya matunda ya kikaboni, isiyo na nikotini." Bidhaa hii:</span><span class="sh">10. Hookah lounge Nairobi inatangaza "nicotine-free, organic fruit shisha." Bidhaa hii:</span></div>
+<div class="mcq-block">
+  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">10. Which of the following are TRUE about a hookah lounge's "nicotine-free, organic fruit shisha" product?</span><span class="sw">10. Yapi kati ya yafuatayo ni KWELI kuhusu bidhaa ya "shisha ya matunda ya kikaboni, isiyo na nikotini" ya baa ya hookah?</span><span class="sh">10. Which of the following ni TRUE kuhusu "nicotine-free, organic fruit shisha" ya hookah lounge?</span></div>
 <div class="options" id="mcq10">
 <div class="opt" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span><span class="en">Is completely safe as it contains no nicotine or tobacco</span><span class="sw">Ni salama kabisa kwani haina nikotini wala tumbaku</span><span class="sh">Ni completely safe kwani haina nicotine wala tumbaku</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span><span class="en">Still exposes users to charcoal toxins including CO, benzene and heavy metals from equipment</span><span class="sw">Bado yanadhuru kwa sumu ya mkaa ikiwemo CO, benzeni na metali nzito kutoka kwa vifaa</span><span class="sh">Bado inaexpose users kwa charcoal toxins ikiwemo CO, benzene na heavy metals kutoka kwa equipment</span></div>
 <div class="opt" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span><span class="en">Is legal to sell to under-18s because it has no tobacco</span><span class="sw">Ni halali kuuza kwa chini ya miaka 18 kwa sababu haina tumbaku</span><span class="sh">Ni legal kuuza kwa under-18s kwa sababu haina tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span><span class="en">Has been approved by Kenya Bureau of Standards as safe</span><span class="sw">Imeidhinishwa na Shirika la Viwango la Kenya kama salama</span><span class="sh">Imeidhinishwa na KEBS kama safe</span></div>
+<div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span><span class="en">Herbal shisha carries the same lung cancer, cardiovascular, and infection risks as tobacco shisha</span><span class="sw">Shisha ya mimea ina hatari sawa za kansa ya mapafu, moyo, na maambukizi kama shisha ya tumbaku</span><span class="sh">Shisha ya mimea ina hatari sawa za kansa ya mapafu, moyo, na maambukizi kama shisha ya tumbaku</span></div>
 </div><div class="mcq-fb" id="fb_mcq10"></div></div>
 <button class="check-btn" onclick="checkAllMCQ()"><span class="en">✓ Check MCQ Answers</span><span class="sw">✓ Angalia Majibu</span></button>
 
-<div class="quiz-part-head"><span class="en">Part B: Fill in the Blanks — 5 marks</span><span class="sw">Sehemu B: Jaza Nafasi</span><span class="sh">Part B: Fill Blanks</span></div>
-<div class="q-block">
-<p class="q-text"><span class="en">One shisha session produces approximately ______ times more tar than a single cigarette.</span><span class="sw">Kipindi kimoja cha shisha hutoa takriban mara ______ zaidi ya lami kuliko sigara moja.</span><span class="sh">One shisha session hutoa approximately mara ______ zaidi ya tar kuliko single cigarette.</span></p>
-<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f1" autocomplete="off" placeholder="Type your answer..."></p>
-<div class="fb-box" id="fb1"></div>
-<p class="q-text"><span class="en">The charcoal in shisha produces a gas called ______ that blocks oxygen in the blood and causes heart disease.</span><span class="sw">Mkaa katika shisha hutoa gesi inayoitwa ______ inayozuia oksijeni katika damu na kusababisha ugonjwa wa moyo.</span><span class="sh">Mkaa kwa shisha hutoa gas inayoitwa ______ inayozuia oxygen kwa damu na kusababisha heart disease.</span></p>
-<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f2" autocomplete="off" placeholder="Type your answer..."></p>
-<div class="fb-box" id="fb2"></div>
-<p class="q-text"><span class="en">Under Kenya's Tobacco Control Act 2007, selling shisha to anyone under ______ years old is illegal.</span><span class="sw">Chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007, kuuza shisha kwa mtu yeyote chini ya miaka ______ ni haramu.</span><span class="sh">Chini ya Kenya Tobacco Control Act 2007, kuuza shisha kwa mtu yeyote chini ya miaka ______ ni illegal.</span></p>
-<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f3" autocomplete="off" placeholder="Type your answer..."></p>
-<div class="fb-box" id="fb3"></div>
-<p class="q-text"><span class="en">The highly addictive chemical found in shisha tobacco that rewires the brain's reward system is called ______.</span><span class="sw">Kemikali yenye uraibu mkubwa inayopatikana katika tumbaku ya shisha inayobadilisha mfumo wa tuzo wa ubongo inaitwa ______.</span><span class="sh">Highly addictive chemical inayopatikana kwa shisha tobacco inayorewire brain reward system inaitwa ______.</span></p>
-<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f4" autocomplete="off" placeholder="Type your answer..."></p>
-<div class="fb-box" id="fb4"></div>
-<p class="q-text"><span class="en">Benzene in shisha smoke is a known cause of ______ cancer (blood cancer).</span><span class="sw">Benzeni katika moshi wa shisha ni sababu inayojulikana ya saratani ya ______ (saratani ya damu).</span><span class="sh">Benzene kwa shisha smoke ni known cause ya ______ cancer (blood cancer).</span></p>
-<p style="margin:8px 0 4px;"><input type="text" class="fill-blank" id="f5" autocomplete="off" placeholder="Type your answer..."></p>
-<div class="fb-box" id="fb5"></div>
-<button class="check-btn" onclick="checkFills()"><span class="en">✓ Check Answers</span><span class="sw">✓ Angalia</span></button>
-</div>
-
-<div class="quiz-part-head"><span class="en">Part C: Short Answer — 10 marks</span><span class="sw">Sehemu C: Majibu Mafupi</span><span class="sh">Part C: Short Answer</span></div>
-<div class="q-block"><p class="q-text"><span class="en">A friend tells you "Shisha is safer than cigarettes because the water filters the smoke." Using specific facts, explain why this is false. (4 marks)</span><span class="sw">Rafiki anakuambia "Shisha ni salama zaidi kuliko sigara kwa sababu maji huchuja moshi." Kwa kutumia ukweli maalum, eleza kwa nini hii ni uongo. (alama 4)</span><span class="sh">Friend anakuambia "Shisha ni safer than cigarettes kwa sababu water hufilter smoke." Kwa kutumia specific facts, explain kwa nini hii ni false. (marks 4)</span></p>
-<textarea class="sa-area" id="sa1" placeholder="Write your answer here..."></textarea>
-<button class="grade-btn" data-qid="sa1" data-fbid="sfb1" data-kws="[&quot;water&quot;, &quot;filter&quot;, &quot;cool&quot;, &quot;tar&quot;, &quot;carbon monoxide&quot;, &quot;nicotine&quot;, &quot;benzene&quot;, &quot;36&quot;, &quot;10&quot;, &quot;toxin&quot;, &quot;chemical&quot;, &quot;false&quot;, &quot;myth&quot;]" data-req="4" data-pts="4" data-model="The water myth is false for these reasons: 1) Water only COOLS the smoke making it feel smoother — it does not remove any toxins. 2) One session produces 36x more tar than one cigarette — deposited directly in lungs. 3) Carbon monoxide: up to 40x more than one cigarette — causes heart disease. 4) Nicotine: equivalent to 10 cigarettes per session — highly addictive. 5) Benzene and heavy metals also pass through unchanged. The smooth feeling from cooler smoke actually encourages deeper and longer inhalation — making it MORE harmful." onclick="gradeFromData(this)">&#10003; Grade</button>
-<div class="fb-box" id="sfb1"></div></div>
-<div class="q-block"><p class="q-text"><span class="en">Describe THREE specific health risks of sharing a shisha pipe, other than nicotine addiction. (3 marks)</span><span class="sw">Eleza HATARI TATU maalum za kiafya za kushiriki bomba la shisha, zaidi ya uraibu wa nikotini. (alama 3)</span><span class="sh">Describe HATARI TATU specific za kiafya za kushiriki shisha pipe, zaidi ya nicotine addiction. (marks 3)</span></p>
-<textarea class="sa-area" id="sa2" placeholder="Write your answer here..."></textarea>
-<button class="grade-btn" data-qid="sa2" data-fbid="sfb2" data-kws="[&quot;tuberculosis&quot;, &quot;tb&quot;, &quot;herpes&quot;, &quot;hepatitis&quot;, &quot;covid&quot;, &quot;respiratory&quot;, &quot;infection&quot;, &quot;mouthpiece&quot;, &quot;saliva&quot;, &quot;oral&quot;, &quot;transmission&quot;]" data-req="3" data-pts="3" data-model="1) Tuberculosis (TB) — a bacterial respiratory infection transmitted through shared oral contact; high prevalence in Kenya. 2) Herpes simplex virus — transmitted through saliva/oral contact on the mouthpiece. 3) Hepatitis B and C — bloodborne viruses transmissible through small cuts in the mouth. 4) COVID-19 and influenza — respiratory viruses transmitted through shared air and surfaces. New mouthpieces reduce but do not eliminate risk." onclick="gradeFromData(this)">&#10003; Grade</button>
-<div class="fb-box" id="sfb2"></div></div>
-<div class="q-block"><p class="q-text"><span class="en">Explain the concept of social normalisation and why it makes shisha particularly dangerous for Kenyan youth. (3 marks)</span><span class="sw">Eleza dhana ya kawaida ya kijamii na kwa nini inafanya shisha kuwa hatari hasa kwa vijana wa Kenya. (alama 3)</span><span class="sh">Explain concept ya social normalisation na kwa nini inafanya shisha kuwa particularly dangerous kwa Kenyan youth. (marks 3)</span></p>
-<textarea class="sa-area" id="sa3" placeholder="Write your answer here..."></textarea>
-<button class="grade-btn" data-qid="sa3" data-fbid="sfb3" data-kws="[&quot;normal&quot;, &quot;social&quot;, &quot;lounge&quot;, &quot;friends&quot;, &quot;peer&quot;, &quot;pressure&quot;, &quot;addiction&quot;, &quot;casual&quot;, &quot;trendy&quot;, &quot;marketing&quot;, &quot;youth&quot;, &quot;nairobi&quot;, &quot;identity&quot;]" data-req="3" data-pts="3" data-model="Social normalisation means shisha is presented as a normal, trendy, social activity (like going for coffee) rather than drug use. This is dangerous for youth because: 1) It removes the &quot;drug&quot; stigma that normally creates caution. 2) Social settings (with friends, music, attractive lounges) create strong psychological associations between relaxation/belonging and nicotine intake. 3) Marketing uses flavours, aesthetics, and influencers to target young people specifically. 4) By the time addiction develops, the behaviour feels completely normal — making it harder to recognise as a problem and seek help." onclick="gradeFromData(this)">&#10003; Grade</button>
-<div class="fb-box" id="sfb3"></div></div>
 <button class="score-btn" onclick="showTotalScore()">🏆 <span class="en">Get My Score</span><span class="sw">Pata Alama Zangu</span><span class="sh">Pata Score Yangu</span></button>
 <div class="score-box pass" id="scoreBoxPass" style="display:none;">
 <div class="score-num" id="scoreNumPass"></div>
@@ -526,7 +509,7 @@ function init() {
     if(ph) ph.style.display='flex';
     if(vid) vid.style.display='none';
   }
-  var slug2 = document.body.dataset.lessonSlug;
+  var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
   var resumeSlide = window.ARISE_RESUME_SLIDE || (slug2 ? parseInt(localStorage.getItem('arise_slide_'+slug2)||'0') : 0);
   if (resumeSlide > 0 && resumeSlide < slides.length-1) { setTimeout(function(){ go(resumeSlide); }, 120); }
 }
@@ -568,10 +551,6 @@ function scPick(btn, scId, type, resId) {
   var res = document.getElementById(resId);
   if(res){ res.className='s-result '+type; res.style.display='block'; }
 }
-function scRetry(scId) {
-  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){ b.disabled=false; b.className='choice'; });
-  document.querySelectorAll('#'+scId+' .s-result').forEach(function(r){ r.style.display='none'; });
-}
 function saveJournal(slug4, textarea) {
   var text=textarea.value.trim(); if(!text) return;
   var key='arise_journal_'+slug4;
@@ -584,82 +563,57 @@ function saveJournal(slug4, textarea) {
   if(fb){ fb.textContent='✓ Saved / Imehifadhiwa'; fb.style.color='#2e7d32'; }
 }
 // ── MCQ ──────────────────────────────────────────────────────
-var mcqAnswers = {mcq1:'C', mcq2:'B', mcq3:'D', mcq4:'C', mcq5:'B', mcq6:'A', mcq7:'C', mcq8:'D', mcq9:'A', mcq10:'B'};
+var mcqAnswers={mcq1:["C","D"],mcq2:["B","D"],mcq3:["C","D"],mcq4:["C","D"],mcq5:["B","D"],mcq6:["A","D"],mcq7:["C","D"],mcq8:["C","D"],mcq9:["A","D"],mcq10:["B","D"]};
 var mcqExplain = {
-  mcq1:'C — One shisha session (45-60 minutes, ~200 puffs) produces 36 times more tar than smoking one cigarette. The water pipe format allows much more smoke to be inhaled per session.',
-  mcq2:'B — This is the most important shisha myth to debunk. Water cools the smoke (making it feel smoother and easier to inhale large quantities) but does NOT filter out tar, carbon monoxide, nicotine, heavy metals, or benzene.',
-  mcq3:'D — The shared mouthpiece transmits oral and respiratory infections including TB, herpes simplex, hepatitis B and C, COVID-19, and influenza. Even "disposable" or "new" mouthpieces do not eliminate all transmission risk.',
-  mcq4:'C — One shisha session delivers nicotine equivalent to smoking approximately 10 cigarettes, due to the long duration (45-60 min) and high number of puffs (~200). This is why nicotine addiction from shisha develops faster than most users expect.',
-  mcq5:'B — Kenya\'s Tobacco Control Act 2007 covers all tobacco products including shisha. It bans smoking in public places, prohibits sale to under-18s, and requires health warnings. Many shisha lounges operate in violation of this law.',
-  mcq6:'A — Heavy metals including lead, chromium, and arsenic leach from the metal hose, bowl, and fittings of the hookah device itself as they heat up. This is in addition to toxins from the tobacco and charcoal.',
-  mcq7:'C — Even tobacco-free herbal shisha uses charcoal to heat the herbs, and charcoal combustion produces carbon monoxide, benzene (a cause of leukaemia), and other carcinogens. "Herbal" is a marketing term that does not make shisha safe.',
-  mcq8:'D — Facts are the most powerful response to myths. Specific numbers (36x tar, 10 cigarettes of nicotine) are more persuasive than general statements. This corrects the myth while showing knowledge, which commands respect.',
-  mcq9:'A — Benzene is classified by the WHO as a Group 1 carcinogen — meaning there is definitive evidence it causes cancer in humans. It is a known cause of leukaemia (blood cancer) and is produced by burning charcoal.',
-  mcq10:'B — "Nicotine-free" shisha still uses charcoal heating, which produces carbon monoxide (heart disease), benzene (leukaemia), and heavy metals leach from the equipment. "Organic" and "fruit" are marketing terms that do not make the product safe.'
+  mcq1:"C and D — A shisha session delivers 36x more smoke than a cigarette, AND it also delivers far more carbon monoxide — a poisonous gas from charcoal combustion that enters the bloodstream.",
+  mcq2:"B and D — Water only cools smoke — toxins like CO, nicotine, and tar pass straight through, AND the sweet flavours and pleasant smells are marketing tactics deliberately masking the toxic chemicals.",
+  mcq3:"C and D — Shared shisha pipes can transmit tuberculosis, herpes, and hepatitis, AND oral herpes, COVID-19, and other respiratory viruses specifically spread through shared mouthpieces.",
+  mcq4:"C and D — One shisha session is equivalent to 10 cigarettes in smoke volume, AND shisha tobacco contains nicotine — leading to dependence just as with cigarettes.",
+  mcq5:"B and D — Shisha is covered under tobacco law with sale to under-18s being illegal, AND shisha lounges that serve minors or operate near schools face fines and closure under Kenyan tobacco regulations.",
+  mcq6:"A and D — Lead and arsenic from metal pipes are known carcinogens found in shisha smoke, AND carbon monoxide from charcoal combustion binds haemoglobin — reducing the blood oxygen-carrying capacity.",
+  mcq7:"C and D — Herbal shisha is still harmful because charcoal produces CO and benzene, AND specifically: even without tobacco, charcoal combustion maintains all the carbon monoxide and benzene risks.",
+  mcq8:"C and D — The best response is sharing a specific fact about shisha risks, AND specifically: one shisha session equals 10 cigarettes of smoke is a powerful factual response to any invitation.",
+  mcq9:"A and D — Benzene is a known cause of leukaemia (blood cancer), AND it damages bone marrow specifically — suppressing blood cell production and explaining the link to blood cancers.",
+  mcq10:"B and D — Herbal shisha still exposes users to charcoal toxins including CO and benzene, AND it carries the same lung cancer, cardiovascular, and infection risks — it is not a safe alternative."
 };
 var mcqScore=0, mcqChecked=false;
-function selectOpt(el,group,letter){
+function selectOpt(el, group, letter) {
   if(mcqChecked) return;
-  document.querySelectorAll('#'+group+' .opt').forEach(function(o){ o.classList.remove('selected'); });
-  el.classList.add('selected'); el.dataset.chosen=letter;
+  el.classList.toggle('selected');
 }
-function checkAllMCQ(){
-  mcqScore=0; mcqChecked=true;
-  Object.keys(mcqAnswers).forEach(function(group){
-    var correct=mcqAnswers[group];
-    var opts=document.querySelectorAll('#'+group+' .opt');
-    var chosen=null;
-    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen=o.dataset.chosen||o.querySelector('.opt-letter').textContent.trim(); });
+function shuffleOptions(){document.querySelectorAll('.options').forEach(function(div){var opts=Array.from(div.children);for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));div.appendChild(opts[j]);opts.splice(j,1);}});}
+function checkAllMCQ() {
+  mcqScore = 0; mcqChecked = true;
+  Object.keys(mcqAnswers).forEach(function(group) {
+    var correct = mcqAnswers[group];
+    var opts = document.querySelectorAll('#'+group+' .opt');
+    var chosen = [];
+    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen.push(o.querySelector('.opt-letter').textContent.trim()); });
     opts.forEach(function(o){
-      var letter=o.querySelector('.opt-letter').textContent.trim();
-      if(letter===correct) o.classList.add('correct');
-      else if(o.classList.contains('selected')&&letter!==correct) o.classList.add('wrong');
+      var letter = o.querySelector('.opt-letter').textContent.trim();
+      if(correct.indexOf(letter)!==-1) o.classList.add('correct');
+      else if(chosen.indexOf(letter)!==-1) o.classList.add('wrong');
     });
-    var fb=document.getElementById('fb_'+group);
-    if(chosen===correct){ mcqScore++; fb.innerHTML='<span class="kf">✓ Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
-    else { fb.innerHTML='<span class="km">✗ Incorrect.</span> Correct: <strong>'+correct+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
+    var isCorrect = correct.length===chosen.length && correct.every(function(l){ return chosen.indexOf(l)!==-1; });
+    var fb = document.getElementById('fb_'+group);
+    if(isCorrect){ mcqScore++; fb.innerHTML='<span class="kf">&#10003; Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
+    else { fb.innerHTML='<span class="km">&#10007; Incorrect.</span> Correct: <strong>'+correct.join(', ')+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
     fb.style.display='block';
   });
 }
 
 // ── FILL BLANKS ───────────────────────────────────────────────
-var fbAns = {f1:['36', 'thirty six', 'thirty-six'], f2:['carbon monoxide', 'co'], f3:['18', 'eighteen'], f4:['nicotine', 'nikotini'], f5:['leukaemia', 'leukemia', 'blood', 'lukemia']};
-var fbModels = {
-  f1:'36 — one shisha session (200 puffs, 45-60 minutes) deposits 36 times more tar in the lungs than one cigarette.',
-  f2:'Carbon monoxide (CO) — produced by charcoal combustion. It binds to haemoglobin more strongly than oxygen, reducing blood oxygen levels and increasing heart disease risk.',
-  f3:'18 — Kenya\'s Tobacco Control Act 2007 prohibits sale of tobacco products (including shisha) to persons under 18 years.',
-  f4:'Nicotine — a drug that triggers dopamine release in the brain\'s reward system. One shisha session delivers equivalent nicotine to 10 cigarettes, making addiction development rapid.',
-  f5:'Leukaemia (blood cancer) — benzene is a Group 1 WHO carcinogen produced by charcoal combustion. It is found in every shisha session regardless of tobacco content.'
-};
-var fillScore=0, fillChecked=false;
-function checkFills(){
-  fillScore=0; fillChecked=true;
-  Object.keys(fbAns).forEach(function(id){
-    var el=document.getElementById(id);
-    var val=el.value.toLowerCase().trim();
-    var ok=fbAns[id].some(function(a){ return val===a||val.includes(a); });
-    el.classList.toggle('correct',ok); el.classList.toggle('wrong',!ok);
-    if(ok) fillScore++;
-    var fb=document.getElementById('fb'+id.slice(1));
-    fb.innerHTML=ok?'<span class="kf">✓ Correct! (1 mark)</span> '+fbModels[id]:'<span class="km">✗ Expected: <strong>'+fbAns[id][0]+'</strong></span> — '+fbModels[id];
-    fb.style.display='block';
-  });
-}
 
 // ── SHORT ANSWER ──────────────────────────────────────────────
-var saScores={};
-function showFb(id,html){ var e=document.getElementById(id); e.innerHTML=html; e.style.display='block'; }
 
 function showTotalScore(){
   if(!mcqChecked) checkAllMCQ();
-  if(!fillChecked) checkFills();
-  var saTotal=Object.values(saScores).reduce(function(a,b){ return a+b; },0);
-  var total=mcqScore+fillScore+saTotal;
-  var max=25;
+  var total=mcqScore;
+  var max=10;
   var pct=Math.round((total/max)*100);
   var grade=pct>=80?'Exceeds Expectation 🎉':pct>=60?'Meets Expectation 👍':pct>=40?'Approaches Expectation 📖':'Below Expectation 💪';
-  var slug=document.body.dataset.lessonSlug||'shisha-hookah';
-  var mslug=document.body.dataset.moduleSlug||'shisha';
+  var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug||'shisha-hookah';
+  var mslug=window.ARISE_MODULE_SLUG||document.body.dataset.moduleSlug||'shisha';
   fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:slug,module_slug:mslug,score:total,total:max,percent:pct})}).catch(function(){});
   if(pct>=60){
     document.getElementById('scoreBoxPass').style.display='block';
@@ -669,12 +623,13 @@ function showTotalScore(){
     document.getElementById('retryBox').style.display='none';
   } else {
     document.getElementById('retryBox').style.display='block';
-    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). Need 15/25 (60%) to pass.';
+    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). Need 6/10 (60%) to pass.';
     document.getElementById('scoreBoxPass').style.display='none';
   }
 }
 function resetQuiz(){
-  mcqChecked=false; mcqScore=0; fillScore=0; fillChecked=false; saScores={};
+shuffleOptions();
+  mcqChecked=false; mcqScore=0;
   document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected','correct','wrong'); });
   document.querySelectorAll('.mcq-fb').forEach(function(f){ f.style.display='none'; });
   document.querySelectorAll('.fill-blank').forEach(function(f){ f.value=''; f.classList.remove('correct','wrong'); });
@@ -688,20 +643,7 @@ window.addEventListener('DOMContentLoaded', init);
 
 
 
-function gradeFromData(btn){var qid=btn.dataset.qid,fbid=btn.dataset.fbid,kws=JSON.parse(btn.dataset.kws),req=parseInt(btn.dataset.req),pts=parseInt(btn.dataset.pts),model=btn.dataset.model;gradeKw(qid,fbid,kws,req,pts,model);}
-function gradeKw(qid,fbid,kws,req,pts,model){
-  var val=document.getElementById(qid).value.toLowerCase();
-  var found=kws.filter(function(k){return val.includes(k);});
-  var awarded=Math.round((Math.min(found.length,req)/req)*pts);
-  saScores[qid]=awarded;
-  var grade=awarded>=pts?'Excellent!':awarded>0?'Good attempt':'Needs improvement';
-  var fs=found.length?'<br><span class="kf">Found: '+found.join(', ')+'</span>':'';
-  var miss=kws.filter(function(k){return !val.includes(k);}).slice(0,5);
-  var ms=miss.length?'<br><span class="km">Missing: '+miss.join(', ')+'</span>':'';
-  var fb=document.getElementById(fbid);
-  fb.innerHTML='<strong>'+awarded+'/'+pts+' - '+grade+'</strong>'+fs+ms+(model?'<br><em style="font-size:.78rem;color:#888;">Model: '+model+'</em>':'');
-  fb.style.display='block';
-}
+
 
 </script>
 </body>

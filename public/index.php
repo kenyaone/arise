@@ -60,6 +60,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 if (isset($_GET['logout'])) {
     unset($_SESSION['arise_student_id']);
     session_destroy();
+    // Clear persistent session cookie
+    setcookie('arise_ph', '', ['expires' => time() - 3600, 'path' => '/arise/', 'httponly' => true, 'samesite' => 'Lax']);
     header('Location: /arise/login');
     exit;
 }

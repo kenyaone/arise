@@ -71,12 +71,34 @@ function initDatabase(): void {
 
 function getSessionHash(): string {
     if (session_status() === PHP_SESSION_NONE) {
+        // Long-lived PHP session cookie (30 days)
+        session_set_cookie_params([
+            'lifetime' => 86400 * 30,
+            'path'     => '/arise/',
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
         session_start();
     }
     if (!isset($_SESSION['arise_hash'])) {
-        $_SESSION['arise_hash'] = substr(md5(uniqid(mt_rand(), true)), 0, 16);
+        // Restore from persistent cookie if available (survives PHP session expiry)
+        if (!empty($_COOKIE['arise_ph'])) {
+            $_SESSION['arise_hash'] = $_COOKIE['arise_ph'];
+        } else {
+            $_SESSION['arise_hash'] = substr(md5(uniqid(mt_rand(), true)), 0, 16);
+        }
     }
-    return $_SESSION['arise_hash'];
+    // Keep persistent backup cookie in sync (refresh expiry each request)
+    $h = $_SESSION['arise_hash'];
+    if (!headers_sent() && (empty($_COOKIE['arise_ph']) || $_COOKIE['arise_ph'] !== $h)) {
+        setcookie('arise_ph', $h, [
+            'expires'  => time() + 86400 * 30,
+            'path'     => '/arise/',
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
+    return $h;
 }
 
 function getDeviceHash(): string {

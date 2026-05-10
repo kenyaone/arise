@@ -59,16 +59,46 @@ function smtp_send(string $to, string $subject, string $body, array $smtp): arra
 
 function snap(): array {
     return [
-        'learners'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
-        'modules'   => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
-        'lessons'   => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
-        'quizzes'   => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
-        'pretests'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
-        'posttests' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
-        'certs'     => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
-        'forum'     => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
-        'questions' => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+        'learners'       => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
+        'active_schools' => (int)db()->querySingle("SELECT COUNT(*) FROM schools WHERE is_active=1"),
+        'modules'        => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
+        'lessons'        => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
+        'quizzes'        => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
+        'pretests'       => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
+        'posttests'      => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
+        'certs'          => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
+        'forum'          => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
+        'questions'      => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+        'generated_at'   => date('Y-m-d H:i:s'),
     ];
+}
+
+// Returns only schools that are active in the schools table (respects removals), including location
+function activeSchoolRows(): array {
+    $rows = [];
+    $result = db()->query("
+        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
+        FROM students st
+        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
+        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
+        ORDER BY st.school_name
+    ");
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $sn  = $row['school_name'];
+        $sne = SQLite3::escapeString($sn);
+        $entry = [
+            'school_name'    => $sn,
+            'county'         => $row['county'] ?? '',
+            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
+            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
+            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
+            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
+            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
+            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+        ];
+        $rows[] = $entry;
+    }
+    return $rows;
 }
 
 // ── Handle AJAX requests ──────────────────────────────────────────────────────
@@ -129,10 +159,9 @@ if ($action === 'post') {
     if (!$emailTo) { echo json_encode(['status'=>'error','message'=>'No recipient email — configure settings first']); exit; }
     if (!$smtpUser || !$smtpPass) { echo json_encode(['status'=>'error','message'=>'SMTP not configured']); exit; }
 
-    $last = db()->querySingle("SELECT * FROM datapost_sync_log ORDER BY id DESC LIMIT 1", true);
-    if (!$last) { echo json_encode(['status'=>'error','message'=>'Nothing synced yet']); exit; }
-
-    $data    = json_decode($last['data_snapshot'], true);
+    // Always use live data so the report reflects the current state of the DB
+    $data    = snap();
+    $data['schools'] = activeSchoolRows();
     $subject = "ARISE — Performance Report — " . date('d/m/Y');
     $result = smtp_send($emailTo, $subject, json_encode($data, JSON_PRETTY_PRINT), [
         'host' => $cfg['smtp_host'] ?? 'smtp.gmail.com',
@@ -177,19 +206,7 @@ if ($action === 'test_email') {
 
 if ($action === 'cloud_sync') {
     header('Content-Type: application/json');
-    $schoolRows = [];
-    $result = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND deleted_at IS NULL AND school_name !='' ORDER BY school_name");
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $sn  = $row['school_name'];
-        $sne = SQLite3::escapeString($sn);
-        $schoolRows[] = [
-            'school_name'    => $sn,
-            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
-            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
-            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
-            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
-        ];
-    }
+    $schoolRows = activeSchoolRows();
     if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active schools found']); exit; }
 
     $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows]);

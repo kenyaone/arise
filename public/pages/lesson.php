@@ -42,6 +42,7 @@ if ($lessonType === 'interactive' && $filePath) {
         $html = file_get_contents($htmlFile);
         $inject = "<script>
 window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";
+window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
 window.ARISE_MODULE_SLUG='" . addslashes($lesson['module_slug']) . "';
 window.ARISE_RESUME_SLIDE=" . $resumeSlide . ";
 window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';

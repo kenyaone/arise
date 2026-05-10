@@ -2,24 +2,24 @@
   "name": "ARISE DataPost Sync",
   "short_name": "DataPost",
   "description": "Sync school data to cloud every 2 weeks",
-  "start_url": "/arise/?p=datapost",
+  "start_url": "/arise/datapost/",
   "scope": "/arise/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#ffffff",
   "theme_color": "#0ea271",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230ea271' width='192' height='192' rx='40'/><text x='96' y='110' font-size='120' fill='white' text-anchor='middle' dominant-baseline='middle'>📊</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%230ea271' width='512' height='512' rx='110'/><text x='256' y='290' font-size='320' fill='white' text-anchor='middle' dominant-baseline='middle'>📊</text></svg>",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

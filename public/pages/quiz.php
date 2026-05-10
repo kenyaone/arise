@@ -235,7 +235,14 @@ let currentQ = 0;
 let mcqAnswers = {};
 let essayAnswers = {};
 
-function parseCorrectAnswers(str) { return str ? str.toUpperCase().split(/[,\s]+/).filter(x => x) : []; }
+function parseCorrectAnswers(str) {
+    if (!str) return [];
+    const s = str.toUpperCase().trim();
+    // Handle comma/space-separated: "b,c" or "a, b" → ['B','C']
+    if (/[,\s]/.test(s)) return s.split(/[,\s]+/).filter(x => /^[A-D]$/.test(x));
+    // Handle concatenated: "abc" → ['A','B','C']
+    return s.split('').filter(x => /^[A-D]$/.test(x));
+}
 function countWords(t) { return t.trim().split(/\s+/).filter(w => w.length > 0).length; }
 
 function renderQuestion() {
@@ -250,17 +257,24 @@ function renderQuestion() {
         const selectedAnswers = mcqAnswers[q.id] || [];
         const isMultiSelect = correctAnswers.length > 1;
 
-        html += `<span class="q-type-badge badge-mcq">${isMultiSelect ? '✓ Select All That Apply' : 'Multiple Choice'}</span>
+        html += `<span class="q-type-badge badge-mcq">${isMultiSelect ? '☑ Select All That Apply' : '● Multiple Choice'}</span>
             <span class="marks-badge">${q.max_marks} mark${q.max_marks > 1 ? 's' : ''}</span>
             <div class="quiz-question">${q.question}</div><div class="quiz-options">`;
 
         ['A','B','C','D'].forEach(opt => {
             const isSelected = selectedAnswers.includes(opt);
-            const checkboxId = `checkbox-${q.id}-${opt}`;
-            html += `<label style="display:flex;align-items:center;padding:12px;margin-bottom:8px;border:2px solid ${isSelected?'var(--primary)':'var(--border)'};border-radius:8px;cursor:pointer;background:${isSelected?'rgba(108,92,231,0.08)':'transparent'};transition:all 0.2s;">
-                <input type="checkbox" id="${checkboxId}" style="width:18px;height:18px;cursor:pointer;margin-right:10px;" ${isSelected?'checked':''} onchange="toggleMCQ(${q.id},'${opt}')">
-                <span style="flex:1;cursor:pointer;">${opt}. ${q.options[opt]}</span>
-            </label>`;
+            const inputId = `input-${q.id}-${opt}`;
+            if (isMultiSelect) {
+                html += `<label style="display:flex;align-items:center;padding:12px;margin-bottom:8px;border:2px solid ${isSelected?'var(--green)':'var(--border)'};border-radius:8px;cursor:pointer;background:${isSelected?'rgba(61,99,24,0.08)':'transparent'};transition:all 0.2s;">
+                    <input type="checkbox" id="${inputId}" style="width:18px;height:18px;cursor:pointer;margin-right:10px;flex-shrink:0;" ${isSelected?'checked':''} onchange="toggleMCQ(${q.id},'${opt}',true)">
+                    <span style="flex:1;cursor:pointer;">${opt}. ${q.options[opt]}</span>
+                </label>`;
+            } else {
+                html += `<label style="display:flex;align-items:center;padding:12px;margin-bottom:8px;border:2px solid ${isSelected?'var(--green)':'var(--border)'};border-radius:8px;cursor:pointer;background:${isSelected?'rgba(61,99,24,0.08)':'transparent'};transition:all 0.2s;">
+                    <input type="radio" name="radio-${q.id}" id="${inputId}" style="width:18px;height:18px;cursor:pointer;margin-right:10px;flex-shrink:0;accent-color:var(--green);" ${isSelected?'checked':''} onchange="toggleMCQ(${q.id},'${opt}',false)">
+                    <span style="flex:1;cursor:pointer;">${opt}. ${q.options[opt]}</span>
+                </label>`;
+            }
         });
         html += `</div>`;
     } else {
@@ -286,11 +300,15 @@ function renderQuestion() {
     document.getElementById('quiz-area').innerHTML = html;
 }
 
-function toggleMCQ(id, opt) {
-    if (!mcqAnswers[id]) mcqAnswers[id] = [];
-    const idx = mcqAnswers[id].indexOf(opt);
-    if (idx >= 0) mcqAnswers[id].splice(idx, 1);
-    else mcqAnswers[id].push(opt);
+function toggleMCQ(id, opt, isMulti) {
+    if (isMulti) {
+        if (!mcqAnswers[id]) mcqAnswers[id] = [];
+        const idx = mcqAnswers[id].indexOf(opt);
+        if (idx >= 0) mcqAnswers[id].splice(idx, 1);
+        else mcqAnswers[id].push(opt);
+    } else {
+        mcqAnswers[id] = [opt];
+    }
     renderQuestion();
 }
 function updateEssay(id, text) {
