@@ -101,6 +101,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   .nav-btn{padding:8px 14px;font-size:.8rem;}
 }
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* MCQ SATA */
+.mcq-block{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;}
+.mcq-block .q-text{font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.6;}
+.mcq-block .q-text::after{content:"☑ Select all correct answers — choose 2";display:block;font-size:.72rem;font-weight:700;color:#0a5e2a;margin-top:4px;letter-spacing:.01em;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:500px){.opts{grid-template-columns:1fr;}}
+.opt{background:#f4f7f5;border:2px solid var(--border);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:.83rem;line-height:1.5;transition:.15s;display:flex;align-items:flex-start;gap:8px;}
+.opt:hover{border-color:var(--pri-l);background:#edf7f1;}
+.opt.selected{border-color:var(--pri);background:#e0f2e9;font-weight:600;}
+.opt.correct{border-color:var(--ok);background:#e8f5e9;}
+.opt.wrong{border-color:var(--no);background:#ffebee;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
 </style>
 </head>
 <body>
@@ -443,46 +455,118 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   <div class="slide-head">📝 <span data-en="Quiz — Miraa / Khat" data-sw="Jaribio — Miraa / Khat" data-sh="Quiz — Miraa / Khat"></span></div>
   <div class="quiz-wrap">
 
-    <!-- PART A -->
-    <div class="qpart-title" data-en="Part A: Fill in the Blanks (5 marks)" data-sw="Sehemu A: Jaza Nafasi (alama 5)" data-sh="Part A: Jaza Blanks (marks 5)"></div>
-
-    <div class="fill-item">1. <span data-en="The main psychoactive chemical in fresh miraa is called" data-sw="Kemikali kuu ya kubadilisha akili katika miraa safi huitwa" data-sh="Kemikali kuu ya miraa fresh inaitwa"></span> <input class="fill-blank" id="f1" placeholder="..."> <span class="fb-result" id="fr1"></span>
-    </div>
-    <div class="fill-item">2. <span data-en="The World Health Organization (WHO) classifies miraa as a drug that can cause" data-sw="WHO inaainisha miraa kama dawa inayoweza kusababisha" data-sh="WHO inasema miraa inaweza cause"></span> <input class="fill-blank" id="f2" placeholder="..."> <span data-en="dependence." data-sw="utegemezi." data-sh="dependence."></span> <span class="fb-result" id="fr2"></span>
-    </div>
-    <div class="fill-item">3. <span data-en="Miraa effects begin within" data-sw="Athari za miraa huanza ndani ya dakika" data-sh="Effects za miraa zinaanza ndani ya minutes"></span> <input class="fill-blank" id="f3" placeholder="..." style="width:80px"> <span data-en="to 30 minutes of chewing." data-sw="hadi 30 za kutafuna." data-sh="hadi 30 za kuchew."></span> <span class="fb-result" id="fr3"></span>
-    </div>
-    <div class="fill-item">4. <span data-en="Long-term miraa chewing increases the risk of" data-sw="Kutafuna miraa kwa muda mrefu kunaongeza hatari ya" data-sh="Kuchew miraa kwa muda mrefu kunaongeza risk ya"></span> <input class="fill-blank" id="f4" placeholder="..."> <span data-en="cancer in the mouth." data-sw="saratani mdomoni." data-sh="saratani mdomoni."></span> <span class="fb-result" id="fr4"></span>
-    </div>
-    <div class="fill-item">5. <span data-en="The free Kenya drug helpline number operated by NACADA is" data-sw="Nambari ya bure ya simu ya dawa Kenya inayoendeshwa na NACADA ni" data-sh="NACADA free helpline number ni"></span> <input class="fill-blank" id="f5" placeholder="..."> <span class="fb-result" id="fr5"></span>
+    <!-- Q1 -->
+    <div class="mcq-block" id="q1">
+      <div class="q-text" data-en="1. Which TWO chemicals in miraa are responsible for its mind-altering (psychoactive) effects?" data-sw="1. Kemikali MBILI gani katika miraa zinazosababisha athari za kubadilisha akili?" data-sh="1. Kemikali MBILI gani za miraa zinazobadilisha akili?">1. Which TWO chemicals in miraa are responsible for its mind-altering (psychoactive) effects?</div>
+      <div class="opts">
+        <div class="opt" data-q="1" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Cathinone" data-sw="Cathinone" data-sh="Cathinone">Cathinone</span></div>
+        <div class="opt" data-q="1" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Caffeine" data-sw="Kafeini" data-sh="Caffeine">Caffeine</span></div>
+        <div class="opt" data-q="1" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Cathine" data-sw="Cathine" data-sh="Cathine">Cathine</span></div>
+        <div class="opt" data-q="1" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Nicotine" data-sw="Nikotini" data-sh="Nicotine">Nicotine</span></div>
+      </div>
     </div>
 
-    <!-- PART B -->
-    <div class="qpart-title" data-en="Part B: Short Answer (10 marks)" data-sw="Sehemu B: Jibu Fupi (alama 10)" data-sh="Part B: Short Answer (marks 10)"></div>
-
-    <div class="sa-item">
-      <p data-en="1. Explain THREE health consequences of long-term miraa chewing. (3 marks)" data-sw="1. Eleza ATHARI TATU za kiafya za kutafuna miraa kwa muda mrefu. (alama 3)" data-sh="1. Explain MATATU health consequences za kuchew miraa kwa muda mrefu. (marks 3)"></p>
-      <textarea class="sa-box" id="sa1" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
-      <button class="grade-btn" onclick="gradeAnswer('sa1','sf1','cfg1')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
-      <div class="sa-feedback" id="sf1"></div>
+    <!-- Q2 -->
+    <div class="mcq-block" id="q2">
+      <div class="q-text" data-en="2. Which TWO statements correctly describe how miraa affects the brain?" data-sw="2. Taarifa MBILI zipi zinaelezea kwa usahihi jinsi miraa inavyoathiri ubongo?" data-sh="2. Statements MBILI zipi zinaelezea vizuri jinsi miraa inavyoaffect brain?">2. Which TWO statements correctly describe how miraa affects the brain?</div>
+      <div class="opts">
+        <div class="opt" data-q="2" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="It releases dopamine causing euphoria and energy" data-sw="Hutoa dopamine ikisababisha furaha na nguvu" data-sh="Inatoa dopamine ikisababisha euphoria na energy">It releases dopamine causing euphoria and energy</span></div>
+        <div class="opt" data-q="2" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="It slows down the central nervous system" data-sw="Hupunguza mfumo wa neva kuu" data-sh="Inapunguza central nervous system">It slows down the central nervous system</span></div>
+        <div class="opt" data-q="2" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="It increases norepinephrine causing alertness and high blood pressure" data-sw="Huongeza norepinephrine ikisababisha uangalifu na shinikizo la damu" data-sh="Inaongeza norepinephrine — alertness na high BP">It increases norepinephrine causing alertness and high blood pressure</span></div>
+        <div class="opt" data-q="2" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="It reduces heart rate and calms anxiety" data-sw="Hupunguza mapigo ya moyo na kutuliza wasiwasi" data-sh="Inapunguza heart rate na kutuliza anxiety">It reduces heart rate and calms anxiety</span></div>
+      </div>
     </div>
 
-    <div class="sa-item">
-      <p data-en="2. A friend says: 'Miraa is just a plant — it's natural and therefore safe.' How would you respond? (3 marks)" data-sw="2. Rafiki anasema: 'Miraa ni mmea tu — ni wa asili na kwa hiyo ni salama.' Ungejibu vipi? (alama 3)" data-sh="2. Rafiki anasema: 'Miraa ni plant tu — ni natural kwa hiyo ni safe.' Ungejibu vipi? (marks 3)"></p>
-      <textarea class="sa-box" id="sa2" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
-      <button class="grade-btn" onclick="gradeAnswer('sa2','sf2','cfg2')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
-      <div class="sa-feedback" id="sf2"></div>
+    <!-- Q3 -->
+    <div class="mcq-block" id="q3">
+      <div class="q-text" data-en="3. Which TWO are short-term effects that users experience when chewing miraa?" data-sw="3. Zipi ni athari MBILI za muda mfupi wanazopata watumiaji wanapotafuna miraa?" data-sh="3. Zipi ni effects MBILI za muda mfupi za kuchew miraa?">3. Which TWO are short-term effects that users experience when chewing miraa?</div>
+      <div class="opts">
+        <div class="opt" data-q="3" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Improved sleep quality" data-sw="Usingizi ulioimarishwa" data-sh="Sleep inaimprove">Improved sleep quality</span></div>
+        <div class="opt" data-q="3" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Euphoria (feeling of happiness and excitement)" data-sw="Euphoria (hisia ya furaha na msisimko)" data-sh="Euphoria — feeling ya happiness">Euphoria (feeling of happiness and excitement)</span></div>
+        <div class="opt" data-q="3" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Increased energy and reduced fatigue" data-sw="Nguvu zaidi na kupungua kwa uchovu" data-sh="Energy inaongezeka na uchovu unapotea">Increased energy and reduced fatigue</span></div>
+        <div class="opt" data-q="3" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Better concentration in school" data-sw="Umakini bora shuleni" data-sh="Concentration inaboresha shuleni">Better concentration in school</span></div>
+      </div>
     </div>
 
-    <div class="sa-item">
-      <p data-en="3. Describe FOUR warning signs that someone may be dependent on miraa. (4 marks)" data-sw="3. Eleza ISHARA NNE za onyo kwamba mtu anaweza kutegemea miraa. (alama 4)" data-sh="3. Describe FOUR warning signs kwamba mtu anaweza kuwa dependent kwa miraa. (marks 4)"></p>
-      <textarea class="sa-box" id="sa3" data-en="Write your answer here..." data-sw="Andika jibu lako hapa..." data-sh="Andika answer yako hapa..."></textarea>
-      <button class="grade-btn" onclick="gradeAnswer('sa3','sf3','cfg3')">✓ <span data-en="Grade" data-sw="Pima" data-sh="Grade"></span></button>
-      <div class="sa-feedback" id="sf3"></div>
+    <!-- Q4 -->
+    <div class="mcq-block" id="q4">
+      <div class="q-text" data-en="4. Which TWO are long-term health consequences of regularly chewing miraa?" data-sw="4. Zipi ni matokeo MAWILI ya kiafya ya muda mrefu ya kutafuna miraa mara kwa mara?" data-sh="4. Zipi ni long term health consequences MBILI za kuchew miraa regularly?">4. Which TWO are long-term health consequences of regularly chewing miraa?</div>
+      <div class="opts">
+        <div class="opt" data-q="4" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Improved cardiovascular fitness" data-sw="Ustawi wa moyo ulioimarishwa" data-sh="Heart inaimprove">Improved cardiovascular fitness</span></div>
+        <div class="opt" data-q="4" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Oral cancer risk and severe tooth decay" data-sw="Hatari ya saratani ya mdomo na kuoza kwa meno" data-sh="Risk ya oral cancer na meno kuoza">Oral cancer risk and severe tooth decay</span></div>
+        <div class="opt" data-q="4" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Chronic high blood pressure and stroke risk" data-sw="Shinikizo la damu la kudumu na hatari ya kiharusi" data-sh="Chronic high BP na risk ya stroke">Chronic high blood pressure and stroke risk</span></div>
+        <div class="opt" data-q="4" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Stronger immune system" data-sw="Mfumo wa kinga ulioimarishwa" data-sh="Immune system inaimprove">Stronger immune system</span></div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="mcq-block" id="q5">
+      <div class="q-text" data-en="5. Which TWO statements about miraa and dependence are correct?" data-sw="5. Taarifa MBILI zipi kuhusu miraa na utegemezi ni sahihi?" data-sh="5. Statements MBILI zipi kuhusu miraa na dependence ni correct?">5. Which TWO statements about miraa and dependence are correct?</div>
+      <div class="opts">
+        <div class="opt" data-q="5" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Miraa causes significant psychological dependence" data-sw="Miraa husababisha utegemezi mkubwa wa kisaikolojia" data-sh="Miraa inakusababishia psychological dependence kubwa">Miraa causes significant psychological dependence</span></div>
+        <div class="opt" data-q="5" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Miraa has the same severe physical withdrawal as heroin" data-sw="Miraa ina uondoaji mkali wa kimwili sawa na heroin" data-sh="Miraa ina same severe withdrawal kama heroin">Miraa has the same severe physical withdrawal as heroin</span></div>
+        <div class="opt" data-q="5" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="WHO classifies khat as a drug of abuse" data-sw="WHO inaainisha khat kama dawa ya kulevya" data-sh="WHO inasema khat ni drug ya abuse">WHO classifies khat as a drug of abuse</span></div>
+        <div class="opt" data-q="5" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Miraa is completely harmless and non-addictive" data-sw="Miraa haina madhara kabisa na haikusababishi uraibu" data-sh="Miraa haina madhara wala addiction">Miraa is completely harmless and non-addictive</span></div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="mcq-block" id="q6">
+      <div class="q-text" data-en="6. Which TWO are warning signs that a person may be dependent on miraa?" data-sw="6. Zipi ni ishara MBILI za onyo kwamba mtu anaweza kutegemea miraa?" data-sh="6. Zipi ni warning signs MBILI za dependence ya miraa?">6. Which TWO are warning signs that a person may be dependent on miraa?</div>
+      <div class="opts">
+        <div class="opt" data-q="6" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Chewing every day and feeling very unwell if they skip a day" data-sw="Kutafuna kila siku na kuhisi vibaya sana wakiachilia siku" data-sh="Unachew kila siku na ukiskip siku unajisikia vibaya sana">Chewing every day and feeling very unwell if they skip a day</span></div>
+        <div class="opt" data-q="6" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Chewing miraa once a month at social events" data-sw="Kutafuna miraa mara moja kwa mwezi katika matukio ya kijamii" data-sh="Unachew miraa mara moja kwa mwezi at events">Chewing miraa once a month at social events</span></div>
+        <div class="opt" data-q="6" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Spending most of their income on miraa while family goes without basics" data-sw="Kutumia pesa nyingi kwenye miraa huku familia ikiwa na uhitaji" data-sh="Spending most ya pesa kwa miraa — familia haipati basics">Spending most of their income on miraa while family goes without basics</span></div>
+        <div class="opt" data-q="6" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Feeling energetic and productive after chewing" data-sw="Kuhisi nguvu na tija baada ya kutafuna" data-sh="Kujisikia energetic na productive baada ya kuchew">Feeling energetic and productive after chewing</span></div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="mcq-block" id="q7">
+      <div class="q-text" data-en="7. Which TWO facts about miraa's legal status and origin are correct?" data-sw="7. Ukweli MBILI gani kuhusu hali ya kisheria ya miraa na asili yake ni sahihi?" data-sh="7. Facts MBILI zipi kuhusu legal status na origin ya miraa ni correct?">7. Which TWO facts about miraa's legal status and origin are correct?</div>
+      <div class="opts">
+        <div class="opt" data-q="7" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Miraa is legal to grow and sell in Kenya" data-sw="Miraa ni halali kulima na kuuza Kenya" data-sh="Miraa ni legal kulima na kuuza Kenya">Miraa is legal to grow and sell in Kenya</span></div>
+        <div class="opt" data-q="7" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Miraa is banned in some countries such as the UK and USA" data-sw="Miraa imepigwa marufuku nchi nyingine kama UK na USA" data-sh="Miraa imebanned places kama UK na USA">Miraa is banned in some countries such as the UK and USA</span></div>
+        <div class="opt" data-q="7" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Miraa is illegal in all African countries" data-sw="Miraa ni haramu katika nchi zote za Afrika" data-sh="Miraa ni illegal Afrika yote">Miraa is illegal in all African countries</span></div>
+        <div class="opt" data-q="7" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Miraa is mainly grown in Nairobi County" data-sw="Miraa hulimwa zaidi Kaunti ya Nairobi" data-sh="Miraa inakuzwa zaidi Nairobi">Miraa is mainly grown in Nairobi County</span></div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="mcq-block" id="q8">
+      <div class="q-text" data-en="8. Which TWO are effective ways to refuse miraa when offered by peers?" data-sw="MBILI gani ni njia bora za kukataa miraa unapopewa na wenzako?" data-sh="MBILI gani ni njia nzuri za kurefuse miraa ukipewa na peers?">8. Which TWO are effective ways to refuse miraa when offered by peers?</div>
+      <div class="opts">
+        <div class="opt" data-q="8" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Say nothing and accept to avoid conflict with friends" data-sw="Usiseme kitu na ukubali kuepuka mgogoro na marafiki" data-sh="Usiseme kitu na ukubali kuepuka conflict na friends">Say nothing and accept to avoid conflict with friends</span></div>
+        <div class="opt" data-q="8" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="'No thanks — I'm watching my health'" data-sw="'Hapana asante — ninaangalia afya yangu'" data-sh="'Hapana sawa — ninawatch health yangu'">'No thanks — I'm watching my health'</span></div>
+        <div class="opt" data-q="8" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Simply walk away and stay firm in your decision" data-sw="Toka tu na ukae imara katika uamuzi wako" data-sh="Toka tu — stay firm katika decision yako">Simply walk away and stay firm in your decision</span></div>
+        <div class="opt" data-q="8" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Agree to try just once so friends don't feel rejected" data-sw="Kubali kujaribu mara moja ili marafiki wasijisikie kukataliwa" data-sh="Kubali kujaribu mara moja tu ili friends wasifeel rejected">Agree to try just once so friends don't feel rejected</span></div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="mcq-block" id="q9">
+      <div class="q-text" data-en="9. Which TWO helplines provide support for drug dependence in Kenya?" data-sw="Nambari MBILI gani za msaada hutoa usaidizi kwa utegemezi wa dawa Kenya?" data-sh="Helplines MBILI zipi zinatoa support kwa drug dependence Kenya?">9. Which TWO helplines provide support for drug dependence in Kenya?</div>
+      <div class="opts">
+        <div class="opt" data-q="9" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="NACADA — call 1192 (free counselling and referrals)" data-sw="NACADA — piga 1192 (ushauri nasaha na rufaa bila malipo)" data-sh="NACADA — piga 1192 (free counselling na referrals)">NACADA — call 1192 (free counselling and referrals)</span></div>
+        <div class="opt" data-q="9" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Kenya Revenue Authority — call 0800 (tax compliance)" data-sw="Mamlaka ya Mapato Kenya — piga 0800 (uzingatiaji wa kodi)" data-sh="Kenya Revenue Authority — tax compliance">Kenya Revenue Authority — call 0800 (tax compliance)</span></div>
+        <div class="opt" data-q="9" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Childline Kenya — call 116 (free, 24/7 child support)" data-sw="Childline Kenya — piga 116 (bure, msaada wa watoto 24/7)" data-sh="Childline Kenya — piga 116 (free, 24/7)">Childline Kenya — call 116 (free, 24/7 child support)</span></div>
+        <div class="opt" data-q="9" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Kenya Bureau of Standards — product safety certification" data-sw="Shirika la Viwango la Kenya — uthibitisho wa usalama wa bidhaa" data-sh="KEBS — product safety certification">Kenya Bureau of Standards — product safety certification</span></div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="mcq-block" id="q10">
+      <div class="q-text" data-en="10. Which TWO statements correctly describe cathinone, the main chemical in miraa?" data-sw="10. Taarifa MBILI zipi zinaelezea kwa usahihi cathinone, kemikali kuu katika miraa?" data-sh="10. Statements MBILI zipi zinaelezea cathinone — main chemical ya miraa — vizuri?">10. Which TWO statements correctly describe cathinone, the main chemical in miraa?</div>
+      <div class="opts">
+        <div class="opt" data-q="10" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="It is similar in effect to amphetamine" data-sw="Ina athari inayofanana na amphetamine" data-sh="Ina effect kama amphetamine">It is similar in effect to amphetamine</span></div>
+        <div class="opt" data-q="10" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="It is most potent in dried or old miraa" data-sw="Ina nguvu zaidi katika miraa kavu au ya zamani" data-sh="Ina nguvu zaidi katika miraa kavu au ya zamani">It is most potent in dried or old miraa</span></div>
+        <div class="opt" data-q="10" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="It degrades rapidly after harvest — users prefer fresh miraa within 48 hours" data-sw="Inaharibika haraka baada ya kuvunwa — watumiaji wanapenda miraa safi ndani ya masaa 48" data-sh="Inaexpire haraka — watu wanapenda fresh miraa within 48 hours">It degrades rapidly after harvest — users prefer fresh miraa within 48 hours</span></div>
+        <div class="opt" data-q="10" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="It is a sedative that relaxes and calms the brain" data-sw="Ni dawa ya kutuliza ambayo inafanya ubongo utulie" data-sh="Ni sedative inayocalm na kurelax brain">It is a sedative that relaxes and calms the brain</span></div>
+      </div>
     </div>
 
     <div class="submit-bar">
-      <button class="submit-btn" onclick="submitQuiz()"><span data-en="Submit Quiz" data-sw="Wasilisha Jaribio" data-sh="Submit Quiz">Submit Quiz</span></button>
+      <button class="submit-btn" onclick="checkAllMCQ()"><span data-en="Submit Quiz" data-sw="Wasilisha Jaribio" data-sh="Submit Quiz">Submit Quiz</span></button>
     </div>
     <div class="score-box" id="score-box">
       <h3 id="score-title"></h3>
@@ -507,15 +591,19 @@ const TOTAL = 10;
 let lang = 'en';
 let visited = new Set([1]);
 let quizSubmitted = false;
-let partAScore = 0;
 
-// Fill-blank answers
-const FILL_ANSWERS = {
-  f1: ['cathinone','kathion'],
-  f2: ['psychological','psycho','kisaikolojia','mental'],
-  f3: ['15','dakika 15'],
-  f4: ['oral','mouth','mdomo'],
-  f5: ['1192']
+// Correct answers: 2 per question
+const mcqAnswers = {
+  1: ['A','C'],
+  2: ['A','C'],
+  3: ['B','C'],
+  4: ['B','C'],
+  5: ['A','C'],
+  6: ['A','C'],
+  7: ['A','B'],
+  8: ['B','C'],
+  9: ['A','C'],
+  10: ['A','C']
 };
 
 // ── LANGUAGE ──
@@ -563,78 +651,58 @@ function updateDots() {
   }
 }
 
-// ── FILL BLANK GRADING ──
-function checkFill(id, resultId) {
-  const val = document.getElementById(id).value.trim().toLowerCase();
-  const accepted = FILL_ANSWERS[id];
-  const ok = accepted.some(a => val.includes(a));
-  const el = document.getElementById(resultId);
-  el.textContent = ok ? '✓ Correct! (1 mark)' : '✗ Expected: ' + accepted[0];
-  el.className = 'fb-result ' + (ok ? 'ok' : 'no');
-  return ok ? 1 : 0;
-}
-
-// ── SHORT ANSWER GRADING ──
-const GRADE_CFGS = {
-  cfg1: {
-    keywords: ['heart','blood pressure','mental','psychosis','depression','oral','tooth','teeth','cancer','liver','malnutrition','weight','addiction','stroke','moyo','shinikizo','akili','meno','saratani','ini','uzito','uraibu'],
-    required: 3, marks: 3,
-    model: 'Three consequences: (1) Heart — chronic high blood pressure and stroke risk; (2) Mental health — depression, psychosis, paranoia; (3) Oral health — tooth decay, gum disease, oral cancer risk.'
-  },
-  cfg2: {
-    keywords: ['natural','chemical','cathinone','dopamine','dangerous','harmful','WHO','addictive','dependence','asili','kemikali','hatari','kudhuru','uraibu','utegemezi'],
-    required: 3, marks: 3,
-    model: 'Response: Being natural does not mean safe. Cathinone is a powerful chemical similar to amphetamine. Many natural substances are harmful. WHO classifies it as a drug causing psychological dependence. Long-term chewing causes serious health damage.'
-  },
-  cfg3: {
-    keywords: ['daily','every day','money','income','spend','family','irritable','depressed','concentrate','tolerance','more','lie','lying','work','hobbies','kila siku','pesa','familia','hasira','unyogovu','zaidi','kusimama','burudani'],
-    required: 4, marks: 4,
-    model: 'Four warning signs: (1) Chewing every day — cannot skip without feeling unwell; (2) Spending most income on miraa while family lacks basics; (3) Feeling irritable or depressed without miraa; (4) Needing more to get same effect (tolerance); (5) Giving up work or hobbies to chew more; (6) Lying to family about use.'
+// ── MCQ SELECTION ──
+function selectOpt(el) {
+  if (quizSubmitted) return;
+  const q = el.getAttribute('data-q');
+  const selected = document.querySelectorAll('.opt[data-q="' + q + '"].selected');
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+  } else {
+    if (selected.length >= 2) return;
+    el.classList.add('selected');
   }
-};
-
-function gradeAnswer(saId, fbId, cfgKey) {
-  const cfg = GRADE_CFGS[cfgKey];
-  const ans = document.getElementById(saId).value.trim().toLowerCase();
-  if (!ans) { alert('Please write an answer first.'); return; }
-  const found = cfg.keywords.filter(k => ans.includes(k.toLowerCase()));
-  const missed = cfg.keywords.filter(k => !ans.includes(k.toLowerCase())).slice(0, 5);
-  const hitRate = Math.min(found.length / cfg.required, 1);
-  const marks = Math.round(hitRate * cfg.marks);
-  const cls = marks >= cfg.marks ? 'ok' : marks > 0 ? 'partial' : 'no';
-  const fb = document.getElementById(fbId);
-  fb.className = 'sa-feedback show ' + cls;
-  fb.innerHTML =
-    '<strong>' + marks + ' / ' + cfg.marks + ' marks</strong><br>' +
-    (found.length ? '<span class="kw-found">\u2713 Key points: ' + found.slice(0,6).join(', ') + '</span><br>' : '') +
-    (missed.length ? '<span class="kw-miss">\u2717 Missing: ' + missed.join(', ') + '</span><br>' : '') +
-    '<div class="model-ans"><strong>Model answer:</strong> ' + cfg.model + '</div>';
 }
 
 // ── SUBMIT QUIZ ──
-function submitQuiz() {
+function checkAllMCQ() {
   if (quizSubmitted) return;
-  partAScore = 0;
-  ['f1','f2','f3','f4','f5'].forEach(id => {
-    partAScore += checkFill(id, id.replace('f','fr'));
-  });
   quizSubmitted = true;
+  let score = 0;
+  for (let q = 1; q <= 10; q++) {
+    const correct = mcqAnswers[q];
+    const opts = document.querySelectorAll('.opt[data-q="' + q + '"]');
+    let qCorrect = true;
+    opts.forEach(opt => {
+      const letter = opt.getAttribute('data-opt');
+      const isCorrect = correct.includes(letter);
+      const isSelected = opt.classList.contains('selected');
+      if (isCorrect) opt.classList.add('correct');
+      if (isSelected && !isCorrect) { opt.classList.add('wrong'); qCorrect = false; }
+      if (isCorrect && !isSelected) qCorrect = false;
+      opt.onclick = null;
+    });
+    if (qCorrect) score++;
+  }
+  const pct = Math.round((score / 10) * 100);
   const box = document.getElementById('score-box');
   box.style.display = 'block';
-  document.getElementById('score-title').textContent = 'Part A Score: ' + partAScore + ' / 5';
-  document.getElementById('score-detail').textContent = 'Grade short answer questions above for full marks. Well done for completing the lesson!';
+  document.getElementById('score-title').textContent = score + ' / 10 (' + pct + '%)';
+  document.getElementById('score-detail').textContent =
+    pct >= 80 ? '⭐ Excellent! You understand miraa and its consequences very well.' :
+    pct >= 60 ? '👍 Good effort! Review the highlighted questions and try again.' :
+    '📖 Keep studying! Check the green correct answers and revisit the lesson slides.';
   box.scrollIntoView({behavior:'smooth'});
 
-  // Report to ARISE LMS
   if (window.ARISE_LESSON_ID) {
     fetch('/arise/api/submit-score', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         lesson_id: window.ARISE_LESSON_ID,
-        score: partAScore,
-        total: 5,
-        percent: Math.round((partAScore/5)*100)
+        score: score,
+        total: 10,
+        percent: pct
       })
     }).catch(()=>{});
   }
@@ -647,7 +715,7 @@ function applyLang(l) {
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
       el.placeholder = v;
     } else if (el.tagName === 'BUTTON') {
-      return; // buttons use child spans
+      return;
     } else if (el.children.length === 0) {
       el.textContent = v;
     }
