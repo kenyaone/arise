@@ -71,6 +71,8 @@ function initDatabase(): void {
 
 function getSessionHash(): string {
     if (session_status() === PHP_SESSION_NONE) {
+        // Extend server-side session lifetime (cPanel default is only 24 min)
+        @ini_set('session.gc_maxlifetime', 86400 * 30);
         // Long-lived PHP session cookie (30 days)
         session_set_cookie_params([
             'lifetime' => 86400 * 30,
@@ -261,9 +263,22 @@ function getStudentBySession(): ?array {
     $hash = getSessionHash();
     $stmt = db()->prepare('SELECT * FROM students WHERE session_hash = :hash AND is_active = 1');
     $stmt->bindValue(':hash', $hash);
-    $result = $stmt->execute();
-    $row = $result->fetchArray(SQLITE3_ASSOC);
-    return $row ?: null;
+    $row = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    if ($row) return $row;
+
+    // Fallback: recover by student_id stored in session (survives hash mismatch after re-login on another device)
+    $sid = (int)($_SESSION['arise_student_id'] ?? 0);
+    if ($sid > 0) {
+        $stmt2 = db()->prepare('SELECT * FROM students WHERE id = :id AND is_active = 1');
+        $stmt2->bindValue(':id', $sid);
+        $row2 = $stmt2->execute()->fetchArray(SQLITE3_ASSOC);
+        if ($row2) {
+            // Re-sync session hash so future hash-based lookups work
+            try { db()->exec("UPDATE students SET session_hash='".SQLite3::escapeString($hash)."' WHERE id=$sid"); } catch(\Exception $e) {}
+            return $row2;
+        }
+    }
+    return null;
 }
 
 function registerStudent(string $name, string $school, string $class): int {

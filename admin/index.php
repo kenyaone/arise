@@ -121,7 +121,7 @@ $navGroups = [
     ],
     'Content' => [
         ['p'=>'content',    'icon'=>'📚','label'=>'Modules',     'perm'=>'content_view'],
-        ['p'=>'teacher_content_publish','icon'=>'📤','label'=>'Publish Content', 'perm'=>'content_manage', 'role'=>'teacher'],
+        ['p'=>'teacher_content_publish','icon'=>'📤','label'=>'Publish Content', 'perm'=>'content_manage'],
         ['p'=>'quiz',       'icon'=>'🧠','label'=>'Quiz Builder', 'perm'=>'content_manage'],
         ['p'=>'admin_question_difficulty','icon'=>'📊','label'=>'Question Performance', 'perm'=>'dashboard'],
         ['p'=>'challenges', 'icon'=>'💪','label'=>'Challenges',  'perm'=>'content_manage'],
