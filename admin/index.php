@@ -128,7 +128,8 @@ $navGroups = [
         ['p'=>'bulk_upload','icon'=>'📦','label'=>'Bulk Upload',  'perm'=>'content_manage'],
     ],
     'People' => [
-        ['p'=>'schools',     'icon'=>'🏫','label'=>'Projects',       'perm'=>'content_manage'],
+        ['p'=>'clusters',    'icon'=>'📁','label'=>'Clusters',        'perm'=>'content_manage'],
+        ['p'=>'schools',     'icon'=>'🏫','label'=>'Projects',        'perm'=>'content_manage'],
         ['p'=>'students',    'icon'=>'👥','label'=>'Learners',        'perm'=>'students_view'],
         ['p'=>'certificates','icon'=>'🎓','label'=>'Certificates',    'perm'=>'students_view'],
         ['p'=>'questions',   'icon'=>'❓','label'=>'Anon Questions',  'perm'=>'questions_view'],
@@ -1101,6 +1102,9 @@ elseif ($page === 'audit'):
 
 elseif ($page === 'bulk_upload'):
     include __DIR__.'/pages/admin_bulk_upload.php';
+
+elseif ($page === 'clusters'):
+    include __DIR__.'/pages/admin_clusters.php';
 
 elseif ($page === 'reports'):
     include __DIR__.'/pages/admin_reports.php';
