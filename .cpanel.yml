@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/cpmsfdav/public_html/arise/
+    - /bin/rsync -av --exclude='.git' --exclude='data/arise.db' . $DEPLOYPATH
