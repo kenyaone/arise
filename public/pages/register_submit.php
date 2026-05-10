@@ -77,6 +77,7 @@ if ($existing) {
     if (session_status() === PHP_SESSION_NONE) session_start();
     $_SESSION['arise_student_id']   = $existing['id'];
     $_SESSION['arise_student_name'] = $name;
+    setcookie('arise_uid', $existing['id'], ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
 
     header('Location: ?p=modules&exists=1');
     exit;
@@ -105,6 +106,7 @@ $linkStmt->execute();
 if (session_status() === PHP_SESSION_NONE) session_start();
 $_SESSION['arise_student_id']   = $studentId;
 $_SESSION['arise_student_name'] = $name;
+setcookie('arise_uid', $studentId, ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
 
 header('Location: ?p=modules');
 exit;

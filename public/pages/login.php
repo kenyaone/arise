@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
         if ($student && !$error) {
             if (session_status() === PHP_SESSION_NONE) session_start();
             $_SESSION['arise_student_id'] = $student['id'];
+            setcookie('arise_uid', $student['id'], ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
             $hash = getSessionHash();
             if ($hash) {
                 $stmt2 = db()->prepare('UPDATE students SET session_hash=:h WHERE id=:id');

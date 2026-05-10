@@ -266,15 +266,17 @@ function getStudentBySession(): ?array {
     $row = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
     if ($row) return $row;
 
-    // Fallback: recover by student_id stored in session (survives hash mismatch after re-login on another device)
+    // Fallback: recover by student_id from session or persistent cookie (survives any session loss)
     $sid = (int)($_SESSION['arise_student_id'] ?? 0);
+    if ($sid <= 0) $sid = (int)($_COOKIE['arise_uid'] ?? 0);
     if ($sid > 0) {
         $stmt2 = db()->prepare('SELECT * FROM students WHERE id = :id AND is_active = 1');
         $stmt2->bindValue(':id', $sid);
         $row2 = $stmt2->execute()->fetchArray(SQLITE3_ASSOC);
         if ($row2) {
-            // Re-sync session hash so future hash-based lookups work
+            // Re-sync session hash and refresh persistent cookie
             try { db()->exec("UPDATE students SET session_hash='".SQLite3::escapeString($hash)."' WHERE id=$sid"); } catch(\Exception $e) {}
+            if (!headers_sent()) setcookie('arise_uid', $sid, ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
             return $row2;
         }
     }
