@@ -54,7 +54,11 @@ try { runAutoBackup(); } catch (Exception $e) {}
 $modules = getModules();
 $page = $_GET['p'] ?? '';
 
-if (session_status() === PHP_SESSION_NONE) session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.gc_maxlifetime', 86400 * 30);
+    session_set_cookie_params(['lifetime' => 86400 * 30, 'path' => '/arise/', 'httponly' => true, 'samesite' => 'Lax']);
+    session_start();
+}
 
 // Student logout
 if (isset($_GET['logout'])) {

@@ -9,7 +9,7 @@ $isTeacher = false;
 
 // Check admin session (for admin panel logins)
 if (isset($_SESSION['arise_admin_id']) && isset($_SESSION['arise_admin_role'])) {
-    $isTeacher = in_array($_SESSION['arise_admin_role'], ['teacher', 'admin']);
+    $isTeacher = in_array($_SESSION['arise_admin_role'], ['teacher', 'admin', 'superadmin']);
 }
 
 // Check student session with teacher role (for student portal logins)
