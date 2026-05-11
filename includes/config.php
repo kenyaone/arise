@@ -264,7 +264,15 @@ function getStudentBySession(): ?array {
     $stmt = db()->prepare('SELECT * FROM students WHERE session_hash = :hash AND is_active = 1');
     $stmt->bindValue(':hash', $hash);
     $row = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
-    if ($row) return $row;
+    if ($row) {
+        // Keep arise_uid cookie alive (refresh expiry on every request)
+        $sid = $row['id'];
+        if (!headers_sent() && (empty($_COOKIE['arise_uid']) || (int)$_COOKIE['arise_uid'] !== $sid)) {
+            setcookie('arise_uid', $sid, ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
+        }
+        $_SESSION['arise_student_id'] = $sid;
+        return $row;
+    }
 
     // Fallback: recover by student_id from session or persistent cookie (survives any session loss)
     $sid = (int)($_SESSION['arise_student_id'] ?? 0);
@@ -274,9 +282,10 @@ function getStudentBySession(): ?array {
         $stmt2->bindValue(':id', $sid);
         $row2 = $stmt2->execute()->fetchArray(SQLITE3_ASSOC);
         if ($row2) {
-            // Re-sync session hash and refresh persistent cookie
+            // Re-sync session hash and refresh both persistent cookies
             try { db()->exec("UPDATE students SET session_hash='".SQLite3::escapeString($hash)."' WHERE id=$sid"); } catch(\Exception $e) {}
             if (!headers_sent()) setcookie('arise_uid', $sid, ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
+            $_SESSION['arise_student_id'] = $sid;
             return $row2;
         }
     }

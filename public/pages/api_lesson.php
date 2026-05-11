@@ -144,6 +144,88 @@ switch ($action) {
         echo json_encode(['status' => 'ok']);
         break;
 
+    // ── save_quiz_score: score from interactive lesson MCQ quiz ─────────
+    case 'save_quiz_score':
+        $lessonId = intval($body['lesson_id'] ?? 0);
+        $score    = intval($body['score']     ?? 0);
+        $total    = intval($body['total']     ?? 10);
+        $percent  = floatval($body['percent'] ?? 0);
+
+        if ($lessonId) {
+            $lesson = db()->querySingle(
+                "SELECT l.id, l.slug, l.module_id, m.slug AS mod_slug, m.title AS mod_title
+                 FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=$lessonId",
+                true
+            );
+            if ($lesson) {
+                $lessonSlug = $lesson['slug'];
+                $moduleId   = intval($lesson['module_id']);
+                $hash = getSessionHash();
+                $sid  = getStudentId();
+
+                $stmt = db()->prepare(
+                    'INSERT INTO quiz_attempts (session_hash, student_id, module_id, lesson_slug, score, total_questions, percentage)
+                     VALUES (:hash, :sid, :mod, :lslug, :score, :total, :pct)'
+                );
+                $stmt->bindValue(':hash',  $hash);
+                $stmt->bindValue(':sid',   $sid);
+                $stmt->bindValue(':mod',   $moduleId);
+                $stmt->bindValue(':lslug', $lessonSlug);
+                $stmt->bindValue(':score', $score);
+                $stmt->bindValue(':total', $total);
+                $stmt->bindValue(':pct',   $percent);
+                $stmt->execute();
+
+                updateDailyStats();
+
+                if ($sid) {
+                    $xpEarned = $percent >= 60 ? 150 : 50;
+                    awardXP($sid, $xpEarned, 'quiz', 'Quiz: ' . $lessonSlug . ' ' . $percent . '%');
+                    if ($percent >= 60) {
+                        db()->exec("UPDATE student_xp SET total_quizzes_passed=total_quizzes_passed+1 WHERE student_id=$sid");
+                    }
+
+                    // Auto-issue certificate if score >= 60%
+                    if ($percent >= 60) {
+                        $student = getStudentBySession();
+                        $module  = getModule($lesson['mod_slug']);
+                        if ($student && $module) {
+                            $existing = db()->querySingle(
+                                "SELECT id FROM certificates WHERE student_id=$sid AND module_id=$moduleId"
+                            );
+                            if (!$existing) {
+                                do {
+                                    $certNum = 'ARISE-' . date('Y') . '-' . str_pad(mt_rand(10000,99999),5,'0',STR_PAD_LEFT);
+                                } while (db()->querySingle("SELECT id FROM certificates WHERE cert_number='" . SQLite3::escapeString($certNum) . "'"));
+
+                                $stmt2 = db()->prepare(
+                                    'INSERT INTO certificates (cert_number, student_id, student_name, module_id, module_title, score, percentage)
+                                     VALUES (:cert, :sid, :name, :mid, :mtitle, :score, :pct)'
+                                );
+                                $stmt2->bindValue(':cert',   $certNum);
+                                $stmt2->bindValue(':sid',    $sid);
+                                $stmt2->bindValue(':name',   $student['full_name']);
+                                $stmt2->bindValue(':mid',    $moduleId);
+                                $stmt2->bindValue(':mtitle', $module['title']);
+                                $stmt2->bindValue(':score',  $score);
+                                $stmt2->bindValue(':pct',    $percent);
+                                $stmt2->execute();
+                            } elseif ($percent > db()->querySingle("SELECT percentage FROM certificates WHERE student_id=$sid AND module_id=$moduleId")) {
+                                $stmt2 = db()->prepare('UPDATE certificates SET score=:s, percentage=:p WHERE student_id=:sid AND module_id=:mid');
+                                $stmt2->bindValue(':s',   $score);
+                                $stmt2->bindValue(':p',   $percent);
+                                $stmt2->bindValue(':sid', $sid);
+                                $stmt2->bindValue(':mid', $moduleId);
+                                $stmt2->execute();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        echo json_encode(['status' => 'ok']);
+        break;
+
     // ── ack_cw: acknowledge content warning for a module ───────────────
     case 'ack_cw':
         $moduleId = intval($body['module_id'] ?? 0);

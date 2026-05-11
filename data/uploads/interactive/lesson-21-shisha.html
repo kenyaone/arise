@@ -138,7 +138,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .sa-area:focus{outline:none;border-color:var(--pri);}
 .grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
 .grade-btn:hover{background:var(--pri-l);}
-.q-text::after{content:"☑ Select all correct answers — choose 2";display:block;font-size:.72rem;font-weight:700;color:#0a5e2a;margin-top:4px;letter-spacing:.01em;}.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
 .score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
 .score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
 .score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
@@ -363,122 +363,131 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 
 </div>
 
-<!-- ═══ SLIDE 9 ═══ -->
 <div class="slide">
-<div class="slide-head">📝 <span class="en">Reflection & Practice</span><span class="sw">Tafakari na Mazoezi</span><span class="sh">Reflection na Practice</span></div>
-<div class="journal-box">
-<span class="journal-label">📓 <span class="en">Personal Reflection</span><span class="sw">Tafakari ya Kibinafsi</span></span>
-<p style="font-size:.85rem;margin-bottom:8px;color:var(--soft);"><span class="en">Have you ever seen shisha being used as a "normal" social activity? What myths did people believe? What would you say now that you know the facts?</span><span class="sw">Je, umewahi kuona shisha ikitumika kama shughuli ya kawaida ya kijamii? Ni hadithi zipi ambazo watu waliamini? Ungesema nini sasa ukijua ukweli?</span></p>
-<textarea class="journal-area" id="journalEntry" placeholder="Write here..."></textarea>
-<button class="journal-save" onclick="saveJournal('shisha', document.getElementById('journalEntry'))">💾 Save</button>
-<div class="journal-fb" id="journalFb"></div>
-</div>
-<div class="example-box"><strong><span class="en">Quick Check</span><span class="sw">Quick Check</span></strong><span class="en">Before the quiz: (1) How many times more tar does one shisha session produce vs one cigarette? (2) Name THREE chemicals in shisha smoke. (3) Why is sharing a shisha pipe a health risk beyond nicotine? (4) What is the NACADA helpline number?</span><span class="sw">Before the quiz: (1) How many times more tar does one shisha session produce vs one cigarette? (2) Name THREE chemicals in shisha smoke. (3) Why is sharing a shisha pipe a health risk beyond nicotine? (4) What is the NACADA helpline number?</span></div>
-
-</div>
-
-<!-- ═══ SLIDE 10 — QUIZ ═══ -->
-<div class="slide">
-<div class="slide-head">📊 <span class="en">Quiz — 25 Marks</span><span class="sw">Jaribio — Alama 25</span><span class="sh">Quiz — Marks 25</span></div>
-<p class="tp" style="font-size:.82rem;color:var(--soft);"><span class="en">Complete all parts. 6/10 (60%) to earn your certificate.</span><span class="sw">Kamilisha sehemu zote. 15/25 kupata cheti.</span><span class="sh">Fanya sehemu zote. 15/25 kupata certificate.</span></p>
-
-<div class="quiz-part-head"><span class="en">Part A: MCQ — 10 marks</span><span class="sw">Sehemu A: MCQ</span><span class="sh">Part A: MCQ</span></div>
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">1. Which of the following are TRUE about how much tar one shisha session produces compared to smoking one cigarette?</span><span class="sw">1. Yapi kati ya yafuatayo ni KWELI kuhusu kiasi cha lami kinachotolewa na kipindi kimoja cha shisha ikilinganishwa na sigara moja?</span><span class="sh">1. Which of the following ni TRUE kuhusu kiasi cha tar one shisha session hutoa compared na smoking one cigarette?</span></div>
+<div class="q-text">1. A school counselor in Nakuru conducts a lesson on recognizing signs of stress in adolescents. Which are SIGNS OF STRESS in adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq1">
-<div class="opt" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span><span class="en">5 times more</span><span class="sw">Mara 5 zaidi</span><span class="sh">Mara 5 zaidi</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span><span class="en">10 times more</span><span class="sw">Mara 10 zaidi</span><span class="sh">Mara 10 zaidi</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span><span class="en">36 times more</span><span class="sw">Mara 36 zaidi</span><span class="sh">Mara 36 zaidi</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span><span class="en">A single shisha session also delivers far more carbon monoxide than a single cigarette</span><span class="sw">Kikao kimoja cha shisha pia hutoa monoksidi ya kaboni zaidi zaidi kuliko sigara moja</span><span class="sh">Kikao kimoja cha shisha pia hutoa monoksidi ya kaboni zaidi zaidi kuliko sigara moja</span></div>
-</div><div class="mcq-fb" id="fb_mcq1"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Difficulty concentrating or declining academic performance.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Withdrawal from friends and family.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Changes in sleep patterns — sleeping too much or too little.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Consistently high energy and enthusiasm for activities.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Physical symptoms such as headaches, stomachaches, and fatigue without medical cause.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">2. Which of the following explain why the water in a shisha pipe does NOT make it safer?</span><span class="sw">2. Yapi kati ya yafuatayo yanaeleza kwa nini maji katika bomba la shisha HAYAFANYI kuwa salama zaidi?</span><span class="sh">2. Which of the following vinaeleza kwa nini maji kwa shisha pipe HAYAFANYI kuwa safer?</span></div>
+<div class="q-text">2. Peter, 16, Kisii, is feeling stressed about his KCSE exams. His friend advises him to drink alcohol at weekends to &#x27;take his mind off things.&#x27; What is WRONG with this advice?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq2">
-<div class="opt" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span><span class="en">The water evaporates before filtering anything</span><span class="sw">Maji hupuka kabla ya kuchuja chochote</span><span class="sh">Maji huvuka kabla ya kuchuja kitu chochote</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span><span class="en">Water only cools the smoke — toxins like CO, nicotine and tar still pass through unchanged</span><span class="sw">Maji hupoza moshi tu — sumu kama CO, nikotini na lami bado hupita bila kubadilika</span><span class="sh">Maji hupoza smoke tu — toxins kama CO, nikotini na tar bado hupita unchanged</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span><span class="en">Water turns chemicals into harmless vapour</span><span class="sw">Maji hubadilisha kemikali kuwa mvuke usio na madhara</span><span class="sh">Maji hubadilisha chemicals kuwa harmless vapour</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span><span class="en">Sweet fruit flavours and pleasant smell of shisha are marketing tactics that mask toxic chemicals</span><span class="sw">Ladha tamu za matunda na harufu nzuri ya shisha ni mbinu za masoko zinazofunika kemikali zenye sumu</span><span class="sh">Ladha tamu za matunda na harufu nzuri ya shisha ni mbinu za masoko zinazofunika kemikali zenye sumu</span></div>
-</div><div class="mcq-fb" id="fb_mcq2"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Nothing — moderate alcohol use reduces stress.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Alcohol is a depressant that worsens stress and anxiety long-term, impairs judgment, and can lead to dependency — especially in adolescents.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Alcohol is only harmful for adults, not teenagers.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Alcohol relaxes the mind and is a good study aid.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">3. Which of the following infections can be transmitted by sharing a shisha pipe?</span><span class="sw">3. Yapi kati ya yafuatayo ni maambukizi yanayoweza kupitishwa kwa kushiriki bomba la shisha?</span><span class="sh">3. Which of the following infections zinaweza kupitishwa kwa kushiriki shisha pipe?</span></div>
+<div class="q-text">3. An ARISE peer educator in Garissa explains healthy stress management strategies to Form 2 students. Which are HEALTHY ways to manage stress?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq3">
-<div class="opt" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span><span class="en">Only herpes simplex virus</span><span class="sw">Herpes simplex tu</span><span class="sh">Herpes simplex tu</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span><span class="en">Only tuberculosis</span><span class="sw">Kifua kikuu tu</span><span class="sh">TB tu</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span><span class="en">Oral herpes, COVID-19, and other respiratory viruses can spread through shared mouthpieces</span><span class="sw">Herpes ya mdomo, COVID-19, na virusi vingine vya kupumua vinaweza kuenea kupitia mdomo unaoshirikiwa</span><span class="sh">Herpes ya mdomo, COVID-19, na virusi vingine vya kupumua vinaweza kuenea kupitia mdomo unaoshirikiwa</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span><span class="en">Tuberculosis, herpes, hepatitis and respiratory infections</span><span class="sw">Kifua kikuu, herpes, hepatitis na maambukizi ya kupumua</span><span class="sh">TB, herpes, hepatitis na respiratory infections</span></div>
-</div><div class="mcq-fb" id="fb_mcq3"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Physical exercise — running, sports, walking.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Talking to a trusted friend, family member, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Using alcohol or drugs to numb the feelings.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Creative activities such as music, art, or writing.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Prayer, meditation, or mindfulness practices.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">4. Which of the following correctly describe how much nicotine one shisha session delivers?</span><span class="sw">4. Yapi kati ya yafuatayo yanaeleza kwa usahihi kiasi cha nikotini kinachotolewa na kipindi kimoja cha shisha?</span><span class="sh">4. Which of the following correctly describe kiasi cha nicotine one shisha session hutoa?</span></div>
+<div class="q-text">4. Aisha, 15, Nairobi, notices her classmate Daniel has become moody, secretive, has red eyes regularly, and is stealing money from friends. She is worried about him. Which signs MOST LIKELY suggest Daniel may be abusing drugs?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq4">
-<div class="opt" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span><span class="en">Equivalent to half a cigarette</span><span class="sw">Sawa na nusu sigara</span><span class="sh">Sawa na nusu sigara</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span><span class="en">Equivalent to 2 cigarettes</span><span class="sw">Sawa na sigara 2</span><span class="sh">Sawa na sigara 2</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span><span class="en">Equivalent to 10 cigarettes</span><span class="sw">Sawa na sigara 10</span><span class="sh">Sawa na sigara 10</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span><span class="en">Shisha tobacco contains nicotine — regular users develop dependence just as they would with cigarettes</span><span class="sw">Tumbaku ya shisha ina nikotini — watumiaji wa kawaida wanakuza uraibu kama vile sigara</span><span class="sh">Tumbaku ya shisha ina nikotini — watumiaji wa kawaida wanakuza uraibu kama vile sigara</span></div>
-</div><div class="mcq-fb" id="fb_mcq4"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> He is just going through a difficult time personally.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Moodiness, secretiveness, red eyes, and stealing to fund a habit are recognized warning signs of drug abuse.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Red eyes simply mean he needs glasses.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Stealing money is unrelated to drug use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">5. Which of the following correctly describe shisha's status under Kenya's Tobacco Control Act 2007?</span><span class="sw">5. Yapi kati ya yafuatayo yanaeleza hali ya shisha chini ya Sheria ya Udhibiti wa Tumbaku ya Kenya ya 2007?</span><span class="sh">5. Which of the following correctly describe hali ya shisha chini ya Kenya Tobacco Control Act 2007?</span></div>
+<div class="q-text">5. During a Form 4 ARISE session in Mombasa, learners discuss the consequences of drug and substance abuse. Which are CONSEQUENCES of drug and substance abuse among adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq5">
-<div class="opt" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span><span class="en">Is completely unregulated and legal for all ages</span><span class="sw">Haidhibitiwa kabisa na ni halali kwa umri wote</span><span class="sh">Haidhibitiwa na ni legal kwa umri wote</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span><span class="en">Is covered under tobacco law — sale to under-18s is illegal and smoking in public is banned</span><span class="sw">Inashughulikiwa chini ya sheria ya tumbaku — mauzo kwa chini ya miaka 18 ni haramu</span><span class="sh">Inashughulikiwa chini ya tobacco law — mauzo kwa under-18s ni illegal</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span><span class="en">Is legal for people over 16</span><span class="sw">Ni halali kwa watu zaidi ya miaka 16</span><span class="sh">Ni legal kwa watu zaidi ya miaka 16</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span><span class="en">Shisha lounges serving minors or operating near schools face fines and closure under Kenya's tobacco law</span><span class="sw">Sehemu za shisha zinazoserve watoto wadogo au karibu na shule zinakabiliwa na faini na kufungwa</span><span class="sh">Sehemu za shisha zinazoserve watoto wadogo au karibu na shule zinakabiliwa na faini na kufungwa</span></div>
-</div><div class="mcq-fb" id="fb_mcq5"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Declining academic performance and school dropout.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Physical health problems including liver damage, lung disease, and heart problems.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Improved concentration and enhanced academic performance.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Increased risk of engaging in risky sexual behaviors.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Mental health problems including psychosis, depression, and anxiety.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">6. Which of the following toxic metals found in shisha smoke come primarily from the hookah equipment itself?</span><span class="sw">6. Yapi kati ya yafuatayo ni metali zenye sumu zinazopatikana katika moshi wa shisha ambazo zinatoka hasa kutoka kwa vifaa vya hookah?</span><span class="sh">6. Which of the following toxic metals zinazopatikana kwa shisha smoke zinatoka hasa kutoka kwa hookah equipment?</span></div>
+<div class="q-text">6. Grace, 17, Thika, has been feeling deeply hopeless for several weeks — she says she cannot see a reason to continue living. She has been giving away her belongings. What should a friend or teacher do IMMEDIATELY?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq6">
-<div class="opt" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span><span class="en">Lead and arsenic from the metal pipes and fittings</span><span class="sw">Risasi na arseniki kutoka kwa mabomba ya chuma</span><span class="sh">Lead na arsenic kutoka kwa metal pipes</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span><span class="en">Nicotine from the tobacco</span><span class="sw">Nikotini kutoka kwa tumbaku</span><span class="sh">Nicotine kutoka kwa tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span><span class="en">Tar from the flavouring chemicals</span><span class="sw">Lami kutoka kwa kemikali za ladha</span><span class="sh">Tar kutoka kwa flavouring chemicals</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span><span class="en">Carbon monoxide from charcoal combustion is a major toxic product — it binds haemoglobin reducing oxygen</span><span class="sw">Monoksidi ya kaboni kutoka kwa makaa ni bidhaa kubwa ya sumu — inafunga haemoglobin kupunguza oksijeni</span><span class="sh">Monoksidi ya kaboni kutoka kwa makaa ni bidhaa kubwa ya sumu — inafunga haemoglobin kupunguza oksijeni</span></div>
-</div><div class="mcq-fb" id="fb_mcq6"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Tell Grace she is being dramatic and seeking attention.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Take Grace&#x27;s words and behavior seriously as potential signs of suicidal ideation. Stay with her, listen without judgment, and immediately connect her to professional help.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Tell Grace&#x27;s classmates to cheer her up.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Wait a few days to see if Grace feels better on her own.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">7. Which of the following accurately describe herbal (tobacco-free) shisha?</span><span class="sw">7. Yapi kati ya yafuatayo yanaeleza kwa usahihi shisha ya mimea (isiyo na tumbaku)?</span><span class="sh">7. Which of the following accurately describe herbal (tobacco-free) shisha?</span></div>
+<div class="q-text">7. An ARISE facilitator in Eldoret explains to learners how they can support a peer who is showing signs of stress or mental health challenges. Which are APPROPRIATE ways to support a peer experiencing stress or mental health challenges?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq7">
-<div class="opt" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span><span class="en">Completely safe because it contains no tobacco</span><span class="sw">Salama kabisa kwa sababu haina tumbaku</span><span class="sh">Completely safe kwa sababu haina tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span><span class="en">Slightly less harmful but still contains some nicotine</span><span class="sw">Kidogo pungufu ya madhara lakini bado ina nikotini kidogo</span><span class="sh">Kidogo less harmful lakini bado ina nicotine kidogo</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span><span class="en">Still harmful because charcoal combustion produces CO, benzene and other toxins regardless of tobacco</span><span class="sw">Bado ni hatari kwa sababu mwako wa mkaa hutoa CO, benzeni na sumu zingine bila kujali tumbaku</span><span class="sh">Bado ni harmful kwa sababu charcoal combustion hutoa CO, benzene na toxins bila kujali tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span><span class="en">Herbal shisha without tobacco still burns charcoal — all CO and benzene risks fully remain</span><span class="sw">Shisha ya mimea bila tumbaku bado inachoma makaa — hatari zote za CO na benzene zinabaki</span><span class="sh">Shisha ya mimea bila tumbaku bado inachoma makaa — hatari zote za CO na benzene zinabaki</span></div>
-</div><div class="mcq-fb" id="fb_mcq7"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Listen without judgment and take their feelings seriously.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Encourage them to talk to a trusted adult, teacher, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Tell them to &#x27;snap out of it&#x27; and stop being weak.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Check in on them regularly and let them know they are not alone.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Know when to escalate — involve a responsible adult if they are in danger.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">8. Which of the following are accurate factual responses to the claim "Shisha is just flavoured steam — not a real drug"?</span><span class="sw">8. Yapi kati ya yafuatayo ni majibu sahihi ya ukweli kwa dai "Shisha ni mvuke wa ladha tu — si dawa halisi"?</span><span class="sh">8. Which of the following ni accurate factual responses kwa dai "Shisha ni flavoured steam tu — si real drug"?</span></div>
+<div class="q-text">8. Brian, 17, Kisumu, has been using miraa (khat) regularly since Form 2. He now cannot study without chewing it and gets anxious and irritable when he doesn&#x27;t. What does Brian&#x27;s pattern of miraa use indicate?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq8">
-<div class="opt" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span><span class="en">Agree and try it once to be polite</span><span class="sw">Kubali na ujaribu mara moja kwa heshima</span><span class="sh">Kubali na ujaribu mara moja kuwa polite</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span><span class="en">Ignore them and walk away without explanation</span><span class="sw">Waache na uende bila kueleza</span><span class="sh">Ignore na uende bila kueleza</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span><span class="en">Share a fact: "One shisha session = 10 cigarettes of smoke — I'll pass, thanks"</span><span class="sw">Shiriki ukweli: "Kikao kimoja cha shisha = sigara 10 za moshi — sitashiriki, asante"</span><span class="sh">Shiriki ukweli: "Kikao kimoja cha shisha = sigara 10 za moshi — sitashiriki, asante"</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span><span class="en">Say: "Actually, shisha smoke contains nicotine, tar, and carbon monoxide — one session equals 10 cigarettes of nicotine and 36 cigarettes of tar."</span><span class="sw">Sema: "Ukweli, moshi wa shisha una nikotini, lami, na CO — kipindi kimoja = nikotini ya sigara 10 na lami ya sigara 36."</span><span class="sh">Sema: "Actually, shisha smoke ina nicotine, tar, na CO — one session = nikotini ya cigarettes 10 na tar ya cigarettes 36."</span></div>
-</div><div class="mcq-fb" id="fb_mcq8"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Brian is just a habitual tea drinker — miraa is harmless.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Brian has developed dependency on miraa — he experiences withdrawal symptoms when he doesn&#x27;t use it.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Miraa is not a drug and cannot cause dependency.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Brian&#x27;s anxiety is unrelated to his miraa use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">9. Which of the following explain why benzene found in shisha smoke is particularly dangerous?</span><span class="sw">9. Yapi kati ya yafuatayo yanaeleza kwa nini benzeni inayopatikana katika moshi wa shisha ni hatari sana?</span><span class="sh">9. Which of the following vinaeleza kwa nini benzene inayopatikana kwa shisha smoke ni hatari sana?</span></div>
+<div class="q-text">9. A community health worker in Garissa educates parents on warning signs that their child may be abusing drugs. Which are WARNING SIGNS that an adolescent may be abusing drugs or substances?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq9">
-<div class="opt" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span><span class="en">Is a known cause of leukaemia (blood cancer)</span><span class="sw">Ni sababu inayojulikana ya lukemia (saratani ya damu)</span><span class="sh">Ni known cause ya leukaemia (blood cancer)</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span><span class="en">Makes the smoke smell unpleasant</span><span class="sw">Inafanya moshi kunuka vibaya</span><span class="sh">Inafanya smoke kunuka vibaya</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span><span class="en">Causes immediate respiratory failure</span><span class="sw">Inasababisha kushindwa kupumua mara moja</span><span class="sh">Inasababisha immediate respiratory failure</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span><span class="en">Benzene from charcoal also damages bone marrow, suppressing the production of blood cells</span><span class="sw">Benzene kutoka makaa pia inaharibu uboho, ikizuia uzalishaji wa seli za damu</span><span class="sh">Benzene kutoka makaa pia inaharibu uboho, ikizuia uzalishaji wa seli za damu</span></div>
-</div><div class="mcq-fb" id="fb_mcq9"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Sudden changes in friend groups — especially older friends with no obvious connection.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Unexplained loss of money or missing valuables at home.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Increased appetite and weight gain.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Dramatic changes in behavior, mood, or academic performance.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Secretive behavior and unexplained absences from school or home.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">10. Which of the following are TRUE about a hookah lounge's "nicotine-free, organic fruit shisha" product?</span><span class="sw">10. Yapi kati ya yafuatayo ni KWELI kuhusu bidhaa ya "shisha ya matunda ya kikaboni, isiyo na nikotini" ya baa ya hookah?</span><span class="sh">10. Which of the following ni TRUE kuhusu "nicotine-free, organic fruit shisha" ya hookah lounge?</span></div>
+<div class="q-text">10. Miriam, 16, Meru, feels enormous pressure from her parents to get straight A&#x27;s in her KCSE. She is losing sleep, has lost her appetite, and cries often. Her parents tell her to &#x27;focus and stop being dramatic.&#x27; What is Miriam MOST LIKELY experiencing?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq10">
-<div class="opt" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span><span class="en">Is completely safe as it contains no nicotine or tobacco</span><span class="sw">Ni salama kabisa kwani haina nikotini wala tumbaku</span><span class="sh">Ni completely safe kwani haina nicotine wala tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span><span class="en">Still exposes users to charcoal toxins including CO, benzene and heavy metals from equipment</span><span class="sw">Bado yanadhuru kwa sumu ya mkaa ikiwemo CO, benzeni na metali nzito kutoka kwa vifaa</span><span class="sh">Bado inaexpose users kwa charcoal toxins ikiwemo CO, benzene na heavy metals kutoka kwa equipment</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span><span class="en">Is legal to sell to under-18s because it has no tobacco</span><span class="sw">Ni halali kuuza kwa chini ya miaka 18 kwa sababu haina tumbaku</span><span class="sh">Ni legal kuuza kwa under-18s kwa sababu haina tumbaku</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span><span class="en">Herbal shisha carries the same lung cancer, cardiovascular, and infection risks as tobacco shisha</span><span class="sw">Shisha ya mimea ina hatari sawa za kansa ya mapafu, moyo, na maambukizi kama shisha ya tumbaku</span><span class="sh">Shisha ya mimea ina hatari sawa za kansa ya mapafu, moyo, na maambukizi kama shisha ya tumbaku</span></div>
-</div><div class="mcq-fb" id="fb_mcq10"></div></div>
-<button class="check-btn" onclick="checkAllMCQ()"><span class="en">✓ Check MCQ Answers</span><span class="sw">✓ Angalia Majibu</span></button>
-
-<button class="score-btn" onclick="showTotalScore()">🏆 <span class="en">Get My Score</span><span class="sw">Pata Alama Zangu</span><span class="sh">Pata Score Yangu</span></button>
-<div class="score-box pass" id="scoreBoxPass" style="display:none;">
-<div class="score-num" id="scoreNumPass"></div>
-<div class="grade-label" id="gradeLabelPass"></div>
-<p style="font-size:.85rem;opacity:.9;margin-bottom:14px;"><span class="en">Congratulations! You passed.</span><span class="sw">Hongera! Umefaulu.</span><span class="sh">Hongera! Umepita.</span></p>
-<a id="certBtn" href="#" class="cert-btn">🎓 Get Certificate</a>
-<a href="/arise/uploads/pdfs/shisha-hookah.pdf" target="_blank" style="display:block;text-align:center;padding:10px 28px;background:rgba(255,255,255,.15);color:#fff;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:10px;border:2px solid rgba(255,255,255,.4);">📄 Download Study Guide (PDF)</a>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Normal academic enthusiasm — she should work harder.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Significant stress related to academic pressure that is negatively affecting her physical and mental health.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Laziness disguised as stress.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A physical illness unrelated to stress.</div>
 </div>
-<div class="retry-box" id="retryBox"><p><span class="en">Below 60% — try again!</span><span class="sw">Chini ya 60%!</span><span class="sh">Chini ya 60%!</span></p><p id="retryScore" style="font-size:.8rem;color:var(--soft);"></p><button class="retry-btn" onclick="resetQuiz()">🔄 Retry</button></div>
-<a href="/arise/?p=modules" style="display:block;text-align:center;padding:12px;background:linear-gradient(135deg,var(--pri),var(--acc));color:#fff;border-radius:var(--radius);font-size:.92rem;font-weight:700;text-decoration:none;margin-top:14px;">📚 Back to Modules</a>
+<div class="mcq-fb" id="fb_mcq10"></div>
 </div>
-
-</div><!-- /slides-wrap -->
-
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+</div>
 <div class="nav-bar"><div class="nav-inner">
 <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Back</span><span class="sw">Nyuma</span></button>
 <div class="dots" id="dotsWrap"></div>
@@ -551,92 +560,37 @@ function scPick(btn, scId, type, resId) {
   var res = document.getElementById(resId);
   if(res){ res.className='s-result '+type; res.style.display='block'; }
 }
-function saveJournal(slug4, textarea) {
-  var text=textarea.value.trim(); if(!text) return;
-  var key='arise_journal_'+slug4;
-  var entries=JSON.parse(localStorage.getItem(key)||'[]');
-  entries.unshift({text:text,date:new Date().toLocaleDateString('en-KE')});
-  if(entries.length>10) entries=entries.slice(0,10);
-  localStorage.setItem(key,JSON.stringify(entries));
-  textarea.value='';
-  var fb=document.getElementById('journalFb');
-  if(fb){ fb.textContent='✓ Saved / Imehifadhiwa'; fb.style.color='#2e7d32'; }
-}
-// ── MCQ ──────────────────────────────────────────────────────
-var mcqAnswers={mcq1:["C","D"],mcq2:["B","D"],mcq3:["C","D"],mcq4:["C","D"],mcq5:["B","D"],mcq6:["A","D"],mcq7:["C","D"],mcq8:["C","D"],mcq9:["A","D"],mcq10:["B","D"]};
-var mcqExplain = {
-  mcq1:"C and D — A shisha session delivers 36x more smoke than a cigarette, AND it also delivers far more carbon monoxide — a poisonous gas from charcoal combustion that enters the bloodstream.",
-  mcq2:"B and D — Water only cools smoke — toxins like CO, nicotine, and tar pass straight through, AND the sweet flavours and pleasant smells are marketing tactics deliberately masking the toxic chemicals.",
-  mcq3:"C and D — Shared shisha pipes can transmit tuberculosis, herpes, and hepatitis, AND oral herpes, COVID-19, and other respiratory viruses specifically spread through shared mouthpieces.",
-  mcq4:"C and D — One shisha session is equivalent to 10 cigarettes in smoke volume, AND shisha tobacco contains nicotine — leading to dependence just as with cigarettes.",
-  mcq5:"B and D — Shisha is covered under tobacco law with sale to under-18s being illegal, AND shisha lounges that serve minors or operate near schools face fines and closure under Kenyan tobacco regulations.",
-  mcq6:"A and D — Lead and arsenic from metal pipes are known carcinogens found in shisha smoke, AND carbon monoxide from charcoal combustion binds haemoglobin — reducing the blood oxygen-carrying capacity.",
-  mcq7:"C and D — Herbal shisha is still harmful because charcoal produces CO and benzene, AND specifically: even without tobacco, charcoal combustion maintains all the carbon monoxide and benzene risks.",
-  mcq8:"C and D — The best response is sharing a specific fact about shisha risks, AND specifically: one shisha session equals 10 cigarettes of smoke is a powerful factual response to any invitation.",
-  mcq9:"A and D — Benzene is a known cause of leukaemia (blood cancer), AND it damages bone marrow specifically — suppressing blood cell production and explaining the link to blood cancers.",
-  mcq10:"B and D — Herbal shisha still exposes users to charcoal toxins including CO and benzene, AND it carries the same lung cancer, cardiovascular, and infection risks — it is not a safe alternative."
-};
-var mcqScore=0, mcqChecked=false;
-function selectOpt(el, group, letter) {
-  if(mcqChecked) return;
-  el.classList.toggle('selected');
-}
-function shuffleOptions(){document.querySelectorAll('.options').forEach(function(div){var opts=Array.from(div.children);for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));div.appendChild(opts[j]);opts.splice(j,1);}});}
-function checkAllMCQ() {
-  mcqScore = 0; mcqChecked = true;
-  Object.keys(mcqAnswers).forEach(function(group) {
-    var correct = mcqAnswers[group];
-    var opts = document.querySelectorAll('#'+group+' .opt');
-    var chosen = [];
-    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen.push(o.querySelector('.opt-letter').textContent.trim()); });
-    opts.forEach(function(o){
-      var letter = o.querySelector('.opt-letter').textContent.trim();
-      if(correct.indexOf(letter)!==-1) o.classList.add('correct');
-      else if(chosen.indexOf(letter)!==-1) o.classList.add('wrong');
-    });
-    var isCorrect = correct.length===chosen.length && correct.every(function(l){ return chosen.indexOf(l)!==-1; });
-    var fb = document.getElementById('fb_'+group);
-    if(isCorrect){ mcqScore++; fb.innerHTML='<span class="kf">&#10003; Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
-    else { fb.innerHTML='<span class="km">&#10007; Incorrect.</span> Correct: <strong>'+correct.join(', ')+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
-    fb.style.display='block';
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,C,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
   });
-}
-
-// ── FILL BLANKS ───────────────────────────────────────────────
-
-// ── SHORT ANSWER ──────────────────────────────────────────────
-
-function showTotalScore(){
-  if(!mcqChecked) checkAllMCQ();
-  var total=mcqScore;
-  var max=10;
-  var pct=Math.round((total/max)*100);
-  var grade=pct>=80?'Exceeds Expectation 🎉':pct>=60?'Meets Expectation 👍':pct>=40?'Approaches Expectation 📖':'Below Expectation 💪';
-  var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug||'shisha-hookah';
-  var mslug=window.ARISE_MODULE_SLUG||document.body.dataset.moduleSlug||'shisha';
-  fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:slug,module_slug:mslug,score:total,total:max,percent:pct})}).catch(function(){});
-  if(pct>=60){
-    document.getElementById('scoreBoxPass').style.display='block';
-    document.getElementById('scoreNumPass').textContent=total+' / '+max+' ('+pct+'%)';
-    document.getElementById('gradeLabelPass').textContent=grade;
-    document.getElementById('certBtn').href='/?p=certificate&module='+mslug+'&score='+pct;
-    document.getElementById('retryBox').style.display='none';
-  } else {
-    document.getElementById('retryBox').style.display='block';
-    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). Need 6/10 (60%) to pass.';
-    document.getElementById('scoreBoxPass').style.display='none';
-  }
-}
-function resetQuiz(){
-shuffleOptions();
-  mcqChecked=false; mcqScore=0;
-  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected','correct','wrong'); });
-  document.querySelectorAll('.mcq-fb').forEach(function(f){ f.style.display='none'; });
-  document.querySelectorAll('.fill-blank').forEach(function(f){ f.value=''; f.classList.remove('correct','wrong'); });
-  document.querySelectorAll('.fb-box').forEach(function(f){ f.style.display='none'; });
-  document.querySelectorAll('.sa-area').forEach(function(f){ f.value=''; });
-  document.getElementById('retryBox').style.display='none';
-  document.getElementById('scoreBoxPass').style.display='none';
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand this topic very well.':pct>=60?'👍 Good effort! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
 }
 window.addEventListener('DOMContentLoaded', init);
 

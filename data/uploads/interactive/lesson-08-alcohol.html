@@ -138,7 +138,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .sa-area:focus{outline:none;border-color:var(--pri);}
 .grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
 .grade-btn:hover{background:var(--pri-l);}
-.q-text::after{content:"☑ Select all correct answers — choose 2";display:block;font-size:.72rem;font-weight:700;color:#0a5e2a;margin-top:4px;letter-spacing:.01em;}.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
 .score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
 .score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
 .score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
@@ -367,123 +367,131 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 
 </div>
 
-<!-- ═══ SLIDE 9 ═══ -->
 <div class="slide">
-<div class="slide-head">📝 <span class="en">Reflection & Practice</span><span class="sw">Tafakari na Mazoezi</span><span class="sh">Reflection na Practice</span></div>
-<p class="tp"><span class="en">Think about what you have learned about alcohol:</span><span class="sw">Fikiria kuhusu ulichojifunza kuhusu pombe:</span><span class="sh">Think about what you have learned about alcohol:</span></p>
-<div class="journal-box">
-<span class="journal-label">📓 <span class="en">Personal Reflection — Your answers are private and saved on this device only.</span><span class="sw">Tafakari ya Kibinafsi — Majibu yako ni ya siri.</span></span>
-<p style="font-size:.85rem;margin-bottom:8px;color:var(--soft);"><span class="en">Write about a time you or someone you know faced pressure to drink. What happened? What would you do differently knowing what you know now?</span><span class="sw">Andika kuhusu wakati ulipokabiliwa na shinikizo la kunywa. Nini kilitokea? Ungefanya nini tofauti sasa?</span></p>
-<textarea class="journal-area" id="journalEntry" placeholder="Write here — this is private..."></textarea>
-<button class="journal-save" onclick="saveJournal('alcohol', document.getElementById('journalEntry'))">💾 Save privately</button>
-<div class="journal-fb" id="journalFb"></div>
-</div>
-<div class="example-box"><strong><span class="en">Quick Check</span><span class="sw">Swali la Haraka</span></strong><span class="en">Before moving to the quiz, can you answer these without looking back? (1) What does DARE stand for? (2) What is the NACADA helpline number? (3) Why is chang'aa more dangerous than regular beer? (4) At what age does the law allow drinking in Kenya?</span><span class="sw">Kabla ya kwenda kwa jaribio, unaweza kujibu bila kuangalia? (1) DARE inamaanisha nini? (2) Nambari ya simu ya NACADA? (3) Kwa nini chang'aa ni hatari zaidi? (4) Umri gani wa kisheria kunywa Kenya?</span></div>
-
-</div>
-
-<!-- ═══ SLIDE 10 — QUIZ ═══ -->
-<div class="slide">
-<div class="slide-head">📊 <span class="en">Quiz — 25 Marks</span><span class="sw">Jaribio — Alama 25</span><span class="sh">Quiz — Marks 25</span></div>
-<p class="tp" style="font-size:.82rem;color:var(--soft);"><span class="en">Complete all parts. 6/10 (60%) to earn your certificate.</span><span class="sw">Kamilisha sehemu zote. 15/25 kupata cheti.</span><span class="sh">Fanya sehemu zote. 15/25 kupata certificate.</span></p>
-
-<div class="quiz-part-head"><span class="en">Part A: MCQ — 10 marks</span><span class="sw">Sehemu A: MCQ</span><span class="sh">Part A: MCQ</span></div>
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">1. Which of the following are TRUE about why chang'aa is more dangerous than commercial beer?</span><span class="sw">1. Yapi kati ya yafuatayo ni ya KWELI kuhusu kwa nini chang'aa ni hatari zaidi ya bia ya biashara?</span><span class="sh">1. Yapi kati ya yafuatayo ni ya KWELI kuhusu kwa nini chang'aa ni hatari zaidi ya commercial beer?</span></div>
+<div class="q-text">1. A school counselor in Nakuru conducts a lesson on recognizing signs of stress in adolescents. Which are SIGNS OF STRESS in adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq1">
-<div class="opt" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span><span class="en">It is much cheaper to produce</span><span class="sw">Ni nafuu zaidi kutengeneza</span><span class="sh">Ni cheap kutengeneza</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span><span class="en">Possible methanol contamination causing blindness and death</span><span class="sw">Uwezekano wa methanol inayosababisha upofu na kifo</span><span class="sh">Methanol inaweza kusababisha blindness na death</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span><span class="en">It has a stronger flavour</span><span class="sw">Ina ladha kali zaidi</span><span class="sh">Ina stronger flavour</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span><span class="en">Illicitly brewed alcohol frequently contains dangerous additives like battery acid or methanol</span><span class="sw">Pombe haramu mara nyingi ina viongeza hatari kama asidi ya betri au methanol</span><span class="sh">Pombe haramu mara nyingi ina viongeza hatari kama asidi ya betri au methanol</span></div>
-</div><div class="mcq-fb" id="fb_mcq1"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Difficulty concentrating or declining academic performance.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Withdrawal from friends and family.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Changes in sleep patterns — sleeping too much or too little.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Consistently high energy and enthusiasm for activities.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Physical symptoms such as headaches, stomachaches, and fatigue without medical cause.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">2. Which of the following brain regions are most damaged by alcohol in adolescents?</span><span class="sw">2. Zipi kati ya sehemu za ubongo zinaathiriwa zaidi na pombe kwa vijana?</span><span class="sh">2. Zipi kati ya brain regions zinaathiriwa zaidi na alcohol kwa vijana?</span></div>
+<div class="q-text">2. Peter, 16, Kisii, is feeling stressed about his KCSE exams. His friend advises him to drink alcohol at weekends to &#x27;take his mind off things.&#x27; What is WRONG with this advice?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq2">
-<div class="opt" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span><span class="en">Cerebellum — controls balance</span><span class="sw">Cerebellum — inadhibiti usawa</span><span class="sh">Cerebellum — inadhibiti balance</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span><span class="en">The hippocampus — alcohol impairs memory formation, explaining why heavy drinkers black out</span><span class="sw">Hippocampus — pombe inaathiri uundaji wa kumbukumbu, kuelezea blackouts</span><span class="sh">Hippocampus — pombe inaathiri uundaji wa kumbukumbu, kuelezea blackouts</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span><span class="en">Prefrontal cortex — judgment, impulse control, planning</span><span class="sw">Prefrontal cortex — hukumu, udhibiti wa msukumo</span><span class="sh">Prefrontal cortex — judgment, impulse control, planning</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span><span class="en">Amygdala — processes fear</span><span class="sw">Amygdala — inashughulikia hofu</span><span class="sh">Amygdala — inashughulikia fear</span></div>
-</div><div class="mcq-fb" id="fb_mcq2"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Nothing — moderate alcohol use reduces stress.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Alcohol is a depressant that worsens stress and anxiety long-term, impairs judgment, and can lead to dependency — especially in adolescents.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Alcohol is only harmful for adults, not teenagers.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Alcohol relaxes the mind and is a good study aid.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">3. Which of the following are appropriate DARE responses for Njeri to "One beer won't hurt — everyone drinks at our age"?</span><span class="sw">3. Zipi kati ya hizi ni majibu sahihi ya DARE kwa Njeri kujibu "Bia moja haitadhuru — kila mtu anakunywa"?</span><span class="sh">3. Zipi kati ya hizi ni appropriate DARE responses kwa Njeri kujibu "One beer haitaumiza — everyone anakunywa"?</span></div>
+<div class="q-text">3. An ARISE peer educator in Garissa explains healthy stress management strategies to Form 2 students. Which are HEALTHY ways to manage stress?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq3">
-<div class="opt" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span><span class="en">"No thank you — I'll have a soda instead. I need to be sharp for training tomorrow."</span><span class="sw">"Hapana asante — nitakunywa soda. Ninahitaji kuwa na nguvu kwa mafunzo kesho."</span><span class="sh">"Hapana — nitakunywa soda. Ninahitaji kuwa sharp kwa training kesho."</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span><span class="en">Drink one to avoid awkwardness and fit in</span><span class="sw">Kunywa moja ili kuepuka wasiwasi</span><span class="sh">Kunywa moja kuepuka awkwardness</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span><span class="en">Pretend to drink but pour it away</span><span class="sw">Jifanya kunywa lakini mwaga</span><span class="sh">Pretend kunywa lakini pour</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span><span class="en">Use a prepared line: "I'm on medication — I can't mix with alcohol tonight"</span><span class="sw">Tumia jibu lililotayarishwa: "Niko dawa — siwezi kuchanganya na pombe usiku huu"</span><span class="sh">Tumia jibu lililotayarishwa: "Niko dawa — siwezi kuchanganya na pombe usiku huu"</span></div>
-</div><div class="mcq-fb" id="fb_mcq3"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Physical exercise — running, sports, walking.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Talking to a trusted friend, family member, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Using alcohol or drugs to numb the feelings.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Creative activities such as music, art, or writing.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Prayer, meditation, or mindfulness practices.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">4. Which of the following are TRUE about blood alcohol concentration and driving in Kenya?</span><span class="sw">4. Yapi kati ya yafuatayo ni ya KWELI kuhusu mkusanyiko wa pombe katika damu na kuendesha gari Kenya?</span><span class="sh">4. Yapi kati ya yafuatayo ni ya KWELI kuhusu blood alcohol level na kuendesha gari Kenya?</span></div>
+<div class="q-text">4. Aisha, 15, Nairobi, notices her classmate Daniel has become moody, secretive, has red eyes regularly, and is stealing money from friends. She is worried about him. Which signs MOST LIKELY suggest Daniel may be abusing drugs?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq4">
-<div class="opt" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span><span class="en">Above 0.15% BAC</span><span class="sw">Zaidi ya 0.15%</span><span class="sh">Zaidi ya 0.15%</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span><span class="en">Above 0.08% BAC</span><span class="sw">Zaidi ya 0.08%</span><span class="sh">Zaidi ya 0.08%</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span><span class="en">Above 0.20% BAC</span><span class="sw">Zaidi ya 0.20%</span><span class="sh">Zaidi ya 0.20%</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span><span class="en">For drivers under 18, Kenya applies zero tolerance — any alcohol is a criminal offence</span><span class="sw">Kwa madereva chini ya miaka 18, Kenya inatumia kanuni ya sifuri — pombe yoyote ni kosa la jinai</span><span class="sh">Kwa madereva chini ya miaka 18, Kenya inatumia kanuni ya sifuri — pombe yoyote ni kosa la jinai</span></div>
-</div><div class="mcq-fb" id="fb_mcq4"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> He is just going through a difficult time personally.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Moodiness, secretiveness, red eyes, and stealing to fund a habit are recognized warning signs of drug abuse.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Red eyes simply mean he needs glasses.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Stealing money is unrelated to drug use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">5. Which of the following are signs of serious alcohol intoxication requiring immediate emergency care?</span><span class="sw">5. Zipi kati ya hizi ni dalili za ulevi mkubwa wa pombe unaohitaji huduma ya dharura mara moja?</span><span class="sh">5. Zipi kati ya hizi ni signs za serious alcohol intoxication inayohitaji emergency care mara moja?</span></div>
+<div class="q-text">5. During a Form 4 ARISE session in Mombasa, learners discuss the consequences of drug and substance abuse. Which are CONSEQUENCES of drug and substance abuse among adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq5">
-<div class="opt" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span><span class="en">Slurred speech and impaired coordination</span><span class="sw">Maneno ya makwazo na uratibu mbaya</span><span class="sh">Slurred speech na impaired coordination</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span><span class="en">Flushed face and increased confidence</span><span class="sw">Uso mwekundu na kujiamini zaidi</span><span class="sh">Flushed face na increased confidence</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span><span class="en">Blue-tinged lips or fingertips — a sign of oxygen deprivation from respiratory depression</span><span class="sw">Midomo au vidole vyenye rangi ya bluu — ishara ya ukosefu wa oksijeni</span><span class="sh">Midomo au vidole vyenye rangi ya bluu — ishara ya ukosefu wa oksijeni</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span><span class="en">Unconsciousness or unresponsiveness</span><span class="sw">Kupoteza fahamu au kutokujibu</span><span class="sh">Unconsciousness au unresponsiveness</span></div>
-</div><div class="mcq-fb" id="fb_mcq5"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Declining academic performance and school dropout.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Physical health problems including liver damage, lung disease, and heart problems.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Improved concentration and enhanced academic performance.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Increased risk of engaging in risky sexual behaviors.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Mental health problems including psychosis, depression, and anxiety.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">6. Which of the following are valid helpline numbers for alcohol and substance abuse support in Kenya?</span><span class="sw">6. Zipi kati ya nambari zifuatazo ni halisi za msaada wa pombe na madawa Kenya?</span><span class="sh">6. Zipi kati ya nambari zifuatazo ni valid helpline numbers za alcohol na substance abuse Kenya?</span></div>
+<div class="q-text">6. Grace, 17, Thika, has been feeling deeply hopeless for several weeks — she says she cannot see a reason to continue living. She has been giving away her belongings. What should a friend or teacher do IMMEDIATELY?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq6">
-<div class="opt" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span><span class="en">0800 720 715</span><span class="sw">0800 720 715</span><span class="sh">0800 720 715</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span><span class="en">1190</span><span class="sw">1190</span><span class="sh">1190</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span><span class="en">0800 723 253</span><span class="sw">0800 723 253</span><span class="sh">0800 723 253</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span><span class="en">116 — Childline Kenya also provides alcohol and substance abuse counselling for young people</span><span class="sw">116 — Childline Kenya pia inatoa ushauri wa pombe na dawa za kulevya kwa vijana</span><span class="sh">116 — Childline Kenya pia inatoa ushauri wa pombe na dawa za kulevya kwa vijana</span></div>
-</div><div class="mcq-fb" id="fb_mcq6"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Tell Grace she is being dramatic and seeking attention.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Take Grace&#x27;s words and behavior seriously as potential signs of suicidal ideation. Stay with her, listen without judgment, and immediately connect her to professional help.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Tell Grace&#x27;s classmates to cheer her up.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Wait a few days to see if Grace feels better on her own.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">7. Which of the following explain why adolescents are more at risk from alcohol than adults?</span><span class="sw">7. Yapi kati ya yafuatayo yanaelezea kwa nini vijana wana hatari zaidi kutokana na pombe kuliko watu wazima?</span><span class="sh">7. Yapi kati ya yafuatayo yanaelezea kwa nini vijana wana hatari zaidi kutokana na pombe kuliko adults?</span></div>
+<div class="q-text">7. An ARISE facilitator in Eldoret explains to learners how they can support a peer who is showing signs of stress or mental health challenges. Which are APPROPRIATE ways to support a peer experiencing stress or mental health challenges?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq7">
-<div class="opt" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span><span class="en">Their brains are still developing, making them more vulnerable to addiction and cognitive damage</span><span class="sw">Ubongo wao bado unakua, na kuwafanya kuwa hatari zaidi kwa uraibu na uharibifu wa utambuzi</span><span class="sh">Brain yao bado inakua, wanaweza uraibu na cognitive damage haraka</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span><span class="en">They weigh less so alcohol affects them faster</span><span class="sw">Wana uzito mdogo hivyo pombe inawaathiri haraka</span><span class="sh">Wana uzito mdogo hivyo alcohol inawaathiri haraka</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span><span class="en">They mix alcohol with soft drinks which increases toxicity</span><span class="sw">Wanachanganya pombe na vinywaji laini ambavyo huongeza sumu</span><span class="sh">Wanachanganya alcohol na soft drinks ambayo huongeza toxicity</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span><span class="en">Earlier onset of drinking dramatically increases lifetime risk of alcohol dependence</span><span class="sw">Kuanza kunywa mapema huongeza sana hatari ya uraibu wa pombe maishani</span><span class="sh">Kuanza kunywa mapema huongeza sana hatari ya uraibu wa pombe maishani</span></div>
-</div><div class="mcq-fb" id="fb_mcq7"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Listen without judgment and take their feelings seriously.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Encourage them to talk to a trusted adult, teacher, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Tell them to &#x27;snap out of it&#x27; and stop being weak.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Check in on them regularly and let them know they are not alone.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Know when to escalate — involve a responsible adult if they are in danger.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">8. Which of the following correctly describe what Kevin's brother's behaviour indicates?</span><span class="sw">8. Zipi kati ya hizi zinaelezea kwa usahihi kile ambacho tabia ya kaka ya Kevin inaonyesha?</span><span class="sh">8. Zipi kati ya hizi zinaelezea kwa usahihi kile ambacho behaviour ya brother ya Kevin inaonyesha?</span></div>
+<div class="q-text">8. Brian, 17, Kisumu, has been using miraa (khat) regularly since Form 2. He now cannot study without chewing it and gets anxious and irritable when he doesn&#x27;t. What does Brian&#x27;s pattern of miraa use indicate?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq8">
-<div class="opt" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span><span class="en">He is hungry and needs food</span><span class="sw">Ana njaa na anahitaji chakula</span><span class="sh">Ana njaa na anahitaji food</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span><span class="en">He is experiencing a severe hangover</span><span class="sw">Ana hangover mbaya</span><span class="sh">Ana severe hangover</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span><span class="en">He has alcohol dependence and is experiencing withdrawal symptoms</span><span class="sw">Ana utegemezi wa pombe na ana dalili za kujiondoa</span><span class="sh">Ana alcohol dependence na withdrawal symptoms</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span><span class="en">Alcohol withdrawal can be life-threatening — seizures may occur without medical supervision</span><span class="sw">Kuacha pombe kunaweza kuhatarisha maisha — mshtuko unaweza kutokea bila msaada wa daktari</span><span class="sh">Kuacha pombe kunaweza kuhatarisha maisha — mshtuko unaweza kutokea bila msaada wa daktari</span></div>
-</div><div class="mcq-fb" id="fb_mcq8"></div></div>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Brian is just a habitual tea drinker — miraa is harmless.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Brian has developed dependency on miraa — he experiences withdrawal symptoms when he doesn&#x27;t use it.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Miraa is not a drug and cannot cause dependency.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Brian&#x27;s anxiety is unrelated to his miraa use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">9. Which of the following are TRUE about "moderate drinking" for Kenyan adolescents?</span><span class="sw">9. Yapi kati ya yafuatayo ni ya KWELI kuhusu "unywaji wa wastani" kwa vijana wa Kenya?</span><span class="sh">9. Yapi kati ya yafuatayo ni ya KWELI kuhusu "moderate drinking" kwa vijana wa Kenya?</span></div>
+<div class="q-text">9. A community health worker in Garissa educates parents on warning signs that their child may be abusing drugs. Which are WARNING SIGNS that an adolescent may be abusing drugs or substances?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq9">
-<div class="opt" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span><span class="en">1–2 drinks per day is safe for anyone over 16</span><span class="sw">Vinywaji 1-2 kwa siku ni salama kwa yeyote zaidi ya 16</span><span class="sh">Vinywaji 1-2 kwa siku ni safe kwa yeyote zaidi ya 16</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span><span class="en">Mixing alcohol with food eliminates health risks</span><span class="sw">Kuchanganya pombe na chakula huondoa hatari za kiafya</span><span class="sh">Kuchanganya pombe na chakula huondoa health risks</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span><span class="en">Even one drink impairs reaction time and judgment — no amount is truly safe for adolescents</span><span class="sw">Hata kinywaji kimoja kinaathiri mwitikio na uamuzi — hakuna kiasi salama kwa vijana</span><span class="sh">Hata kinywaji kimoja kinaathiri mwitikio na uamuzi — hakuna kiasi salama kwa vijana</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span><span class="en">There is no safe level of alcohol for adolescents under 18</span><span class="sw">Hakuna kiwango salama cha pombe kwa vijana chini ya 18</span><span class="sh">Hakuna safe level ya alcohol kwa vijana chini ya 18</span></div>
-</div><div class="mcq-fb" id="fb_mcq9"></div></div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Sudden changes in friend groups — especially older friends with no obvious connection.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Unexplained loss of money or missing valuables at home.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Increased appetite and weight gain.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Dramatic changes in behavior, mood, or academic performance.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Secretive behavior and unexplained absences from school or home.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
 <div class="mcq-block">
-  <div class="sata-badge">&#9745; Select all that apply</div><div class="q-text"><span class="en">10. Which of the following are appropriate actions for Amina when she notices these warning signs in Juma?</span><span class="sw">10. Zipi kati ya hizi ni hatua sahihi za Amina anapoona ishara hizi za onyo kwa Juma?</span><span class="sh">10. Zipi kati ya hizi ni appropriate actions za Amina anapoona warning signs hizi kwa Juma?</span></div>
+<div class="q-text">10. Miriam, 16, Meru, feels enormous pressure from her parents to get straight A&#x27;s in her KCSE. She is losing sleep, has lost her appetite, and cries often. Her parents tell her to &#x27;focus and stop being dramatic.&#x27; What is Miriam MOST LIKELY experiencing?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq10">
-<div class="opt" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span><span class="en">Report him to the headteacher immediately without talking to him first</span><span class="sw">Mripoti kwa mkurugenzi mara moja bila kuzungumza naye kwanza</span><span class="sh">Mripoti kwa headteacher mara moja bila kuzungumza naye kwanza</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span><span class="en">Talk to Juma privately and with care: "Nakujali — nimeona mabadiliko, je, uko sawa?"</span><span class="sw">Zungumza na Juma kwa faragha na kwa upendo: "Nakujali — nimeona mabadiliko, je, uko sawa?"</span><span class="sh">Zungumza na Juma kwa faragha: "Nakujali — nimeona changes, je, uko sawa?"</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span><span class="en">Ignore it — it is not your problem</span><span class="sw">Kupuuza — si tatizo lako</span><span class="sh">Ignore — si problem yako</span></div>
-<div class="opt" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span><span class="en">Suggest Juma contacts NACADA (0800 723 253) for confidential free counselling</span><span class="sw">Pendekeza Juma apige NACADA (0800 723 253) kwa ushauri wa siri na bure</span><span class="sh">Pendekeza Juma apige NACADA (0800 723 253) kwa ushauri wa siri na bure</span></div>
-</div><div class="mcq-fb" id="fb_mcq10"></div></div>
-<button class="check-btn" onclick="checkAllMCQ()"><span class="en">✓ Check MCQ Answers</span><span class="sw">✓ Angalia Majibu</span></button>
-
-<button class="score-btn" onclick="showTotalScore()">🏆 <span class="en">Get My Score</span><span class="sw">Pata Alama Zangu</span><span class="sh">Pata Score Yangu</span></button>
-<div class="score-box pass" id="scoreBoxPass" style="display:none;">
-<div class="score-num" id="scoreNumPass"></div>
-<div class="grade-label" id="gradeLabelPass"></div>
-<p style="font-size:.85rem;opacity:.9;margin-bottom:14px;"><span class="en">Congratulations! You passed.</span><span class="sw">Hongera! Umefaulu.</span><span class="sh">Hongera! Umepita.</span></p>
-<a id="certBtn" href="#" class="cert-btn">🎓 Get Certificate</a>
-<a href="/arise/uploads/pdfs/alcohol-changaa.pdf" target="_blank" style="display:block;text-align:center;padding:10px 28px;background:rgba(255,255,255,.15);color:#fff;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:10px;border:2px solid rgba(255,255,255,.4);">📄 Download Study Guide (PDF)</a>
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Normal academic enthusiasm — she should work harder.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Significant stress related to academic pressure that is negatively affecting her physical and mental health.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Laziness disguised as stress.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A physical illness unrelated to stress.</div>
 </div>
-<div class="retry-box" id="retryBox"><p><span class="en">Below 60% — try again!</span><span class="sw">Chini ya 60%!</span><span class="sh">Chini ya 60%!</span></p><p id="retryScore" style="font-size:.8rem;color:var(--soft);"></p><button class="retry-btn" onclick="resetQuiz()">🔄 Retry</button></div>
-<a href="/arise/?p=modules" style="display:block;text-align:center;padding:12px;background:linear-gradient(135deg,var(--pri),var(--acc));color:#fff;border-radius:var(--radius);font-size:.92rem;font-weight:700;text-decoration:none;margin-top:14px;">📚 Back to Modules</a>
+<div class="mcq-fb" id="fb_mcq10"></div>
 </div>
-
-</div><!-- /slides-wrap -->
-
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+</div>
 <div class="nav-bar"><div class="nav-inner">
 <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Back</span><span class="sw">Nyuma</span></button>
 <div class="dots" id="dotsWrap"></div>
@@ -556,92 +564,37 @@ function scPick(btn, scId, type, resId) {
   var res = document.getElementById(resId);
   if(res){ res.className='s-result '+type; res.style.display='block'; }
 }
-function saveJournal(slug4, textarea) {
-  var text=textarea.value.trim(); if(!text) return;
-  var key='arise_journal_'+slug4;
-  var entries=JSON.parse(localStorage.getItem(key)||'[]');
-  entries.unshift({text:text,date:new Date().toLocaleDateString('en-KE')});
-  if(entries.length>10) entries=entries.slice(0,10);
-  localStorage.setItem(key,JSON.stringify(entries));
-  textarea.value='';
-  var fb=document.getElementById('journalFb');
-  if(fb){ fb.textContent='✓ Saved / Imehifadhiwa'; fb.style.color='#2e7d32'; }
-}
-// ── MCQ ──────────────────────────────────────────────────────
-var mcqAnswers={mcq1:["B","D"],mcq2:["B","C"],mcq3:["A","D"],mcq4:["B","D"],mcq5:["C","D"],mcq6:["C","D"],mcq7:["A","D"],mcq8:["C","D"],mcq9:["C","D"],mcq10:["B","D"]};
-var mcqExplain = {
-  mcq1:"B and D — Illicit alcohol risks include methanol contamination causing blindness and death, AND dangerous additives like battery acid are commonly found in illegal brews.",
-  mcq2:"B and C — Alcohol most critically impairs the prefrontal cortex (judgment and impulse control) AND the hippocampus (memory formation) — explaining both poor decisions and blackouts.",
-  mcq3:"A and D — The best response is an assertive confident refusal with a social excuse, AND a prepared exit line like 'I am on medication' removes pressure gracefully.",
-  mcq4:"B and D — The legal driving limit is 0.08% BAC, AND for drivers under 18, Kenya applies zero tolerance — any alcohol level is a criminal offence.",
-  mcq5:"C and D — Life-threatening alcohol poisoning signs include blue-tinged lips and fingertips (oxygen deprivation), AND unconsciousness — both require immediate emergency response.",
-  mcq6:"C and D — The main alcohol helpline is NACADA (0800 723 253), AND Childline Kenya (116) also provides counselling for young people dealing with alcohol and substance issues.",
-  mcq7:"A and D — Adolescent brains are still developing making them more vulnerable to alcohol, AND the earlier drinking starts, the higher the lifetime risk of dependence.",
-  mcq8:"C and D — Severe morning shaking is alcohol withdrawal (dependence), AND withdrawal can be life-threatening — seizures and delirium tremens require medical supervision.",
-  mcq9:"C and D — There is no safe level of alcohol for adolescents under 18, AND even one drink measurably impairs reaction time and judgment in young people.",
-  mcq10:"B and D — Talk to Juma privately with care first, AND suggest he contacts NACADA (0800 723 253) for confidential free professional counselling support."
-};
-var mcqScore=0, mcqChecked=false;
-function selectOpt(el, group, letter) {
-  if(mcqChecked) return;
-  el.classList.toggle('selected');
-}
-function shuffleOptions(){document.querySelectorAll('.options').forEach(function(div){var opts=Array.from(div.children);for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));div.appendChild(opts[j]);opts.splice(j,1);}});}
-function checkAllMCQ() {
-  mcqScore = 0; mcqChecked = true;
-  Object.keys(mcqAnswers).forEach(function(group) {
-    var correct = mcqAnswers[group];
-    var opts = document.querySelectorAll('#'+group+' .opt');
-    var chosen = [];
-    opts.forEach(function(o){ if(o.classList.contains('selected')) chosen.push(o.querySelector('.opt-letter').textContent.trim()); });
-    opts.forEach(function(o){
-      var letter = o.querySelector('.opt-letter').textContent.trim();
-      if(correct.indexOf(letter)!==-1) o.classList.add('correct');
-      else if(chosen.indexOf(letter)!==-1) o.classList.add('wrong');
-    });
-    var isCorrect = correct.length===chosen.length && correct.every(function(l){ return chosen.indexOf(l)!==-1; });
-    var fb = document.getElementById('fb_'+group);
-    if(isCorrect){ mcqScore++; fb.innerHTML='<span class="kf">&#10003; Correct! (1 mark)</span> '+mcqExplain[group]; fb.className='mcq-fb ok'; }
-    else { fb.innerHTML='<span class="km">&#10007; Incorrect.</span> Correct: <strong>'+correct.join(', ')+'.</strong> '+mcqExplain[group]; fb.className='mcq-fb no'; }
-    fb.style.display='block';
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,C,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
   });
-}
-
-// ── FILL BLANKS ───────────────────────────────────────────────
-
-// ── SHORT ANSWER ──────────────────────────────────────────────
-
-function showTotalScore(){
-  if(!mcqChecked) checkAllMCQ();
-  var total=mcqScore;
-  var max=10;
-  var pct=Math.round((total/max)*100);
-  var grade=pct>=80?'Exceeds Expectation 🎉':pct>=60?'Meets Expectation 👍':pct>=40?'Approaches Expectation 📖':'Below Expectation 💪';
-  var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug||'alcohol-changaa';
-  var mslug=window.ARISE_MODULE_SLUG||document.body.dataset.moduleSlug||'alcohol';
-  fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:slug,module_slug:mslug,score:total,total:max,percent:pct})}).catch(function(){});
-  if(pct>=60){
-    document.getElementById('scoreBoxPass').style.display='block';
-    document.getElementById('scoreNumPass').textContent=total+' / '+max+' ('+pct+'%)';
-    document.getElementById('gradeLabelPass').textContent=grade;
-    document.getElementById('certBtn').href='/?p=certificate&module='+mslug+'&score='+pct;
-    document.getElementById('retryBox').style.display='none';
-  } else {
-    document.getElementById('retryBox').style.display='block';
-    document.getElementById('retryScore').textContent='Score: '+total+'/'+max+' ('+pct+'%). Need 6/10 (60%) to pass.';
-    document.getElementById('scoreBoxPass').style.display='none';
-  }
-}
-function resetQuiz(){
-shuffleOptions();
-  mcqChecked=false; mcqScore=0;
-  document.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected','correct','wrong'); });
-  document.querySelectorAll('.mcq-fb').forEach(function(f){ f.style.display='none'; });
-  document.querySelectorAll('.fill-blank').forEach(function(f){ f.value=''; f.classList.remove('correct','wrong'); });
-  document.querySelectorAll('.fb-box').forEach(function(f){ f.style.display='none'; });
-  document.querySelectorAll('.sa-area').forEach(function(f){ f.value=''; });
-  document.getElementById('retryBox').style.display='none';
-  document.getElementById('scoreBoxPass').style.display='none';
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand this topic very well.':pct>=60?'👍 Good effort! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
 }
 window.addEventListener('DOMContentLoaded', init);
 

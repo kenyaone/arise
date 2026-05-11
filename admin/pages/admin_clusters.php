@@ -1,7 +1,6 @@
 <?php
 // Cluster & Project Assignment Management
-$db = $GLOBALS['db'] ?? null;
-if (!$db) { echo '<p class="text-danger">Database not available.</p>'; return; }
+$db = db();
 
 // Ensure clusters table + column exist
 $db->exec("CREATE TABLE IF NOT EXISTS clusters (

@@ -1,9 +1,49 @@
 <?php
-// Schema migrations for M&E gates (safe, idempotent)
+// Schema migrations (safe, idempotent)
 foreach ([
     "ALTER TABLE modules ADD COLUMN require_pretest INTEGER DEFAULT 1",
     "ALTER TABLE modules ADD COLUMN require_posttest INTEGER DEFAULT 1",
 ] as $sql) { try { db()->exec($sql); } catch(Exception $e) {} }
+db()->exec("CREATE TABLE IF NOT EXISTS module_feedback (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    module_id INTEGER NOT NULL,
+    session_hash TEXT NOT NULL,
+    student_id INTEGER,
+    rating INTEGER NOT NULL,
+    most_useful TEXT,
+    unclear TEXT,
+    would_recommend INTEGER DEFAULT 1,
+    submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)");
+try { db()->exec("CREATE UNIQUE INDEX uniq_feedback ON module_feedback(module_id,session_hash)"); } catch(Exception $e) {}
+
+// Handle poll submission
+if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['poll_rating'])) {
+    $rating = max(1, min(5, intval($_POST['poll_rating'])));
+    $useful = trim($_POST['most_useful'] ?? '');
+    $unclear = trim($_POST['unclear'] ?? '');
+    $recommend = isset($_POST['would_recommend']) ? 1 : 0;
+    $hash = getSessionHash();
+    $sid  = getStudentId();
+    $modSlug = $_POST['module_slug'] ?? '';
+    $mod = getModule($modSlug);
+    if ($mod && $hash) {
+        $stmt = db()->prepare(
+            'INSERT OR REPLACE INTO module_feedback (module_id,session_hash,student_id,rating,most_useful,unclear,would_recommend)
+             VALUES (:mid,:hash,:sid,:rating,:useful,:unclear,:rec)'
+        );
+        $stmt->bindValue(':mid',   $mod['id']);
+        $stmt->bindValue(':hash',  $hash);
+        $stmt->bindValue(':sid',   $sid);
+        $stmt->bindValue(':rating',$rating);
+        $stmt->bindValue(':useful',$useful ?: null);
+        $stmt->bindValue(':unclear',$unclear ?: null);
+        $stmt->bindValue(':rec',   $recommend);
+        $stmt->execute();
+    }
+    header('Location: /arise/?p=module&slug='.urlencode($modSlug).'&feedback=1');
+    exit;
+}
 
 $slug = $_GET['slug'] ?? '';
 $module = getModule($slug);
@@ -465,58 +505,59 @@ $interactiveCount = $counts['interactive'];
 
     <?php
     // Knowledge Assessment — pre/post test state
-    $_pretestDone = false; $_postestDone = false; $_lessonPassed = false;
+    $_pretestDone = false; $_lessonQuizDone = false; $_postestDone = false; $_lessonPassed = false;
     if (getStudentId()) {
         $_h = getSessionHash();
         $_mid = intval($module['id']);
         $_hEsc = SQLite3::escapeString($_h);
-        $_pretestDone  = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='pre'");
-        $_postestDone  = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='post'");
-        // Gate: learner must complete interactive lesson quiz with ≥60% before post-test
-        $_lessonPassed = (bool)db()->querySingle("SELECT id FROM quiz_attempts WHERE module_id=$_mid AND percentage>=60 AND (session_hash='$_hEsc' OR student_id=".intval(getStudentId()).")");
+        $_pretestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='pre'");
+        $_lessonQuizDone = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='lesson'");
+        $_postestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='post'");
+        $_lessonPassed   = $_lessonQuizDone; // lesson quiz replaces the old ≥60% gate
     }
-    $hasQuestions = (bool)db()->querySingle("SELECT id FROM quiz_questions WHERE module_id=".intval($module['id'])." AND question_type='mcq' LIMIT 1");
+    $hasQuestions = (bool)db()->querySingle("SELECT id FROM quiz_questions WHERE module_id=".intval($module['id'])." AND is_published=1 LIMIT 1");
     ?>
 
     <?php if ($hasQuestions): ?>
     <?php
-        $_bgCol     = $_postestDone ? '#f0fdf4' : ($_lessonPassed ? '#eff6ff' : ($_pretestDone ? '#faf5ff' : '#fffbeb'));
-        $_bdCol     = $_postestDone ? '#86efac' : ($_lessonPassed ? '#93c5fd' : ($_pretestDone ? '#d8b4fe' : '#fcd34d'));
-        $_stepIcon  = $_postestDone ? '&#10003;' : ($_lessonPassed ? '&#128200;' : ($_pretestDone ? '&#127918;' : '&#128203;'));
-        $_stepColor = $_postestDone ? '#166534' : ($_lessonPassed ? '#1d4ed8' : ($_pretestDone ? '#6b21a8' : '#92400e'));
+        if ($_postestDone)          { $_bgCol='#f0fdf4'; $_bdCol='#86efac'; $_stepColor='#166534'; $_stepIcon='&#10003;'; $_stepLabel='All Complete &#10003;'; $_stepDesc='You have completed all assessments for this module.'; }
+        elseif ($_lessonQuizDone)   { $_bgCol='#eff6ff'; $_bdCol='#93c5fd'; $_stepColor='#1d4ed8'; $_stepIcon='&#128200;'; $_stepLabel='Step 4 of 4 &mdash; Take the Post-Test'; $_stepDesc='Great work! Now complete the post-test to earn your certificate.'; }
+        elseif ($_pretestDone)      { $_bgCol='#faf5ff'; $_bdCol='#d8b4fe'; $_stepColor='#6b21a8'; $_stepIcon='&#127918;'; $_stepLabel='Step 2 &amp; 3 of 4 &mdash; Study Lessons, Then Take Lesson Quiz'; $_stepDesc='Go through the lessons below, then take the 10-question lesson quiz.'; }
+        else                        { $_bgCol='#fffbeb'; $_bdCol='#fcd34d'; $_stepColor='#92400e'; $_stepIcon='&#128203;'; $_stepLabel='Step 1 of 4 &mdash; Take the Pre-Test First'; $_stepDesc='Do this before lessons to measure your starting knowledge.'; }
     ?>
     <div style="background:<?= $_bgCol ?>;border:2px solid <?= $_bdCol ?>;border-radius:14px;padding:18px 20px;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="font-size:1.5rem;"><?= $_stepIcon ?></span>
         <div>
-          <div style="font-weight:700;font-size:.95rem;color:<?= $_stepColor ?>;">
-            <?php if (!$_pretestDone): ?>Step 1 of 3 &mdash; Take the Pre-Test First
-            <?php elseif (!$_lessonPassed): ?>Step 2 of 3 &mdash; Complete the Interactive Lesson (Score &ge;60%)
-            <?php elseif (!$_postestDone): ?>Step 3 of 3 &mdash; Take the Post-Test
-            <?php else: ?>Assessment Complete &#10003;
-            <?php endif; ?>
-          </div>
-          <div style="font-size:.8rem;color:#6b7280;margin-top:2px;">
-            <?php if (!$_pretestDone): ?>Do this before reading the lessons to measure your starting knowledge.
-            <?php elseif (!$_lessonPassed): ?>Open the interactive lesson below, complete all questions and score &ge;60% to unlock the post-test.
-            <?php elseif (!$_postestDone): ?>Great work! You passed the lesson. Now take the Post-Test to measure how much you have learned.
-            <?php else: ?>You have completed the pre-test, interactive lesson, and post-test for this module.
-            <?php endif; ?>
-          </div>
+          <div style="font-weight:700;font-size:.95rem;color:<?= $_stepColor ?>;"><?= $_stepLabel ?></div>
+          <div style="font-size:.8rem;color:#6b7280;margin-top:2px;"><?= $_stepDesc ?></div>
         </div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <!-- Step 1: Pre-Test -->
         <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=pre"
            class="btn <?= $_pretestDone ? 'btn-secondary' : 'btn-primary' ?>"
-           style="<?= $_pretestDone ? 'opacity:.7;' : '' ?>">
-          &#128203; Pre-Test <?= $_pretestDone ? '&#10003; Done' : '&rarr; Start Here' ?>
+           style="<?= $_pretestDone ? 'opacity:.7;' : '' ?>font-size:.82rem">
+          &#128203; Pre-Test<?= $_pretestDone ? ' &#10003;' : ' &rarr;' ?>
         </a>
-        <span style="color:#9ca3af;font-size:.82rem;">&#8594; lesson &ge;60% &#8594;</span>
+        <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
+        <!-- Step 2: Lessons (no button, user scrolls down) -->
+        <span style="font-size:.82rem;color:<?= ($_pretestDone && !$_lessonQuizDone) ? '#6b21a8' : '#9ca3af' ?>;font-weight:600">&#128218; Lessons</span>
+        <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
+        <!-- Step 3: Lesson Quiz -->
+        <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=lesson"
+           class="btn <?= $_lessonQuizDone ? 'btn-secondary' : 'btn-primary' ?>"
+           style="<?= !$_pretestDone ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_lessonQuizDone ? 'opacity:.7;' : '') ?>font-size:.82rem"
+           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : 'In-lesson quiz — 10 questions' ?>">
+          &#127919; Lesson Quiz<?= $_lessonQuizDone ? ' &#10003;' : (!$_pretestDone ? ' &#128274;' : ' &rarr;') ?>
+        </a>
+        <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
+        <!-- Step 4: Post-Test -->
         <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=post"
            class="btn <?= $_postestDone ? 'btn-secondary' : 'btn-primary' ?>"
-           style="<?= (!$_pretestDone || !$_lessonPassed) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>"
-           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : (!$_lessonPassed ? 'Score ≥60% in the interactive lesson first' : 'Measure how much you learned') ?>">
-          &#128200; Post-Test <?= $_postestDone ? '&#10003; Done' : ($_lessonPassed ? '&rarr; Take Now' : '&#128274; Locked') ?>
+           style="<?= (!$_lessonQuizDone) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>font-size:.82rem"
+           title="<?= !$_lessonQuizDone ? 'Complete the Lesson Quiz first' : 'Measure how much you learned' ?>">
+          &#128200; Post-Test<?= $_postestDone ? ' &#10003;' : (!$_lessonQuizDone ? ' &#128274;' : ' &rarr;') ?>
         </a>
       </div>
     </div>
@@ -634,7 +675,8 @@ $interactiveCount = $counts['interactive'];
     <?php endif; ?>
 
 
-    <a href="/arise/?p=modules" class="back-btn" style="margin-top:14px;display:inline-flex;">&#8592; Back to All Modules</a>
+
+    <a href="/arise/?p=modules" class="back-btn" style="margin-top:20px;display:inline-flex;">&#8592; Back to All Modules</a>
 
 </div>
 

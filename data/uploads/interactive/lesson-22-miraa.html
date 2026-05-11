@@ -104,7 +104,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 /* MCQ SATA */
 .mcq-block{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;}
 .mcq-block .q-text{font-size:.9rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.6;}
-.mcq-block .q-text::after{content:"☑ Select all correct answers — choose 2";display:block;font-size:.72rem;font-weight:700;color:#0a5e2a;margin-top:4px;letter-spacing:.01em;}
+.mcq-block 
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 @media(max-width:500px){.opts{grid-template-columns:1fr;}}
 .opt{background:#f4f7f5;border:2px solid var(--border);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:.83rem;line-height:1.5;transition:.15s;display:flex;align-items:flex-start;gap:8px;}
@@ -448,133 +448,131 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
     <strong data-en="Model Answer:" data-sw="Jibu la Mfano:" data-sh="Model Answer:"></strong>
     <span data-en="Janet should first ensure her own safety. She can talk to a trusted teacher, school counsellor or relative. She can call Childline 116 (free, confidential) for guidance. Her father needs professional help — NACADA (1192) can advise the family on accessing rehabilitation. Janet is not responsible for her father's choices but can seek help on his behalf." data-sw="Janet kwanza ahakikishe usalama wake. Anaweza kuzungumza na mwalimu anayemwamini, mshauri wa shule au ndugu. Anaweza kupiga simu Childline 116 (bila malipo, siri) kupata mwongozo. Baba yake anahitaji msaada wa kitaalamu — NACADA (1192) inaweza kushauri familia jinsi ya kupata ukarabati. Janet hana jukumu la maamuzi ya baba yake lakini anaweza kutafuta msaada kwa niaba yake." data-sh="Janet kwanza aensure safety yake. Anaweza kuzungumza na trusted teacher, school counsellor au relative. Anaweza kupiga Childline 116 (free, confidential) kupata guidance. Dad wake anahitaji professional help — NACADA (1192) inaweza advise family. Janet si responsible kwa dad's choices lakini anaweza tafuta help kwa behalf yake."></span>
   </div>
+
+<div style="margin-top:18px;border-top:1px solid var(--border);padding-top:14px;">
+<div class="quiz-part-head">&#128221; MCQ Practice <span>10 questions</span></div>
+<div class="mcq-block">
+<div class="q-text">1. A school counselor in Nakuru conducts a lesson on recognizing signs of stress in adolescents. Which are SIGNS OF STRESS in adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Difficulty concentrating or declining academic performance.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Withdrawal from friends and family.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Changes in sleep patterns — sleeping too much or too little.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Consistently high energy and enthusiasm for activities.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Physical symptoms such as headaches, stomachaches, and fatigue without medical cause.</div>
 </div>
-
-<!-- SLIDE 10: QUIZ -->
-<div class="slide" id="slide-10">
-  <div class="slide-head">📝 <span data-en="Quiz — Miraa / Khat" data-sw="Jaribio — Miraa / Khat" data-sh="Quiz — Miraa / Khat"></span></div>
-  <div class="quiz-wrap">
-
-    <!-- Q1 -->
-    <div class="mcq-block" id="q1">
-      <div class="q-text" data-en="1. Which TWO chemicals in miraa are responsible for its mind-altering (psychoactive) effects?" data-sw="1. Kemikali MBILI gani katika miraa zinazosababisha athari za kubadilisha akili?" data-sh="1. Kemikali MBILI gani za miraa zinazobadilisha akili?">1. Which TWO chemicals in miraa are responsible for its mind-altering (psychoactive) effects?</div>
-      <div class="opts">
-        <div class="opt" data-q="1" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Cathinone" data-sw="Cathinone" data-sh="Cathinone">Cathinone</span></div>
-        <div class="opt" data-q="1" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Caffeine" data-sw="Kafeini" data-sh="Caffeine">Caffeine</span></div>
-        <div class="opt" data-q="1" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Cathine" data-sw="Cathine" data-sh="Cathine">Cathine</span></div>
-        <div class="opt" data-q="1" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Nicotine" data-sw="Nikotini" data-sh="Nicotine">Nicotine</span></div>
-      </div>
-    </div>
-
-    <!-- Q2 -->
-    <div class="mcq-block" id="q2">
-      <div class="q-text" data-en="2. Which TWO statements correctly describe how miraa affects the brain?" data-sw="2. Taarifa MBILI zipi zinaelezea kwa usahihi jinsi miraa inavyoathiri ubongo?" data-sh="2. Statements MBILI zipi zinaelezea vizuri jinsi miraa inavyoaffect brain?">2. Which TWO statements correctly describe how miraa affects the brain?</div>
-      <div class="opts">
-        <div class="opt" data-q="2" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="It releases dopamine causing euphoria and energy" data-sw="Hutoa dopamine ikisababisha furaha na nguvu" data-sh="Inatoa dopamine ikisababisha euphoria na energy">It releases dopamine causing euphoria and energy</span></div>
-        <div class="opt" data-q="2" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="It slows down the central nervous system" data-sw="Hupunguza mfumo wa neva kuu" data-sh="Inapunguza central nervous system">It slows down the central nervous system</span></div>
-        <div class="opt" data-q="2" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="It increases norepinephrine causing alertness and high blood pressure" data-sw="Huongeza norepinephrine ikisababisha uangalifu na shinikizo la damu" data-sh="Inaongeza norepinephrine — alertness na high BP">It increases norepinephrine causing alertness and high blood pressure</span></div>
-        <div class="opt" data-q="2" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="It reduces heart rate and calms anxiety" data-sw="Hupunguza mapigo ya moyo na kutuliza wasiwasi" data-sh="Inapunguza heart rate na kutuliza anxiety">It reduces heart rate and calms anxiety</span></div>
-      </div>
-    </div>
-
-    <!-- Q3 -->
-    <div class="mcq-block" id="q3">
-      <div class="q-text" data-en="3. Which TWO are short-term effects that users experience when chewing miraa?" data-sw="3. Zipi ni athari MBILI za muda mfupi wanazopata watumiaji wanapotafuna miraa?" data-sh="3. Zipi ni effects MBILI za muda mfupi za kuchew miraa?">3. Which TWO are short-term effects that users experience when chewing miraa?</div>
-      <div class="opts">
-        <div class="opt" data-q="3" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Improved sleep quality" data-sw="Usingizi ulioimarishwa" data-sh="Sleep inaimprove">Improved sleep quality</span></div>
-        <div class="opt" data-q="3" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Euphoria (feeling of happiness and excitement)" data-sw="Euphoria (hisia ya furaha na msisimko)" data-sh="Euphoria — feeling ya happiness">Euphoria (feeling of happiness and excitement)</span></div>
-        <div class="opt" data-q="3" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Increased energy and reduced fatigue" data-sw="Nguvu zaidi na kupungua kwa uchovu" data-sh="Energy inaongezeka na uchovu unapotea">Increased energy and reduced fatigue</span></div>
-        <div class="opt" data-q="3" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Better concentration in school" data-sw="Umakini bora shuleni" data-sh="Concentration inaboresha shuleni">Better concentration in school</span></div>
-      </div>
-    </div>
-
-    <!-- Q4 -->
-    <div class="mcq-block" id="q4">
-      <div class="q-text" data-en="4. Which TWO are long-term health consequences of regularly chewing miraa?" data-sw="4. Zipi ni matokeo MAWILI ya kiafya ya muda mrefu ya kutafuna miraa mara kwa mara?" data-sh="4. Zipi ni long term health consequences MBILI za kuchew miraa regularly?">4. Which TWO are long-term health consequences of regularly chewing miraa?</div>
-      <div class="opts">
-        <div class="opt" data-q="4" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Improved cardiovascular fitness" data-sw="Ustawi wa moyo ulioimarishwa" data-sh="Heart inaimprove">Improved cardiovascular fitness</span></div>
-        <div class="opt" data-q="4" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Oral cancer risk and severe tooth decay" data-sw="Hatari ya saratani ya mdomo na kuoza kwa meno" data-sh="Risk ya oral cancer na meno kuoza">Oral cancer risk and severe tooth decay</span></div>
-        <div class="opt" data-q="4" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Chronic high blood pressure and stroke risk" data-sw="Shinikizo la damu la kudumu na hatari ya kiharusi" data-sh="Chronic high BP na risk ya stroke">Chronic high blood pressure and stroke risk</span></div>
-        <div class="opt" data-q="4" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Stronger immune system" data-sw="Mfumo wa kinga ulioimarishwa" data-sh="Immune system inaimprove">Stronger immune system</span></div>
-      </div>
-    </div>
-
-    <!-- Q5 -->
-    <div class="mcq-block" id="q5">
-      <div class="q-text" data-en="5. Which TWO statements about miraa and dependence are correct?" data-sw="5. Taarifa MBILI zipi kuhusu miraa na utegemezi ni sahihi?" data-sh="5. Statements MBILI zipi kuhusu miraa na dependence ni correct?">5. Which TWO statements about miraa and dependence are correct?</div>
-      <div class="opts">
-        <div class="opt" data-q="5" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Miraa causes significant psychological dependence" data-sw="Miraa husababisha utegemezi mkubwa wa kisaikolojia" data-sh="Miraa inakusababishia psychological dependence kubwa">Miraa causes significant psychological dependence</span></div>
-        <div class="opt" data-q="5" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Miraa has the same severe physical withdrawal as heroin" data-sw="Miraa ina uondoaji mkali wa kimwili sawa na heroin" data-sh="Miraa ina same severe withdrawal kama heroin">Miraa has the same severe physical withdrawal as heroin</span></div>
-        <div class="opt" data-q="5" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="WHO classifies khat as a drug of abuse" data-sw="WHO inaainisha khat kama dawa ya kulevya" data-sh="WHO inasema khat ni drug ya abuse">WHO classifies khat as a drug of abuse</span></div>
-        <div class="opt" data-q="5" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Miraa is completely harmless and non-addictive" data-sw="Miraa haina madhara kabisa na haikusababishi uraibu" data-sh="Miraa haina madhara wala addiction">Miraa is completely harmless and non-addictive</span></div>
-      </div>
-    </div>
-
-    <!-- Q6 -->
-    <div class="mcq-block" id="q6">
-      <div class="q-text" data-en="6. Which TWO are warning signs that a person may be dependent on miraa?" data-sw="6. Zipi ni ishara MBILI za onyo kwamba mtu anaweza kutegemea miraa?" data-sh="6. Zipi ni warning signs MBILI za dependence ya miraa?">6. Which TWO are warning signs that a person may be dependent on miraa?</div>
-      <div class="opts">
-        <div class="opt" data-q="6" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Chewing every day and feeling very unwell if they skip a day" data-sw="Kutafuna kila siku na kuhisi vibaya sana wakiachilia siku" data-sh="Unachew kila siku na ukiskip siku unajisikia vibaya sana">Chewing every day and feeling very unwell if they skip a day</span></div>
-        <div class="opt" data-q="6" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Chewing miraa once a month at social events" data-sw="Kutafuna miraa mara moja kwa mwezi katika matukio ya kijamii" data-sh="Unachew miraa mara moja kwa mwezi at events">Chewing miraa once a month at social events</span></div>
-        <div class="opt" data-q="6" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Spending most of their income on miraa while family goes without basics" data-sw="Kutumia pesa nyingi kwenye miraa huku familia ikiwa na uhitaji" data-sh="Spending most ya pesa kwa miraa — familia haipati basics">Spending most of their income on miraa while family goes without basics</span></div>
-        <div class="opt" data-q="6" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Feeling energetic and productive after chewing" data-sw="Kuhisi nguvu na tija baada ya kutafuna" data-sh="Kujisikia energetic na productive baada ya kuchew">Feeling energetic and productive after chewing</span></div>
-      </div>
-    </div>
-
-    <!-- Q7 -->
-    <div class="mcq-block" id="q7">
-      <div class="q-text" data-en="7. Which TWO facts about miraa's legal status and origin are correct?" data-sw="7. Ukweli MBILI gani kuhusu hali ya kisheria ya miraa na asili yake ni sahihi?" data-sh="7. Facts MBILI zipi kuhusu legal status na origin ya miraa ni correct?">7. Which TWO facts about miraa's legal status and origin are correct?</div>
-      <div class="opts">
-        <div class="opt" data-q="7" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Miraa is legal to grow and sell in Kenya" data-sw="Miraa ni halali kulima na kuuza Kenya" data-sh="Miraa ni legal kulima na kuuza Kenya">Miraa is legal to grow and sell in Kenya</span></div>
-        <div class="opt" data-q="7" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Miraa is banned in some countries such as the UK and USA" data-sw="Miraa imepigwa marufuku nchi nyingine kama UK na USA" data-sh="Miraa imebanned places kama UK na USA">Miraa is banned in some countries such as the UK and USA</span></div>
-        <div class="opt" data-q="7" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Miraa is illegal in all African countries" data-sw="Miraa ni haramu katika nchi zote za Afrika" data-sh="Miraa ni illegal Afrika yote">Miraa is illegal in all African countries</span></div>
-        <div class="opt" data-q="7" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Miraa is mainly grown in Nairobi County" data-sw="Miraa hulimwa zaidi Kaunti ya Nairobi" data-sh="Miraa inakuzwa zaidi Nairobi">Miraa is mainly grown in Nairobi County</span></div>
-      </div>
-    </div>
-
-    <!-- Q8 -->
-    <div class="mcq-block" id="q8">
-      <div class="q-text" data-en="8. Which TWO are effective ways to refuse miraa when offered by peers?" data-sw="MBILI gani ni njia bora za kukataa miraa unapopewa na wenzako?" data-sh="MBILI gani ni njia nzuri za kurefuse miraa ukipewa na peers?">8. Which TWO are effective ways to refuse miraa when offered by peers?</div>
-      <div class="opts">
-        <div class="opt" data-q="8" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="Say nothing and accept to avoid conflict with friends" data-sw="Usiseme kitu na ukubali kuepuka mgogoro na marafiki" data-sh="Usiseme kitu na ukubali kuepuka conflict na friends">Say nothing and accept to avoid conflict with friends</span></div>
-        <div class="opt" data-q="8" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="'No thanks — I'm watching my health'" data-sw="'Hapana asante — ninaangalia afya yangu'" data-sh="'Hapana sawa — ninawatch health yangu'">'No thanks — I'm watching my health'</span></div>
-        <div class="opt" data-q="8" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Simply walk away and stay firm in your decision" data-sw="Toka tu na ukae imara katika uamuzi wako" data-sh="Toka tu — stay firm katika decision yako">Simply walk away and stay firm in your decision</span></div>
-        <div class="opt" data-q="8" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Agree to try just once so friends don't feel rejected" data-sw="Kubali kujaribu mara moja ili marafiki wasijisikie kukataliwa" data-sh="Kubali kujaribu mara moja tu ili friends wasifeel rejected">Agree to try just once so friends don't feel rejected</span></div>
-      </div>
-    </div>
-
-    <!-- Q9 -->
-    <div class="mcq-block" id="q9">
-      <div class="q-text" data-en="9. Which TWO helplines provide support for drug dependence in Kenya?" data-sw="Nambari MBILI gani za msaada hutoa usaidizi kwa utegemezi wa dawa Kenya?" data-sh="Helplines MBILI zipi zinatoa support kwa drug dependence Kenya?">9. Which TWO helplines provide support for drug dependence in Kenya?</div>
-      <div class="opts">
-        <div class="opt" data-q="9" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="NACADA — call 1192 (free counselling and referrals)" data-sw="NACADA — piga 1192 (ushauri nasaha na rufaa bila malipo)" data-sh="NACADA — piga 1192 (free counselling na referrals)">NACADA — call 1192 (free counselling and referrals)</span></div>
-        <div class="opt" data-q="9" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="Kenya Revenue Authority — call 0800 (tax compliance)" data-sw="Mamlaka ya Mapato Kenya — piga 0800 (uzingatiaji wa kodi)" data-sh="Kenya Revenue Authority — tax compliance">Kenya Revenue Authority — call 0800 (tax compliance)</span></div>
-        <div class="opt" data-q="9" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="Childline Kenya — call 116 (free, 24/7 child support)" data-sw="Childline Kenya — piga 116 (bure, msaada wa watoto 24/7)" data-sh="Childline Kenya — piga 116 (free, 24/7)">Childline Kenya — call 116 (free, 24/7 child support)</span></div>
-        <div class="opt" data-q="9" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="Kenya Bureau of Standards — product safety certification" data-sw="Shirika la Viwango la Kenya — uthibitisho wa usalama wa bidhaa" data-sh="KEBS — product safety certification">Kenya Bureau of Standards — product safety certification</span></div>
-      </div>
-    </div>
-
-    <!-- Q10 -->
-    <div class="mcq-block" id="q10">
-      <div class="q-text" data-en="10. Which TWO statements correctly describe cathinone, the main chemical in miraa?" data-sw="10. Taarifa MBILI zipi zinaelezea kwa usahihi cathinone, kemikali kuu katika miraa?" data-sh="10. Statements MBILI zipi zinaelezea cathinone — main chemical ya miraa — vizuri?">10. Which TWO statements correctly describe cathinone, the main chemical in miraa?</div>
-      <div class="opts">
-        <div class="opt" data-q="10" data-opt="A" onclick="selectOpt(this)"><span class="opt-letter">A</span><span data-en="It is similar in effect to amphetamine" data-sw="Ina athari inayofanana na amphetamine" data-sh="Ina effect kama amphetamine">It is similar in effect to amphetamine</span></div>
-        <div class="opt" data-q="10" data-opt="B" onclick="selectOpt(this)"><span class="opt-letter">B</span><span data-en="It is most potent in dried or old miraa" data-sw="Ina nguvu zaidi katika miraa kavu au ya zamani" data-sh="Ina nguvu zaidi katika miraa kavu au ya zamani">It is most potent in dried or old miraa</span></div>
-        <div class="opt" data-q="10" data-opt="C" onclick="selectOpt(this)"><span class="opt-letter">C</span><span data-en="It degrades rapidly after harvest — users prefer fresh miraa within 48 hours" data-sw="Inaharibika haraka baada ya kuvunwa — watumiaji wanapenda miraa safi ndani ya masaa 48" data-sh="Inaexpire haraka — watu wanapenda fresh miraa within 48 hours">It degrades rapidly after harvest — users prefer fresh miraa within 48 hours</span></div>
-        <div class="opt" data-q="10" data-opt="D" onclick="selectOpt(this)"><span class="opt-letter">D</span><span data-en="It is a sedative that relaxes and calms the brain" data-sw="Ni dawa ya kutuliza ambayo inafanya ubongo utulie" data-sh="Ni sedative inayocalm na kurelax brain">It is a sedative that relaxes and calms the brain</span></div>
-      </div>
-    </div>
-
-    <div class="submit-bar">
-      <button class="submit-btn" onclick="checkAllMCQ()"><span data-en="Submit Quiz" data-sw="Wasilisha Jaribio" data-sh="Submit Quiz">Submit Quiz</span></button>
-    </div>
-    <div class="score-box" id="score-box">
-      <h3 id="score-title"></h3>
-      <p id="score-detail"></p>
-    </div>
-  </div>
+<div class="mcq-fb" id="fb_mcq1"></div>
 </div>
-
+<div class="mcq-block">
+<div class="q-text">2. Peter, 16, Kisii, is feeling stressed about his KCSE exams. His friend advises him to drink alcohol at weekends to &#x27;take his mind off things.&#x27; What is WRONG with this advice?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Nothing — moderate alcohol use reduces stress.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Alcohol is a depressant that worsens stress and anxiety long-term, impairs judgment, and can lead to dependency — especially in adolescents.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Alcohol is only harmful for adults, not teenagers.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Alcohol relaxes the mind and is a good study aid.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">3. An ARISE peer educator in Garissa explains healthy stress management strategies to Form 2 students. Which are HEALTHY ways to manage stress?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Physical exercise — running, sports, walking.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Talking to a trusted friend, family member, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Using alcohol or drugs to numb the feelings.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Creative activities such as music, art, or writing.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Prayer, meditation, or mindfulness practices.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">4. Aisha, 15, Nairobi, notices her classmate Daniel has become moody, secretive, has red eyes regularly, and is stealing money from friends. She is worried about him. Which signs MOST LIKELY suggest Daniel may be abusing drugs?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> He is just going through a difficult time personally.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Moodiness, secretiveness, red eyes, and stealing to fund a habit are recognized warning signs of drug abuse.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Red eyes simply mean he needs glasses.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Stealing money is unrelated to drug use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">5. During a Form 4 ARISE session in Mombasa, learners discuss the consequences of drug and substance abuse. Which are CONSEQUENCES of drug and substance abuse among adolescents?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Declining academic performance and school dropout.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Physical health problems including liver damage, lung disease, and heart problems.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Improved concentration and enhanced academic performance.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Increased risk of engaging in risky sexual behaviors.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Mental health problems including psychosis, depression, and anxiety.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">6. Grace, 17, Thika, has been feeling deeply hopeless for several weeks — she says she cannot see a reason to continue living. She has been giving away her belongings. What should a friend or teacher do IMMEDIATELY?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Tell Grace she is being dramatic and seeking attention.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Take Grace&#x27;s words and behavior seriously as potential signs of suicidal ideation. Stay with her, listen without judgment, and immediately connect her to professional help.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Tell Grace&#x27;s classmates to cheer her up.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Wait a few days to see if Grace feels better on her own.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">7. An ARISE facilitator in Eldoret explains to learners how they can support a peer who is showing signs of stress or mental health challenges. Which are APPROPRIATE ways to support a peer experiencing stress or mental health challenges?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Listen without judgment and take their feelings seriously.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Encourage them to talk to a trusted adult, teacher, or counselor.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Tell them to &#x27;snap out of it&#x27; and stop being weak.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Check in on them regularly and let them know they are not alone.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Know when to escalate — involve a responsible adult if they are in danger.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">8. Brian, 17, Kisumu, has been using miraa (khat) regularly since Form 2. He now cannot study without chewing it and gets anxious and irritable when he doesn&#x27;t. What does Brian&#x27;s pattern of miraa use indicate?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Brian is just a habitual tea drinker — miraa is harmless.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Brian has developed dependency on miraa — he experiences withdrawal symptoms when he doesn&#x27;t use it.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Miraa is not a drug and cannot cause dependency.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Brian&#x27;s anxiety is unrelated to his miraa use.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">9. A community health worker in Garissa educates parents on warning signs that their child may be abusing drugs. Which are WARNING SIGNS that an adolescent may be abusing drugs or substances?</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Sudden changes in friend groups — especially older friends with no obvious connection.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Unexplained loss of money or missing valuables at home.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Increased appetite and weight gain.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Dramatic changes in behavior, mood, or academic performance.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Secretive behavior and unexplained absences from school or home.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">10. Miriam, 16, Meru, feels enormous pressure from her parents to get straight A&#x27;s in her KCSE. She is losing sleep, has lost her appetite, and cries often. Her parents tell her to &#x27;focus and stop being dramatic.&#x27; What is Miriam MOST LIKELY experiencing?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Normal academic enthusiasm — she should work harder.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Significant stress related to academic pressure that is negatively affecting her physical and mental health.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Laziness disguised as stress.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A physical illness unrelated to stress.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; Submit Quiz</button>
+<div id="score-box" style="display:none;padding:14px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+</div>
 </div><!-- /slides-wrap -->
 
 <!-- NAV BAR -->
@@ -587,24 +585,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 <script>
 // ── STATE ──
 let currentSlide = 1;
-const TOTAL = 10;
+const TOTAL = 9;
 let lang = 'en';
 let visited = new Set([1]);
-let quizSubmitted = false;
-
-// Correct answers: 2 per question
-const mcqAnswers = {
-  1: ['A','C'],
-  2: ['A','C'],
-  3: ['B','C'],
-  4: ['B','C'],
-  5: ['A','C'],
-  6: ['A','C'],
-  7: ['A','B'],
-  8: ['B','C'],
-  9: ['A','C'],
-  10: ['A','C']
-};
 
 // ── LANGUAGE ──
 function setLang(l) {
@@ -651,61 +634,29 @@ function updateDots() {
   }
 }
 
-// ── MCQ SELECTION ──
-function selectOpt(el) {
-  if (quizSubmitted) return;
-  const q = el.getAttribute('data-q');
-  const selected = document.querySelectorAll('.opt[data-q="' + q + '"].selected');
-  if (el.classList.contains('selected')) {
-    el.classList.remove('selected');
-  } else {
-    if (selected.length >= 2) return;
-    el.classList.add('selected');
-  }
-}
-
-// ── SUBMIT QUIZ ──
-function checkAllMCQ() {
-  if (quizSubmitted) return;
-  quizSubmitted = true;
-  let score = 0;
-  for (let q = 1; q <= 10; q++) {
-    const correct = mcqAnswers[q];
-    const opts = document.querySelectorAll('.opt[data-q="' + q + '"]');
-    let qCorrect = true;
-    opts.forEach(opt => {
-      const letter = opt.getAttribute('data-opt');
-      const isCorrect = correct.includes(letter);
-      const isSelected = opt.classList.contains('selected');
-      if (isCorrect) opt.classList.add('correct');
-      if (isSelected && !isCorrect) { opt.classList.add('wrong'); qCorrect = false; }
-      if (isCorrect && !isSelected) qCorrect = false;
-      opt.onclick = null;
-    });
-    if (qCorrect) score++;
-  }
-  const pct = Math.round((score / 10) * 100);
-  const box = document.getElementById('score-box');
-  box.style.display = 'block';
-  document.getElementById('score-title').textContent = score + ' / 10 (' + pct + '%)';
-  document.getElementById('score-detail').textContent =
-    pct >= 80 ? '⭐ Excellent! You understand miraa and its consequences very well.' :
-    pct >= 60 ? '👍 Good effort! Review the highlighted questions and try again.' :
-    '📖 Keep studying! Check the green correct answers and revisit the lesson slides.';
-  box.scrollIntoView({behavior:'smooth'});
-
-  if (window.ARISE_LESSON_ID) {
-    fetch('/arise/api/submit-score', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        lesson_id: window.ARISE_LESSON_ID,
-        score: score,
-        total: 10,
-        percent: pct
-      })
-    }).catch(()=>{});
-  }
+var mcqAnswers={'mcq1':'A,B,C,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>\u2713 Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>\u2717 Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'\u2014')+'</strong> \u2014 Correct: <strong>'+correct+'</strong>. ':'<strong>\u2717 Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'\u2b50 Excellent!':pct>=60?'\ud83d\udc4d Good! Review incorrect answers.':'\ud83d\udcd6 Keep studying!';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
 }
 
 // ── APPLY LANG ON LOAD ──

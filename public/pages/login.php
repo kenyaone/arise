@@ -289,9 +289,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
                     <label style="display:block; font-size:.75rem; font-weight:700; color:#374151; margin-bottom:6px; text-transform:uppercase;">
                         Cluster *
                     </label>
+                    <?php
+                    $loginClusters = [];
+                    $clRes = db()->query("SELECT DISTINCT name FROM classes WHERE is_active=1 ORDER BY name");
+                    while ($clRow = $clRes->fetchArray(SQLITE3_NUM)) $loginClusters[] = $clRow[0];
+                    ?>
+                    <?php if ($loginClusters): ?>
+                    <select name="class_name" required
+                            style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box; background:#fff;">
+                        <option value="">— Select your cluster —</option>
+                        <?php foreach ($loginClusters as $cl): ?>
+                        <option value="<?= e($cl) ?>" <?= (($_POST['class_name'] ?? '') === $cl) ? 'selected' : '' ?>><?= e($cl) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php else: ?>
                     <input type="text" name="class_name" required placeholder="e.g. Form 2A, Grade 9"
                            value="<?= e($_POST['class_name'] ?? '') ?>"
                            style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group" style="margin-bottom:20px;">

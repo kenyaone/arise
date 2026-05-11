@@ -6,13 +6,21 @@ trackPageView('certificates');
 
 $student = getStudentBySession();
 $certs = [];
+$refusalPassed = false;
 
 if ($student) {
     $stmt = db()->prepare("SELECT c.*, m.icon FROM certificates c JOIN modules m ON c.module_id = m.id WHERE c.student_id = :sid ORDER BY c.issued_at DESC");
     $stmt->bindValue(':sid', $student['id']);
     $result = $stmt->execute();
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) { $certs[] = $row; }
+
+    $refusalPassed = (bool) db()->querySingle(
+        "SELECT id FROM quiz_attempts WHERE student_id=" . intval($student['id']) .
+        " AND lesson_slug='refusal-skills-lesson' AND percentage>=60 LIMIT 1"
+    );
 }
+
+$REFUSAL_GATED = [1, 4, 5, 6];
 ?>
 
 <div class="container">
@@ -40,7 +48,14 @@ if ($student) {
     <?php else: ?>
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:15px;">
             <?php foreach ($certs as $c): ?>
-            <div class="dp-card" style="border-top:4px solid var(--primary); text-align:center;">
+            <?php
+                $isGated = in_array($c['module_id'], $REFUSAL_GATED) && !$refusalPassed;
+                $modSlug = db()->querySingle("SELECT slug FROM modules WHERE id={$c['module_id']}");
+            ?>
+            <div class="dp-card" style="border-top:4px solid <?= $isGated ? '#f59e0b' : 'var(--primary)' ?>; text-align:center; position:relative;">
+                <?php if ($isGated): ?>
+                <div style="position:absolute;top:10px;right:10px;background:#fef3c7;border:1px solid #f59e0b;border-radius:20px;padding:2px 8px;font-size:.7rem;font-weight:700;color:#92400e;">🔒 Locked</div>
+                <?php endif; ?>
                 <div style="font-size:2rem;"><?= $c['icon'] ?></div>
                 <h3 style="margin:5px 0;"><?= e($c['module_title']) ?></h3>
                 <div style="font-size:1.8rem; font-weight:700; color:var(--success); margin:8px 0;"><?= $c['percentage'] ?>%</div>
@@ -48,8 +63,14 @@ if ($student) {
                     Earned <?= date('M j, Y', strtotime($c['issued_at'])) ?><br>
                     <span style="font-family:monospace; font-size:0.75rem;"><?= e($c['cert_number']) ?></span>
                 </div>
-                <a href="?p=certificate&module=<?= urlencode(db()->querySingle("SELECT slug FROM modules WHERE id = {$c['module_id']}")) ?>&score=<?= intval($c['percentage']) ?>" 
+                <?php if ($isGated): ?>
+                <a href="?p=lesson&slug=refusal-skills-lesson&required=1" class="btn btn-sm" style="background:#f59e0b;color:#fff;border:none;">
+                    ⚠️ Complete Refusal Skills to unlock
+                </a>
+                <?php else: ?>
+                <a href="?p=certificate&module=<?= urlencode($modSlug) ?>&score=<?= intval($c['percentage']) ?>"
                    class="btn btn-primary btn-sm" target="_blank">🖨️ View & Print</a>
+                <?php endif; ?>
             </div>
             <?php endforeach; ?>
         </div>

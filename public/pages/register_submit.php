@@ -4,7 +4,7 @@
  * Validates password, hashes it, and stores in password_hash column.
  */
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ?p=register');
+    header('Location: /arise/?p=register');
     exit;
 }
 
@@ -18,7 +18,7 @@ $passwordConfirm = $_POST['password_confirm'] ?? '';
 // Basic field validation
 // ============================================================
 if (empty($name) || empty($school) || empty($class)) {
-    header('Location: ?p=register&error=1');
+    header('Location: /arise/?p=register&error=1');
     exit;
 }
 
@@ -26,15 +26,15 @@ if (empty($name) || empty($school) || empty($class)) {
 // Password validation
 // ============================================================
 if (empty($password)) {
-    header('Location: ?p=register&password_error=' . urlencode('Password is required.'));
+    header('Location: /arise/?p=register&password_error=' . urlencode('Password is required.'));
     exit;
 }
 if (strlen($password) < 6) {
-    header('Location: ?p=register&password_error=' . urlencode('Password must be at least 6 characters.'));
+    header('Location: /arise/?p=register&password_error=' . urlencode('Password must be at least 6 characters.'));
     exit;
 }
 if ($password !== $passwordConfirm) {
-    header('Location: ?p=register&password_error=' . urlencode('Passwords do not match.'));
+    header('Location: /arise/?p=register&password_error=' . urlencode('Passwords do not match.'));
     exit;
 }
 
@@ -79,7 +79,7 @@ if ($existing) {
     $_SESSION['arise_student_name'] = $name;
     setcookie('arise_uid', $existing['id'], ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
 
-    header('Location: ?p=modules&exists=1');
+    header('Location: /arise/?p=modules&exists=1');
     exit;
 }
 
@@ -108,5 +108,5 @@ $_SESSION['arise_student_id']   = $studentId;
 $_SESSION['arise_student_name'] = $name;
 setcookie('arise_uid', $studentId, ['expires'=>time()+86400*30,'path'=>'/arise/','httponly'=>true,'samesite'=>'Lax']);
 
-header('Location: ?p=modules');
+header('Location: /arise/?p=modules');
 exit;

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Biblical Foundation on Sexuality | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="biblical-sexuality" data-module-slug="biblical-sexuality">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Module 21</div><div class="lesson-name">Biblical Foundation on Sexuality</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">&#127757;</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">&#128289;</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A&#8722;</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=resources" class="lb-help">&#128681; Help</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+<h3>&#128203; By the end of this lesson:</h3>
+<ol>
+<li>Describe the Biblical perspective on human sexuality as a gift from God</li>
+<li>Explain the Christian value of sexual purity and abstinence before marriage</li>
+<li>Identify the risks associated with sex outside of God's design</li>
+<li>Understand that forgiveness and restoration are available to all</li>
+<li>Apply Biblical principles to make healthy, values-based decisions about relationships</li>
+</ol>
+<div class="inquiry">
+<strong>&#128269; Inquiry:</strong> Have you ever thought about how your faith or values shape the way you see relationships and sexuality?
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: Sexuality as God's Design -->
+<div class="slide">
+<div class="slide-head">&#128149; Sexuality as God's Design</div>
+<div class="key-term">
+<strong>&#128273; Human Sexuality</strong>
+The physical, emotional, relational, and spiritual dimensions of being male or female.
+</div>
+<p class="tp">Genesis 1:27 — <em>"God created mankind in his own image... male and female he created them."</em></p>
+<p class="tp">Genesis 2:24 — <em>"A man leaves his father and mother and is united to his wife, and they become one flesh."</em></p>
+<p class="tp">The Bible presents sexuality as good and created by God — but for a specific purpose: intimate union within marriage.</p>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Imani</div>
+Mungu aliumba 'intimacy' — si kitu chafu. Ni gift, lakini ina boundaries.
+</div>
+<div class="tip-box"><strong>&#128161; Tip</strong> Sexuality is not just about sex — it includes how we relate to others, our emotions, and our sense of identity.</div>
+</div>
+
+<!-- SLIDE 3: God's Design for Sex: Within Marriage -->
+<div class="slide">
+<div class="slide-head">&#128146; God's Design for Sex: Within Marriage</div>
+<p class="tp">The Bible consistently places sexual intimacy within the covenant of marriage — one man, one woman, lifelong commitment.</p>
+<p class="tp">1 Corinthians 7:2 — <em>"Each man should have sexual relations with his own wife, and each woman with her own husband."</em></p>
+<p class="tp"><strong>Why marriage?</strong> It provides security, commitment, and the best environment for children.</p>
+<div class="example-box">
+<strong>&#128214; Joseph's Integrity (Genesis 39)</strong>
+Joseph refused the advances of Potiphar's wife — choosing integrity over temptation at personal cost. He was imprisoned for doing the right thing, yet God honoured his faithfulness.
+</div>
+<div class="warn-box"><strong>&#9888;&#65039; Real Consequences</strong> Sex outside marriage exposes you to STIs, unplanned pregnancy, emotional hurt, and spiritual harm — consequences God's design protects you from.</div>
+</div>
+
+<!-- SLIDE 4: Sexual Purity and Abstinence -->
+<div class="slide">
+<div class="slide-head">&#10024; Sexual Purity and Abstinence</div>
+<p class="tp"><strong>Abstinence</strong> means choosing not to engage in sexual activity until marriage.</p>
+<p class="tp">1 Thessalonians 4:3 — <em>"It is God's will that you should be sanctified: that you should avoid sexual immorality."</em></p>
+<p class="tp">Purity is not just physical — it includes thoughts, media, and relationships.</p>
+<p class="tp"><strong>Practical tips for staying pure:</strong></p>
+<ul class="bl">
+<li>Set clear relationship boundaries with your partner early</li>
+<li>Avoid situations that tempt you (being alone late at night)</li>
+<li>Fill your mind with positive content</li>
+<li>Have accountability — a trusted friend or mentor</li>
+<li>Pray for strength and discipline</li>
+</ul>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Mitaani</div>
+Kujiepusha si weakness — ni nguvu. "Alijidhibiti" ndio mtu wa respect.
+</div>
+</div>
+
+<!-- SLIDE 5: Consequences of Sex Outside God's Design -->
+<div class="slide">
+<div class="slide-head">&#9888;&#65039; Consequences of Sex Outside God's Design</div>
+<table class="info-table">
+<tr><th>Consequence</th><th>Description</th></tr>
+<tr><td>STIs</td><td>HIV, gonorrhoea, syphilis, HPV — spread through unprotected sex</td></tr>
+<tr><td>Unplanned pregnancy</td><td>School dropout, early marriage, financial hardship</td></tr>
+<tr><td>Emotional harm</td><td>Guilt, heartbreak, loss of self-esteem, trauma</td></tr>
+<tr><td>Spiritual impact</td><td>Distance from God; guilt affecting prayer life and faith</td></tr>
+<tr><td>Broken trust</td><td>Damaged friendships, family relationships, reputation</td></tr>
+</table>
+<div class="warn-box"><strong>&#9888;&#65039; Kenya Context</strong> In Kenya, teenage pregnancy is one of the leading causes of girls dropping out of secondary school.</div>
+</div>
+
+<!-- SLIDE 6: Healthy God-Honoring Relationships -->
+<div class="slide">
+<div class="slide-head">&#128140; Healthy God-Honoring Relationships</div>
+<p class="tp">A God-honoring relationship respects boundaries, builds character, and prepares for marriage.</p>
+<div class="key-term">
+<strong>&#128273; Covenant</strong>
+A deep, binding commitment made before God — the foundation of marriage.
+</div>
+<p class="tp"><strong>Signs of a healthy, values-based relationship:</strong></p>
+<ul class="bl">
+<li>Both people respect each other's boundaries without pressure</li>
+<li>The relationship draws both people closer to God and their goals</li>
+<li>There is honesty, kindness, and mutual encouragement</li>
+<li>No one uses the other person for physical satisfaction only</li>
+</ul>
+<div class="example-box">
+<strong>&#128214; Ruth and Boaz (Book of Ruth)</strong>
+A story of mutual respect, integrity, and God's blessing on a righteous relationship. Boaz honoured Ruth publicly and acted with integrity at every step.
+</div>
+<div class="tip-box"><strong>&#128161; Tip</strong> If a relationship consistently pulls you away from your faith, family, or goals — it is not God's best for you.</div>
+</div>
+
+<!-- SLIDE 7: Pornography and Lust: A Modern Danger -->
+<div class="slide">
+<div class="slide-head">&#128245; Pornography and Lust: A Modern Danger</div>
+<p class="tp">Matthew 5:28 — <em>"Anyone who looks at a woman lustfully has already committed adultery with her in his heart."</em></p>
+<p class="tp"><strong>Pornography is harmful because it:</strong></p>
+<ul class="bl">
+<li>Distorts healthy views of sex and relationships</li>
+<li>Creates addiction affecting the brain like drugs</li>
+<li>Objectifies women and men</li>
+<li>Creates unrealistic expectations for marriage</li>
+</ul>
+<p class="tp">Online pornography is increasingly available to Kenyan youth via smartphones.</p>
+<div class="warn-box"><strong>&#9888;&#65039; You Are Not Alone</strong> If you struggle with pornography or lustful thoughts, you are not alone — and you can get help. Talk to a trusted pastor, counsellor, or mentor.</div>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Mitaani</div>
+Kama unajaribu kutoka kwa tabia mbaya ya mtandaoni, usijaribu peke yako — tafuta msaada.
+</div>
+</div>
+
+<!-- SLIDE 8: Forgiveness and Restoration -->
+<div class="slide">
+<div class="slide-head">&#128149; Forgiveness and Restoration</div>
+<p class="tp">The Bible is clear that no sexual sin is beyond God's forgiveness.</p>
+<p class="tp">1 John 1:9 — <em>"If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."</em></p>
+<p class="tp"><strong>Secondary virginity</strong> — making a fresh commitment to sexual purity after past mistakes.</p>
+<p class="tp"><strong>Steps to restoration:</strong></p>
+<ol class="bl">
+<li>Acknowledge what happened — be honest with yourself and God</li>
+<li>Confess and ask for forgiveness (from God and others where appropriate)</li>
+<li>Make a new commitment to purity going forward</li>
+<li>Seek support from a trusted counsellor, pastor, or mentor</li>
+</ol>
+<div class="example-box">
+<strong>&#128214; David — Psalm 51</strong>
+Despite serious moral failure, David confessed honestly before God, was forgiven, and was restored to relationship with God. His psalm of repentance is one of the most powerful in Scripture.
+</div>
+<div class="tip-box"><strong>&#128161; Tip</strong> You are not defined by your past. God's grace is greater than your mistakes.</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127916; Module Video</div>
+<p class="tp">Watch carefully, then continue to the quiz.</p>
+<div class="video-slot">
+<video id="lessonVideo" controls style="display:none;width:100%;"></video>
+<div class="video-placeholder" id="videoPlaceholder">
+<div class="play-icon">&#127916;</div>
+<p style="color:rgba(255,255,255,.8);">Biblical Foundation on Sexuality</p>
+<p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:6px;">Your teacher will upload this video.</p>
+<span class="upload-note">&#128193; /uploads/media/biblical-sexuality.mp4</span>
+</div>
+</div>
+<div class="video-caption">Biblical Foundation on Sexuality</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; Practice Quiz — 10 Questions</div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Answer all questions, then tap <strong>Submit</strong>.</div>
+
+<!-- Q1: MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Wanjiku, a Form 3 student at a Christian school in Nairobi, is studying God's design for sexuality. Which of the following correctly reflect the Biblical perspective on sexuality? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Sexuality is a good gift created by God.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> God designed sex to be within the covenant of marriage.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> The Bible teaches that sex is shameful and should never be discussed.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Sexual purity applies to thoughts and media, not just physical actions.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> The Bible teaches that forgiveness is available for sexual sin.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2: MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. According to Genesis 2:24, what is God's design for sexual union?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> It is permissible between any two consenting adults.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> It is designed for physical pleasure only, with no spiritual meaning.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> It is reserved for within the lifelong covenant of marriage.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> It is acceptable before marriage as long as both people love each other.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3: MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. Hassan, a Form 4 student in Garissa, is listing reasons why abstinence is the wisest choice for young people. Which of the following are correct reasons? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> It protects against sexually transmitted infections including HIV.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> It prevents unplanned pregnancy and school dropout.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> It guarantees that you will get married quickly.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> It protects emotional wellbeing and self-esteem.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> It aligns with Biblical teaching on sexual purity.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4: MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Fatuma attends a Christian youth group in Mombasa. Her youth leader quotes 1 Thessalonians 4:3: "It is God's will that you should be sanctified: that you should avoid sexual immorality." What does this verse teach?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Sexual immorality is only wrong for older people.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> God requires sexual purity as part of a holy life.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> The verse only applies to married people.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Purity is optional depending on your denomination.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5: MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. Kamau, a Form 3 student in Nakuru, wants to build a God-honouring relationship. Which of the following are signs of a healthy, values-based relationship? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Both people respect each other's boundaries without pressure.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> The relationship draws both people closer to God and their goals.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> One person controls the other to prevent temptation.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> There is honesty, kindness, and mutual encouragement.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Neither person pressures the other for physical intimacy.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6: MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. What does pornography do to the brain that makes it particularly dangerous for young people?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> It teaches young people healthy views of sex.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> It is harmless if watched only once.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> It rewires the brain similarly to drugs, creating addiction.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> It is only harmful if watched with others.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7: MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. A youth pastor is teaching about restoration after sexual sin. Which of the following are appropriate steps toward restoration? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Acknowledge what happened and be honest with yourself and God.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Confess to God and ask for forgiveness.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Keep the sin secret to avoid embarrassment and never speak of it again.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Make a new commitment to purity going forward.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Seek support from a trusted counsellor, pastor, or mentor.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8: MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. What is "secondary virginity" in the context of Christian teaching on sexuality?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> A medical procedure to restore physical virginity.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> A concept that applies only to girls, not boys.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> A fresh commitment to sexual purity made after past mistakes.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Virginity that is less valuable than primary virginity.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9: MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. Which of the following are practical ways to maintain sexual purity as a young person? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Set clear relationship boundaries with your partner early.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Avoid situations that create temptation (being alone late at night).</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Watch pornography to understand what to avoid.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Have an accountability partner — a trusted friend or mentor.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Fill your mind with positive, upbuilding content.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10: MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. Brian, a Form 4 student in Kisumu, has made moral mistakes in past relationships. His church counsellor refers him to 1 John 1:9. What does this verse promise?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> God forgives only minor sins, not sexual sin.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> You must confess your sins publicly before God will forgive you.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Forgiveness is not available for repeated sins.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> If we confess our sins, God is faithful to forgive and purify us.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; Submit Quiz</button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});btn.classList.add('chosen-'+type);var res=document.getElementById(resId);if(res){res.className='s-result '+type;res.style.display='block';}}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'C','mcq9':'A,B,D,E','mcq10':'D'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'&#8212;')+'</strong> &mdash; Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'&#11088; Excellent! You understand this topic very well.':pct>=60?'&#128077; Good effort! Review the highlighted incorrect answers.':'&#128214; Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

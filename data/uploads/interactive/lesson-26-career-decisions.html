@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Career Decisions | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="career-decisions" data-module-slug="career-decisions">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Module 19</div><div class="lesson-name">Career Decisions</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">&#127757;</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">&#128289;</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A&#8722;</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=resources" class="lb-help">&#128681; Help</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+<h3>&#128203; By the end of this lesson:</h3>
+<ol>
+<li>Explain what a career is and why career planning matters for Kenyan youth</li>
+<li>Describe the steps of a career decision-making process</li>
+<li>Identify post-KCSE pathways available in Kenya (university, TVET, polytechnic, entrepreneurship)</li>
+<li>Use self-assessment tools to match interests and skills to careers</li>
+<li>Explain what KUCCPS, HELB, and TVET mean in the Kenyan education context</li>
+</ol>
+<div class="inquiry">
+<strong>&#128269; Inquiry:</strong> What career do you see yourself in at age 30 — and have you ever thought about the steps to get there?
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: What Is a Career? -->
+<div class="slide">
+<div class="slide-head">&#128188; What Is a Career?</div>
+<p class="tp">A career is a long-term professional journey, not just a single job. Understanding this difference is the first step in making purposeful decisions about your future.</p>
+<ul class="bl">
+<li><strong>Job</strong> — short-term work done primarily for income, which may change frequently</li>
+<li><strong>Career</strong> — a purposeful long-term path made up of related roles, experiences, and growth in one field</li>
+</ul>
+<div class="key-term">
+<strong>&#128273; Career</strong>
+A series of related occupational roles over a lifetime, often in one field, shaped by deliberate choices, education, and experience.
+</div>
+<div class="example-box">
+<strong>&#127466;&#127462; Example — Wanjiku's Healthcare Career</strong>
+Wanjiku starts as a community health volunteer in Kiambu, becomes a registered nurse after training at KMTC, and eventually rises to hospital administrator at Kenyatta National Hospital. Each role is different — but all are part of one healthcare career built step by step.
+</div>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Mtaani</div>
+"Kazi ni tofauti na career. Career ni safari ya maisha yako ya kazi." — Usifanye kazi tu kwa pesa leo; fikiria unaenda wapi baadaye.
+</div>
+</div>
+
+<!-- SLIDE 3: Self-Assessment: Know Yourself -->
+<div class="slide">
+<div class="slide-head">&#129504; Self-Assessment: Know Yourself</div>
+<p class="tp">Before choosing a career, you must understand yourself. The VISAP model is a simple self-assessment framework used by career counsellors in Kenyan schools.</p>
+<ul class="bl">
+<li><strong>V — Values:</strong> What matters most to you? (helping others, earning money, creativity, leadership, faith)</li>
+<li><strong>I — Interests:</strong> What activities energise you? What do you enjoy so much you lose track of time?</li>
+<li><strong>S — Skills:</strong> What are you naturally good at — writing, maths, working with your hands, talking to people?</li>
+<li><strong>A — Abilities:</strong> What aptitudes do you have even without training — spatial reasoning, empathy, logic?</li>
+<li><strong>P — Personality:</strong> Do you prefer working alone or with people? Indoors or outdoors? Leading or supporting?</li>
+</ul>
+<div class="example-box">
+<strong>&#127466;&#127462; Example — Otieno's VISAP Profile</strong>
+Otieno loves biology, spends weekends helping sick animals on his uncle's farm in Kisumu, and is known for his patience. His VISAP profile points strongly toward veterinary medicine or agricultural science — both realistic pathways after KCSE.
+</div>
+<div class="tip-box"><strong>&#128161; Tip</strong> Guidance counsellors in Kenyan secondary schools are trained to help you do formal self-assessments. Book an appointment — it is free and confidential.</div>
+</div>
+
+<!-- SLIDE 4: Post-KCSE Pathways in Kenya -->
+<div class="slide">
+<div class="slide-head">&#127963; Post-KCSE Pathways in Kenya</div>
+<p class="tp">After KCSE, Kenyan students have more options than they often realise. The pathway you choose should match your results, your interests, and your financial situation — not just social pressure.</p>
+<table class="info-table">
+<tr><th>Pathway</th><th>Description</th><th>Example</th></tr>
+<tr><td><strong>University</strong></td><td>4–6 year degree programme placed through KUCCPS using cluster points</td><td>Medicine, Law, Engineering at University of Nairobi</td></tr>
+<tr><td><strong>TVET / Polytechnic</strong></td><td>1–3 year technical or vocational diploma or certificate in practical skills</td><td>Electrical, Plumbing, Fashion Design at NYS</td></tr>
+<tr><td><strong>College / Diploma</strong></td><td>Private colleges, nursing schools, teacher training colleges offering diplomas</td><td>Nursing at KMTC, Education at a TTC</td></tr>
+<tr><td><strong>Entrepreneurship</strong></td><td>Self-employment, apprenticeship, or starting a small business using a skill or idea</td><td>Agribusiness, barbershop, tech startup, crafts</td></tr>
+</table>
+<div class="tip-box"><strong>&#128161; TVET Is NOT a Failure</strong> Many TVET graduates earn more than university graduates within 5 years because technical skills are in high demand and short supply. A welder, electrician, or plumber can earn KES 80,000+ per month.</div>
+</div>
+
+<!-- SLIDE 5: Understanding KUCCPS -->
+<div class="slide">
+<div class="slide-head">&#127979; Understanding KUCCPS</div>
+<p class="tp">If you plan to join a public university in Kenya, you will go through KUCCPS — the body that manages all government-sponsored university placements.</p>
+<ul class="bl">
+<li><strong>KUCCPS</strong> = Kenya Universities and Colleges Central Placement Service</li>
+<li>Governs how KCSE graduates are placed into public universities and some colleges</li>
+<li>Each degree programme has four <strong>cluster subjects</strong> — the four KCSE subjects most relevant to that course</li>
+<li>Your <strong>cluster points</strong> are calculated from your grades in those four subjects and must meet the minimum cut-off for your chosen programme</li>
+<li>Minimum cluster points differ by course — e.g. Medicine requires approximately 40+ points, while Education may require 20+</li>
+</ul>
+<div class="key-term">
+<strong>&#128273; Cluster Points</strong>
+The weighted KCSE score calculated from your four cluster subjects for a specific degree programme. Different programmes have different cluster subject combinations and different minimum cut-off points.
+</div>
+<div class="warn-box"><strong>&#9888;&#65039; Important</strong> KUCCPS only places students into <strong>government-sponsored slots</strong> at public universities. Applications to private universities and TVET institutions are made separately and directly to those institutions.</div>
+</div>
+
+<!-- SLIDE 6: HELB Student Loans -->
+<div class="slide">
+<div class="slide-head">&#128178; HELB Student Loans</div>
+<p class="tp">The cost of university education can be a barrier for many Kenyan families. HELB exists to bridge that gap so that financial hardship does not end a student's education journey.</p>
+<ul class="bl">
+<li><strong>HELB</strong> = Higher Education Loans Board</li>
+<li>Provides <strong>loans</strong> (money you borrow and repay after graduation) and <strong>bursaries</strong> (money given free to very needy students) to Kenyan university students</li>
+<li>Applications open annually — apply early after KCSE results are released</li>
+<li>Repayment begins after graduation once you are formally employed</li>
+</ul>
+<div class="key-term">
+<strong>&#128273; Bursary</strong>
+A bursary is money given to a student that does not need to be repaid — unlike a loan. It is awarded based on financial need and is intended to support students from very poor backgrounds.
+</div>
+<div class="example-box">
+<strong>&#127466;&#127462; Example — Kamau from Kisii</strong>
+Kamau scored a C+ in KCSE and gained admission to KMTC for a clinical medicine diploma. He applied for HELB funding early and was awarded a bursary that covered most of his fees. He is now in his second year, debt-free.
+</div>
+<div class="tip-box"><strong>&#128161; County Bursaries</strong> Every county government in Kenya offers bursaries to local students. Visit your County Education Office or check your county government website for application details — many students miss these simply because they do not know they exist.</div>
+</div>
+
+<!-- SLIDE 7: Steps in Career Planning -->
+<div class="slide">
+<div class="slide-head">&#128203; Steps in Career Planning</div>
+<p class="tp">Career planning is not a single decision — it is an ongoing process. Following these six steps helps you make informed, realistic choices rather than guessing or following peer pressure.</p>
+<ol class="bl">
+<li><strong>Self-assess</strong> — Know your values, interests, skills, abilities, and personality (VISAP)</li>
+<li><strong>Explore</strong> — Research careers and educational pathways that match your profile; talk to people working in those fields</li>
+<li><strong>Decide</strong> — Shortlist 2–3 realistic options; use a pros and cons analysis to weigh each one honestly</li>
+<li><strong>Plan</strong> — Map out the specific academic requirements, institutions, and financial steps needed to achieve your chosen career</li>
+<li><strong>Act</strong> — Apply to schools or programmes, seek mentors in your chosen field, do job shadowing or internships where possible</li>
+<li><strong>Review</strong> — Revisit and update your plan regularly as you gain new experience, qualifications, and insight</li>
+</ol>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Mtaani</div>
+"Usisubiri Form 4 kujua career yako. Anza sasa sasa!" — The earlier you start exploring, the better your choices will be when the time comes to decide.
+</div>
+</div>
+
+<!-- SLIDE 8: Kenya's Growing Career Sectors -->
+<div class="slide">
+<div class="slide-head">&#127758; Kenya's Growing Career Sectors</div>
+<div class="warn-box"><strong>Where is Kenya's economy heading?</strong> Understanding which sectors are growing helps you make career choices that will still be relevant and in-demand when you finish your training.</div>
+<table class="info-table">
+<tr><th>Sector</th><th>Why It's Growing</th><th>Example Roles</th></tr>
+<tr><td><strong>ICT &amp; Tech</strong></td><td>Silicon Savannah, iHub Nairobi, growing digital economy</td><td>Software developer, cybersecurity analyst, data analyst</td></tr>
+<tr><td><strong>Healthcare</strong></td><td>Universal Health Coverage policy drive</td><td>Nurses, clinical officers, public health officers</td></tr>
+<tr><td><strong>Agriculture</strong></td><td>Food security agenda; agritech innovation</td><td>Agribusiness manager, agronomist, food technologist</td></tr>
+<tr><td><strong>Tourism &amp; Hospitality</strong></td><td>Wildlife, coastal, and cultural tourism expansion</td><td>Hotel manager, tour guide, events coordinator</td></tr>
+<tr><td><strong>Construction</strong></td><td>Affordable housing and infrastructure boom</td><td>Civil engineer, quantity surveyor, architect</td></tr>
+<tr><td><strong>Green Energy</strong></td><td>Solar and wind energy expansion across Kenya</td><td>Electrical technician, solar installer, energy auditor</td></tr>
+</table>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127916; Module Video</div>
+<p class="tp">Watch carefully, then continue to the quiz.</p>
+<div class="video-slot">
+<video id="lessonVideo" controls style="display:none;width:100%;"></video>
+<div class="video-placeholder" id="videoPlaceholder">
+<div class="play-icon">&#127916;</div>
+<p style="color:rgba(255,255,255,.8);">Career Decisions — Planning Your Future</p>
+<p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:6px;">Your teacher will upload this video.</p>
+<span class="upload-note">&#128193; /uploads/media/career-decisions.mp4</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; Practice Quiz — 10 Questions</div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Answer all questions, then tap <strong>Submit</strong>.</div>
+
+<div class="mcq-block">
+<div class="q-text">1. Fatuma, a Form 4 student in Eldoret, is doing a VISAP self-assessment. Which of the following are components of the VISAP self-assessment model? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Values (what matters most to you)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Interests (what activities energise you)</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Salary expectations (how much money you want)</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Skills and Abilities (what you are good at)</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Personality (how you prefer to work and interact)</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. A Form 4 student in Nairobi wants to study Medicine at the University of Nairobi through KUCCPS. What does KUCCPS stand for?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Kenya University College Central Placement System</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Kenya Universities and Colleges Central Placement Service</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Kenya Undergraduate Curriculum and Career Placement Service</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Kenya United Colleges and Courses Placement Scheme</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. Brian, a guidance counsellor in Mombasa, lists post-KCSE pathways for students. Which of the following are valid pathways after KCSE in Kenya? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> University degree via KUCCPS cluster points</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> TVET/polytechnic diploma or certificate</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Repeating Form 1 to improve KCSE results</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Private college or KMTC diploma programme</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Apprenticeship or entrepreneurship</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. Zawadi scored a B in KCSE and wants to study Electrical Engineering. She cannot get a government-sponsored slot at university. Which is her BEST next option?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Give up on engineering entirely</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Wait three years and re-sit KCSE</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Enrol in a TVET programme in electrical engineering or apply to a private university</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Move to another county hoping for better placement</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. Akinyi is explaining the 6 steps of career planning to Form 3 students in Kisumu. Which of the following are recognised steps in career planning? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Self-assess — know your values, interests, skills, and personality</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Explore — research careers matching your profile</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Decide — pick one career and never change your mind</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Plan — map out the academic and financial steps needed</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Act — apply, seek mentors, do job shadowing or internships</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. Ochieng from Kisumu learns about HELB. What does HELB primarily provide?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Free laptops for university students</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Government-sponsored university placement</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Loans and bursaries to support Kenyan university students</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Scholarships only for students who score A in KCSE</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. A career counsellor in Nakuru is talking about Kenya's fastest-growing career sectors. Which of the following are identified as growing sectors in Kenya's economy? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> ICT and technology (Silicon Savannah)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Healthcare (Universal Health Coverage drive)</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Film acting in Hollywood</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Agriculture and agribusiness</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Green energy (solar and wind)</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. Hassan, a Form 3 student in Garissa, believes that only university graduates can succeed in life. What is the BEST response to this myth?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> He is correct — a university degree is the only route to success</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Success requires only a university degree, never a TVET qualification</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> TVET graduates often earn more than university graduates within 5 years in technical fields</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Only students from Nairobi can access TVET</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. Miriam, a Form 4 student in Meru, is doing a VISAP self-assessment. Which of the following questions are relevant to the self-assessment process? Select ALL that apply.</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> What activities make me lose track of time because I enjoy them so much?</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> What are my core values — what matters most to me in life?</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Which career does my neighbour think I should pursue?</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> What skills do I have that others often compliment?</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> What kind of working environment suits my personality?</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. A Form 4 student has completed self-assessment, explored career options, and made a decision. According to the 6-step career planning model, what should she do NEXT?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Stop planning — she has already decided</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Re-sit her KCSE immediately</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Tell all her classmates which career she chose</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Plan — map out the specific academic and financial steps needed to achieve her chosen career</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; Submit Quiz</button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});btn.classList.add('chosen-'+type);var res=document.getElementById(resId);if(res){res.className='s-result '+type;res.style.display='block';}}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'A,B,D,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'C','mcq9':'A,B,D,E','mcq10':'D'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'&#8212;')+'</strong> &mdash; Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'&#11088; Excellent! You understand this topic very well.':pct>=60?'&#128077; Good effort! Review the highlighted incorrect answers.':'&#128214; Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

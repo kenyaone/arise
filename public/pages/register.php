@@ -7,17 +7,21 @@
  */
 trackPageView('register');
 
-// Load projects (schools) with clusters (classes)
-$schoolsResult = db()->query("SELECT * FROM schools WHERE is_active=1 ORDER BY name");
+// Load ARISE clusters first, then projects grouped by cluster
+$clustersResult = db()->query("SELECT id, name FROM clusters ORDER BY name");
+$clusters = [];
+while ($c = $clustersResult->fetchArray(SQLITE3_ASSOC)) $clusters[] = $c;
+
+$schoolsResult = db()->query("SELECT s.id, s.name, s.cluster_id, COALESCE(c.name,'') AS cluster_name FROM schools s LEFT JOIN clusters c ON c.id=s.cluster_id WHERE s.is_active=1 ORDER BY s.name");
 $schools = [];
+$schoolsByCluster = []; // cluster_id => [schools]
 while ($s = $schoolsResult->fetchArray(SQLITE3_ASSOC)) {
-    $classResult = db()->query("SELECT * FROM classes WHERE school_id={$s['id']} AND is_active=1 ORDER BY name");
-    $classes = [];
-    while ($c = $classResult->fetchArray(SQLITE3_ASSOC)) $classes[] = $c;
-    $s['classes'] = $classes;
     $schools[] = $s;
+    $cid = $s['cluster_id'] ?: 'none';
+    $schoolsByCluster[$cid][] = $s;
 }
 $hasSchools = count($schools) > 0;
+$hasClusters = count($clusters) > 0;
 ?>
 
 <div class="container">
@@ -63,74 +67,64 @@ $hasSchools = count($schools) > 0;
                            style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
                 </div>
 
-                <?php if ($hasSchools): ?>
-                <!-- Project Dropdown (was: School) -->
+                <?php if ($hasClusters && $hasSchools): ?>
+
+                <!-- Step 1: ARISE Cluster -->
                 <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
+                    <label class="form-label" style="display:block;font-size:.78rem;font-weight:700;color:var(--mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;">
+                        Cluster *
+                    </label>
+                    <select id="clusterSelect" required
+                            onchange="loadProjects(this.value)"
+                            class="form-control"
+                            style="width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:8px;font-size:1rem;box-sizing:border-box;">
+                        <option value="">— Select your cluster —</option>
+                        <?php foreach($clusters as $cl): ?>
+                            <option value="<?= $cl['id'] ?>"><?= e($cl['name']) ?></option>
+                        <?php endforeach; ?>
+                        <?php if (!empty($schoolsByCluster['none'])): ?>
+                            <option value="none">Other / Not listed</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <!-- Step 2: Project (filtered by cluster) -->
+                <div class="form-group" style="margin-bottom:20px;" id="projectWrap">
+                    <label class="form-label" style="display:block;font-size:.78rem;font-weight:700;color:var(--mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;">
                         Project *
                     </label>
                     <select name="school_name" id="schoolSelect" required
-                            onchange="loadClasses(this.value)"
                             class="form-control"
-                            style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
-                        <option value="">— Select your project —</option>
-                        <?php foreach($schools as $s): ?>
-                            <option value="<?= e($s['name']) ?>" data-id="<?= $s['id'] ?>"><?= e($s['name']) ?></option>
-                        <?php endforeach; ?>
+                            style="width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:8px;font-size:1rem;box-sizing:border-box;">
+                        <option value="">— Select cluster first —</option>
                     </select>
                 </div>
 
-                <!-- Cluster Dropdown (was: Class / Stream) -->
-                <div class="form-group" style="margin-bottom:20px;" id="classWrap">
-                    <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
-                        Cluster *
-                    </label>
-                    <select name="class_name" id="classSelect" required
-                            class="form-control"
-                            style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
-                        <option value="">— Select project first —</option>
-                    </select>
-                </div>
-
-                <!-- Classes JSON for JS -->
                 <script>
-                var schoolClasses = <?= json_encode(array_reduce($schools, function($carry, $s) {
-                    $carry[$s['id']] = array_map(fn($c) => $c['name'], $s['classes']);
-                    return $carry;
-                }, [])) ?>;
+                var schoolsByCluster = <?= json_encode(array_map(function($list) {
+                    return array_map(fn($s) => ['id'=>$s['id'],'name'=>$s['name']], $list);
+                }, $schoolsByCluster)) ?>;
 
-                function loadClasses(schoolName) {
-                    var sel = document.getElementById('schoolSelect');
-                    var opt = sel.options[sel.selectedIndex];
-                    var schoolId = opt ? opt.getAttribute('data-id') : null;
-                    var classSel = document.getElementById('classSelect');
-                    classSel.innerHTML = '<option value="">— Select your cluster —</option>';
-                    if (schoolId && schoolClasses[schoolId]) {
-                        schoolClasses[schoolId].forEach(function(c) {
-                            var o = document.createElement('option');
-                            o.value = c; o.textContent = c;
-                            classSel.appendChild(o);
-                        });
-                    }
+                function loadProjects(clusterId) {
+                    var projSel = document.getElementById('schoolSelect');
+                    projSel.innerHTML = '<option value="">— Select your project —</option>';
+                    var list = schoolsByCluster[clusterId] || [];
+                    list.forEach(function(s) {
+                        var o = document.createElement('option');
+                        o.value = s.name; o.textContent = s.name;
+                        projSel.appendChild(o);
+                    });
                 }
                 </script>
 
                 <?php else: ?>
                 <!-- Fallback: free text if no projects configured yet -->
-                <div class="form-group" style="margin-bottom:16px;">
+                <div class="form-group" style="margin-bottom:20px;">
                     <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
                         Project Name *
                     </label>
                     <input type="text" name="school_name" class="form-control"
                            placeholder="e.g. Moi Girls Eldoret" required
-                           style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
-                </div>
-                <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
-                        Cluster *
-                    </label>
-                    <input type="text" name="class_name" class="form-control"
-                           placeholder="e.g. Form 2, Grade 9, Class 8" required
                            style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
                 </div>
                 <div class="alert alert-success" style="background:#f0fdf4; color:#166534; border-left:4px solid #16a34a; padding:12px 16px; border-radius:6px; margin-bottom:16px; font-size:0.88rem;">

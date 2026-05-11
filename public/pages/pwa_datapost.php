@@ -59,16 +59,132 @@ function smtp_send(string $to, string $subject, string $body, array $smtp): arra
 
 function snap(): array {
     return [
-        'learners'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
-        'modules'   => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
-        'lessons'   => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
-        'quizzes'   => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
-        'pretests'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
-        'posttests' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
-        'certs'     => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
-        'forum'     => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
-        'questions' => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+        'learners'       => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1 AND deleted_at IS NULL"),
+        'modules'        => (int)db()->querySingle("SELECT COUNT(*) FROM modules WHERE is_active=1"),
+        'lessons'        => (int)db()->querySingle("SELECT COUNT(*) FROM lessons WHERE is_active=1"),
+        'quizzes'        => (int)db()->querySingle("SELECT COUNT(*) FROM quiz_attempts"),
+        'pretests'       => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='pre'"),
+        'posttests'      => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts WHERE test_type='post'"),
+        'certs'          => (int)db()->querySingle("SELECT COUNT(*) FROM certificates"),
+        'forum'          => (int)db()->querySingle("SELECT COUNT(*) FROM forum_posts WHERE is_hidden=0"),
+        'questions'      => (int)db()->querySingle("SELECT COUNT(*) FROM anonymous_questions"),
+        'poll_responses' => (int)db()->querySingle("SELECT COUNT(*) FROM module_feedback"),
     ];
+}
+
+function pollSummary(): array {
+    $res = db()->query("
+        SELECT m.id, m.slug, m.title,
+            COUNT(mf.id) AS responses,
+            ROUND(AVG(mf.rating),2) AS avg_rating,
+            SUM(mf.would_recommend) AS recommends
+        FROM modules m
+        LEFT JOIN module_feedback mf ON mf.module_id = m.id
+        WHERE m.is_active=1
+        GROUP BY m.id
+        HAVING responses > 0
+        ORDER BY m.id
+    ");
+    $rows = [];
+    while ($r = $res->fetchArray(SQLITE3_ASSOC)) $rows[] = $r;
+    return $rows;
+}
+
+// County-level fallback coordinates (centroid or main town)
+const COUNTY_COORDS = [
+    'Nairobi'              => [-1.2864, 36.8172],
+    'Kiambu'               => [-1.0536, 36.6710],
+    'Uasin Gishu'          => [ 0.5204, 35.2698],
+    'UASIN GISHU'          => [ 0.5204, 35.2698],
+    'Nandi'                => [ 0.2028, 35.1045],
+    'Kisumu'               => [-0.0917, 34.7680],
+    'Siaya'                => [ 0.0625, 34.2422],
+    'Siaya-Kisumu'         => [-0.0500, 34.5000],
+    'Kakamega'             => [ 0.2827, 34.7519],
+    'Vihiga'               => [ 0.0076, 34.7234],
+    'Vihiga-Nandi-Kisumu'  => [ 0.1000, 34.8500],
+    'Busia'                => [ 0.4610, 34.1110],
+    'Homa Bay'             => [-0.5180, 34.4570],
+    'Migori'               => [-1.0634, 34.4731],
+    'Narok'                => [-1.0834, 35.8730],
+    'Migori-Narok'         => [-1.0634, 34.4731],
+    'Narok-Kajiado'        => [-1.0834, 35.8730],
+    'Kajiado'              => [-1.8520, 36.7760],
+    'Machakos'             => [-1.5177, 37.2634],
+    'Kitui'                => [-1.3671, 38.0106],
+    'Kitui-Machakos'       => [-1.3671, 38.0106],
+    'Makueni'              => [-1.8018, 37.6209],
+    'Meru'                 => [ 0.0476, 37.6493],
+    'Embu'                 => [-0.5330, 37.4580],
+    'Tharaka Nithi'        => [-0.2960, 37.9570],
+    'Tharaka Nithi-Embu'   => [-0.5330, 37.4580],
+    'Nakuru'               => [-0.3031, 36.0800],
+    'Laikipia'             => [ 0.3600, 36.7810],
+    'Nyeri'                => [-0.4167, 36.9481],
+    'Murang\'a'            => [-0.7833, 37.0370],
+    'Kirinyaga'            => [-0.6580, 37.3310],
+    'Nyandarua'            => [-0.1110, 36.3610],
+    'Kericho'              => [-0.3690, 35.2840],
+    'Bomet'                => [-0.7820, 35.3420],
+    'Kisii'                => [-0.6773, 34.7796],
+    'Nyamira'              => [-0.5670, 34.9370],
+    'Trans Nzoia'          => [ 1.0570, 35.0000],
+    'Elgeyo Marakwet'      => [ 0.7980, 35.5060],
+    'Baringo'              => [ 0.4640, 35.7510],
+    'West Pokot'           => [ 1.6230, 35.0940],
+    'Turkana'              => [ 3.1190, 35.5960],
+    'Samburu'              => [ 1.2160, 36.6950],
+    'Isiolo'               => [ 0.3540, 37.5820],
+    'Marsabit'             => [ 2.3350, 37.9890],
+    'Garissa'              => [-0.4530, 39.6460],
+    'Wajir'                => [ 1.7500, 40.0590],
+    'Mandera'              => [ 3.9370, 41.8550],
+    'Tana River'           => [-1.4890, 40.2650],
+    'Lamu'                 => [-2.2720, 40.9020],
+    'Kilifi'               => [-3.6300, 39.8500],
+    'Kwale'                => [-4.1750, 39.4520],
+    'Mombasa'              => [-4.0435, 39.6682],
+    'Taita Taveta'         => [-3.3160, 38.4800],
+    'Yala'                 => [ 0.1028, 34.3437],
+];
+
+function buildSchoolRows(): array {
+    // ALL active schools regardless of learner count
+    $result = db()->query("
+        SELECT sc.name AS school_name, sc.county, sc.lat, sc.lng,
+               c.name AS cluster_name
+        FROM schools sc
+        LEFT JOIN clusters c ON c.id = sc.cluster_id
+        WHERE sc.is_active = 1
+        ORDER BY sc.name
+    ");
+    $rows = [];
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $sne = SQLite3::escapeString($row['school_name']);
+        $learners = (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL");
+
+        // Apply county fallback if no explicit coordinates
+        $lat = $row['lat'] !== null && $row['lat'] != 0 ? (float)$row['lat'] : null;
+        $lng = $row['lng'] !== null && $row['lng'] != 0 ? (float)$row['lng'] : null;
+        if (($lat === null || $lng === null) && !empty($row['county'])) {
+            $fallback = COUNTY_COORDS[$row['county']] ?? null;
+            if ($fallback) { $lat = $fallback[0]; $lng = $fallback[1]; }
+        }
+
+        $rows[] = [
+            'school_name'    => $row['school_name'],
+            'county'         => $row['county'] ?? '',
+            'cluster'        => $row['cluster_name'] ?? '',
+            'lat'            => $lat,
+            'lng'            => $lng,
+            'has_learners'   => $learners > 0,
+            'learner_count'  => $learners,
+            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
+            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
+            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+        ];
+    }
+    return $rows;
 }
 
 // ── Handle AJAX requests ──────────────────────────────────────────────────────
@@ -177,32 +293,9 @@ if ($action === 'test_email') {
 
 if ($action === 'cloud_sync') {
     header('Content-Type: application/json');
-    // Only sync schools that are currently active in the schools table, with location
-    $schoolRows = [];
-    $result = db()->query("
-        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
-        FROM students st
-        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
-        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
-        ORDER BY st.school_name
-    ");
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $sn  = $row['school_name'];
-        $sne = SQLite3::escapeString($sn);
-        $schoolRows[] = [
-            'school_name'    => $sn,
-            'county'         => $row['county'] ?? '',
-            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
-            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
-            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
-            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
-            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
-            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
-        ];
-    }
+    $schoolRows = buildSchoolRows();
     if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active schools found']); exit; }
-
-    $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows]);
+    $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows,'poll_summary'=>pollSummary()]);
     $syncUrl  = $cfg['cloud_sync_url'] ?? 'https://ariseci.org/arise-sync.php';
 
     $ch = curl_init($syncUrl);
@@ -227,30 +320,8 @@ if ($action === 'cloud_sync') {
 
 if ($action === 'cloud_sync_prepare') {
     header('Content-Type: application/json');
-    // Only prepare schools that are currently active in the schools table, with location
-    $schoolRows = [];
-    $result = db()->query("
-        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
-        FROM students st
-        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
-        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
-        ORDER BY st.school_name
-    ");
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $sn  = $row['school_name'];
-        $sne = SQLite3::escapeString($sn);
-        $schoolRows[] = [
-            'school_name'    => $sn,
-            'county'         => $row['county'] ?? '',
-            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
-            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
-            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
-            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
-            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
-            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
-        ];
-    }
-    echo json_encode(['status'=>'ok','schools'=>$schoolRows,'generated_at'=>date('Y-m-d H:i:s')]);
+    $schoolRows = buildSchoolRows();
+    echo json_encode(['status'=>'ok','schools'=>$schoolRows,'poll_summary'=>pollSummary(),'generated_at'=>date('Y-m-d H:i:s')]);
     exit;
 }
 

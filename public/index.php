@@ -54,12 +54,6 @@ try { runAutoBackup(); } catch (Exception $e) {}
 $modules = getModules();
 $page = $_GET['p'] ?? '';
 
-if (session_status() === PHP_SESSION_NONE) {
-    ini_set('session.gc_maxlifetime', 86400 * 30);
-    session_set_cookie_params(['lifetime' => 86400 * 30, 'path' => '/arise/', 'httponly' => true, 'samesite' => 'Lax']);
-    session_start();
-}
-
 // Student logout
 if (isset($_GET['logout'])) {
     unset($_SESSION['arise_student_id']);
@@ -80,8 +74,11 @@ if ($student || !empty($_SESSION['arise_admin_id'])) {
     header('Expires: 0');
 }
 
+// Admins and teachers can view student-facing pages (for review/preview)
+$isAdminSession = !empty($_SESSION['arise_admin_id']);
+
 // Redirect to login if not logged in and page requires login
-if (!$student && !in_array($page, ['login', 'register', '', 'datapost', 'donor_report'])) {
+if (!$student && !$isAdminSession && !in_array($page, ['login', 'register', 'register_submit', '', 'datapost', 'donor_report'])) {
     header('Location: /arise/login');
     exit;
 }
@@ -90,6 +87,9 @@ if (!$student && !in_array($page, ['login', 'register', '', 'datapost', 'donor_r
 if ($page === '') {
     if ($student) {
         $page = 'home';
+    } elseif ($isAdminSession) {
+        header('Location: /arise/admin/');
+        exit;
     } else {
         header('Location: /arise/login');
         exit;

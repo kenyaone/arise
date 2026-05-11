@@ -38,6 +38,19 @@ if ($student && $module && ($module['require_posttest'] ?? 1)) {
     }
 }
 
+// Refusal Skills gate — modules 1 (Drugs), 4 (GBV), 5 (HIV/AIDS), 6 (Life Skills)
+$REFUSAL_GATED_MODULES = [1, 4, 5, 6];
+if ($student && $module && in_array($module['id'], $REFUSAL_GATED_MODULES)) {
+    $refusalPassed = (bool) db()->querySingle(
+        "SELECT id FROM quiz_attempts WHERE student_id=" . intval($studentId) .
+        " AND lesson_slug='refusal-skills-lesson' AND percentage>=60 LIMIT 1"
+    );
+    if (!$refusalPassed) {
+        header('Location: /arise/?p=lesson&slug=refusal-skills-lesson&required=1');
+        exit;
+    }
+}
+
 // 4. Get certificate record — use URL params if provided (admin print)
 $urlCert = isset($_GET['cert']) ? urldecode($_GET['cert']) : null;
 $urlDate = isset($_GET['date']) ? urldecode($_GET['date']) : null;

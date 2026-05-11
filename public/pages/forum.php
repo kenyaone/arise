@@ -105,10 +105,15 @@ trackPageView('forum');
             </div>
             <div style="margin-bottom:12px;">
                 <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">Related Module (optional)</label>
+                <?php
+                // Pre-select module if coming from module page
+                $preModSlug = $_GET['module'] ?? '';
+                $preModId = $preModSlug ? db()->querySingle("SELECT id FROM modules WHERE slug='".SQLite3::escapeString($preModSlug)."'") : 0;
+                ?>
                 <select name="module_id" style="max-width:300px;">
                     <option value="">— General Discussion —</option>
                     <?php foreach($modules as $m): ?>
-                        <option value="<?= $m['id'] ?>"><?= $m['icon'] ?> <?= e($m['title']) ?></option>
+                        <option value="<?= $m['id'] ?>" <?= $preModId==$m['id']?'selected':'' ?>><?= $m['icon'] ?> <?= e($m['title']) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sexually Transmitted Diseases | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.q-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:10px;}
+.q-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:9px;line-height:1.55;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;min-width:120px;font-size:.88rem;padding:2px 6px;outline:none;text-align:center;color:var(--dark);font-family:inherit;}
+.fill-blank.correct{border-bottom:2px solid var(--ok);background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 8px;}
+.fill-blank.wrong{border-bottom:2px solid var(--no);background:#ffebee;color:#b71c1c;border-radius:4px;padding:2px 8px;}
+.fb-box{background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.8rem;display:none;line-height:1.65;}
+.kf{color:var(--ok);font-weight:700;}
+.km{color:var(--no);font-weight:700;}
+.sa-area{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.85rem;min-height:70px;resize:vertical;font-family:inherit;color:var(--dark);}
+.sa-area:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.cert-btn{display:inline-block;background:#fff;color:var(--pri);padding:10px 28px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:4px;}
+.retry-box{background:#fff3e0;border:2px solid var(--acc);border-radius:var(--radius);padding:16px;text-align:center;margin-top:12px;display:none;}
+.retry-box p{font-size:.88rem;color:#6b4a00;margin-bottom:10px;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="stds-lesson" data-module-slug="hiv-aids-stis">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · HIV/AIDS &amp; STIs · Lesson 2 of 2</div><div class="lesson-name">&#129440; Sexually Transmitted Diseases</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">&#127757;</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">&#128289;</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A&#8722;</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=resources" class="lb-help">&#128681; Help</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+<h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo hili:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+<ol>
+<li><span class="en">Identify common STDs and their causative agents</span><span class="sw">Tambua STI za kawaida na visababishi vyake</span><span class="sh">Identify common STDs na causative agents zao</span></li>
+<li><span class="en">Describe signs, symptoms and complications of STDs</span><span class="sw">Eleza dalili, ishara na matatizo ya STI</span><span class="sh">Describe signs, symptoms na complications za STDs</span></li>
+<li><span class="en">Understand how STDs are prevented, tested and treated</span><span class="sw">Elewa jinsi STI zinavyozuiwa, kupimwa na kutibiwa</span><span class="sh">Elewa jinsi STDs zinavyozuiwa, kupimwa na kutibiwa</span></li>
+<li><span class="en">Reduce stigma by knowing the facts</span><span class="sw">Punguza unyanyapaa kwa kujua ukweli</span><span class="sh">Reduce stigma kwa kujua facts</span></li>
+</ol>
+<div class="inquiry">
+<span class="en"><strong>&#128269; Big Question:</strong> Why are so many STDs silent — and what does that mean for your health decisions?</span>
+<span class="sw"><strong>&#128269; Swali Kubwa:</strong> Kwa nini STI nyingi hazina dalili — na hii inamaanisha nini kwa maamuzi yako ya afya?</span>
+<span class="sh"><strong>&#128269; Big Question:</strong> Kwa nini STDs nyingi ni silent — na hii inamaanisha nini kwa health decisions zako?</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: STDs Overview -->
+<div class="slide">
+<div class="slide-head">&#129440; <span class="en">STDs — The Basics</span><span class="sw">Misingi ya STI</span><span class="sh">STDs — The Basics</span></div>
+<p class="tp">
+<span class="en">Sexually Transmitted Diseases (STDs) are among the most common infections in Kenya, but most are preventable and many are curable. The key is knowledge, testing, and early treatment.</span>
+<span class="sw">Magonjwa ya zinaa (STI) ni miongoni mwa maambukizi ya kawaida zaidi Kenya, lakini mengi yanazuiwa na mengi yanaposwa. Ufunguo ni elimu, kupima, na matibabu ya mapema.</span>
+<span class="sh">Magonjwa ya zinaa (STDs) ni miongoni mwa common infections Kenya, lakini mengi yanazuiwa na mengi yanaweza kuposwa. Ufunguo ni knowledge, kupima, na early treatment.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; STD / STI</span><span class="sw">&#128273; Ugonjwa wa Zinaa</span><span class="sh">&#128273; STD / STI</span></strong>
+<span class="en">Sexually Transmitted Disease/Infection — infections spread primarily through sexual contact. Kenya reports 3+ million STI cases per year. Many show NO symptoms.</span>
+<span class="sw">Ugonjwa/Maambukizi ya Zinaa — maambukizi yanayosambazwa hasa kupitia ngono. Kenya inaona visa 3+ milioni vya STI kwa mwaka. Mengi hayana dalili.</span>
+<span class="sh">Sexually Transmitted Disease/Infection — infections zinazosambazwa hasa kwa sexual contact. Kenya inaona 3+ million STI cases kwa mwaka. Nyingi hazina symptoms.</span>
+</div>
+<table class="info-table">
+<tr><th><span class="en">Type</span><span class="sw">Aina</span><span class="sh">Type</span></th><th><span class="en">Examples</span><span class="sw">Mifano</span><span class="sh">Examples</span></th><th><span class="en">Curable?</span><span class="sw">Inaposwa?</span><span class="sh">Curable?</span></th></tr>
+<tr><td><span class="en">Bacterial</span><span class="sw">Bakteria</span><span class="sh">Bacterial</span></td><td><span class="en">Gonorrhoea, Chlamydia, Syphilis</span><span class="sw">Kisonono, Klamidia, Kaswende</span><span class="sh">Gonorrhoea, Chlamydia, Syphilis</span></td><td><span class="en">Yes — antibiotics</span><span class="sw">Ndiyo — antibiotiki</span><span class="sh">Yes — antibiotics</span></td></tr>
+<tr><td><span class="en">Viral</span><span class="sw">Virusi</span><span class="sh">Viral</span></td><td><span class="en">Herpes (HSV), HPV, HIV</span><span class="sw">Herpes (HSV), HPV, VVU</span><span class="sh">Herpes (HSV), HPV, HIV</span></td><td><span class="en">No cure, manageable</span><span class="sw">Haiposwa, inadhibitiwa</span><span class="sh">No cure, manageable</span></td></tr>
+<tr><td><span class="en">Parasitic</span><span class="sw">Vimelea</span><span class="sh">Parasitic</span></td><td><span class="en">Trichomoniasis</span><span class="sw">Trikamoniasisi</span><span class="sh">Trichomoniasis</span></td><td><span class="en">Yes — antiparasitics</span><span class="sw">Ndiyo — dawa za vimelea</span><span class="sh">Yes — antiparasitics</span></td></tr>
+<tr><td><span class="en">Fungal</span><span class="sw">Fangasi</span><span class="sh">Fungal</span></td><td><span class="en">Candida (thrush)</span><span class="sw">Kandida (thrush)</span><span class="sh">Candida (thrush)</span></td><td><span class="en">Yes — antifungals</span><span class="sw">Ndiyo — dawa za fangasi</span><span class="sh">Yes — antifungals</span></td></tr>
+<tr><td><span class="en">Common fact</span><span class="sw">Ukweli muhimu</span><span class="sh">Common fact</span></td><td><span class="en">1 in 5 sexually active Kenyans</span><span class="sw">1 kati ya 5 Wakenya wanaofanya ngono</span><span class="sh">1 kati ya 5 sexually active Kenyans</span></td><td><span class="en">May have an undiagnosed STI</span><span class="sw">Wanaweza kuwa na STI isiyogundulika</span><span class="sh">Wanaweza kuwa na undiagnosed STI</span></td></tr>
+</table>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Mitaani</div>
+<span class="en" style="display:block;">Marafiki wangu, ukweli ni huu: ukiangalia mtu huwezi kujua ana STI. Wengi hawajui wenyewe. Kujipima ndiyo njia pekee ya kujua.</span>
+<span class="sw" style="display:block;">Marafiki, ukweli ni huu: ukiangalia mtu huwezi kujua ana STI. Wengi hawajui wenyewe. Kujipima ndiyo njia pekee ya kujua.</span>
+<span class="sh" style="display:block;">Marafiki wangu, ukweli ni huu: ukiangalia mtu huwezi kujua ana STI. Wengi hawajui wenyewe. Kujipima ndiyo njia pekee ya kujua.</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Gonorrhoea & Chlamydia -->
+<div class="slide">
+<div class="slide-head">&#128308; <span class="en">Gonorrhoea &amp; Chlamydia — The Silent Epidemics</span><span class="sw">Kisonono na Klamidia — Magonjwa ya Kimya</span><span class="sh">Gonorrhoea &amp; Chlamydia — The Silent Epidemics</span></div>
+<p class="tp">
+<span class="en">Gonorrhoea and chlamydia are the most common bacterial STDs in Kenya. They often cause NO symptoms — especially in women — making them dangerous if left untreated.</span>
+<span class="sw">Kisonono na klamidia ni STI za bakteria zinazojulikana zaidi Kenya. Mara nyingi hazina dalili — hasa kwa wanawake — na hii ni hatari bila matibabu.</span>
+<span class="sh">Gonorrhoea na chlamydia ni most common bacterial STDs Kenya. Mara nyingi hazina symptoms — hasa kwa wanawake — na hii ni hatari bila treatment.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Gonorrhoea (Kisonono)</span><span class="sw">&#128273; Kisonono</span><span class="sh">&#128273; Gonorrhoea (Kisonono)</span></strong>
+<span class="en">Caused by Neisseria gonorrhoeae. Symptoms: burning urination, yellowish discharge, pelvic pain. Often symptomless in women. Can cause infertility if untreated. Curable with antibiotics.</span>
+<span class="sw">Husababishwa na Neisseria gonorrhoeae. Dalili: maumivu wakati wa kukojoa, kutoka usaha wa njano, maumivu ya tumbo la chini. Mara nyingi hayana dalili kwa wanawake. Inaweza kusababisha utasa bila matibabu. Inaposwa kwa antibiotiki.</span>
+<span class="sh">Caused na Neisseria gonorrhoeae. Symptoms: burning kukojoa, yellowish discharge, pelvic pain. Mara nyingi symptomless kwa wanawake. Inaweza cause infertility bila treatment. Curable na antibiotics.</span>
+</div>
+<div class="key-term">
+<strong><span class="en">&#128273; Chlamydia</span><span class="sw">&#128273; Klamidia</span><span class="sh">&#128273; Chlamydia</span></strong>
+<span class="en">Most common bacterial STI worldwide. Up to 70% of cases show NO symptoms. Causes: discharge, burning, pelvic pain. Major cause of ectopic pregnancy and infertility. Curable with antibiotics.</span>
+<span class="sw">STI ya kawaida zaidi ya bakteria duniani. Hadi 70% ya visa hayana dalili. Husababisha: kutoka usaha, moto wakati wa kukojoa, maumivu ya tumbo. Chanzo kikuu cha ujauzito nje ya kizazi na utasa. Inaposwa kwa antibiotiki.</span>
+<span class="sh">Most common bacterial STI worldwide. Hadi 70% ya cases hazina symptoms. Husababisha: discharge, burning, pelvic pain. Major cause ya ectopic pregnancy na infertility. Curable na antibiotics.</span>
+</div>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Antibiotic Resistance Alert</span><span class="sw">&#9888;&#65039; Tahadhari ya Upinzani wa Antibiotiki</span><span class="sh">&#9888;&#65039; Antibiotic Resistance Alert</span></strong>
+<span class="en"> Gonorrhoea is becoming resistant to common antibiotics (superbug gonorrhoea). Always complete the full antibiotic course. Never share medications.</span>
+<span class="sw"> Kisonono kinaanza kupinga antibiotiki za kawaida (kisonono cha vipaji). Daima kamilisha kozi yote ya antibiotiki. Usishiriki dawa.</span>
+<span class="sh"> Gonorrhoea inaanza kupinga common antibiotics (superbug gonorrhoea). Daima complete full antibiotic course. Usishiriki dawa.</span>
+</div>
+<div class="tip-box"><strong><span class="en">&#128161; Go to a Clinic</span><span class="sw">&#128161; Nenda Kliniki</span><span class="sh">&#128161; Go to Clinic</span></strong>
+<span class="en"> If you suspect an STI, visit a health clinic. Doctors treat you confidentially — no report to school or parents for over-15s.</span>
+<span class="sw"> Ukishuku STI, nenda kliniki. Madaktari wanakutibu kwa siri — hawatoi ripoti shuleni au kwa wazazi kwa wale wenye miaka 15+.</span>
+<span class="sh"> Ukishuku STI, nenda clinic. Doctors wanakutibu confidentially — hawatoi report shuleni au kwa parents kwa over-15s.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: Syphilis & Trichomoniasis -->
+<div class="slide">
+<div class="slide-head">&#128309; <span class="en">Syphilis &amp; Trichomoniasis</span><span class="sw">Kaswende na Trikamoniasisi</span><span class="sh">Syphilis &amp; Trichomoniasis</span></div>
+<table class="info-table">
+<tr><th><span class="en">Feature</span><span class="sw">Kipengele</span><span class="sh">Feature</span></th><th><span class="en">Syphilis</span><span class="sw">Kaswende</span><span class="sh">Syphilis</span></th><th><span class="en">Trichomoniasis</span><span class="sw">Trikamoniasisi</span><span class="sh">Trichomoniasis</span></th></tr>
+<tr><td><span class="en">Cause</span><span class="sw">Kisababishi</span><span class="sh">Cause</span></td><td><span class="en">Treponema pallidum (bacteria)</span><span class="sw">Treponema pallidum (bakteria)</span><span class="sh">Treponema pallidum (bacteria)</span></td><td><span class="en">Trichomonas vaginalis (parasite)</span><span class="sw">Trichomonas vaginalis (kimelea)</span><span class="sh">Trichomonas vaginalis (parasite)</span></td></tr>
+<tr><td><span class="en">Stage/Symptom</span><span class="sw">Hatua/Dalili</span><span class="sh">Stage/Symptom</span></td><td><span class="en">Stage 1: Painless sore (chancre); Stage 2: Rash, fever; Stage 3: Brain/heart damage</span><span class="sw">Hatua 1: Kidonda kisichosababisha maumivu; Hatua 2: Upele, homa; Hatua 3: Uharibifu wa ubongo/moyo</span><span class="sh">Stage 1: Painless sore (chancre); Stage 2: Rash, fever; Stage 3: Brain/heart damage</span></td><td><span class="en">Itching, burning, frothy yellow-green discharge</span><span class="sw">Kuwasha, moto, kutoka usaha wa manjano-kijani wenye povu</span><span class="sh">Itching, burning, frothy yellow-green discharge</span></td></tr>
+<tr><td><span class="en">In women</span><span class="sw">Kwa wanawake</span><span class="sh">Kwa wanawake</span></td><td><span class="en">Often painless, easy to miss</span><span class="sw">Mara nyingi bila maumivu, rahisi kupuuza</span><span class="sh">Mara nyingi painless, easy to miss</span></td><td><span class="en">Very common; often silent in men</span><span class="sw">Kawaida sana; mara nyingi bila dalili kwa wanaume</span><span class="sh">Very common; often silent kwa wanaume</span></td></tr>
+<tr><td><span class="en">Curable?</span><span class="sw">Inaposwa?</span><span class="sh">Curable?</span></td><td><span class="en">Yes — penicillin injection</span><span class="sw">Ndiyo — sindano ya penicillin</span><span class="sh">Yes — penicillin injection</span></td><td><span class="en">Yes — single antibiotic dose</span><span class="sw">Ndiyo — dozi moja ya antibiotiki</span><span class="sh">Yes — single antibiotic dose</span></td></tr>
+<tr><td><span class="en">Complication if untreated</span><span class="sw">Matatizo bila matibabu</span><span class="sh">Complication bila treatment</span></td><td><span class="en">Brain damage, blindness, death, congenital syphilis in babies</span><span class="sw">Uharibifu wa ubongo, upofu, kifo, kaswende ya kuzaliwa kwa watoto wachanga</span><span class="sh">Brain damage, blindness, death, congenital syphilis kwa babies</span></td><td><span class="en">Increases HIV risk 2-3x</span><span class="sw">Huongeza hatari ya VVU mara 2-3</span><span class="sh">Huongeza HIV risk mara 2-3</span></td></tr>
+</table>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">Amara's Story — Eldoret</span><span class="sw">Hadithi ya Amara — Eldoret</span><span class="sh">Story ya Amara — Eldoret</span></strong>
+<span class="en">Amara, 17, noticed a small painless sore and ignored it. Three months later she had a rash and fever. At the clinic, she was diagnosed with syphilis stage 2. She received penicillin treatment and fully recovered. She now educates her peers: "A painless sore still needs a doctor."</span>
+<span class="sw">Amara, miaka 17, aliona kidonda kidogo kisichosababisha maumivu na akapuuza. Miezi mitatu baadaye alikuwa na upele na homa. Kliniki, aligunduliwa na kaswende ya hatua ya 2. Alipewa matibabu ya penicillin na akapona kabisa. Sasa anaelimisha wenzake: "Kidonda kisichosababisha maumivu bado kinahitaji daktari."</span>
+<span class="sh">Amara, miaka 17, aliona kidonda kidogo painless na akapuuza. Miezi tatu baadaye alikuwa na rash na fever. Clinic, aligunduliwa na syphilis stage 2. Alipewa penicillin treatment na akapona kabisa. Sasa anaeducate peers zake: "Painless sore bado inahitaji daktari."</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Herpes & HPV -->
+<div class="slide">
+<div class="slide-head">&#128993; <span class="en">Herpes &amp; HPV — Viral STDs</span><span class="sw">Herpes na HPV — Magonjwa ya Virusi</span><span class="sh">Herpes &amp; HPV — Viral STDs</span></div>
+<p class="tp">
+<span class="en">Viral STDs cannot be cured but can be managed with medication and prevented through vaccination and protective behaviours.</span>
+<span class="sw">Magonjwa ya zinaa ya virusi hayawezi kuposwa lakini yanaweza kudhibitiwa kwa dawa na kuzuiwa kwa chanjo na tabia za kinga.</span>
+<span class="sh">Viral STDs haziwezi curiwa lakini zinaweza managiwa na medication na kuzuiwa kwa vaccination na protective behaviours.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Herpes (HSV)</span><span class="sw">&#128273; Herpes (VHM)</span><span class="sh">&#128273; Herpes (HSV)</span></strong>
+<span class="en">Herpes Simplex Virus (HSV-1/HSV-2). Causes blisters/sores on genitals or mouth. 67% of people under 50 have HSV-1. Can be transmitted even without visible sores (asymptomatic shedding). Antivirals reduce symptoms and transmission. No cure.</span>
+<span class="sw">Virusi ya Herpes Simplex (HSV-1/HSV-2). Husababisha malengelenge/vidonda sehemu za siri au mdomoni. 67% ya watu chini ya miaka 50 wana HSV-1. Inaweza kusambazwa hata bila vidonda vinavyoonekana. Dawa za virusi hupunguza dalili na maambukizi. Haina tiba.</span>
+<span class="sh">Herpes Simplex Virus (HSV-1/HSV-2). Husababisha blisters/sores sehemu za siri au mdomoni. 67% ya watu chini ya miaka 50 wana HSV-1. Inaweza kusambazwa hata bila visible sores (asymptomatic shedding). Antivirals hupunguza symptoms na transmission. No cure.</span>
+</div>
+<div class="key-term">
+<strong><span class="en">&#128273; HPV (Human Papillomavirus)</span><span class="sw">&#128273; HPV (Virusi ya Papiloma ya Binadamu)</span><span class="sh">&#128273; HPV (Human Papillomavirus)</span></strong>
+<span class="en">Most common STI globally. 40+ types. Some cause genital warts; high-risk types (16, 18) cause 99% of cervical cancer. HPV vaccine (Gardasil) protects against the most dangerous types. Cervical cancer is the #2 cancer killer of Kenyan women. HPV vaccine is FREE for girls 10-14 at Kenyan health facilities.</span>
+<span class="sw">STI ya kawaida zaidi duniani. Aina 40+. Baadhi husababisha makonde ya sehemu za siri; aina hatari zaidi (16, 18) husababisha 99% ya saratani ya mlango wa uzazi. Chanjo ya HPV (Gardasil) inalinda dhidi ya aina hatari zaidi. Saratani ya mlango wa uzazi ni kisababishi cha pili cha vifo vya saratani kwa wanawake wa Kenya. Chanjo ya HPV ni BURE kwa wasichana 10-14 Kenya.</span>
+<span class="sh">Most common STI globally. Types 40+. Baadhi husababisha genital warts; high-risk types (16, 18) husababisha 99% ya cervical cancer. HPV vaccine (Gardasil) inalinda dhidi ya most dangerous types. Cervical cancer ni #2 cancer killer ya Kenyan women. HPV vaccine ni FREE kwa wasichana 10-14 kwa Kenyan health facilities.</span>
+</div>
+<div class="tip-box"><strong><span class="en">&#128161; HPV Vaccine is FREE</span><span class="sw">&#128161; Chanjo ya HPV ni BURE</span><span class="sh">&#128161; HPV Vaccine ni FREE</span></strong>
+<span class="en"> Girls 9–14 years old should receive the HPV vaccine at a public health clinic. It protects against cervical cancer — the most preventable cancer. Boys benefit too.</span>
+<span class="sw"> Wasichana wa miaka 9–14 wanapaswa kupata chanjo ya HPV katika kliniki ya umma. Inalinda dhidi ya saratani ya mlango wa uzazi — saratani inayoweza kuzuiwa zaidi. Wavulana pia wananufaika.</span>
+<span class="sh"> Wasichana wa miaka 9–14 wanapaswa kupata HPV vaccine kwa public health clinic. Inalinda dhidi ya cervical cancer — most preventable cancer. Boys pia wananufaika.</span>
+</div>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Nairobi Street Talk</div>
+<span class="en" style="display:block;">HPV vaccine — ukipewa, chukua. Inakuprotect dhidi ya saratani ya mlango wa uzazi (cervical cancer). Bure kabisa kwa msichana Kenya.</span>
+<span class="sw" style="display:block;">Chanjo ya HPV — ukipewa, ipokee. Inakulinda dhidi ya saratani ya mlango wa uzazi. Bure kabisa kwa wasichana Kenya.</span>
+<span class="sh" style="display:block;">HPV vaccine — ukipewa, chukua. Inakuprotect dhidi ya saratani ya mlango wa uzazi (cervical cancer). Bure kabisa kwa msichana Kenya.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Prevention & Condom Use -->
+<div class="slide">
+<div class="slide-head">&#128737;&#65039; <span class="en">Prevention — Your STD Shield</span><span class="sw">Kinga Yako dhidi ya STI</span><span class="sh">Prevention — Your STD Shield</span></div>
+<p class="tp">
+<span class="en">Most STDs are preventable. Combine methods for the strongest protection. No single method is 100% effective for all STDs, which is why layering strategies matters.</span>
+<span class="sw">STI nyingi zinaweza kuzuiwa. Changanya njia kwa ulinzi imara zaidi. Hakuna njia moja inayofaa 100% kwa STI zote, ndio maana kuchanganya mkakati ni muhimu.</span>
+<span class="sh">STDs nyingi zinaweza kuzuiwa. Combine methods kwa strongest protection. Hakuna single method 100% effective kwa STDs zote, ndio maana layering strategies ni muhimu.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">Method</span><span class="sw">Njia</span><span class="sh">Method</span></th><th><span class="en">Protects Against</span><span class="sw">Inalinda Dhidi ya</span><span class="sh">Inalinda Dhidi ya</span></th><th><span class="en">Effectiveness</span><span class="sw">Ufanisi</span><span class="sh">Effectiveness</span></th></tr>
+<tr><td><span class="en">Abstinence</span><span class="sw">Kujizuia</span><span class="sh">Abstinence</span></td><td><span class="en">All STDs</span><span class="sw">STI zote</span><span class="sh">STDs zote</span></td><td><span class="en">100%</span><span class="sw">100%</span><span class="sh">100%</span></td></tr>
+<tr><td><span class="en">Consistent correct condom use</span><span class="sw">Kutumia kondom ipasavyo kila wakati</span><span class="sh">Correct condom use kila wakati</span></td><td><span class="en">Most STDs (not skin-to-skin like HSV/HPV)</span><span class="sw">STI nyingi (si maambukizi ya ngozi kama HSV/HPV)</span><span class="sh">Most STDs (si skin-to-skin kama HSV/HPV)</span></td><td><span class="en">~85–98% depending on STD</span><span class="sw">~85–98% kulingana na STI</span><span class="sh">~85–98% depending on STD</span></td></tr>
+<tr><td><span class="en">Mutual fidelity (both tested)</span><span class="sw">Uaminifu wa pande zote (wote wamepima)</span><span class="sh">Mutual fidelity (wote wamepima)</span></td><td><span class="en">All STDs from that source</span><span class="sw">STI zote kutoka chanzo hicho</span><span class="sh">STDs zote kutoka chanzo hicho</span></td><td><span class="en">Very high</span><span class="sw">Juu sana</span><span class="sh">Very high</span></td></tr>
+<tr><td><span class="en">HPV Vaccine</span><span class="sw">Chanjo ya HPV</span><span class="sh">HPV Vaccine</span></td><td><span class="en">HPV types 6, 11, 16, 18</span><span class="sw">Aina za HPV 6, 11, 16, 18</span><span class="sh">HPV types 6, 11, 16, 18</span></td><td><span class="en">~90%</span><span class="sw">~90%</span><span class="sh">~90%</span></td></tr>
+<tr><td><span class="en">Regular STI testing</span><span class="sw">Kupima STI mara kwa mara</span><span class="sh">Regular STI testing</span></td><td><span class="en">Early detection &amp; treatment</span><span class="sw">Kugundua mapema na matibabu</span><span class="sh">Early detection &amp; treatment</span></td><td><span class="en">Prevents complications</span><span class="sw">Huzuia matatizo</span><span class="sh">Prevents complications</span></td></tr>
+<tr><td><span class="en">Antibiotic prophylaxis (PrEP etc)</span><span class="sw">Uzuio wa antibiotiki (PrEP n.k.)</span><span class="sh">Antibiotic prophylaxis (PrEP etc)</span></td><td><span class="en">HIV</span><span class="sw">VVU</span><span class="sh">HIV</span></td><td><span class="en">~99%</span><span class="sw">~99%</span><span class="sh">~99%</span></td></tr>
+</table>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Important</span><span class="sw">&#9888;&#65039; Muhimu</span><span class="sh">&#9888;&#65039; Important</span></strong>
+<span class="en"> Condoms reduce risk but do NOT fully protect against herpes and HPV which spread via skin contact. Regular testing is still important.</span>
+<span class="sw"> Kondom hupunguza hatari lakini HAIZUII kikamilifu herpes na HPV ambazo husambazwa kwa mguso wa ngozi. Kupima mara kwa mara bado ni muhimu.</span>
+<span class="sh"> Condoms hupunguza risk lakini HAZIZUII kikamilifu herpes na HPV ambazo husambazwa via skin contact. Regular testing bado ni muhimu.</span>
+</div>
+<ul class="bl">
+<li><span class="en">Know your partner's STI status before engaging in sexual activity</span><span class="sw">Jua hali ya STI ya mpenzi wako kabla ya kufanya ngono</span><span class="sh">Jua STI status ya partner wako kabla ya kufanya ngono</span></li>
+<li><span class="en">Use condoms correctly from start to finish — every time</span><span class="sw">Tumia kondom ipasavyo kutoka mwanzo hadi mwisho — kila wakati</span><span class="sh">Tumia condom correctly kutoka mwanzo hadi mwisho — kila wakati</span></li>
+<li><span class="en">Get the HPV vaccine if you are eligible</span><span class="sw">Pata chanjo ya HPV ukistahili</span><span class="sh">Get HPV vaccine ukistahili</span></li>
+<li><span class="en">Get tested for STIs at least once a year if sexually active</span><span class="sw">Pima STI angalau mara moja kwa mwaka ukifanya ngono</span><span class="sh">Pima STIs angalau mara moja kwa mwaka ukiwa sexually active</span></li>
+<li><span class="en">Seek treatment immediately if you notice symptoms or are exposed</span><span class="sw">Tafuta matibabu mara moja ukiona dalili au kuathiriwa</span><span class="sh">Tafuta treatment mara moja ukiona symptoms au kuathiriwa</span></li>
+</ul>
+</div>
+
+<!-- SLIDE 7: Testing & Treatment in Kenya -->
+<div class="slide">
+<div class="slide-head">&#127973;&#65039; <span class="en">Testing &amp; Treatment in Kenya</span><span class="sw">Kupima na Kutibu Kenya</span><span class="sh">Testing &amp; Treatment Kenya</span></div>
+<p class="tp">
+<span class="en">STI testing is free or low-cost at public health facilities across Kenya. You do not need to wait for symptoms — testing is for everyone who is sexually active or has been at risk.</span>
+<span class="sw">Upimaji wa STI ni bure au wa bei nafuu katika vituo vya afya vya umma Kenya. Huhitaji kusubiri dalili — kupima ni kwa kila mtu anayefanya ngono au aliyeathiriwa.</span>
+<span class="sh">STI testing ni free au low-cost kwa public health facilities Kenya. Huhitaji kusubiri symptoms — testing ni kwa kila mtu anayefanya ngono au aliyeathiriwa.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">STD</span><span class="sw">STI</span><span class="sh">STD</span></th><th><span class="en">Test Available</span><span class="sw">Kipimo Kinapatikana</span><span class="sh">Test Available</span></th><th><span class="en">Where</span><span class="sw">Wapi</span><span class="sh">Wapi</span></th><th><span class="en">Cost</span><span class="sw">Bei</span><span class="sh">Bei</span></th><th><span class="en">Treatment</span><span class="sw">Matibabu</span><span class="sh">Treatment</span></th></tr>
+<tr><td><span class="en">Gonorrhoea / Chlamydia</span><span class="sw">Kisonono / Klamidia</span><span class="sh">Gonorrhoea / Chlamydia</span></td><td><span class="en">Urine test, swab</span><span class="sw">Kipimo cha mkojo, swab</span><span class="sh">Urine test, swab</span></td><td><span class="en">All public clinics</span><span class="sw">Kliniki zote za umma</span><span class="sh">Public clinics zote</span></td><td><span class="en">Free</span><span class="sw">Bure</span><span class="sh">Free</span></td><td><span class="en">Antibiotics (free)</span><span class="sw">Antibiotiki (bure)</span><span class="sh">Antibiotics (free)</span></td></tr>
+<tr><td><span class="en">Syphilis</span><span class="sw">Kaswende</span><span class="sh">Syphilis</span></td><td><span class="en">Blood test (VDRL/RPR)</span><span class="sw">Kipimo cha damu (VDRL/RPR)</span><span class="sh">Blood test (VDRL/RPR)</span></td><td><span class="en">All public clinics</span><span class="sw">Kliniki zote za umma</span><span class="sh">Public clinics zote</span></td><td><span class="en">Free</span><span class="sw">Bure</span><span class="sh">Free</span></td><td><span class="en">Penicillin injection</span><span class="sw">Sindano ya penicillin</span><span class="sh">Penicillin injection</span></td></tr>
+<tr><td><span class="en">Herpes</span><span class="sw">Herpes</span><span class="sh">Herpes</span></td><td><span class="en">Clinical exam + swab</span><span class="sw">Uchunguzi + swab</span><span class="sh">Clinical exam + swab</span></td><td><span class="en">Clinics</span><span class="sw">Kliniki</span><span class="sh">Clinics</span></td><td><span class="en">Low cost</span><span class="sw">Bei nafuu</span><span class="sh">Low cost</span></td><td><span class="en">Antiviral tablets</span><span class="sw">Vidonge vya virusi</span><span class="sh">Antiviral tablets</span></td></tr>
+<tr><td><span class="en">HPV / Cervical cancer</span><span class="sw">HPV / Saratani ya mlango wa uzazi</span><span class="sh">HPV / Cervical cancer</span></td><td><span class="en">Pap smear / VIA</span><span class="sw">Pap smear / VIA</span><span class="sh">Pap smear / VIA</span></td><td><span class="en">Level 4+ hospitals</span><span class="sw">Hospitali za ngazi 4+</span><span class="sh">Level 4+ hospitals</span></td><td><span class="en">Free VIA</span><span class="sw">VIA bure</span><span class="sh">Free VIA</span></td><td><span class="en">Cryotherapy</span><span class="sw">Tiba ya baridi</span><span class="sh">Cryotherapy</span></td></tr>
+<tr><td><span class="en">HIV</span><span class="sw">VVU</span><span class="sh">HIV</span></td><td><span class="en">Rapid test</span><span class="sw">Kipimo cha haraka</span><span class="sh">Rapid test</span></td><td><span class="en">All facilities, outreach</span><span class="sw">Vituo vyote, nje ya kliniki</span><span class="sh">Facilities zote, outreach</span></td><td><span class="en">Free</span><span class="sw">Bure</span><span class="sh">Free</span></td><td><span class="en">ARVs (free)</span><span class="sw">ARV (bure)</span><span class="sh">ARVs (free)</span></td></tr>
+<tr><td><span class="en">Trichomoniasis</span><span class="sw">Trikamoniasisi</span><span class="sh">Trichomoniasis</span></td><td><span class="en">Microscopy, rapid test</span><span class="sw">Hadubuni, kipimo cha haraka</span><span class="sh">Microscopy, rapid test</span></td><td><span class="en">Most clinics</span><span class="sw">Kliniki nyingi</span><span class="sh">Most clinics</span></td><td><span class="en">Free</span><span class="sw">Bure</span><span class="sh">Free</span></td><td><span class="en">Metronidazole (free)</span><span class="sw">Metronidazole (bure)</span><span class="sh">Metronidazole (free)</span></td></tr>
+</table>
+<div class="tip-box"><strong><span class="en">&#128161; Confidential Testing</span><span class="sw">&#128161; Upimaji wa Siri</span><span class="sh">&#128161; Confidential Testing</span></strong>
+<span class="en"> STI testing is CONFIDENTIAL. A health worker cannot report your results to your school, parents, or employer without your consent. You have a right to private healthcare.</span>
+<span class="sw"> Upimaji wa STI ni wa SIRI. Mfanyakazi wa afya hawezi kuripoti matokeo yako shuleni, kwa wazazi, au mwajiri wako bila idhini yako. Una haki ya huduma za afya za kibinafsi.</span>
+<span class="sh"> STI testing ni CONFIDENTIAL. Health worker hawezi report results zako shuleni, kwa parents, au mwajiri bila consent yako. Una haki ya private healthcare.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Real Talk Scenarios -->
+<div class="slide">
+<div class="slide-head">&#127917; <span class="en">Real Talk — What Would You Do?</span><span class="sw">Mazungumzo ya Kweli</span><span class="sh">Real Talk — Ungefanya Nini?</span></div>
+<p class="tp"><span class="en">Pick your choice and see the consequence.</span><span class="sw">Chagua na uone matokeo.</span><span class="sh">Chagua yako uone consequence.</span></p>
+
+<div class="scenario-wrap" id="sc1">
+<div class="scenario-ctx">
+<span class="en">Nadia, 16, Meru, notices a burning sensation when she urinates and an unusual discharge. Her friend says "It will go away on its own — don't embarrass yourself going to the clinic."</span>
+<span class="sw">Nadia, miaka 16, Meru, anahisi moto anapokojoa na kutoka usaha wa ajabu. Rafiki yake anasema "Itaisha yenyewe — usijichafue kwenda kliniki."</span>
+<span class="sh">Nadia, miaka 16, Meru, anahisi burning sensation akikojoa na unusual discharge. Rafiki yake anasema "Itaisha yenyewe — usijichosha kwenda clinic."</span>
+</div>
+<div class="scenario-q"><span class="en">What should Nadia do?</span><span class="sw">Nadia afanye nini?</span><span class="sh">Nadia afanye nini?</span></div>
+<div class="choices">
+<button class="choice" onclick="scPick(this,'sc1','bad','sc1r1')"><span class="en">Trust her friend and wait for it to go away</span><span class="sw">Mwamini rafiki yake na asubiri ipone yenyewe</span><span class="sh">Trust rafiki yake na asubiri iende yenyewe</span></button>
+<button class="choice" onclick="scPick(this,'sc1','good','sc1r2')"><span class="en">Visit the clinic — even if embarrassing — and get tested</span><span class="sw">Nenda kliniki — hata kama ni aibu — na apime</span><span class="sh">Nenda clinic — hata kama ni embarrassing — na apime</span></button>
+</div>
+<div class="s-result bad" id="sc1r1">
+<span class="en">Many STDs, especially chlamydia and gonorrhoea, do NOT go away on their own. Without treatment, Nadia risks pelvic inflammatory disease (PID), infertility, and increased HIV transmission risk. Untreated infections also spread to partners.</span>
+<span class="sw">STI nyingi, hasa klamidia na kisonono, HAZIENDI zenyewe. Bila matibabu, Nadia anakabiliwa na hatari ya ugonjwa wa uchochezi wa nyonga (PID), utasa, na kuongezeka kwa hatari ya VVU. Maambukizi yasiyotibiwa pia husambazwa kwa washirika.</span>
+<span class="sh">STDs nyingi, hasa chlamydia na gonorrhoea, HAZIENDI zenyewe. Bila treatment, Nadia anakabiliwa na pelvic inflammatory disease (PID), infertility, na increased HIV risk. Untreated infections pia husambazwa kwa partners.</span>
+<button class="retry-btn" onclick="scRetry('sc1')">&#8617; Try Again</button>
+</div>
+<div class="s-result good" id="sc1r2">
+<span class="en">Nadia visited the youth-friendly clinic. She had chlamydia — tested and treated with a 7-day antibiotic course. She was back in school healthy within a week. She also notified her partner so he could be treated. ✅</span>
+<span class="sw">Nadia alienda kliniki inayofaa kwa vijana. Alikuwa na klamidia — alipima na kutibiwa kwa kozi ya siku 7 ya antibiotiki. Alirudi shuleni akiwa mzima ndani ya wiki moja. Pia alimjulisha mpenzi wake ili apate matibabu. ✅</span>
+<span class="sh">Nadia alienda youth-friendly clinic. Alikuwa na chlamydia — alipima na kutibiwa kwa 7-day antibiotic course. Alirudi shuleni healthy ndani ya wiki moja. Pia alimnotify partner wake apate treatment. ✅</span>
+</div>
+</div>
+
+<div style="margin-top:14px;"></div>
+
+<div class="scenario-wrap" id="sc2">
+<div class="scenario-ctx">
+<span class="en">Kevin, 18, Nairobi, discovers his girlfriend has genital herpes. He thinks "She must have cheated — only 'bad' people get herpes."</span>
+<span class="sw">Kevin, miaka 18, Nairobi, anagundua msichana wake ana herpes ya sehemu za siri. Anafikiri "Lazima alikuwa akidanganya — ni watu 'wabaya' tu wanaopata herpes."</span>
+<span class="sh">Kevin, miaka 18, Nairobi, anagundua girlfriend yake ana genital herpes. Anafikiri "Lazima alidanganya — ni watu 'wabaya' tu wanapata herpes."</span>
+</div>
+<div class="scenario-q"><span class="en">What is the CORRECT understanding Kevin should have?</span><span class="sw">Kevin anapaswa kuwa na uelewa gani SAHIHI?</span><span class="sh">Kevin anapaswa kuwa na CORRECT understanding gani?</span></div>
+<div class="choices">
+<button class="choice" onclick="scPick(this,'sc2','bad','sc2r1')"><span class="en">Break up immediately — herpes shows she is unfaithful</span><span class="sw">Achana naye mara moja — herpes inaonyesha hana uaminifu</span><span class="sh">Break up mara moja — herpes inaonyesha ni unfaithful</span></button>
+<button class="choice" onclick="scPick(this,'sc2','good','sc2r2')"><span class="en">Learn the facts — herpes is common, manageable and not a sign of character</span><span class="sw">Jifunze ukweli — herpes ni ya kawaida, inadhibitiwa na si ishara ya tabia mbaya</span><span class="sh">Jifunze facts — herpes ni common, manageable na si sign ya tabia mbaya</span></button>
+</div>
+<div class="s-result bad" id="sc2r1">
+<span class="en">Herpes (HSV-2) is very common — over 16% of adults globally. Many people acquire it unknowingly from asymptomatic partners or before the current relationship. Judging someone with HSV is based on stigma, not science. Kevin's reaction could cause his girlfriend serious psychological harm.</span>
+<span class="sw">Herpes (HSV-2) ni ya kawaida sana — zaidi ya 16% ya watu wazima duniani. Watu wengi huipata bila kujua kutoka kwa washirika wasio na dalili au kabla ya uhusiano wa sasa. Kumhukumu mtu mwenye HSV kunategemea unyanyapaa, si sayansi. Mwitikio wa Kevin unaweza kumdhuru msichana wake kisaikolojia.</span>
+<span class="sh">Herpes (HSV-2) ni very common — zaidi ya 16% ya adults globally. Watu wengi huipata bila kujua kutoka kwa asymptomatic partners au kabla ya current relationship. Kumhukumu mtu na HSV ni based on stigma, si science. Kevin's reaction inaweza cause girlfriend yake serious psychological harm.</span>
+<button class="retry-btn" onclick="scRetry('sc2')">&#8617; Try Again</button>
+</div>
+<div class="s-result good" id="sc2r2">
+<span class="en">Kevin did research and spoke to a health counsellor. He learnt that herpes can be transmitted even without visible sores, and many people don't know they have it. They both got tested, discussed disclosure, and Kevin used condoms consistently. Their relationship continued on honest, informed terms. ✅</span>
+<span class="sw">Kevin alifanya utafiti na kuzungumza na mshauri wa afya. Alijifunza kwamba herpes inaweza kusambazwa hata bila vidonda vinavyoonekana, na watu wengi hawajui wana. Wote wawili walipima, walijadili ufafanuzi, na Kevin alitumia kondom kwa uthabiti. Uhusiano wao uliendelea kwa uaminifu na maarifa. ✅</span>
+<span class="sh">Kevin alifanya research na kuzungumza na health counsellor. Alijifunza kwamba herpes inaweza kusambazwa hata bila visible sores, na watu wengi hawajui wana. Wote wawili walipima, walijadili disclosure, na Kevin alitumia condoms consistently. Relationship yao iliendelea kwa honest, informed terms. ✅</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127916; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<p class="tp"><span class="en">Watch carefully, then continue to the quiz.</span><span class="sw">Tazama kwa makini, kisha endelea kwa maswali.</span><span class="sh">Watch kwa makini, kisha endelea kwa quiz.</span></p>
+<div class="video-slot">
+<video id="lessonVideo" controls style="display:none;width:100%;"></video>
+<div class="video-placeholder" id="videoPlaceholder">
+<div class="play-icon">&#127916;</div>
+<p style="color:rgba(255,255,255,.8);">Module Video</p>
+<p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:6px;"><span class="en">Your teacher will upload this video.</span><span class="sw">Mwalimu wako ataipakia.</span><span class="sh">Teacher wako ataupload.</span></p>
+<span class="upload-note">&#128193; /uploads/media/hiv-stis.mp4</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<div class="mcq-block">
+<div class="q-text">1. During an ARISE session in Nairobi, a facilitator lists common Sexually Transmitted Infections. Which of the following are STIs discussed in sexual health education?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Gonorrhoea.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Syphilis.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Chlamydia.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Tuberculosis.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Human Papillomavirus (HPV).</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. Zawadi, 17, Kisii, has had an unusual vaginal discharge and burning sensation for 3 weeks. She has no fever. She assumes it will go away. What is the GREATEST risk she faces?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> She will automatically recover — STIs cure themselves.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Untreated STIs like chlamydia or gonorrhoea can cause pelvic inflammatory disease and infertility.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> She will develop HIV automatically.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> The discharge is definitely normal and harmless.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. A health educator in Eldoret explains which STIs are CURABLE with antibiotics. Which of the following STIs can be cured with antibiotic or antiparasitic treatment?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Gonorrhoea.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Syphilis.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Chlamydia.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Herpes (HSV-2).</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Trichomoniasis.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. Kevin, 19, Mombasa, was recently diagnosed with syphilis at stage 1. He noticed a small painless sore that healed on its own and did nothing. What does this indicate?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> He is now cured — the sore healed itself.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> The sore healing does not mean the infection is gone — syphilis progresses silently to more dangerous stages if untreated.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> He no longer needs treatment since it was stage 1.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> A healed sore means the body fought the infection successfully.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. An ARISE peer educator in Kisumu is teaching about the HPV vaccine. Which statements about the HPV vaccine are CORRECT?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> It protects against the HPV types that cause most cervical cancers.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> It is available free of charge for girls aged 9–14 in Kenya.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> It cures existing HPV infections.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> It reduces the risk of genital warts.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Boys can also benefit from HPV vaccination.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. A Form 3 student in Thika says: "I don't need STI testing — I only need to test if I have symptoms." What is the CORRECT response?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Correct — STI testing is only for people with symptoms.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Incorrect — many STIs including chlamydia and gonorrhoea often have NO symptoms, so testing is important even without symptoms.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Correct — symptoms always appear within one week of infection.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Testing is only needed if you have had multiple partners.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. In a community health meeting in Garissa, the facilitator discusses ways to prevent sexually transmitted infections. Which are EFFECTIVE prevention methods?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Consistent and correct condom use.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Abstaining from sexual activity.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Being in a mutually faithful relationship with both partners tested.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Washing genitals after sex eliminates all STI risk.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Regular STI testing and treatment.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. Amina, 16, Meru, is told by a friend that gonorrhoea can be treated by herbal medicine from a traditional healer and she doesn't need to visit a clinic. What is the CORRECT advice?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Traditional medicine can cure gonorrhoea effectively.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Gonorrhoea requires specific antibiotics — herbal remedies do not cure bacterial infections and delay proper treatment.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Gonorrhoea always cures itself within a month.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Any antibiotic will work — she can buy them from a pharmacy without a prescription.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. During an ARISE session in Siaya, learners discuss complications of untreated STIs. Which are COMPLICATIONS that can result from untreated STIs?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Infertility in both men and women.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Increased risk of contracting HIV.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Complications during pregnancy and harm to the unborn baby.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Guaranteed cancer in all cases.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Pelvic Inflammatory Disease (PID) in women.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. Brian, 17, Nairobi, had unprotected sex and is worried about an STI. He visits the clinic. The nurse says the test shows no infection. What is the MOST important advice to give Brian?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Since he tested negative, he has nothing to worry about — he is permanently protected.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Some STIs have 'window periods' and a negative test may need to be repeated; he should use condoms consistently and retest if exposed again.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> He never needs to test again.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A negative result means he cannot get an STI in the future.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});btn.classList.add('chosen-'+type);var res=document.getElementById(resId);if(res){res.className='s-result '+type;res.style.display='block';}}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,C,E','mcq2':'B','mcq3':'A,B,C,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,C,E','mcq8':'B','mcq9':'A,B,C,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'&#8212;')+'</strong> &mdash; Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'&#11088; Excellent! You understand this topic very well.':pct>=60?'&#128077; Good effort! Review the highlighted incorrect answers.':'&#128214; Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

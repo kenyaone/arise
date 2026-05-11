@@ -18,10 +18,14 @@
             <textarea name="question" id="question" placeholder="Type your question here... Nobody will know it's from you." required></textarea>
 
             <label class="section-title mt-1" for="module_id">Related Topic (optional)</label>
+            <?php
+            $preModSlug = $_GET['module'] ?? '';
+            $preModId = $preModSlug ? db()->querySingle("SELECT id FROM modules WHERE slug='".SQLite3::escapeString($preModSlug)."'") : 0;
+            ?>
             <select name="module_id" id="module_id">
                 <option value="">— Choose a topic —</option>
                 <?php foreach ($modules as $m): ?>
-                    <option value="<?= $m['id'] ?>"><?= $m['icon'] ?> <?= e($m['title']) ?></option>
+                    <option value="<?= $m['id'] ?>" <?= $preModId==$m['id']?'selected':'' ?>><?= $m['icon'] ?> <?= e($m['title']) ?></option>
                 <?php endforeach; ?>
             </select>
 

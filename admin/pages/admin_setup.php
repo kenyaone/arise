@@ -248,7 +248,7 @@ if (isset($_POST['factory_reset']) && $_POST['confirm_reset'] === 'RESET') {
     initDatabase();
     $message = '✅ System reset to factory defaults. Please login again.';
     session_destroy();
-    header('Location: ?p=login');
+    header('Location: /arise/login');
     exit;
 }
 

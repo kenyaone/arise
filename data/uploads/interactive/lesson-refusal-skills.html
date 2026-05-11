@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills | ARISE Health Education</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Life Skills &middot; Lesson 5 of 5</div>
+    <div class="lesson-name">&#128466; <span class="en">Refusal Skills</span><span class="sw" style="display:none;">Ujuzi wa Kukataa</span><span class="sh" style="display:none;">Refusal Skills</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Define refusal skills and explain why they protect your health and future</span><span class="sw">Fafanua ujuzi wa kukataa na eleza jinsi unavyolinda afya yako na mustakabali wako</span><span class="sh">Define refusal skills na eleza jinsi zinavyoprotect health yako na future yako</span></li>
+    <li><span class="en">Identify at least 5 peer pressure tactics used to manipulate adolescents</span><span class="sw">Tambua angalau mbinu 5 za shinikizo la rika zinazotumiwa kudanganya vijana</span><span class="sh">Tambua angalau mbinu 5 za peer pressure zinazotumiwa ku-manipulate vijana</span></li>
+    <li><span class="en">Apply the DEAR refusal method in drug, alcohol, and sexual pressure scenarios</span><span class="sw">Tumia njia ya DEAR ya kukataa katika hali za shinikizo la dawa, pombe, na ngono</span><span class="sh">Apply DEAR refusal method kwa situations za drugs, alcohol, na sexual pressure</span></li>
+    <li><span class="en">Practise assertive refusal phrases that are firm, respectful, and effective</span><span class="sw">Fanya mazoezi ya misemo ya kukataa kwa ujasiri ambayo ni thabiti, ya heshima na yenye ufanisi</span><span class="sh">Practice assertive refusal phrases ambazo ni firm, respectful na effective</span></li>
+    <li><span class="en">Know Kenya's support contacts for when saying no is not enough</span><span class="sw">Jua nambari za msaada za Kenya kwa wakati ambapo kusema hapana hakutosha</span><span class="sh">Jua Kenya's support contacts kwa wakati ambapo saying no haitoshi</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Why is saying NO one of the most powerful life skills an adolescent can have — and what makes it so difficult to use?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Kwa nini kusema HAPANA ni mojawapo ya ujuzi muhimu zaidi wa maisha ambao kijana anaweza kuwa nao — na nini hufanya iwe ngumu sana kutumia?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Kwa nini kusema NO ni mojawapo ya life skills muhimu zaidi kwa kijana — na nini inafanya iwe ngumu sana ku-use?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: What Are Refusal Skills? -->
+<div class="slide">
+<div class="slide-head">&#128466; <span class="en">What Are Refusal Skills?</span><span class="sw">Ujuzi wa Kukataa ni Nini?</span><span class="sh">Refusal Skills ni Nini?</span></div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Definition</span><span class="sw">&#128273; Maana</span><span class="sh">&#128273; Definition</span></strong>
+  <span class="en">Refusal skills are the abilities to say NO clearly, firmly, and confidently when pressured to do something that could harm you — including trying drugs, having unsafe sex, joining gangs, or engaging in any risky behaviour.</span>
+  <span class="sw">Ujuzi wa kukataa ni uwezo wa kusema HAPANA wazi, kwa uthabiti, na kwa ujasiri unaposhikiliwa kufanya kitu ambacho kinaweza kukudhuru — ikiwemo kujaribu dawa za kulevya, kufanya ngono isiyosalama, kujiunga na magenge, au kushiriki katika tabia yoyote hatari.</span>
+  <span class="sh">Refusal skills ni uwezo wa kusema NO clearly, firmly, na kwa confidence ukipressurwa kufanya kitu kinachoweza kukudhuru — kama kujaribu drugs, kufanya unsafe sex, kujoin gangs, au kufanya risky behaviour yoyote.</span>
+</div>
+<p class="tp">
+  <span class="en">Adolescence (ages 10&ndash;19) is the peak period for peer pressure. Your brain&rsquo;s decision-making centre (prefrontal cortex) is still developing — making you more vulnerable to group influence. Refusal skills act as a shield.</span>
+  <span class="sw">Ujana (miaka 10&ndash;19) ni kipindi cha kilele cha shinikizo la rika. Kituo cha kufanya maamuzi cha ubongo wako (cortex ya awali) bado inakua — inakufanya uwe dhaifu zaidi kwa ushawishi wa kikundi. Ujuzi wa kukataa hufanya kama ngao.</span>
+  <span class="sh">Adolescence (miaka 10&ndash;19) ni peak time ya peer pressure. Brain yako bado inaendelea kukua — inakufanya uwe more vulnerable kwa group influence. Refusal skills zinafanya kazi kama shield.</span>
+</p>
+<div class="method-grid">
+  <div class="method-card">
+    <div style="font-size:1.5rem;">&#128565;</div>
+    <div class="word"><span class="en">Passive</span><span class="sw">Utulivu</span><span class="sh">Passive</span></div>
+    <div class="desc"><span class="en">Saying nothing, going along. Harmful to you.</span><span class="sw">Kukaa kimya, kukubaliana. Unakudhuru.</span><span class="sh">Kukaa kimya, ukubaliane. Inakudhuru.</span></div>
+  </div>
+  <div class="method-card" style="border-color:var(--no);">
+    <div style="font-size:1.5rem;">&#128545;</div>
+    <div class="word" style="color:var(--no);"><span class="en">Aggressive</span><span class="sw">Ukali</span><span class="sh">Aggressive</span></div>
+    <div class="desc"><span class="en">Attacking back. Damages relationships.</span><span class="sw">Kurudi shambulio. Uharibu uhusiano.</span><span class="sh">Ku-attack back. Inafunga relationships.</span></div>
+  </div>
+  <div class="method-card" style="border-color:var(--ok);grid-column:span 2;">
+    <div style="font-size:1.5rem;">&#10004;&#65039;</div>
+    <div class="word" style="color:var(--ok);"><span class="en">Assertive &#8212; the goal</span><span class="sw">Ujasiri &#8212; lengo</span><span class="sh">Assertive &#8212; ndio goal</span></div>
+    <div class="desc"><span class="en">Clear, calm, confident. Respects yourself and others.</span><span class="sw">Wazi, tulivu, na ujasiri. Kujiheshimu na wengine.</span><span class="sh">Clear, calm, confident. Inajiheshimu na wengine.</span></div>
+  </div>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Kenya Fact</div>
+  <span class="en" style="display:block;">A 2022 NACADA survey found that 84% of adolescents who reported first using alcohol did so due to peer pressure. Refusal skills are Kenya&rsquo;s first line of prevention.</span>
+  <span class="sw" style="display:none;">Utafiti wa NACADA wa 2022 uligundua kwamba 84% ya vijana waliripoti kutumia pombe kwa mara ya kwanza walifanya hivyo kwa sababu ya shinikizo la rika.</span>
+  <span class="sh" style="display:none;">Survey ya NACADA 2022 ilionyesha kwamba 84% ya vijana walianza kutumia alcohol kwa sababu ya peer pressure. Refusal skills ni Kenya's first line ya prevention.</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics — How You Are Manipulated</span><span class="sw">Mbinu za Shinikizo — Jinsi Unavyodanganywa</span><span class="sh">Pressure Tactics — Jinsi Unavyodanganywa</span></div>
+<p class="tp"><span class="en">Recognising a pressure tactic is the first step to refusing it. Know these patterns:</span><span class="sw">Kutambua mbinu ya shinikizo ni hatua ya kwanza ya kuikataa. Jua mifumo hii:</span><span class="sh">Kutambua pressure tactic ni first step ya kuikataa. Jua patterns hizi:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Direct Request &#8212; &ldquo;Just try it once&rdquo;</span><span class="sw">Ombi la Moja kwa Moja &#8212; &ldquo;Jaribu mara moja tu&rdquo;</span><span class="sh">Direct Request &#8212; &ldquo;Jaribu mara moja tu&rdquo;</span></strong>
+  <span class="en">Simple asking, often repeated. The repetition is designed to wear you down.</span>
+  <span class="sw">Kuomba rahisi, mara nyingi hurudiwa. Kurudiwa kumekusudiwa kukuchoshesha.</span>
+  <span class="sh">Simple kuomba, mara nyingi hurudiwa. Kurudiwa kunadesign kukuchoshea.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Guilt Trip &#8212; &ldquo;I thought you were my friend&rdquo;</span><span class="sw">Hisia za Hatia &#8212; &ldquo;Nilidhani wewe ni rafiki yangu&rdquo;</span><span class="sh">Guilt Trip &#8212; &ldquo;Nilikudhani wewe ni my friend&rdquo;</span></strong>
+  <span class="en">Making you feel bad for saying no. Friendship is NOT conditional on doing risky things.</span>
+  <span class="sw">Kukufanya uhisi vibaya kwa kusema hapana. Urafiki si wa masharti kwa kufanya mambo hatari.</span>
+  <span class="sh">Kukufanya uhisi vibaya kwa kusema no. Urafiki si conditional kwa kufanya risky things.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">Daring &#8212; &ldquo;Are you scared? Too weak?&rdquo;</span><span class="sw">Changamoto &#8212; &ldquo;Unaogopa? Dhaifu sana?&rdquo;</span><span class="sh">Daring &#8212; &ldquo;Unaogopa? Too weak?&rdquo;</span></strong>
+  <span class="en">Attacking your pride to force action. Real courage is knowing when to say NO.</span>
+  <span class="sw">Kushambulia kiburi chako kulazimisha hatua. Ujasiri wa kweli ni kujua kusema HAPANA.</span>
+  <span class="sh">Ku-attack pride yako ku-force action. Real courage ni kujua kusema NO.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Normalising &#8212; &ldquo;Everyone does it — you&rsquo;re the odd one out&rdquo;</span><span class="sw">Kawaida &#8212; &ldquo;Kila mtu anafanya &#8212; wewe ndiye mgeni&rdquo;</span><span class="sh">Normalising &#8212; &ldquo;Kila mtu anado &#8212; wewe ndiye odd one out&rdquo;</span></strong>
+  <span class="en">Exaggerating how common a behaviour is to reduce your resistance. &ldquo;Everyone&rdquo; is rarely everyone.</span>
+  <span class="sw">Kupiga chumvi jinsi tabia inavyoenea kupunguza upinzani wako. &ldquo;Kila mtu&rdquo; mara chache ni kila mtu.</span>
+  <span class="sh">Ku-exaggerate jinsi behaviour inavyoenea kupunguza resistance yako. &ldquo;Kila mtu&rdquo; mara chache ni kila mtu.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">Reward / Bribe &#8212; &ldquo;I&rsquo;ll buy you something&rdquo;</span><span class="sw">Rushwa &#8212; &ldquo;Nitakunulia kitu&rdquo;</span><span class="sh">Bribe &#8212; &ldquo;Nitakunulia kitu&rdquo;</span></strong>
+  <span class="en">Offering gifts, money, or favours in exchange for compliance. Common in sexual exploitation (sponsor culture).</span>
+  <span class="sw">Kutoa zawadi, pesa, au upendeleo kwa malipo ya utiifu. Kawaida katika unyonyaji wa kingono (utamaduni wa mdhamini).</span>
+  <span class="sh">Ku-offer gifts, pesa, au favours kwa compliance. Common katika sexual exploitation (sponsor culture).</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> If someone continues to pressure you after a clear NO — that is harassment, not friendship. You have the right to leave and report.</span>
+  <span class="sw"> Mtu akiendelea kukushikilia baada ya HAPANA wazi &#8212; hiyo ni unyakuzi, si urafiki. Una haki ya kuondoka na kuripoti.</span>
+  <span class="sh"> Mtu akiendelea kukushikilia baada ya clear NO &#8212; hiyo ni harassment, si urafiki. Una haki ya kuondoka na kuripoti.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: The DEAR Method -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">The DEAR Refusal Method</span><span class="sw">Njia ya DEAR ya Kukataa</span><span class="sh">The DEAR Refusal Method</span></div>
+<p class="tp"><span class="en">DEAR is a structured, assertive way to say no that is used in health education across Kenya and East Africa.</span><span class="sw">DEAR ni njia iliyopangwa ya ujasiri ya kusema hapana inayotumiwa katika elimu ya afya kote Kenya na Afrika Mashariki.</span><span class="sh">DEAR ni structured, assertive way ya kusema no inayotumiwa kwa health education Kenya na East Africa.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">Name what is being asked of you without blame</span><span class="sw">Taja unachoulizwa bila kulaumiwa</span><span class="sh">Taja unachoulizwa bila ku-blame</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">Say how you feel &#8212; &ldquo;I feel uncomfortable&rdquo;</span><span class="sw">Sema jinsi unavyohisi &#8212; &ldquo;Nahisi vibaya&rdquo;</span><span class="sh">Sema jinsi unavyohisi &#8212; &ldquo;Nahisi uncomfortable&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">Say NO clearly &#8212; &ldquo;No, I will not do that&rdquo;</span><span class="sw">Sema HAPANA wazi &#8212; &ldquo;Hapana, sitafanya hivyo&rdquo;</span><span class="sh">Sema NO clearly &#8212; &ldquo;No, sitafanya hivyo&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">State a consequence or reason &#8212; repeat if needed</span><span class="sw">Eleza matokeo au sababu &#8212; rudia iwapo inahitajika</span><span class="sh">State consequence au reason &#8212; repeat kama inahitajika</span></div>
+  </div>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Example — Drug Pressure</span><span class="sw">Mfano &#8212; Shinikizo la Dawa</span><span class="sh">Example &#8212; Drug Pressure</span></strong>
+  <span class="en">
+    <strong>D:</strong> &ldquo;You&rsquo;re offering me miraa.&rdquo;<br>
+    <strong>E:</strong> &ldquo;I don&rsquo;t want to chew it.&rdquo;<br>
+    <strong>A:</strong> &ldquo;No. I won&rsquo;t.&rdquo;<br>
+    <strong>R:</strong> &ldquo;It harms concentration. My decision is final.&rdquo;
+  </span>
+  <span class="sw">
+    <strong>D:</strong> &ldquo;Unanipa miraa.&rdquo;<br>
+    <strong>E:</strong> &ldquo;Sitaki kutafuna.&rdquo;<br>
+    <strong>A:</strong> &ldquo;Hapana. Sitafanya.&rdquo;<br>
+    <strong>R:</strong> &ldquo;Inadhuru umakini. Uamuzi wangu ni wa mwisho.&rdquo;
+  </span>
+  <span class="sh">
+    <strong>D:</strong> &ldquo;Unanipa miraa.&rdquo;<br>
+    <strong>E:</strong> &ldquo;Sitaki ku-chew.&rdquo;<br>
+    <strong>A:</strong> &ldquo;No. Sitafanya.&rdquo;<br>
+    <strong>R:</strong> &ldquo;Inadhuru concentration yangu. Uamuzi wangu ni wa mwisho.&rdquo;
+  </span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Broken Record Technique</span><span class="sw">&#128161; Mbinu ya Rekodi Iliyovunjika</span><span class="sh">&#128161; Broken Record Technique</span></strong>
+  <span class="en"> If they keep asking, simply repeat your NO calmly. You do not owe anyone an explanation. &ldquo;No. No. No. The answer is no.&rdquo;</span>
+  <span class="sw"> Wakiendelea kuomba, rudia HAPANA yako kwa utulivu. Huna deni la maelezo kwa mtu yeyote. &ldquo;Hapana. Hapana. Hapana. Jibu ni hapana.&rdquo;</span>
+  <span class="sh"> Wakiendelea kuuliza, simply repeat NO yako kwa calm. Huna-deni maelezo kwa mtu yeyote. &ldquo;No. No. No. Answer ni no.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Drug & Alcohol Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#127866; <span class="en">Refusing Drugs &amp; Alcohol</span><span class="sw">Kukataa Dawa za Kulevya &amp; Pombe</span><span class="sh">Kukataa Drugs &amp; Alcohol</span></div>
+<p class="tp"><span class="en">Having a ready phrase removes the panic of the moment. Practise these until they feel natural:</span><span class="sw">Kuwa na msemo ulio tayari huondoa hofu ya wakati huo. Fanya mazoezi ya haya mpaka yaonekane ya kawaida:</span><span class="sh">Kuwa na phrase ready huremove panic ya moment. Practice hizi mpaka ziwe natural:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Simple &amp; Direct</span><span class="sw">Rahisi &amp; ya Moja kwa Moja</span><span class="sh">Simple &amp; Direct</span></div>
+  <div class="phrase"><span class="en">&ldquo;No thanks, I don&rsquo;t drink / use that.&rdquo;</span><span class="sw">&ldquo;Asante, sikunywi / sitatumia hicho.&rdquo;</span><span class="sh">&ldquo;No thanks, sikunywi / sitatumia hivyo.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Give a Reason</span><span class="sw">Toa Sababu</span><span class="sh">Toa Reason</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. I have a match / exam / family thing tomorrow.&rdquo;</span><span class="sw">&ldquo;Hapana. Nina mchezo / mtihani / jambo la familia kesho.&rdquo;</span><span class="sh">&ldquo;No. Nina match / exam / family thing kesho.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Blame an Outside Force</span><span class="sw">Laumu Nguvu ya Nje</span><span class="sh">Blame Outside Force</span></div>
+  <div class="phrase"><span class="en">&ldquo;I can&rsquo;t — my parents will literally check my breath.&rdquo;</span><span class="sw">&ldquo;Siwezi &#8212; wazazi wangu wataangalia pumzi yangu kweli kweli.&rdquo;</span><span class="sh">&ldquo;Siwezi &#8212; wazazi wangu watasheck pumzi yangu literally.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Change the Subject</span><span class="sw">Badilisha Mada</span><span class="sh">Change Subject</span></div>
+  <div class="phrase"><span class="en">&ldquo;No, I&rsquo;m good. Hey, did you hear about the match?&rdquo;</span><span class="sw">&ldquo;Hapana, niko sawa. Hei, ulisikia kuhusu mchezo?&rdquo;</span><span class="sh">&ldquo;No, niko sawa. Hei, uliskia kuhusu match?&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Leave the Scene</span><span class="sw">Toka Eneo</span><span class="sh">Leave the Scene</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. I&rsquo;m out of here.&rdquo; &mdash; then leave.</span><span class="sw">&ldquo;Hapana. Naenda.&rdquo; &#8212; kisha ondoka.</span><span class="sh">&ldquo;No. Naenda saa hii.&rdquo; &#8212; kisha ondoka.</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Key Rules</span><span class="sw">&#128161; Kanuni Muhimu</span><span class="sh">&#128161; Key Rules</span></strong>
+  <span class="en"> Do NOT apologise for saying no. Do NOT over-explain. Make eye contact. Keep your voice calm and steady. Repeat if necessary.</span>
+  <span class="sw"> USITOE msamaha kwa kusema hapana. USIELEZEEE sana. Angalia machoni. Weka sauti yako tulivu na imara. Rudia iwapo inahitajika.</span>
+  <span class="sh"> USITOE apology kwa kusema no. USIELEZEE sana. Make eye contact. Weka voice yako calm na steady. Repeat kama inahitajika.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Sexual Pressure Refusal -->
+<div class="slide">
+<div class="slide-head">&#128106; <span class="en">Refusing Sexual Pressure</span><span class="sw">Kukataa Shinikizo la Kingono</span><span class="sh">Kukataa Sexual Pressure</span></div>
+<p class="tp"><span class="en">Every person has the right to decide what happens to their body. Saying no to sexual pressure — from a partner, a sponsor, or a classmate — is always valid.</span><span class="sw">Kila mtu ana haki ya kuamua kinachotokea kwa mwili wake. Kusema hapana kwa shinikizo la kingono &#8212; kutoka kwa mwenzi, mdhamini, au mwanafunzi mwenzako &#8212; ni halali daima.</span><span class="sh">Kila mtu ana haki ya kuamua kinachotokea kwa mwili wake. Kusema no kwa sexual pressure &#8212; kutoka kwa partner, sponsor, au classmate &#8212; ni always valid.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#128273; Consent = FRIES (review)</span><span class="sw">&#128273; Ridhaa = FRIES (mapitio)</span><span class="sh">&#128273; Consent = FRIES (review)</span></strong>
+  <span class="en"><strong>F</strong>reely given &bull; <strong>R</strong>eversible &bull; <strong>I</strong>nformed &bull; <strong>E</strong>nthusiastic &bull; <strong>S</strong>pecific. If any element is missing, it is NOT consent.</span>
+  <span class="sw"><strong>F</strong>reedom ya kutoa &bull; <strong>R</strong>evocable &bull; <strong>I</strong>nformed &bull; <strong>E</strong>nthusiastic &bull; <strong>S</strong>pecific. Kipengele chochote kikisahauliwa, si ridhaa.</span>
+  <span class="sh"><strong>F</strong>reely given &bull; <strong>R</strong>eversible &bull; <strong>I</strong>nformed &bull; <strong>E</strong>nthusiastic &bull; <strong>S</strong>pecific. Kama element yoyote imekosekana, si consent.</span>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Firm &amp; Final</span><span class="sw">Imara &amp; ya Mwisho</span><span class="sh">Firm &amp; Final</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. And my answer will not change.&rdquo;</span><span class="sw">&ldquo;Hapana. Na jibu langu halitabadilika.&rdquo;</span><span class="sh">&ldquo;No. Na jibu langu halitabadilika.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">To a Sponsor / Older Person</span><span class="sw">Kwa Mdhamini / Mtu Mzee</span><span class="sh">Kwa Sponsor / Mtu Mzee</span></div>
+  <div class="phrase"><span class="en">&ldquo;I appreciate your help, but I will not exchange my body for it. Please respect that.&rdquo;</span><span class="sw">&ldquo;Nashukuru msaada wako, lakini sitabadilisha mwili wangu kwa ajili yake. Tafadhali iheshimu.&rdquo;</span><span class="sh">&ldquo;Nashukuru help yako, lakini sitabadilisha mwili wangu kwa ajili yake. Tafadhali respect hivyo.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">To a Partner</span><span class="sw">Kwa Mwenzi</span><span class="sh">Kwa Partner</span></div>
+  <div class="phrase"><span class="en">&ldquo;I care about you, but I&rsquo;m not ready. If you truly respect me, you will wait.&rdquo;</span><span class="sw">&ldquo;Nakujali, lakini sijawa tayari. Ukimpenda kweli, utasubiri.&rdquo;</span><span class="sh">&ldquo;Nakujali, lakini sijawa ready. Ukiniheshimu kweli, utasubiri.&rdquo;</span></div>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; If NO is ignored:</span><span class="sw">&#9888; HAPANA ikiachwa:</span><span class="sh">&#9888; NO ikipuuzwa:</span></strong>
+  <span class="en"> When a person continues after you say no, they are committing sexual violence under Kenya&rsquo;s Sexual Offences Act 2006. Report to a teacher, Childline 116, or police immediately.</span>
+  <span class="sw"> Mtu anapoendelea baada ya kusema hapana, anafanya ukatili wa kingono chini ya Sheria ya Makosa ya Ngono ya Kenya 2006. Ripoti kwa mwalimu, Childline 116, au polisi mara moja.</span>
+  <span class="sh"> Mtu akiendelea baada ya kusema no, anafanya sexual violence chini ya Sexual Offences Act 2006. Report kwa mwalimu, Childline 116, au polisi mara moja.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Life Skills video loading&hellip;</span><span class="sw">Video ya Ujuzi wa Maisha inapakia&hellip;</span><span class="sh">Life Skills video inaload&hellip;</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one pressure tactic shown in the video and explain how you would use DEAR to respond. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya shinikizo iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kujibu. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kujibu. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 8: Kenya Scenarios -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Real Kenya Scenarios — Practise Saying No</span><span class="sw">Hali Halisi za Kenya &#8212; Fanya Mazoezi ya Kusema Hapana</span><span class="sh">Real Kenya Scenarios &#8212; Practise Kusema No</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario A &#8212; Nairobi, Form 3</span><span class="sw">Hali A &#8212; Nairobi, Kidato cha 3</span><span class="sh">Scenario A &#8212; Nairobi, Form 3</span></div>
+  <div class="scenario"><span class="en">James offers Mercy chang&rsquo;aa at a party, saying &ldquo;Everyone&rsquo;s drinking. You&rsquo;ll look like a child if you don&rsquo;t.&rdquo; Mercy wants to refuse without a fight.</span><span class="sw">James anampa Mercy chang&rsquo;aa katika sherehe, akisema &ldquo;Kila mtu anakunywa. Utaonekana mtoto usiokunywa.&rdquo; Mercy anataka kukataa bila ugomvi.</span><span class="sh">James anampa Mercy chang&rsquo;aa kwa party, akisema &ldquo;Kila mtu anakunywa. Utaonekana mtoto kama hukunywi.&rdquo; Mercy anataka kukataa bila fight.</span></div>
+  <div class="sc-q"><span class="en">What PRESSURE TACTIC is James using?</span><span class="sw">James anatumia MBINU GANI ya shinikizo?</span><span class="sh">James anatumia PRESSURE TACTIC gani?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')"><span class="en">&#128077; Normalising &#8212; claiming &ldquo;everyone&rdquo; does it to reduce resistance</span><span class="sw">&#128077; Kawaida &#8212; kudai &ldquo;kila mtu&rdquo; anafanya kupunguza upinzani</span><span class="sh">&#128077; Normalising &#8212; kudai &ldquo;kila mtu&rdquo; anado kupunguza resistance</span></button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')"><span class="en">&#128078; Guilt trip &#8212; making her feel responsible for his feelings</span><span class="sw">&#128078; Hisia za hatia &#8212; kumfanya ahisi responsible kwa hisia zake</span><span class="sh">&#128078; Guilt trip &#8212; kumfanya ahisi responsible kwa feelings zake</span></button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+  <div class="example-box" style="margin-top:10px;">
+    <strong>&#128101; <span class="en">Mercy&rsquo;s DEAR Response:</span><span class="sw">Jibu la DEAR la Mercy:</span><span class="sh">DEAR Response ya Mercy:</span></strong>
+    <span class="en">&ldquo;You&rsquo;re offering me chang&rsquo;aa. I don&rsquo;t want to drink. No, I won&rsquo;t. It&rsquo;s my choice and I&rsquo;m sticking with it.&rdquo; [walks away]</span>
+    <span class="sw">&ldquo;Unanipa chang&rsquo;aa. Sitaki kunywa. Hapana, sitanywa. Ni chaguo langu na ninashikamana nacho.&rdquo; [anaondoka]</span>
+    <span class="sh">&ldquo;Unanipa chang&rsquo;aa. Sitaki kunywa. No, sitanywa. Ni choice yangu na ninashikamana nayo.&rdquo; [anaenda]</span>
+  </div>
+</div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario B &#8212; Kisumu, Form 2</span><span class="sw">Hali B &#8212; Kisumu, Kidato cha 2</span><span class="sh">Scenario B &#8212; Kisumu, Form 2</span></div>
+  <div class="scenario"><span class="en">A Form 4 senior tells David that smoking marijuana &ldquo;helps you study&rdquo; and dares him: &ldquo;Only cowards refuse.&rdquo;</span><span class="sw">Mwanafunzi wa Kidato cha 4 anamwambia David kwamba kuvuta bangi &ldquo;inakusaidia kustudy&rdquo; na kumdharau: &ldquo;Woga tu wanakataa.&rdquo;</span><span class="sh">Senior wa Form 4 anamwambia David kwamba smoking marijuana &ldquo;inakusaidia kustudy&rdquo; na anamudare: &ldquo;Woga tu wanakataa.&rdquo;</span></div>
+  <div class="sc-q"><span class="en">Which refusal phrase is MOST effective for David?</span><span class="sw">Msemo gani wa kukataa ni MZURI ZAIDI kwa David?</span><span class="sh">Refusal phrase gani ni BEST zaidi kwa David?</span></div>
+  <div id="scB">
+    <button class="choice" onclick="scPick(this,'scB','ok','resB')"><span class="en">&#128077; &ldquo;Call me whatever you want. No. I&rsquo;m leaving.&rdquo;</span><span class="sw">&#128077; &ldquo;Niite chochote utakachoniita. Hapana. Ninaenda.&rdquo;</span><span class="sh">&#128077; &ldquo;Niite chochote. No. Naenda saa hii.&rdquo;</span></button>
+    <button class="choice" onclick="scPick(this,'scB','no','resB')"><span class="en">&#128078; &ldquo;Maybe later, let me think about it.&rdquo;</span><span class="sw">&#128078; &ldquo;Labda baadaye, niache nifikirie.&rdquo;</span><span class="sh">&#128078; &ldquo;Maybe later, niache nithink.&rdquo;</span></button>
+    <div id="resB" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scB')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 9: Resources & Summary -->
+<div class="slide">
+<div class="slide-head">&#128276; <span class="en">Summary &amp; Kenya Support Contacts</span><span class="sw">Muhtasari &amp; Nambari za Msaada za Kenya</span><span class="sh">Summary &amp; Kenya Support Contacts</span></div>
+<div class="key-term">
+  <strong><span class="en">&#10004; 5 Things to Remember</span><span class="sw">&#10004; Mambo 5 ya Kukumbuka</span><span class="sh">&#10004; Vitu 5 vya Kukumbuka</span></strong>
+  <ul class="bl">
+    <li><span class="en"><strong>NO is a complete sentence.</strong> You do not owe anyone an explanation.</span><span class="sw"><strong>HAPANA ni sentensi kamili.</strong> Huna deni la maelezo kwa mtu yeyote.</span><span class="sh"><strong>NO ni complete sentence.</strong> Huna-deni maelezo kwa mtu yeyote.</span></li>
+    <li><span class="en"><strong>Recognise the tactic first</strong> — then respond, not react.</span><span class="sw"><strong>Tambua mbinu kwanza</strong> &#8212; kisha jibu, si kujibu kwa msongo.</span><span class="sh"><strong>Tambua tactic kwanza</strong> &#8212; kisha respond, si react.</span></li>
+    <li><span class="en"><strong>Use DEAR</strong> — Describe, Express, Assert, Reinforce.</span><span class="sw"><strong>Tumia DEAR</strong> &#8212; Eleza, Sema hisia, Thibitisha, Thibitisha tena.</span><span class="sh"><strong>Tumia DEAR</strong> &#8212; Describe, Express, Assert, Reinforce.</span></li>
+    <li><span class="en"><strong>Real friends respect your NO</strong> — those who don&rsquo;t are not real friends.</span><span class="sw"><strong>Marafiki wa kweli wanaiheshimu HAPANA yako</strong> &#8212; wasioiheshimu si marafiki wa kweli.</span><span class="sh"><strong>Real friends wanafuata NO yako</strong> &#8212; ambao hawafuati si real friends.</span></li>
+    <li><span class="en"><strong>When NO is not enough</strong> — leave, report, and get help immediately.</span><span class="sw"><strong>HAPANA isiposha</strong> &#8212; toka, ripoti, na pata msaada mara moja.</span><span class="sh"><strong>NO haitoshi</strong> &#8212; toka, ripoti, na pata help mara moja.</span></li>
+  </ul>
+</div>
+<div class="tip-box" style="margin-top:12px;">
+  <strong><span class="en">&#128222; Kenya Support Contacts</span><span class="sw">&#128222; Nambari za Msaada za Kenya</span><span class="sh">&#128222; Kenya Support Contacts</span></strong><br>
+  <span class="en">
+    &#128222; <strong>NACADA</strong> (substance abuse): 1192 &mdash; Free, confidential, 24/7<br>
+    &#128222; <strong>Childline</strong>: 116 &mdash; Free, any phone, for anyone under 18<br>
+    &#128222; <strong>GBV Support</strong>: GVRC at your nearest public hospital<br>
+    &#128222; <strong>Police</strong>: 999 / 112 in any emergency
+  </span>
+  <span class="sw">
+    &#128222; <strong>NACADA</strong> (dawa za kulevya): 1192 &mdash; Bure, siri, 24/7<br>
+    &#128222; <strong>Childline</strong>: 116 &mdash; Bure, simu yoyote, chini ya miaka 18<br>
+    &#128222; <strong>Msaada wa GBV</strong>: GVRC katika hospitali ya serikali iliyo karibu<br>
+    &#128222; <strong>Polisi</strong>: 999 / 112 katika dharura yoyote
+  </span>
+  <span class="sh">
+    &#128222; <strong>NACADA</strong> (drugs): 1192 &mdash; Free, siri, 24/7<br>
+    &#128222; <strong>Childline</strong>: 116 &mdash; Free, simu yoyote, chini ya miaka 18<br>
+    &#128222; <strong>GBV Support</strong>: GVRC kwa public hospital iliyo karibu<br>
+    &#128222; <strong>Police</strong>: 999 / 112 kwa emergency yoyote
+  </span>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+<div class="mcq-block">
+<div class="q-text">1. Kamau, 16, Thika, receives an aggressive message from a peer online saying he is ugly and should drop out of school. What is the BEST life-skills response to cyberbullying?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq1','A')"><span class="opt-letter">A</span> Send equally aggressive messages back</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq1','B')"><span class="opt-letter">B</span> Ignore it and tell no one</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq1','C')"><span class="opt-letter">C</span> Report to a trusted adult and block the sender</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq1','D')"><span class="opt-letter">D</span> Share the message publicly to gain sympathy</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">2. Neema and her boyfriend disagree about whether to use a condom. He argues it reduces pleasure; she insists on protection. Which negotiation skill should Neema apply?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Give in to keep the relationship peaceful</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> State her position and explain her health reasons clearly</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Avoid the topic permanently</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Ask his friends to persuade him</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">3. A peer education session in Eldoret covers assertiveness. The facilitator asks learners to identify characteristics of assertive communication. Which of the following describe assertive communication? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Speaking clearly and directly</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Respecting both your own and the other person&#x27;s rights</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Insisting your view is always correct</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Using calm tone even under pressure</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Listening actively to the other person</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">4. Adhiambo, 17, Kisumu, notices her friend Atieno has been withdrawn and sad for two weeks after breaking up with her boyfriend. Which life skill should Adhiambo use to best support Atieno?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Empathy and active listening</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Debate skills</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Goal setting for financial success</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Public speaking</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">5. Juma is asked by his youth group in Meru to role-play saying no to alcohol at a party. He freezes and cannot find the words. What practice method would BEST build Juma&#x27;s refusal skills?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span> Reading a textbook about alcohol</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span> Repeated role-play with feedback from peers</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span> Writing an essay about the dangers of alcohol</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span> Watching a documentary alone</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">6. A health teacher in Nairobi explains the WHO&#x27;s ten core life skills to Form 2 students. Which of the following are among the WHO&#x27;s core life skills? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">A</span> Critical thinking</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">B</span> Creative thinking</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">C</span> Bookkeeping</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">D</span> Empathy</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">E</span> Decision-making</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">7. Rehema, 17, Malindi, wants to tell her mother she was sexually harassed at school but is afraid of not being believed. What communication strategy would give Rehema the best chance of being heard?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span> Write a note describing exactly what happened</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span> Send an anonymous tip to the school</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span> Tell only her friends and keep it from adults</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span> Wait until it happens again</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">8. Muoka, 16, Machakos, is told by friends that &#x27;real men do not discuss feelings.&#x27; He has been struggling with sadness after his parents divorced. Which life skill insight should a peer educator share with Muoka?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Real men suppress emotions to appear strong</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Expressing emotions appropriately is a sign of emotional intelligence</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Feelings should only be shared with paid professionals</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Discussing feelings weakens a man&#x27;s character</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">9. During a life skills class in Nakuru, learners discuss steps in responsible decision-making. Which steps are part of a sound decision-making process? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Identify the problem clearly</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Decide based on peer pressure alone</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Consider the consequences of each option</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Consult a trusted person when uncertain</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Evaluate the decision after acting on it</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+<div class="mcq-block">
+<div class="q-text">10. Zawadi&#x27;s mother refuses to discuss puberty with her. Zawadi needs accurate information about menstruation. What is the BEST action for Zawadi to take?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Rely only on rumours from classmates</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Seek information from a school counsellor or clinic</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Search random websites without evaluating sources</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Ignore the questions she has</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Well spotted! That is the normalising tactic — claiming everyone does it to reduce your resistance.</span><span class="sw">Vizuri! Hiyo ni mbinu ya kawaida — kudai kila mtu anafanya kupunguza upinzani wako.</span><span class="sh">Vizuri! Hiyo ni normalising tactic — kudai kila mtu anado kupunguza resistance yako.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">James is normalising — &ldquo;everyone does it.&rdquo; The guilt trip would say &ldquo;I thought you were my friend.&rdquo;</span><span class="sw">James anafanya kawaida — &ldquo;kila mtu anafanya.&rdquo; Hisia za hatia zingesema &ldquo;Nilidhani wewe ni rafiki yangu.&rdquo;</span><span class="sh">James anafanya normalising — &ldquo;kila mtu anado.&rdquo; Guilt trip ingesema &ldquo;Nilikudhani ni friend wangu.&rdquo;</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'C','mcq2':'B','mcq3':'A,B,D,E','mcq4':'A','mcq5':'B','mcq6':'A,B,D,E','mcq7':'A','mcq8':'B','mcq9':'A,C,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'mcq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'mcq','mcq6':'msq','mcq7':'mcq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>\u2713 Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>\u2717 Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'\u2014')+'</strong> \u2014 Correct: <strong>'+correct+'</strong>. ':'<strong>\u2717 Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'\u2b50 Excellent! You understand refusal skills very well.':pct>=60?'\ud83d\udc4d Good! Review the highlighted incorrect answers.':'\ud83d\udcd6 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cyber Crimes | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="cyber-crimes" data-module-slug="cyber-crimes">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · Cyber Crimes · Online Safety &amp; Digital Rights</div><div class="lesson-name">&#128421; Cyber Crimes</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">&#127757;</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">&#128289;</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A&#8722;</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=resources" class="lb-help">&#128681; Help</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+<h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo hili:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+<ol>
+<li><span class="en">Define cyber crimes and identify common types in Kenya</span><span class="sw">Eleza uhalifu wa mtandao na tambua aina za kawaida Kenya</span><span class="sh">Define cyber crimes na identify common types Kenya</span></li>
+<li><span class="en">Understand the Kenya Computer Misuse and Cybercrimes Act 2018</span><span class="sw">Elewa Sheria ya Matumizi Mabaya ya Kompyuta na Uhalifu wa Mtandao 2018</span><span class="sh">Understand Kenya CMCA 2018</span></li>
+<li><span class="en">Recognise how to protect yourself online</span><span class="sw">Tambua jinsi ya kujilinda mtandaoni</span><span class="sh">Jua jinsi ya kujilinda online</span></li>
+<li><span class="en">Know how to report cyber crimes in Kenya</span><span class="sw">Jua jinsi ya kuripoti uhalifu wa mtandao Kenya</span><span class="sh">Jua jinsi ya report cyber crimes Kenya</span></li>
+</ol>
+<div class="inquiry">
+<span class="en"><strong>&#128269; Big Question:</strong> If you wouldn't do it in person, why is it different online?</span>
+<span class="sw"><strong>&#128269; Swali Kubwa:</strong> Kama husingefanya ana kwa ana, kwa nini ni tofauti mtandaoni?</span>
+<span class="sh"><strong>&#128269; Big Question:</strong> Kama hukufanya physically, mbona ni different online?</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: What Are Cyber Crimes? -->
+<div class="slide">
+<div class="slide-head">&#128421; <span class="en">What Are Cyber Crimes?</span><span class="sw">Uhalifu wa Mtandao ni Nini?</span><span class="sh">Cyber Crimes ni Nini?</span></div>
+<p class="tp">
+<span class="en">Cyber crimes are criminal activities carried out using computers, the internet, or digital devices. They are taken very seriously under Kenyan law.</span>
+<span class="sw">Uhalifu wa mtandao ni shughuli za uhalifu zinazofanywa kwa kutumia kompyuta, intaneti, au vifaa vya kidijitali. Zinaangaliwa kwa uzito chini ya sheria ya Kenya.</span>
+<span class="sh">Cyber crimes ni criminal activities zinazofanywa kwa kutumia computers, internet, au digital devices. Zinachukuliwa seriously sana chini ya sheria ya Kenya.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Computer Misuse and Cybercrimes Act 2018 (CMCA)</span><span class="sw">&#128273; Sheria ya Matumizi Mabaya ya Kompyuta 2018</span><span class="sh">&#128273; Computer Misuse and Cybercrimes Act 2018 (CMCA)</span></strong>
+<span class="en">Kenya's comprehensive law criminalising online offences — passed in 2018. Covers hacking, cyberbullying, sextortion, identity theft, online fraud, and more. Penalties range from fines to decades in prison.</span>
+<span class="sw">Sheria ya Kenya inayoshughulikia makosa ya mtandaoni — ilipitishwa 2018. Inashughulikia udukuzi, uonevu wa mtandao, sextortion, wizi wa utambulisho, udanganyifu wa mtandao na zaidi. Adhabu zinatoka faini hadi miaka mingi gerezani.</span>
+<span class="sh">Kenya's comprehensive law inayocriminalise online offences — ilipitishwa 2018. Inashughulikia hacking, cyberbullying, sextortion, identity theft, online fraud, na zaidi. Penalties zinatoka fines hadi decades gerezani.</span>
+</div>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Kenya Cyber Crime Stats</span><span class="sw">&#9888;&#65039; Takwimu za Uhalifu wa Mtandao Kenya</span><span class="sh">&#9888;&#65039; Kenya Cyber Crime Stats</span></strong>
+<span class="en"> Kenya loses <strong>KES 29 billion</strong> annually to cyber crimes (Communications Authority 2023). Youth are both the most frequent victims AND perpetrators.</span>
+<span class="sw"> Kenya inapoteza <strong>KES bilioni 29</strong> kila mwaka kwa uhalifu wa mtandao (Mamlaka ya Mawasiliano 2023). Vijana ni wahanga wa mara kwa mara NA wahalifu pia.</span>
+<span class="sh"> Kenya inapoteza <strong>KES bilioni 29</strong> kila mwaka kwa cyber crimes (Communications Authority 2023). Youth ni frequent victims NA perpetrators.</span>
+</div>
+<table class="info-table">
+<tr><th><span class="en">Type of Cyber Crime</span><span class="sw">Aina ya Uhalifu</span><span class="sh">Type ya Cyber Crime</span></th><th><span class="en">What It Involves</span><span class="sw">Inahusisha Nini</span><span class="sh">Inainvolve Nini</span></th></tr>
+<tr><td><span class="en">Fraud / Scams</span><span class="sw">Ulaghai / Udanganyifu</span><span class="sh">Fraud / Scams</span></td><td><span class="en">Stealing money through fake messages, websites or calls</span><span class="sw">Kuiba pesa kwa ujumbe, tovuti au simu bandia</span><span class="sh">Kuiba pesa kupitia fake messages, websites au calls</span></td></tr>
+<tr><td><span class="en">Cyberbullying</span><span class="sw">Uonevu wa Mtandao</span><span class="sh">Cyberbullying</span></td><td><span class="en">Harassing, threatening, or humiliating someone online</span><span class="sw">Kunyanyasa, kutishia, au kudhalilisha mtu mtandaoni</span><span class="sh">Kuharass, kuthreat, au kudhalilisha mtu online</span></td></tr>
+<tr><td><span class="en">Sextortion</span><span class="sw">Sextortion</span><span class="sh">Sextortion</span></td><td><span class="en">Threatening to share intimate images unless victim pays</span><span class="sw">Kutishia kushiriki picha za karibu isipokuwa mwathirika alipe</span><span class="sh">Kuthreat kushare intimate images unless victim alipe</span></td></tr>
+<tr><td><span class="en">Identity Theft</span><span class="sw">Wizi wa Utambulisho</span><span class="sh">Identity Theft</span></td><td><span class="en">Using another person's personal details to commit fraud</span><span class="sw">Kutumia maelezo ya mtu mwingine kufanya udanganyifu</span><span class="sh">Kutumia personal details za mtu mwingine kufanya fraud</span></td></tr>
+<tr><td><span class="en">Hacking</span><span class="sw">Udukuzi</span><span class="sh">Hacking</span></td><td><span class="en">Accessing someone's device or account without permission</span><span class="sw">Kufikia kifaa au akaunti ya mtu bila ruhusa</span><span class="sh">Kuaccess device au account ya mtu bila permission</span></td></tr>
+<tr><td><span class="en">Cyberstalking</span><span class="sw">Ufuatiliaji wa Mtandao</span><span class="sh">Cyberstalking</span></td><td><span class="en">Repeatedly monitoring or contacting someone online to cause fear</span><span class="sw">Kufuatilia au kuwasiliana na mtu mtandaoni kumsababishia hofu</span><span class="sh">Repeatedly kumonitor au kucontact mtu online kusababisha fear</span></td></tr>
+</table>
+</div>
+
+<!-- SLIDE 3: Online Fraud & Scams -->
+<div class="slide">
+<div class="slide-head">&#128176; <span class="en">Online Fraud &amp; Scams</span><span class="sw">Ulaghai na Udanganyifu wa Mtandao</span><span class="sh">Online Fraud &amp; Scams</span></div>
+<p class="tp">
+<span class="en">Online fraud is one of the most common cyber crimes facing young Kenyans. Scammers use fake messages, calls, and websites to steal money and personal information.</span>
+<span class="sw">Ulaghai wa mtandao ni mojawapo ya uhalifu wa kawaida zaidi unaowakabili vijana wa Kenya. Walaghai hutumia ujumbe bandia, simu, na tovuti kuiba pesa na taarifa za kibinafsi.</span>
+<span class="sh">Online fraud ni moja ya most common cyber crimes inayowakabili vijana wa Kenya. Scammers hutumia fake messages, calls, na websites kuiba pesa na personal info.</span>
+</p>
+<ul class="bl">
+<li><span class="en"><strong>M-Pesa fraud:</strong> criminals pose as Safaricom or banks asking for your PIN or OTP codes</span><span class="sw"><strong>Ulaghai wa M-Pesa:</strong> wahalifu wanajifanya Safaricom au benki wakiomba PIN au nambari za OTP</span><span class="sh"><strong>M-Pesa fraud:</strong> criminals wanajifanya Safaricom au banks wakiomba PIN yako au OTP codes</span></li>
+<li><span class="en"><strong>Fake jobs &amp; scholarships:</strong> posts promising jobs or study funds that require you to "pay to register"</span><span class="sw"><strong>Kazi na usomi bandia:</strong> machapisho yanayoahidi kazi au fedha za masomo yanayohitaji "kulipa kujiandikisha"</span><span class="sh"><strong>Fake jobs &amp; scholarships:</strong> posts zinazoahidi kazi au scholarship zinazohitaji "kulipa kuregister"</span></li>
+<li><span class="en"><strong>Investment scams ("double your money"):</strong> promises of impossible returns — always a scam</span><span class="sw"><strong>Udanganyifu wa uwekezaji ("mara mbili pesa yako"):</strong> ahadi za faida zisizowezekana — ni ulaghai kila wakati</span><span class="sh"><strong>Investment scams ("double your money"):</strong> promises za impossible returns — ni scam kila wakati</span></li>
+<li><span class="en"><strong>SIM swap fraud:</strong> criminals take over your mobile number to access your M-Pesa and bank accounts</span><span class="sw"><strong>Ulaghai wa kubadilisha SIM:</strong> wahalifu wanachukua nambari yako ya simu kupata M-Pesa na akaunti za benki</span><span class="sh"><strong>SIM swap fraud:</strong> criminals wanachukua mobile number yako kupata M-Pesa na bank accounts zako</span></li>
+</ul>
+<div class="key-term">
+<strong><span class="en">&#128273; Phishing</span><span class="sw">&#128273; Uvuvi wa Taarifa (Phishing)</span><span class="sh">&#128273; Phishing</span></strong>
+<span class="en">A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity — fake Safaricom SMS, fake bank emails, fake prize websites.</span>
+<span class="sw">Jaribio la udanganyifu la kupata taarifa nyeti kwa kujifanya chombo kinachoweza kuaminiwa — ujumbe wa Safaricom bandia, barua pepe za benki bandia, tovuti za tuzo bandia.</span>
+<span class="sh">Fraudulent attempt ya kupata sensitive info kwa kujifanya trustworthy entity — fake Safaricom SMS, fake bank emails, fake prize websites.</span>
+</div>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">Case Study — Zawadi, 17, Nakuru</span><span class="sw">Mfano Halisi — Zawadi, 17, Nakuru</span><span class="sh">Case Study — Zawadi, 17, Nakuru</span></strong>
+<span class="en">Zawadi received a WhatsApp message saying she had won a KES 50,000 prize from a popular TV show. Excited, she clicked the link and entered her M-Pesa PIN on what looked like an official page. Within minutes, her M-Pesa account was emptied. The "prize" was a phishing scam.</span>
+<span class="sw">Zawadi alipokea ujumbe wa WhatsApp ukisema ameshinda tuzo ya KES 50,000 kutoka kipindi maarufu cha TV. Akifurahi, alibonyeza kiungo na kuingiza PIN yake ya M-Pesa kwenye ukurasa ulioonekana rasmi. Ndani ya dakika chache, akaunti yake ya M-Pesa ilitupu. "Tuzo" ilikuwa ulaghai wa phishing.</span>
+<span class="sh">Zawadi alipata WhatsApp message ikisema ameshinda KES 50,000 prize kutoka popular TV show. Excited, alibonyeza link na kuingiza M-Pesa PIN yake kwenye page iliyoonekana official. Ndani ya dakika, M-Pesa yake ilitupu. "Prize" ilikuwa phishing scam.</span>
+</div>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Golden Rule</span><span class="sw">&#9888;&#65039; Kanuni ya Dhahabu</span><span class="sh">&#9888;&#65039; Golden Rule</span></strong>
+<span class="en"> If it seems too good to be true — it IS a scam. Legitimate organisations NEVER ask for your PIN, password, or M-Pesa confirmation codes.</span>
+<span class="sw"> Kama inaonekana nzuri sana kuwa kweli — NI ulaghai. Mashirika halisi KAMWE hayakuombi PIN, nenosiri, au nambari za uthibitisho za M-Pesa.</span>
+<span class="sh"> Kama inaonekana too good to be true — NI scam. Legitimate organisations HAZITAKI PIN, password, au M-Pesa confirmation codes zako.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: Cyberbullying -->
+<div class="slide">
+<div class="slide-head">&#128549; <span class="en">Cyberbullying</span><span class="sw">Uonevu wa Mtandao</span><span class="sh">Cyberbullying</span></div>
+<p class="tp">
+<span class="en">Cyberbullying is using digital technology to repeatedly harm or harass another person. It can happen on WhatsApp, Instagram, TikTok, Facebook — anywhere online.</span>
+<span class="sw">Uonevu wa mtandao ni kutumia teknolojia ya kidijitali kudhuru au kunyanyasa mtu mwingine mara kwa mara. Unaweza kutokea kwenye WhatsApp, Instagram, TikTok, Facebook — popote mtandaoni.</span>
+<span class="sh">Cyberbullying ni kutumia digital technology repeatedly kuharass mtu mwingine. Inaweza happen kwenye WhatsApp, Instagram, TikTok, Facebook — popote online.</span>
+</p>
+<ul class="bl">
+<li><span class="en">Sending threatening, humiliating, or hateful messages online</span><span class="sw">Kutuma ujumbe wa vitisho, udhalilishaji, au chuki mtandaoni</span><span class="sh">Kutuma threatening, humiliating, au hateful messages online</span></li>
+<li><span class="en">Posting rumours, fake content, or private information about someone</span><span class="sw">Kuchapisha uvumi, maudhui ya uongo, au taarifa za kibinafsi za mtu</span><span class="sh">Kupost rumours, fake content, au private info ya mtu</span></li>
+<li><span class="en">Creating fake profiles to impersonate and harass others</span><span class="sw">Kuunda wasifu bandia kuiga na kunyanyasa wengine</span><span class="sh">Kuunda fake profiles kujifanya na kuharass wengine</span></li>
+<li><span class="en">Deliberately excluding someone from online groups to isolate them</span><span class="sw">Kumtenga mtu kimakusudi kutoka vikundi vya mtandao kumtenga</span><span class="sh">Deliberately kumexclude mtu kutoka online groups kumtenga</span></li>
+</ul>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Real Consequences</span><span class="sw">&#9888;&#65039; Matokeo Halisi</span><span class="sh">&#9888;&#65039; Real Consequences</span></strong>
+<span class="en"> Victims of cyberbullying experience depression, anxiety, school absenteeism, social isolation, and in extreme cases suicidal ideation. <strong>30% of Kenyan youth</strong> report being cyberbullied.</span>
+<span class="sw"> Wahanga wa uonevu wa mtandao wapata msongo wa mawazo, wasiwasi, kukimbia shule, kutengwa kijamii, na katika hali mbaya mawazo ya kujiua. <strong>30% ya vijana wa Kenya</strong> wanaripoti kunyang'anywa mtandaoni.</span>
+<span class="sh"> Victims wa cyberbullying wapata depression, anxiety, school absenteeism, social isolation, na extreme cases suicidal ideation. <strong>30% ya Kenyan youth</strong> wanaripoti cyberbullying.</span>
+</div>
+<div class="key-term">
+<strong><span class="en">&#128273; Legal Status — CMCA 2018, Section 27</span><span class="sw">&#128273; Hali ya Kisheria — CMCA 2018, Kifungu 27</span><span class="sh">&#128273; Legal Status — CMCA 2018, Section 27</span></strong>
+<span class="en">Cyberbullying is a <strong>criminal offence</strong> in Kenya. Conviction carries up to <strong>2 years imprisonment</strong> or a fine of <strong>KES 200,000</strong> — or both.</span>
+<span class="sw">Uonevu wa mtandao ni <strong>kosa la jinai</strong> Kenya. Hukumu inabeba hadi <strong>miaka 2 gerezani</strong> au faini ya <strong>KES 200,000</strong> — au vyote viwili.</span>
+<span class="sh">Cyberbullying ni <strong>criminal offence</strong> Kenya. Conviction ina hadi <strong>miaka 2 gerezani</strong> au fine ya <strong>KES 200,000</strong> — au vyote viwili.</span>
+</div>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Mitaani</div>
+<span class="en" style="display:block;">Kupost kuhusu mtu mtandaoni bila ruhusa yake — hata ukidhani ni funny — inaweza kukufanya criminal. Online harassment ni kosa. Think before you post.</span>
+<span class="sw" style="display:block;">Kuchapisha kuhusu mtu mtandaoni bila ruhusa yake — hata ukifikiri ni ya kuchekesha — inaweza kukufanya mhalifu. Uonevu wa mtandao ni kosa. Fikiria kabla ya kuchapisha.</span>
+<span class="sh" style="display:block;">Kupost kuhusu mtu online bila permission yake — hata ukifikiri ni funny — inaweza kukufanya criminal. Online harassment ni kosa. Think before you post.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Sextortion & Non-Consensual Sharing -->
+<div class="slide">
+<div class="slide-head">&#128721; <span class="en">Sextortion &amp; Non-Consensual Image Sharing</span><span class="sw">Sextortion na Kushiriki Picha Bila Ridhaa</span><span class="sh">Sextortion &amp; Non-Consensual Sharing</span></div>
+<p class="tp">
+<span class="en">These are among the most serious and traumatic cyber crimes. They disproportionately target young people and often cause severe psychological harm.</span>
+<span class="sw">Hizi ni miongoni mwa uhalifu mbaya na wa kiwewe zaidi wa mtandao. Zinawalenga vijana zaidi na mara nyingi husababisha madhara makubwa ya kisaikolojia.</span>
+<span class="sh">Hizi ni miongoni mwa serious na traumatic cyber crimes. Zinalenga vijana zaidi na mara nyingi husababisha severe psychological harm.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Sextortion</span><span class="sw">&#128273; Sextortion</span><span class="sh">&#128273; Sextortion</span></strong>
+<span class="en">Threatening to share intimate images or information unless the victim pays money or provides more images. Under CMCA 2018 — up to <strong>25 years imprisonment</strong>.</span>
+<span class="sw">Kutishia kushiriki picha au taarifa za karibu isipokuwa mwathirika alipe pesa au atoe picha zaidi. Chini ya CMCA 2018 — hadi <strong>miaka 25 gerezani</strong>.</span>
+<span class="sh">Kuthreat kushare intimate images au info unless victim alipe pesa au atoe more images. Chini ya CMCA 2018 — hadi <strong>miaka 25 gerezani</strong>.</span>
+</div>
+<div class="key-term">
+<strong><span class="en">&#128273; Non-Consensual Image Sharing (Revenge Porn)</span><span class="sw">&#128273; Kushiriki Picha Bila Ridhaa (Filamu ya Kisasi)</span><span class="sh">&#128273; Non-Consensual Sharing (Revenge Porn)</span></strong>
+<span class="en">Sharing intimate images of a person without their consent. A criminal offence under CMCA 2018 regardless of whether the image was originally shared willingly.</span>
+<span class="sw">Kushiriki picha za karibu za mtu bila idhini yao. Ni kosa la jinai chini ya CMCA 2018 bila kujali kama picha iliwahi kushirikiwa kwa hiari.</span>
+<span class="sh">Kushare intimate images za mtu bila consent yao. Ni criminal offence chini ya CMCA 2018 regardless ya kama picha ilishirikiwa willingly awali.</span>
+</div>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">Case Study — Aisha, 16, Mombasa</span><span class="sw">Mfano Halisi — Aisha, 16, Mombasa</span><span class="sh">Case Study — Aisha, 16, Mombasa</span></strong>
+<span class="en">Aisha trusted her boyfriend and shared an intimate photo privately. After they broke up, he threatened to send the photo to her family and school unless she paid him KES 10,000. Instead of paying, Aisha reported the threat to her mother and then to the DCI Cybercrime Unit. The boyfriend was arrested and charged under the CMCA 2018.</span>
+<span class="sw">Aisha alimwamini mpenzi wake na kushiriki picha ya karibu kwa siri. Baada ya kuachana, alitishia kutuma picha kwa familia na shule yake isipokuwa amlipe KES 10,000. Badala ya kulipa, Aisha aliripoti tishio kwa mama yake na kisha kwa Kitengo cha Uhalifu wa Mtandao cha DCI. Mpenzi wake alikamatwa na kushtakiwa chini ya CMCA 2018.</span>
+<span class="sh">Aisha alimwamini boyfriend yake na kushare intimate photo kwa siri. Baada ya breakup, alithreat kutuma picha kwa family na school yake unless amlipe KES 10,000. Badala ya kulipa, Aisha aliripoti threat kwa mama yake na kisha kwa DCI Cybercrime Unit. Boyfriend alikamatwa na kuchargiwa chini ya CMCA 2018.</span>
+</div>
+<div class="tip-box"><strong><span class="en">&#128161; If This Happens to You</span><span class="sw">&#128161; Ikiwa Hii Itatokea Kwako</span><span class="sh">&#128161; Kama Hii Ikitokea Kwako</span></strong>
+<span class="en"> The victim is <strong>NEVER at fault</strong>. Criminals exploit trust — blame lies entirely with the perpetrator. Do <strong>NOT pay</strong>. Screenshot all evidence. Report to police/DCI and the platform immediately.</span>
+<span class="sw"> Mwathirika <strong>KAMWE si wa kulaumiwa</strong>. Wahalifu hutumia uaminifu — lawama iko kabisa kwa mkosaji. <strong>USILIPE</strong>. Piga picha ushahidi wote. Ripoti kwa polisi/DCI na jukwaa mara moja.</span>
+<span class="sh"> Victim <strong>KAMWE si wa kulaumiwa</strong>. Criminals wanaexploit trust — blame iko entirely kwa perpetrator. <strong>USILILIPE</strong>. Screenshot evidence yote. Report kwa police/DCI na platform mara moja.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Identity Theft & Hacking -->
+<div class="slide">
+<div class="slide-head">&#128272; <span class="en">Identity Theft &amp; Hacking</span><span class="sw">Wizi wa Utambulisho na Udukuzi</span><span class="sh">Identity Theft &amp; Hacking</span></div>
+<p class="tp">
+<span class="en">Identity theft and hacking are increasingly common in Kenya — especially as more young people use mobile banking and social media.</span>
+<span class="sw">Wizi wa utambulisho na udukuzi vinazidi kuwa vya kawaida Kenya — hasa vijana wengi wanapotumia benki ya simu na mitandao ya kijamii.</span>
+<span class="sh">Identity theft na hacking zinazidi kuwa common Kenya — especially vijana wengi wanatumia mobile banking na social media.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Identity Theft</span><span class="sw">&#128273; Wizi wa Utambulisho</span><span class="sh">&#128273; Identity Theft</span></strong>
+<span class="en">Using someone else's personal information — ID number, phone number, bank details — to commit fraud or impersonate them online.</span>
+<span class="sw">Kutumia taarifa za kibinafsi za mtu mwingine — nambari ya kitambulisho, nambari ya simu, maelezo ya benki — kufanya udanganyifu au kujifanya wao mtandaoni.</span>
+<span class="sh">Kutumia personal info ya mtu mwingine — ID number, phone number, bank details — kufanya fraud au kujifanya wao online.</span>
+</div>
+<div class="key-term">
+<strong><span class="en">&#128273; Account Hacking</span><span class="sw">&#128273; Udukuzi wa Akaunti</span><span class="sh">&#128273; Account Hacking</span></strong>
+<span class="en">Accessing someone's email, social media, or banking account without their permission. Criminals use stolen passwords, phishing links, or weak security settings.</span>
+<span class="sw">Kufikia barua pepe, mitandao ya kijamii, au akaunti ya benki ya mtu bila ruhusa yake. Wahalifu hutumia manenosiri yaliyoibiwa, viungo vya phishing, au mipangilio dhaifu ya usalama.</span>
+<span class="sh">Kuaccess email, social media, au banking account ya mtu bila permission yao. Criminals hutumia stolen passwords, phishing links, au weak security settings.</span>
+</div>
+<p class="tp"><span class="en"><strong>How it happens:</strong> weak passwords, phishing links, use of public WiFi, sharing login details with friends.</span><span class="sw"><strong>Jinsi inavyotokea:</strong> manenosiri dhaifu, viungo vya phishing, kutumia WiFi ya umma, kushiriki maelezo ya kuingia na marafiki.</span><span class="sh"><strong>Jinsi inavyohappen:</strong> weak passwords, phishing links, public WiFi, kushare login details na marafiki.</span></p>
+<div class="tip-box"><strong><span class="en">&#128161; How to Protect Your Accounts</span><span class="sw">&#128161; Jinsi ya Kulinda Akaunti Zako</span><span class="sh">&#128161; Jinsi ya Protect Accounts Zako</span></strong>
+<span class="en"> Use <strong>strong, unique passwords</strong> (mix of letters, numbers, symbols — at least 8 characters). Enable <strong>2-Factor Authentication (2FA)</strong>. Never click suspicious links. Never use public WiFi for banking.</span>
+<span class="sw"> Tumia <strong>manenosiri imara na ya kipekee</strong> (mchanganyiko wa herufi, nambari, ishara — angalau herufi 8). Wezesha <strong>Uthibitisho wa Hatua 2 (2FA)</strong>. Usibonyeze viungo vinavyotia shaka. Usitumie WiFi ya umma kwa benki.</span>
+<span class="sh"> Tumia <strong>strong, unique passwords</strong> (mix ya letters, numbers, symbols — angalau characters 8). Enable <strong>2-Factor Authentication (2FA)</strong>. Never click suspicious links. Never tumia public WiFi kwa banking.</span>
+</div>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; If Your Account Is Hacked</span><span class="sw">&#9888;&#65039; Akaunti Yako Ikidukuiwa</span><span class="sh">&#9888;&#65039; Account Yako Ikidukuliwa</span></strong>
+<span class="en"> Change your password immediately. Enable 2FA. Report to the platform. Report to the DCI Cybercrime Unit.</span>
+<span class="sw"> Badilisha nenosiri lako mara moja. Wezesha 2FA. Ripoti kwa jukwaa. Ripoti kwa Kitengo cha Uhalifu wa Mtandao cha DCI.</span>
+<span class="sh"> Badilisha password yako mara moja. Enable 2FA. Report kwa platform. Report kwa DCI Cybercrime Unit.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: Protecting Yourself Online -->
+<div class="slide">
+<div class="slide-head">&#128737;&#65039; <span class="en">Protecting Yourself Online</span><span class="sw">Kujilinda Mtandaoni</span><span class="sh">Kujilinda Online</span></div>
+<p class="tp">
+<span class="en">Your digital safety is your responsibility. These habits protect you from most cyber crimes.</span>
+<span class="sw">Usalama wako wa kidijitali ni jukumu lako. Tabia hizi zinakuhami dhidi ya uhalifu mwingi wa mtandao.</span>
+<span class="sh">Digital safety yako ni responsibility yako. Habits hizi zinakuprotect dhidi ya most cyber crimes.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">Safety Practice</span><span class="sw">Tabia ya Usalama</span><span class="sh">Safety Practice</span></th><th><span class="en">Why It Matters</span><span class="sw">Kwa Nini ni Muhimu</span><span class="sh">Kwa Nini ni Muhimu</span></th></tr>
+<tr><td><span class="en">Strong unique passwords (8+ chars, mix of letters/numbers/symbols)</span><span class="sw">Manenosiri imara na ya kipekee (herufi 8+, mchanganyiko)</span><span class="sh">Strong unique passwords (8+ chars, mix ya letters/numbers/symbols)</span></td><td><span class="en">Prevents account hacking</span><span class="sw">Huzuia udukuzi wa akaunti</span><span class="sh">Huzuia account hacking</span></td></tr>
+<tr><td><span class="en">2-Factor Authentication (2FA)</span><span class="sw">Uthibitisho wa Hatua 2 (2FA)</span><span class="sh">2-Factor Authentication (2FA)</span></td><td><span class="en">Adds a second layer — even if password is stolen</span><span class="sw">Inaongeza safu ya pili — hata nenosiri likiibwa</span><span class="sh">Inaongeza second layer — hata password ikiibwa</span></td></tr>
+<tr><td><span class="en">Review privacy settings on all social media</span><span class="sw">Kagua mipangilio ya faragha kwenye mitandao yote ya kijamii</span><span class="sh">Review privacy settings kwa social media zote</span></td><td><span class="en">Controls who sees your information</span><span class="sw">Inadhibiti anayeona taarifa zako</span><span class="sh">Inadhibiti nani anaona info yako</span></td></tr>
+<tr><td><span class="en">Never share PIN, passwords, OTP, or ID number</span><span class="sw">Usishiriki PIN, nenosiri, OTP, au nambari ya ID</span><span class="sh">Never share PIN, passwords, OTP, au ID number</span></td><td><span class="en">Even with "Safaricom" or "bank" callers — they never ask</span><span class="sw">Hata na wapigaji simu wa "Safaricom" au "benki" — hawaulizi</span><span class="sh">Hata na "Safaricom" au "bank" callers — hawaulizi</span></td></tr>
+<tr><td><span class="en">Safe browsing: look for HTTPS, avoid public WiFi for banking</span><span class="sw">Kuvinjari salama: tafuta HTTPS, epuka WiFi ya umma kwa benki</span><span class="sh">Safe browsing: tafuta HTTPS, avoid public WiFi kwa banking</span></td><td><span class="en">Protects sensitive transactions</span><span class="sw">Inalinda miamala nyeti</span><span class="sh">Inaprotect sensitive transactions</span></td></tr>
+<tr><td><span class="en">Think before you share — once posted, you cannot fully delete it</span><span class="sw">Fikiria kabla ya kushiriki — ukichapisha, huwezi kufuta kabisa</span><span class="sh">Think before you share — ukipost, huwezi fully delete</span></td><td><span class="en">Prevents future regret or exploitation</span><span class="sw">Huzuia majuto au unyonyaji wa baadaye</span><span class="sh">Huzuia future regret au exploitation</span></td></tr>
+</table>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Digital Street Smart</div>
+<span class="en" style="display:block;">Marafiki, passwords zako ni kama funguo za nyumba yako — usimwambie mtu yeyote, hata best friend. Na OTP code — hiyo ni ya wewe peke yako. Safaricom hawatakuuliza.</span>
+<span class="sw" style="display:block;">Marafiki, manenosiri yako ni kama funguo za nyumba yako — usimwambie mtu yeyote, hata rafiki wa karibu. Na nambari ya OTP — hiyo ni yako peke yako. Safaricom hawatauliza.</span>
+<span class="sh" style="display:block;">Marafiki, passwords zako ni kama nyumba keys — usimwambie mtu yeyote, hata best friend. Na OTP code — hiyo ni yako peke yako. Safaricom hawatakuuliza.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Reporting Cyber Crimes in Kenya -->
+<div class="slide">
+<div class="slide-head">&#128227; <span class="en">Reporting Cyber Crimes in Kenya</span><span class="sw">Kuripoti Uhalifu wa Mtandao Kenya</span><span class="sh">Kuripoti Cyber Crimes Kenya</span></div>
+<p class="tp">
+<span class="en">Reporting cyber crimes is important — it stops criminals and protects other potential victims. You should always keep evidence before reporting.</span>
+<span class="sw">Kuripoti uhalifu wa mtandao ni muhimu — kunasimamisha wahalifu na kulinda wahanga wengine wanaoweza kutokea. Unapaswa kuhifadhi ushahidi kila wakati kabla ya kuripoti.</span>
+<span class="sh">Kuripoti cyber crimes ni muhimu — kunasimamisha criminals na kuprotect potential victims wengine. Unapaswa kuhifadhi evidence kila wakati kabla ya kuripoti.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">Where to Report</span><span class="sw">Unapowasiliana</span><span class="sh">Unapowasiliana</span></th><th><span class="en">Contact</span><span class="sw">Mawasiliano</span><span class="sh">Contact</span></th></tr>
+<tr><td><span class="en">DCI Cybercrime Unit</span><span class="sw">Kitengo cha Uhalifu wa Mtandao cha DCI</span><span class="sh">DCI Cybercrime Unit</span></td><td>cybercrime@dci.go.ke | +254 722 222 222</td></tr>
+<tr><td><span class="en">Communications Authority of Kenya</span><span class="sw">Mamlaka ya Mawasiliano ya Kenya</span><span class="sh">Communications Authority Kenya</span></td><td><span class="en">0800 721 577 (toll-free)</span><span class="sw">0800 721 577 (bila malipo)</span><span class="sh">0800 721 577 (toll-free)</span></td></tr>
+<tr><td><span class="en">National Police Service</span><span class="sw">Huduma ya Polisi ya Kitaifa</span><span class="sh">National Police Service</span></td><td>999 / 112</td></tr>
+<tr><td><span class="en">Childline Kenya (children &amp; young people)</span><span class="sw">Childline Kenya (watoto na vijana)</span><span class="sh">Childline Kenya (watoto na vijana)</span></td><td>116</td></tr>
+<tr><td><span class="en">Report to the platform (Facebook, WhatsApp, Instagram)</span><span class="sw">Ripoti kwa jukwaa (Facebook, WhatsApp, Instagram)</span><span class="sh">Report kwa platform (Facebook, WhatsApp, Instagram)</span></td><td><span class="en">Use in-app reporting tools</span><span class="sw">Tumia zana za kuripoti ndani ya programu</span><span class="sh">Tumia in-app reporting tools</span></td></tr>
+</table>
+<div class="tip-box"><strong><span class="en">&#128161; Keep Evidence</span><span class="sw">&#128161; Hifadhi Ushahidi</span><span class="sh">&#128161; Hifadhi Evidence</span></strong>
+<span class="en"> Take screenshots of messages, threats, and profiles. Save email headers. Do NOT delete anything before reporting — police need the evidence.</span>
+<span class="sw"> Piga picha za ujumbe, vitisho, na wasifu. Hifadhi vichwa vya barua pepe. USIFUTE chochote kabla ya kuripoti — polisi wanahitaji ushahidi.</span>
+<span class="sh"> Screenshot messages, threats, na profiles. Save email headers. USIDELETE chochote kabla ya kuripoti — police wanahitaji evidence.</span>
+</div>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">Scenario — Brian, 17, Nairobi</span><span class="sw">Hali — Brian, miaka 17, Nairobi</span><span class="sh">Scenario — Brian, 17, Nairobi</span></strong>
+<span class="en">Brian keeps receiving threatening messages from a classmate via WhatsApp. The correct response: <strong>screenshot the evidence</strong>, <strong>block</strong> the sender on WhatsApp, tell a trusted adult, and <strong>report to the DCI Cybercrime Unit</strong>. Do NOT retaliate — that makes you a suspect too.</span>
+<span class="sw">Brian anaendelea kupokea ujumbe wa vitisho kutoka kwa mwanafunzi mwenzake kupitia WhatsApp. Jibu sahihi: <strong>piga picha ushahidi</strong>, <strong>mzuie</strong> mtumaji kwenye WhatsApp, mwambie mtu mzima anayeaminiwa, na <strong>ripoti kwa Kitengo cha Uhalifu wa Mtandao cha DCI</strong>. USISHAMBULIE — hilo linakufanya wewe pia mshukiwa.</span>
+<span class="sh">Brian anapokea threatening messages kutoka kwa classmate wake via WhatsApp. Correct response: <strong>screenshot evidence</strong>, <strong>block</strong> sender kwenye WhatsApp, mwambie trusted adult, na <strong>report kwa DCI Cybercrime Unit</strong>. USIRETALIATE — hiyo inakufanya wewe pia suspect.</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127916; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<p class="tp"><span class="en">Watch carefully, then continue to the quiz.</span><span class="sw">Tazama kwa makini, kisha endelea kwa maswali.</span><span class="sh">Watch kwa makini, kisha endelea kwa quiz.</span></p>
+<div class="video-slot">
+<video id="lessonVideo" controls style="display:none;width:100%;"></video>
+<div class="video-placeholder" id="videoPlaceholder">
+<div class="play-icon">&#127916;</div>
+<p style="color:rgba(255,255,255,.8);">Module Video</p>
+<p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:6px;"><span class="en">Your teacher will upload this video.</span><span class="sw">Mwalimu wako ataipakia.</span><span class="sh">Teacher wako ataupload.</span></p>
+<span class="upload-note">&#128193; /uploads/media/cyber-crimes.mp4</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<div class="mcq-block">
+<div class="q-text">1. Which of the following are examples of cyber crimes under Kenyan law?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Sending threatening messages online.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Sharing someone's intimate photo without their consent.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Using strong passwords to protect your own account.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> SIM swap fraud to access someone's M-Pesa.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Creating a fake profile to harass someone.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. Zawadi received a WhatsApp message saying she won KES 50,000. She clicked the link and lost her M-Pesa PIN. What type of cyber crime was used?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Hacking.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Cyberbullying.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Phishing.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Identity theft.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. Which practices protect you from cyber crimes?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Using strong, unique passwords for each account.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Enabling 2-Factor Authentication.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Sharing your PIN with a trusted friend for safekeeping.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Reviewing your privacy settings regularly.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Never clicking suspicious links or attachments.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. Under the Computer Misuse and Cybercrimes Act 2018, non-consensual sharing of intimate images can result in:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> A verbal warning only.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Up to 25 years imprisonment.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> A fine of KES 1,000.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Community service of 10 hours.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. Aisha is being sextorted — a criminal is threatening to share her intimate images unless she pays. Which are the correct steps?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Do NOT pay — paying encourages more demands.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Screenshot the evidence.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Delete all her social media accounts immediately.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Report to police/DCI Cybercrime Unit.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Report to the platform where the threat was made.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. SIM swap fraud in Kenya is dangerous because it allows criminals to:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Copy your contacts list.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Take over your mobile number and access your M-Pesa and bank accounts.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Track your physical location at all times.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Read your text messages only.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. Which are consequences of cyberbullying for victims?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Depression and anxiety.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> School absenteeism.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Improved social skills from the experience.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Social isolation and shame.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> In extreme cases, suicidal ideation.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. You suspect your social media account has been hacked. What is the MOST important first step?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Delete the account permanently.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Post about it on your other accounts.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Immediately change your password and enable 2-Factor Authentication.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Wait to see if the hacker does anything harmful.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. Which are correct ways to report cyber crimes in Kenya?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Report to DCI Cybercrime Unit at cybercrime@dci.go.ke.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Contact the Communications Authority on 0800 721 577.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Delete all evidence before going to the police.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Report to the platform using their reporting tools.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Call Childline 116 if you are a child or young person.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. Brian, 17, is being harassed by a classmate who keeps sending him threatening messages online. What is Brian's BEST course of action?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Send equally threatening messages back.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Ignore it completely — it will stop on its own.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Screenshot the evidence, block the sender, and report to a trusted adult and the DCI.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Share the harasser's details publicly on social media.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'C','mcq9':'A,B,D,E','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'&#8212;')+'</strong> &mdash; Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'&#11088; Excellent! You understand this topic very well.':pct>=60?'&#128077; Good effort! Review the highlighted incorrect answers.':'&#128214; Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

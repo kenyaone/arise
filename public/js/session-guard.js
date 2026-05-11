@@ -1,43 +1,47 @@
 /**
- * Session Guard — Client-side session validation
- * Lightweight check that doesn't block page rendering
- * Server-side session checks happen first on all pages
+ * Session Guard — only redirects when the server explicitly confirms the session is gone.
+ * Uses retry logic to prevent false logouts from transient server errors.
  */
 
-// Validate session in background without blocking page render
-function validateSessionAsync() {
-  // Don't check on login, register, datapost, or public pages
-  const publicPages = ['login', 'register', 'datapost', 'pwa_datapost', 'donor_report', 'certificate'];
-  const urlParams = new URLSearchParams(window.location.search);
-  const currentPage = urlParams.get('p') || '';
+let _sessionFailCount = 0;
 
+function validateSessionAsync() {
+  const publicPages = ['login', 'register', 'datapost', 'pwa_datapost', 'donor_report', 'certificate'];
+  const currentPage = new URLSearchParams(window.location.search).get('p') || '';
   if (publicPages.includes(currentPage)) return;
 
-  // Use a lightweight HEAD request to check if still authenticated
-  // (much faster than JSON fetch)
   fetch('/arise/pages/api_session_check.php?t=' + Date.now(), {
     method: 'GET',
     credentials: 'include',
     cache: 'no-store'
-  }).then(r => {
-    if (!r.ok) {
-      console.warn('Session check failed, redirecting to login');
+  })
+  .then(r => {
+    if (!r.ok) throw new Error('http_' + r.status);
+    return r.json();
+  })
+  .then(data => {
+    if (data.status === 'not_logged_in') {
+      // Server confirms session is gone — redirect
+      window.location.href = '/arise/login';
+    } else {
+      _sessionFailCount = 0;
+    }
+  })
+  .catch(() => {
+    // Network/server error — only redirect after 3 consecutive failures
+    _sessionFailCount++;
+    if (_sessionFailCount >= 3) {
+      console.warn('Session check failed 3 times in a row, redirecting to login');
       window.location.href = '/arise/login';
     }
-  }).catch(() => {
-    // Network error - don't redirect, assume session is ok
-    // Server will handle actual session validation
   });
 }
 
-// Run async validation after page is fully rendered (don't block)
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(validateSessionAsync, 2000);
-  });
+  document.addEventListener('DOMContentLoaded', () => setTimeout(validateSessionAsync, 3000));
 } else {
-  setTimeout(validateSessionAsync, 2000);
+  setTimeout(validateSessionAsync, 3000);
 }
 
-// Also validate every 10 minutes
-setInterval(validateSessionAsync, 10 * 60 * 1000);
+// Re-check every 15 minutes
+setInterval(validateSessionAsync, 15 * 60 * 1000);

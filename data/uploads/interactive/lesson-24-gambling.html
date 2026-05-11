@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gambling | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="gambling-lesson" data-module-slug="gambling">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · Gambling · The Reality of Gambling</div><div class="lesson-name">&#127922; Gambling</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">&#127757;</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">&#128289;</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A&#8722;</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=resources" class="lb-help">&#128681; Help</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+<h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo hili:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+<ol>
+<li><span class="en">Understand what gambling is and its common forms in Kenya</span><span class="sw">Elewa ni nini kamari na aina zake za kawaida Kenya</span><span class="sh">Understand gambling ni nini na common forms zake Kenya</span></li>
+<li><span class="en">Recognise warning signs of gambling addiction</span><span class="sw">Tambua dalili za onyo za uraibu wa kamari</span><span class="sh">Recognise warning signs za gambling addiction</span></li>
+<li><span class="en">Understand the financial, psychological and social consequences of gambling</span><span class="sw">Elewa matokeo ya kifedha, kisaikolojia na kijamii ya kamari</span><span class="sh">Elewa financial, psychological na social consequences za gambling</span></li>
+<li><span class="en">Know how to get help and support someone with a gambling problem</span><span class="sw">Jua jinsi ya kupata msaada na kumsaidia mwenye tatizo la kamari</span><span class="sh">Jua jinsi ya get help na kusupport mtu ana gambling problem</span></li>
+</ol>
+<div class="inquiry">
+<span class="en"><strong>&#128269; Big Question:</strong> Why do so many young Kenyans lose money they cannot afford?</span>
+<span class="sw"><strong>&#128269; Swali Kubwa:</strong> Kwa nini vijana wengi wa Kenya wanapoteza pesa wasiyoweza kumudu?</span>
+<span class="sh"><strong>&#128269; Big Question:</strong> Kwa nini vijana wengi wa Kenya wanapoteza pesa hawana?</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 2: What Is Gambling? -->
+<div class="slide">
+<div class="slide-head">&#127922; <span class="en">What Is Gambling?</span><span class="sw">Kamari ni Nini?</span><span class="sh">Gambling ni Nini?</span></div>
+<p class="tp">
+<span class="en">Gambling means risking money or valuables on an uncertain outcome, hoping to gain more. Kenya has one of Africa's fastest-growing gambling industries — and young people are at the centre of it.</span>
+<span class="sw">Kamari inamaanisha kuweka pesa au mali kwa matokeo yasiyojulikana, kwa matumaini ya kupata zaidi. Kenya ina moja ya tasnia ya kamari inayokua haraka zaidi Afrika — na vijana wako katikati yake.</span>
+<span class="sh">Gambling inamaanisha kuweka pesa au mali kwa uncertain outcome, ukitumainia kupata zaidi. Kenya ina moja ya fastest-growing gambling industries Afrika — na youth wako katikati.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Problem Gambling</span><span class="sw">&#128273; Tatizo la Kamari</span><span class="sh">&#128273; Problem Gambling</span></strong>
+<span class="en">Gambling behaviour that disrupts personal, family, or vocational pursuits. It goes beyond occasional betting — it becomes compulsive and uncontrollable.</span>
+<span class="sw">Tabia ya kamari inayovuruga maisha ya kibinafsi, familia, au kazi. Inazidi kubashiri mara kwa mara — inakuwa ya kulazimika na isiyoweza kudhibitiwa.</span>
+<span class="sh">Gambling behaviour inayovuruga maisha ya kibinafsi, familia, au kazi. Inakuwa compulsive na haiwezi kudhibitiwa.</span>
+</div>
+<table class="info-table">
+<tr><th><span class="en">Form of Gambling</span><span class="sw">Aina ya Kamari</span><span class="sh">Form ya Gambling</span></th><th><span class="en">Examples in Kenya</span><span class="sw">Mifano Kenya</span><span class="sh">Examples Kenya</span></th></tr>
+<tr><td><span class="en">Sports Betting</span><span class="sw">Kubashiri Michezo</span><span class="sh">Sports Betting</span></td><td><span class="en">SportPesa, Betika, Odibets</span><span class="sw">SportPesa, Betika, Odibets</span><span class="sh">SportPesa, Betika, Odibets</span></td></tr>
+<tr><td><span class="en">Casino Games</span><span class="sw">Michezo ya Kasino</span><span class="sh">Casino Games</span></td><td><span class="en">Slot machines, roulette, poker</span><span class="sw">Mashine za slot, roulette, pokaa</span><span class="sh">Slot machines, roulette, poker</span></td></tr>
+<tr><td><span class="en">Lottery</span><span class="sw">Bahati Nasibu</span><span class="sh">Lottery</span></td><td><span class="en">Sportpika, scratch cards</span><span class="sw">Sportpika, kadi za kukuna</span><span class="sh">Sportpika, scratch cards</span></td></tr>
+<tr><td><span class="en">Online Gambling</span><span class="sw">Kamari ya Mtandaoni</span><span class="sh">Online Gambling</span></td><td><span class="en">Mobile apps, online casinos</span><span class="sw">Programu za simu, kasino ya mtandaoni</span><span class="sh">Mobile apps, online casinos</span></td></tr>
+<tr><td><span class="en">Card Games for Money</span><span class="sw">Michezo ya Karata kwa Pesa</span><span class="sh">Card Games kwa Pesa</span></td><td><span class="en">Local card games, dice games</span><span class="sw">Michezo ya karata ya mitaani, dadu</span><span class="sh">Local card games, dadu</span></td></tr>
+</table>
+<div class="sheng-box"><div class="sheng-head">&#127472;&#127466; Ukweli wa Mitaani</div>
+<span class="en" style="display:block;">~80% ya Kenyan youth aged 17–35 wamewahi gamble at some point. Ukweli: odds are always against you — kila company inapata profit kutoka kwa washindwa.</span>
+<span class="sw" style="display:block;">~80% ya vijana wa Kenya wenye miaka 17–35 wamewahi kucheza kamari. Ukweli: uwezekano daima uko dhidi yako — kila kampuni inapata faida kutoka kwa wanaoshindwa.</span>
+<span class="sh" style="display:block;">~80% ya Kenyan youth wenye miaka 17–35 wamewahi gamble. Ukweli: odds daima ziko against you — kila company inapata profit kutoka kwa wanaoshindwa.</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Sports Betting in Kenya -->
+<div class="slide">
+<div class="slide-head">&#9917; <span class="en">Sports Betting in Kenya</span><span class="sw">Kubashiri Michezo Kenya</span><span class="sh">Sports Betting Kenya</span></div>
+<p class="tp">
+<span class="en">SportPesa, Betika, and Odibets are among Africa's largest betting companies — all based in Kenya. They advertise heavily on TV, radio, social media, and matatus, targeting young people with promises of easy money.</span>
+<span class="sw">SportPesa, Betika, na Odibets ni miongoni mwa makampuni makubwa zaidi ya kubashiri Afrika — yote yamejengwa Kenya. Yanaonekana sana kwenye runinga, redio, mitandao ya kijamii, na matatu, yakivutia vijana kwa ahadi za pesa rahisi.</span>
+<span class="sh">SportPesa, Betika, na Odibets ni miongoni mwa biggest betting companies Afrika — zote ziko Kenya. Zinajitangaza sana kwa TV, radio, social media, na matatu, zikileta vijana kwa ahadi za easy money.</span>
+</p>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; House Always Wins</span><span class="sw">&#9888;&#65039; Kampuni Daima Inashinda</span><span class="sh">&#9888;&#65039; House Always Wins</span></strong>
+<span class="en"> Gambling companies are businesses designed to profit from bettors. The odds are always stacked against the bettor. Most jackpots are won by less than 0.01% of participants — the rest lose.</span>
+<span class="sw"> Makampuni ya kamari ni biashara zilizoundwa kupata faida kutoka kwa wanaobashiri. Uwezekano daima uko dhidi ya mbashiri. Jackpoti nyingi zinashindwa na chini ya 0.01% ya washiriki — wengine wote wanapoteza.</span>
+<span class="sh"> Gambling companies ni businesses zilizo designed kupata profit kutoka kwa bettors. Odds daima ziko against bettor. Most jackpots zinashindwa na chini ya 0.01% ya participants — wengine wote wanapoteza.</span>
+</div>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">James's Story — Nairobi</span><span class="sw">Hadithi ya James — Nairobi</span><span class="sh">Story ya James — Nairobi</span></strong>
+<span class="en">James, 19, from Nairobi, used his KES 12,000 KCSE registration fees to place bets, believing a big win was just around the corner. He lost everything and missed his exam registration deadline. He could not sit his final national exams that year.</span>
+<span class="sw">James, miaka 19, kutoka Nairobi, alitumia ada yake ya usajili wa KCSE ya KES 12,000 kubashiri, akiamini ushindi mkubwa ulikuwa karibu. Alipoteza kila kitu na kukosa tarehe ya mwisho ya usajili wa mtihani. Hakuweza kufanya mitihani yake ya taifa mwaka huo.</span>
+<span class="sh">James, miaka 19, kutoka Nairobi, alitumia KES 12,000 ya KCSE fees zake kuweka bets, akidhani win kubwa ilikuwa karibu. Alipoteza kila kitu na kukosa exam registration deadline. Hakuweza sit KCSE exams zake mwaka huo.</span>
+</div>
+<ul class="bl">
+<li><span class="en">The "jackpot dream" is a marketing tool — used to attract more bettors</span><span class="sw">Ndoto ya jackpoti ni zana ya uuzaji — kutumika kuvutia wabashiri zaidi</span><span class="sh">Jackpot dream ni marketing tool — kutumika kuvutia wabashiri zaidi</span></li>
+<li><span class="en">Betting adverts show winners, never the thousands of losers behind each win</span><span class="sw">Matangazo ya kamari yanaonyesha washindi, si maelfu ya wanaoshindwa nyuma ya kila ushindi</span><span class="sh">Betting adverts zinaonyesha winners, si thousands za losers nyuma ya kila win</span></li>
+<li><span class="en">Chasing the jackpot often leads to spending more than planned</span><span class="sw">Kufuatilia jackpoti mara nyingi husababisha kutumia zaidi ya ilivyopangwa</span><span class="sh">Kufuatilia jackpot mara nyingi husababisha kutumia zaidi ya ulivyoplani</span></li>
+</ul>
+</div>
+
+<!-- SLIDE 4: Signs of Gambling Addiction -->
+<div class="slide">
+<div class="slide-head">&#128308; <span class="en">Signs of Gambling Addiction</span><span class="sw">Dalili za Uraibu wa Kamari</span><span class="sh">Signs za Gambling Addiction</span></div>
+<p class="tp">
+<span class="en">Gambling disorder is a recognised mental health condition (DSM-5). Anyone can develop it — regardless of age, gender or intelligence. Knowing the warning signs can save a life.</span>
+<span class="sw">Ugonjwa wa kamari ni hali ya afya ya akili inayotambulika (DSM-5). Mtu yeyote anaweza kuipata — bila kujali umri, jinsia au akili. Kujua dalili za onyo kunaweza kuokoa maisha.</span>
+<span class="sh">Gambling disorder ni recognised mental health condition (DSM-5). Mtu yeyote anaweza kuipata — bila kujali age, gender au intelligence. Kujua warning signs kunaweza kuokoa maisha.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Gambling Disorder</span><span class="sw">&#128273; Ugonjwa wa Kamari</span><span class="sh">&#128273; Gambling Disorder</span></strong>
+<span class="en">A recognised mental health condition in which a person is unable to control their gambling behaviour despite serious negative consequences to their life.</span>
+<span class="sw">Hali inayotambuliwa ya afya ya akili ambayo mtu hawezi kudhibiti tabia yake ya kamari licha ya matokeo mabaya makubwa kwa maisha yake.</span>
+<span class="sh">Recognised mental health condition ambayo mtu hawezi control gambling behaviour yake licha ya serious negative consequences kwa maisha yake.</span>
+</div>
+<ul class="bl">
+<li><span class="en"><strong>Preoccupation</strong> — thinking about gambling constantly, planning the next bet</span><span class="sw"><strong>Kujishughulisha</strong> — kufikiri kamari mara kwa mara, kupanga kubashiri tena</span><span class="sh"><strong>Preoccupation</strong> — kufikiri gambling constantly, kupanga next bet</span></li>
+<li><span class="en"><strong>Chasing losses</strong> — betting more to try to win back money already lost</span><span class="sw"><strong>Kufuatilia hasara</strong> — kubashiri zaidi kujaribu kurudisha pesa zilizopotea</span><span class="sh"><strong>Chasing losses</strong> — kuweka more bets kujaribu kurudisha pesa zilizopotea</span></li>
+<li><span class="en"><strong>Lying</strong> — hiding gambling from family and friends, lying about money spent</span><span class="sw"><strong>Kudanganya</strong> — kuficha kamari kwa familia na marafiki, kudanganya kuhusu pesa zilizotumiwa</span><span class="sh"><strong>Kudanganya</strong> — kuficha gambling kwa familia na marafiki, kudanganya kuhusu pesa zilizotumika</span></li>
+<li><span class="en"><strong>Stealing or borrowing</strong> — taking money from family or friends to fund gambling</span><span class="sw"><strong>Kuiba au kukopa</strong> — kuchukua pesa kutoka kwa familia au marafiki kufadhili kamari</span><span class="sh"><strong>Kuiba au kukopa</strong> — kuchukua pesa kutoka kwa familia au marafiki kufund gambling</span></li>
+<li><span class="en"><strong>Neglect</strong> — skipping school, work, or responsibilities because of gambling</span><span class="sw"><strong>Kupuuza</strong> — kukosa shule, kazi, au majukumu kwa sababu ya kamari</span><span class="sh"><strong>Neglect</strong> — kukosa shule, kazi, au responsibilities kwa sababu ya gambling</span></li>
+<li><span class="en"><strong>Withdrawal symptoms</strong> — feeling irritable, anxious or restless when unable to gamble</span><span class="sw"><strong>Dalili za kuacha</strong> — kuhisi hasira, wasiwasi au kutokuwa na utulivu usipoweza kucheza kamari</span><span class="sh"><strong>Withdrawal symptoms</strong> — kuhisi irritable, anxious au restless unapoweza gamble</span></li>
+</ul>
+</div>
+
+<!-- SLIDE 5: Financial Consequences -->
+<div class="slide">
+<div class="slide-head">&#128178; <span class="en">Financial Consequences</span><span class="sw">Matokeo ya Kifedha</span><span class="sh">Financial Consequences</span></div>
+<p class="tp">
+<span class="en">Research shows Kenyan youth gamblers spend an average of KES 2,000–5,000 per month on gambling — money that could fund education, savings, or business. The financial damage is real and long-lasting.</span>
+<span class="sw">Utafiti unaonyesha vijana wa Kenya wanaocheza kamari wanatumia wastani wa KES 2,000–5,000 kwa mwezi kwa kamari — pesa ambazo zingeweza kufadhili elimu, akiba, au biashara. Uharibifu wa kifedha ni wa kweli na wa muda mrefu.</span>
+<span class="sh">Research inaonyesha Kenyan youth gamblers wanatumia average ya KES 2,000–5,000 kwa mwezi kwa gambling — pesa ambazo zingeweza fund education, savings, au biashara. Financial damage ni ya kweli na ya muda mrefu.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">Impact</span><span class="sw">Athari</span><span class="sh">Impact</span></th><th><span class="en">How It Happens</span><span class="sw">Jinsi Inavyotokea</span><span class="sh">Jinsi Inavyotokea</span></th></tr>
+<tr><td><span class="en">Debt cycles</span><span class="sw">Mizunguko ya madeni</span><span class="sh">Debt cycles</span></td><td><span class="en">Taking M-Pesa loans (Fuliza, KCB M-Pesa) to fund gambling, then losing the loan</span><span class="sw">Kuchukua mkopo wa M-Pesa (Fuliza, KCB M-Pesa) kufadhili kamari, kisha kupoteza mkopo</span><span class="sh">Kuchukua M-Pesa loans (Fuliza, KCB M-Pesa) kufund gambling, kisha kupoteza loan</span></td></tr>
+<tr><td><span class="en">School fees spent</span><span class="sw">Ada ya shule kutumika</span><span class="sh">School fees kutumika</span></td><td><span class="en">Money given for school used on betting platforms</span><span class="sw">Pesa iliyotolewa kwa shule kutumika kwenye majukwaa ya kubashiri</span><span class="sh">Pesa ya school fees ikitumika kwa betting platforms</span></td></tr>
+<tr><td><span class="en">Stolen family savings</span><span class="sw">Akiba ya familia kuibiwa</span><span class="sw">Family savings kuibiwa</span><span class="sh">Family savings kuibiwa</span></td><td><span class="en">Taking money from parents or siblings to continue gambling</span><span class="sw">Kuchukua pesa kutoka kwa wazazi au ndugu kuendelea na kamari</span><span class="sh">Kuchukua pesa kutoka kwa parents au siblings kuendelea na gambling</span></td></tr>
+<tr><td><span class="en">Lost investment potential</span><span class="sw">Uwezekano wa uwekezaji kupotea</span><span class="sh">Investment potential kupotea</span></td><td><span class="en">Long-term poverty; unable to invest in education or business</span><span class="sw">Umaskini wa muda mrefu; kushindwa kuwekeza katika elimu au biashara</span><span class="sh">Long-term poverty; kushindwa kuwekeza kwa education au biashara</span></td></tr>
+</table>
+<div class="tip-box"><strong><span class="en">&#128161; No Strategy Beats the Odds</span><span class="sw">&#128161; Hakuna Mkakati wa Kushinda Uwezekano</span><span class="sh">&#128161; Hakuna Strategy Inayoshinda Odds</span></strong>
+<span class="en"> No betting strategy, system, or algorithm can beat the house over the long run. The house always wins because the odds are designed that way. "Sure bets" do not exist.</span>
+<span class="sw"> Hakuna mkakati, mfumo, au algoriti ya kubashiri inayoweza kushinda kampuni kwa muda mrefu. Kampuni daima inashinda kwa sababu uwezekano umeundwa hivyo. "Kubashiri hakika" hakukuwepo.</span>
+<span class="sh"> Hakuna betting strategy, system, au algorithm inayoweza beat the house kwa long run. House always wins kwa sababu odds zimedesigned hivyo. "Sure bets" hazipo.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Psychological & Social Consequences -->
+<div class="slide">
+<div class="slide-head">&#129302; <span class="en">Psychological &amp; Social Consequences</span><span class="sw">Matokeo ya Kisaikolojia na Kijamii</span><span class="sh">Psychological &amp; Social Consequences</span></div>
+<p class="tp">
+<span class="en">Gambling addiction does not only destroy finances — it damages mental health, relationships, and social wellbeing. The shame and secrecy around gambling losses make recovery harder.</span>
+<span class="sw">Uraibu wa kamari hauangamizi tu fedha — unaharibu afya ya akili, mahusiano, na ustawi wa kijamii. Aibu na usiri unaozunguka hasara za kamari hufanya kupona kuwa mgumu zaidi.</span>
+<span class="sh">Gambling addiction haiangamizi tu pesa — inaharibu mental health, relationships, na social wellbeing. Aibu na secrecy inayozunguka gambling losses hufanya recovery kuwa ngumu zaidi.</span>
+</p>
+<ul class="bl">
+<li><span class="en">Depression and anxiety from repeated losses and mounting debt</span><span class="sw">Msongo wa mawazo na wasiwasi kutoka kwa hasara zinazofuatana na madeni yanayoongezeka</span><span class="sh">Depression na anxiety kutoka kwa repeated losses na debt inayoongezeka</span></li>
+<li><span class="en">Shame, guilt, and social isolation — withdrawing from friends and family</span><span class="sw">Aibu, hatia, na kutengwa na jamii — kujiepusha na marafiki na familia</span><span class="sh">Aibu, guilt, na social isolation — kujiepusha na marafiki na familia</span></li>
+<li><span class="en">Damaged family relationships — especially when stolen money is discovered</span><span class="sw">Mahusiano ya familia kuharibika — hasa pesa zilizoibiwa zinapogunduliwa</span><span class="sh">Family relationships kuharibika — hasa pesa zilizoibiwa zinapogunduliwa</span></li>
+<li><span class="en">Peer pressure to gamble — friends normalising betting as a social activity</span><span class="sw">Shinikizo la rika la kucheza kamari — marafiki kuifanya kubashiri kuonekana kawaida kama shughuli ya kijamii</span><span class="sh">Peer pressure ya gamble — marafiki wakifanya betting ionekane normal kama social activity</span></li>
+<li><span class="en">Links to drug and alcohol use — using substances to cope with gambling stress</span><span class="sw">Uhusiano na matumizi ya dawa za kulevya na pombe — kutumia vitu hivi kukabiliana na msongo wa kamari</span><span class="sh">Links kwa drugs na alcohol — kuzitumia cope na gambling stress</span></li>
+</ul>
+<div class="example-box">
+<strong>&#127472;&#127466; <span class="en">Fatuma's Family — Mombasa</span><span class="sw">Familia ya Fatuma — Mombasa</span><span class="sh">Family ya Fatuma — Mombasa</span></strong>
+<span class="en">Fatuma, 17, from Mombasa, watched her brother's gambling spiral tear apart their family. He sold the family goat — their most valuable asset — to pay his gambling debt. The discovery caused weeks of conflict and deep mistrust that damaged the family for months.</span>
+<span class="sw">Fatuma, miaka 17, kutoka Mombasa, aliona mzunguko wa kamari wa kaka yake ukivunja familia yao. Aliuza mbuzi wa familia — mali yao ya thamani zaidi — kulipa deni la kamari yake. Ugunduzi huo ulisababisha wiki za migogoro na kutokuaminiana sana ambayo kuliathiri familia kwa miezi.</span>
+<span class="sh">Fatuma, miaka 17, kutoka Mombasa, aliwatch gambling spiral ya kaka yake ikivunja familia yao. Aliuza mbuzi wa familia — asset yao ya thamani zaidi — kulipa gambling debt yake. Ugunduzi huo ulisababisha wiki za conflict na deep mistrust ambayo iliaffect familia kwa miezi.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: Why Gambling Feels Addictive -->
+<div class="slide">
+<div class="slide-head">&#129504; <span class="en">Why Gambling Feels Addictive</span><span class="sw">Kwa Nini Kamari Inahisi Inazoesha</span><span class="sh">Kwa Nini Gambling Inafeel Addictive</span></div>
+<p class="tp">
+<span class="en">Gambling addiction is not just about willpower — it is rooted in brain chemistry. Understanding the science helps us see why it is so difficult to stop, and why blaming the individual misses the point.</span>
+<span class="sw">Uraibu wa kamari si tu kuhusu nguvu ya mapenzi — una mizizi katika kemia ya ubongo. Kuelewa sayansi husaidia tuone kwa nini ni vigumu sana kuacha, na kwa nini kumlaumu mtu binafsi ni kukosa lengo.</span>
+<span class="sh">Gambling addiction si tu kuhusu willpower — ina mizizi kwa brain chemistry. Kuelewa science husaidia tuone kwa nini ni vigumu sana kusimama, na kwa nini kumlaumu mtu peke yake ni kukosa point.</span>
+</p>
+<div class="key-term">
+<strong><span class="en">&#128273; Dopamine &amp; Reward Pathways</span><span class="sw">&#128273; Dopamini na Njia za Thawabu</span><span class="sh">&#128273; Dopamine &amp; Reward Pathways</span></strong>
+<span class="en">Each bet triggers a release of dopamine in the brain — the same chemical released by drugs. This creates a powerful craving to repeat the experience, even when losing.</span>
+<span class="sw">Kila ubashiri huchochea kutolewa kwa dopamini katika ubongo — kemikali ile ile inayotolewa na dawa za kulevya. Hii huunda hamu kali ya kurudia uzoefu, hata unaposhindwa.</span>
+<span class="sh">Kila bet hutrigger release ya dopamine kwa ubongo — same chemical inayotolewa na drugs. Hii huunda powerful craving ya kurepeat experience, hata ukiwa unashindwa.</span>
+</div>
+<ul class="bl">
+<li><span class="en"><strong>Variable reward schedules</strong> — unpredictable wins are MORE addictive than predictable ones (proven psychology)</span><span class="sw"><strong>Ratiba za thawabu zinazobadilika</strong> — ushindi usiotarajiwa ni wa kulevya ZAIDI kuliko unaotarajiwa (saikolojia iliyothibitishwa)</span><span class="sh"><strong>Variable reward schedules</strong> — unpredictable wins ni MORE addictive kuliko predictable ones (proven psychology)</span></li>
+<li><span class="en"><strong>Near-miss effect</strong> — almost winning feels motivating even though it is still a loss</span><span class="sw"><strong>Athari ya karibu kushinda</strong> — karibu kushinda kunahisi kuchochea ingawa bado ni kushindwa</span><span class="sh"><strong>Near-miss effect</strong> — karibu kushinda kunahisi motivating ingawa bado ni loss</span></li>
+<li><span class="en"><strong>App design</strong> — betting apps and machines are engineered to maximise playtime and spending</span><span class="sw"><strong>Ubunifu wa programu</strong> — programu za kubashiri na mashine zimeundwa kuongeza muda wa kucheza na matumizi</span><span class="sh"><strong>App design</strong> — betting apps na machines zimeundwa kumaximise playtime na spending</span></li>
+<li><span class="en"><strong>Skill illusion</strong> — the brain cannot distinguish between skill and luck in the short term, making gamblers feel they are "getting better"</span><span class="sw"><strong>Udanganyifu wa ustadi</strong> — ubongo hauwezi kutofautisha kati ya ustadi na bahati muda mfupi, ukifanya wachezaji kamari wahisi wanaboresha</span><span class="sh"><strong>Skill illusion</strong> — ubongo hauwezi distinguish kati ya skill na luck kwa short term, ikifanya gamblers wahisi wanaimprove</span></li>
+</ul>
+<div class="warn-box"><strong><span class="en">&#9888;&#65039; Designed to Trap You</span><span class="sw">&#9888;&#65039; Imeundwa Kukutega</span><span class="sh">&#9888;&#65039; Designed Kukutrap</span></strong>
+<span class="en"> Betting apps notify you about "free bets" and "bonuses" to get you back. These are not gifts — they are calculated tools to increase your spending and dependency.</span>
+<span class="sw"> Programu za kubashiri zinakuarifu kuhusu "kubashiri bure" na "bonasi" ili kukurudisha. Hizi si zawadi — ni zana zilizohesabiwa kuongeza matumizi yako na utegemezi.</span>
+<span class="sh"> Betting apps zinakunotify kuhusu "free bets" na "bonuses" kukurudisha. Hizi si gifts — ni calculated tools kuincrease spending yako na dependency.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Getting Help & Staying Safe -->
+<div class="slide">
+<div class="slide-head">&#128241; <span class="en">Getting Help &amp; Staying Safe</span><span class="sw">Kupata Msaada na Kujiepusha</span><span class="sh">Kupata Help na Kujiepusha</span></div>
+<p class="tp">
+<span class="en">Gambling disorder is treatable. Recovery is possible with the right help. The legal gambling age in Kenya is 18+ (Betting Control and Licensing Board). Anyone under 18 who gambles is engaging in illegal activity.</span>
+<span class="sw">Ugonjwa wa kamari unaweza kutibiwa. Kupona kunawezekana na msaada unaofaa. Umri wa kisheria wa kucheza kamari Kenya ni miaka 18+ (Bodi ya Udhibiti na Utoaji Leseni wa Kubashiri). Yeyote chini ya miaka 18 anayecheza kamari anafanya shughuli ya haramu.</span>
+<span class="sh">Gambling disorder inaweza kutibiwa. Recovery inawezekana na right help. Legal gambling age Kenya ni 18+ (Betting Control and Licensing Board). Yeyote chini ya miaka 18 anayegamble anafanya illegal activity.</span>
+</p>
+<table class="info-table">
+<tr><th><span class="en">Action</span><span class="sw">Hatua</span><span class="sh">Action</span></th><th><span class="en">Details</span><span class="sw">Maelezo</span><span class="sh">Details</span></th></tr>
+<tr><td><span class="en">Self-exclusion</span><span class="sw">Kujitenga</span><span class="sh">Self-exclusion</span></td><td><span class="en">Request self-exclusion from betting companies — they are legally required to block your account</span><span class="sw">Omba kujitenga kwa makampuni ya kubashiri — kisheria yanalazimishwa kuzuia akaunti yako</span><span class="sh">Request self-exclusion kutoka kwa betting companies — kisheria wanalazimika ku-block account yako</span></td></tr>
+<tr><td><span class="en">Talk to someone</span><span class="sw">Zungumza na mtu</span><span class="sh">Zungumza na mtu</span></td><td><span class="en">Trusted adult, school counsellor, religious leader</span><span class="sw">Mtu mzima unayemwamini, mshauri wa shule, kiongozi wa dini</span><span class="sh">Trusted adult, school counsellor, religious leader</span></td></tr>
+<tr><td><span class="en">NACADA Helpline</span><span class="sw">Mstari wa Msaada wa NACADA</span><span class="sh">NACADA Helpline</span></td><td><span class="en">0800 723 253 — Free, confidential, 24/7</span><span class="sw">0800 723 253 — Bure, siri, masaa 24/7</span><span class="sh">0800 723 253 — Free, confidential, 24/7</span></td></tr>
+<tr><td><span class="en">Befrienders Kenya</span><span class="sw">Befrienders Kenya</span><span class="sh">Befrienders Kenya</span></td><td><span class="en">0722 178 177 — If gambling is causing depression or suicidal thoughts</span><span class="sw">0722 178 177 — Ikiwa kamari inasababisha msongo wa mawazo au mawazo ya kujiua</span><span class="sh">0722 178 177 — Kama gambling inasababisha depression au suicidal thoughts</span></td></tr>
+</table>
+<div class="scenario-wrap">
+<div class="scenario-ctx">
+<span class="en"><strong>Scenario:</strong> Brian, 17, keeps asking his friend to lend him money "just this once" to cover gambling losses. His friend suspects a pattern.</span>
+<span class="sw"><strong>Hali:</strong> Brian, miaka 17, anamwomba rafiki yake mara kwa mara mkopo wa pesa "mara hii tu" kufunika hasara za kamari. Rafiki yake anashuku mfumo.</span>
+<span class="sh"><strong>Scenario:</strong> Brian, miaka 17, anamwomba rafiki yake mara kwa mara pesa "mara hii tu" kufunika gambling losses. Rafiki yake anashuku pattern.</span>
+</div>
+<div class="scenario-q"><span class="en">What is the RIGHT response from the friend?</span><span class="sw">Jibu SAHIHI la rafiki ni nini?</span><span class="sh">Response SAHIHI ya rafiki ni nini?</span></div>
+<div class="choices" id="sc1">
+<button class="choice" onclick="scPick(this,'sc1','bad','sc1r1')"><span class="en">Lend him the money — he is a friend and needs help</span><span class="sw">Mpe mkopo — ni rafiki na anahitaji msaada</span><span class="sh">Mpe pesa — ni rafiki anahitaji msaada</span></button>
+<button class="choice" onclick="scPick(this,'sc1','good','sc1r2')"><span class="en">Refuse and advise him to seek professional help from NACADA (0800 723 253)</span><span class="sw">Kataa na mwambie atafute msaada wa kitaaluma kutoka NACADA (0800 723 253)</span><span class="sh">Refuse na mwambie atafute professional help kutoka NACADA (0800 723 253)</span></button>
+</div>
+<div class="s-result bad" id="sc1r1">
+<span class="en">Lending money enables the gambling problem — it does not solve it. By covering losses, the friend removes the natural consequence that might motivate Brian to seek help. True friendship means being honest even when it is hard.</span>
+<span class="sw">Kumpa mkopo kunawezesha tatizo la kamari — halisuluhishi. Kwa kufunika hasara, rafiki huondoa matokeo ya asili yanayoweza kumchochea Brian kutafuta msaada. Urafiki wa kweli unamaanisha kuwa mkweli hata inapokuwa ngumu.</span>
+<span class="sh">Kumpa pesa inaenablе gambling problem — haisolvei. Kwa kufunika losses, rafiki huondoa natural consequence inayoweza kumotivate Brian kutafuta help. True friendship inamaanisha kuwa honest hata ikuwa ngumu.</span>
+<button class="retry-btn" onclick="scRetry('sc1')">&#8617; Try Again</button>
+</div>
+<div class="s-result good" id="sc1r2">
+<span class="en">Refusing to fund gambling is the most supportive thing a friend can do. Brian needs professional support, not enablement. Calling NACADA on 0800 723 253 is free and confidential. A true friend helps someone face their problem, not avoid it. ✅</span>
+<span class="sw">Kukataa kufadhili kamari ndiyo jambo la kusaidia zaidi rafiki anaweza kufanya. Brian anahitaji msaada wa kitaaluma, si kuwezesha zaidi. Kupiga simu NACADA kwa 0800 723 253 ni bure na siri. Rafiki wa kweli humsaidia mtu kukabiliana na tatizo lake, si kulipuuza. ✅</span>
+<span class="sh">Kukataa kufund gambling ndiyo supportive zaidi rafiki anaweza kufanya. Brian anahitaji professional support, si enablement. Kupigia NACADA simu kwa 0800 723 253 ni free na confidential. True friend humhelp mtu face problem yake, si kuiavoid. ✅</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127916; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<p class="tp"><span class="en">Watch carefully, then continue to the quiz.</span><span class="sw">Tazama kwa makini, kisha endelea kwa maswali.</span><span class="sh">Watch kwa makini, kisha endelea kwa quiz.</span></p>
+<div class="video-slot">
+<video id="lessonVideo" controls style="display:none;width:100%;"></video>
+<div class="video-placeholder" id="videoPlaceholder">
+<div class="play-icon">&#127916;</div>
+<p style="color:rgba(255,255,255,.8);">Module Video</p>
+<p style="color:rgba(255,255,255,.6);font-size:.8rem;margin-top:6px;"><span class="en">Your teacher will upload this video.</span><span class="sw">Mwalimu wako ataipakia.</span><span class="sh">Teacher wako ataupload.</span></p>
+<span class="upload-note">&#128193; /uploads/media/gambling.mp4</span>
+</div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:#6b7280;margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<div class="mcq-block">
+<div class="q-text">1. An ARISE peer educator in Kisumu asks students to identify common forms of gambling in Kenya. Which of the following are common forms of gambling in Kenya?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Sports betting (SportPesa, Betika, Odibets).</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Card games for money.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Playing football for exercise.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Casino games.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Online lottery (e.g. Sportpika).</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. James, 19, from Nairobi, spent his KES 12,000 exam registration fees on betting and lost everything. He then placed more bets trying to win back what he lost. What term describes this pattern?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Jackpot strategy.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Chasing losses.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Smart gambling.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Arbitrage.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. A facilitator during an ARISE session lists warning signs of gambling addiction. Which of the following are recognised warning signs of gambling addiction?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Preoccupation with gambling — thinking about it constantly.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Chasing losses — betting more to recover money already lost.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Winning consistently without any negative effects.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Lying to family and friends about gambling.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Stealing or borrowing money to fund gambling.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. A student asks: "Why do betting companies like SportPesa and Betika always seem to be profitable?" What is the correct explanation?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> They give away more money than they take in.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> The odds are always designed to favour the bettor.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> The odds are designed to ensure companies profit from bettors over time.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Most people who gamble are very lucky.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. An ARISE educator asks learners to identify the financial consequences of gambling addiction among Kenyan youth. Which of the following are financial consequences?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Accumulating M-Pesa loans (Fuliza, KCB M-Pesa) to fund gambling.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Spending school fees or family savings on bets.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Reliably building wealth through jackpots.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Debt cycles that are hard to escape.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Neglecting investment in education or business due to gambling losses.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. A health educator explains why gambling is so difficult to stop. The reason gambling feels addictive is partly because of:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> The smell of casinos making people feel excited.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Dopamine release in the brain triggered by uncertain rewards — the same mechanism as drug addiction.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> The fact that gambling is always profitable if you are patient.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Gambling being a guaranteed source of income over time.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. Fatuma watched her brother's gambling addiction cause serious harm in their Mombasa home. Which of the following are psychological or social consequences of gambling addiction?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Depression and anxiety from repeated losses.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Damaged family relationships when stolen money is discovered.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Improved academic performance due to increased focus.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Shame, guilt, and social isolation.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Links to substance use as a coping mechanism for gambling stress.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. A student in Nairobi asks: "What is the legal minimum age for gambling in Kenya under the Betting Control and Licensing Board regulations?"</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> 15 years.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> 21 years.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> 16 years.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> 18 years.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. During an ARISE session on getting help for gambling, learners are asked which steps are appropriate for someone struggling with a gambling problem. Which of the following are appropriate steps?</div>
+<div class="sata-badge">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Contact NACADA on 0800 723 253 for free, confidential support.</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Request self-exclusion from betting companies.</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Bet more to try to win back losses and clear debt quickly.</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Talk to a trusted adult or school counsellor.</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Seek help from Befrienders Kenya (0722 178 177) if gambling is causing depression or suicidal thoughts.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. Kevin's friend confesses he has been stealing from his family to fund online gambling and is deeply ashamed. What is the BEST advice Kevin can give?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Tell him to keep gambling until he wins back what he stole.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Encourage him to confess to his family, seek forgiveness, and get professional help from NACADA.</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Advise him to hide it from his family permanently to avoid conflict.</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Tell him gambling is normal for young people and he will grow out of it.</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;">
+<div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div>
+<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>
+</div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});btn.classList.add('chosen-'+type);var res=document.getElementById(resId);if(res){res.className='s-result '+type;res.style.display='block';}}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'D','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'&#8212;')+'</strong> &mdash; Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'&#11088; Excellent! You understand this topic very well.':pct>=60?'&#128077; Good effort! Review the highlighted incorrect answers.':'&#128214; Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
