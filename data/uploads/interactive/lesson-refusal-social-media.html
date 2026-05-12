@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Social Media &amp; Online Pressure | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-social-media">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Social Media &amp; SRH &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Online Pressure</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Shinikizo la Mtandaoni</span><span class="sh" style="display:none;">Refusal Skills &mdash; Online Pressure</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify online pressure tactics used to coerce Kenyan adolescents on social media</span><span class="sw">Tambua mbinu za shinikizo za mtandaoni zinazotumiwa kulazimisha vijana wa Kenya kwenye mitandao ya kijamii</span><span class="sh">Tambua online pressure tactics zinazotumiwa ku-coerce vijana wa Kenya kwa social media</span></li>
+    <li><span class="en">Apply DEAR to refuse sexting, unsolicited images, and online grooming</span><span class="sw">Tumia DEAR kukataa kutuma picha za ngono, picha zisizoulizwa, na udanganyifu wa mtandaoni</span><span class="sh">Apply DEAR kukataa sexting, unsolicited images, na online grooming</span></li>
+    <li><span class="en">Know how to safely report online harassment in Kenya</span><span class="sw">Jua jinsi ya kuripoti unyanyasaji wa mtandaoni kwa usalama Kenya</span><span class="sh">Jua jinsi ya safely report online harassment Kenya</span></li>
+    <li><span class="en">Practise refusal scripts for WhatsApp, TikTok, and Instagram pressure situations</span><span class="sw">Fanya mazoezi ya misemo ya kukataa kwa hali za shinikizo za WhatsApp, TikTok, na Instagram</span><span class="sh">Practice refusal scripts kwa WhatsApp, TikTok, na Instagram pressure situations</span></li>
+    <li><span class="en">Understand that online NO is as valid as in-person NO</span><span class="sw">Elewa kwamba HAPANA ya mtandaoni ina thamani sawa na HAPANA ya ana kwa ana</span><span class="sh">Understand kwamba online NO ni as valid kama in-person NO</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Has anyone ever sent you something on your phone or social media that made you uncomfortable &mdash; what did you do?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Je, mtu amewahi kukutumia kitu kwenye simu yako au mitandao ya kijamii ambacho kilikufanya usijisikie vizuri &mdash; ulifanya nini?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Je, mtu amewahi kukutumia kitu kwa simu yako au social media ambacho kilikufanya uncomfortable &mdash; ulifanya nini?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Online Pressure and SRH Risks -->
+<div class="slide">
+<div class="slide-head">&#128242; <span class="en">Online Pressure and SRH Risks</span><span class="sw">Shinikizo la Mtandaoni na Hatari za SRH</span><span class="sh">Online Pressure na SRH Risks</span></div>
+<p class="tp">
+  <span class="en">87% of Kenyan secondary school students use WhatsApp; 54% use TikTok (CA Survey 2023). Social media creates unique pressure: 24/7 access, anonymity, screenshot culture, and viral threats.</span>
+  <span class="sw">87% ya wanafunzi wa sekondari wa Kenya wanatumia WhatsApp; 54% wanatumia TikTok (Utafiti wa CA 2023). Mitandao ya kijamii inaunda shinikizo la kipekee: upatikanaji wa masaa 24/7, kutojulikana, utamaduni wa picha za skrini, na vitisho vya virusi.</span>
+  <span class="sh">87% ya Kenya secondary school students wanatumia WhatsApp; 54% wanatumia TikTok (CA Survey 2023). Social media inacreate unique pressure: 24/7 access, anonymity, screenshot culture, na viral threats.</span>
+</p>
+<div class="key-term">
+  <strong><span class="en">&#128247; SRH Risks Online</span><span class="sw">&#128247; Hatari za SRH Mtandaoni</span><span class="sh">&#128247; SRH Risks Online</span></strong>
+  <ul class="bl" style="margin-bottom:0;">
+    <li><span class="en">Being pressured to share nude images (sexting)</span><span class="sw">Kushikiliwa kushiriki picha za uchi (sexting)</span><span class="sh">Kupressurwa kushare nude images (sexting)</span></li>
+    <li><span class="en">Receiving unsolicited sexual content</span><span class="sw">Kupokea maudhui ya ngono yasiyoulizwa</span><span class="sh">Kupokea unsolicited sexual content</span></li>
+    <li><span class="en">Online grooming by older persons</span><span class="sw">Udanganyifu wa mtandaoni na watu wazima</span><span class="sh">Online grooming na watu wakubwa</span></li>
+    <li><span class="en">Sextortion</span><span class="sw">Sextortion</span><span class="sh">Sextortion</span></li>
+  </ul>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Sextortion</span><span class="sw">&#128273; Neno Muhimu: Sextortion</span><span class="sh">&#128273; Key Term: Sextortion</span></strong>
+  <span class="en">Threatening to share private or intimate images unless someone pays money or provides more images.</span>
+  <span class="sw">Kutishia kushiriki picha za faragha au za karibu isipokuwa mtu atalipa pesa au kutoa picha zaidi.</span>
+  <span class="sh">Kutishia kushare private au intimate images isipokuwa mtu atalipa pesa au kutoa picha zaidi.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> Once an image is sent online, you cannot control where it goes. Sharing intimate images of minors is a criminal offence in Kenya.</span>
+  <span class="sw"> Picha ikishatumwa mtandaoni, huwezi kudhibiti inaenda wapi. Kushiriki picha za karibu za watoto wadogo ni kosa la jinai Kenya.</span>
+  <span class="sh"> Image ikishatumwa online, huwezi control inaenda wapi. Kushare intimate images za minors ni criminal offence Kenya.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Alert</div>
+  <span class="en" style="display:block;">Screenshot + share bila ruhusa = criminal offence Kenya. Mtu anayekutishia na picha zako anakuvunja CMCA 2018.</span>
+  <span class="sw" style="display:none;">Picha ya skrini + kushiriki bila ruhusa = kosa la jinai Kenya. Mtu anayekutishia na picha zako anakukiuka CMCA 2018.</span>
+  <span class="sh" style="display:none;">Screenshot + share bila ruhusa = criminal offence Kenya. Mtu anayekutishia na picha zako anakuvunja CMCA 2018.</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Online Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Online Pressure Tactics</span><span class="sw">Mbinu za Shinikizo za Mtandaoni</span><span class="sh">Online Pressure Tactics</span></div>
+<p class="tp"><span class="en">Recognising an online pressure tactic is the first step to refusing it. Know these patterns:</span><span class="sw">Kutambua mbinu ya shinikizo ya mtandaoni ni hatua ya kwanza ya kuikataa. Jua mifumo hii:</span><span class="sh">Kutambua online pressure tactic ni first step ya kuikataa. Jua patterns hizi:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">&ldquo;Send me a photo &mdash; if you really like me you will&rdquo; &mdash; Digital coercion</span><span class="sw">&ldquo;Nitumie picha &mdash; ukipenda kweli utafanya&rdquo; &mdash; Kulazimishwa kidijitali</span><span class="sh">&ldquo;Nitumie photo &mdash; ukipenda kweli utafanya&rdquo; &mdash; Digital coercion</span></strong>
+  <span class="en">Using emotional pressure and fake love to extract images from you.</span>
+  <span class="sw">Kutumia shinikizo la kihisia na upendo wa uongo kukupata picha.</span>
+  <span class="sh">Kutumia emotional pressure na fake love kukupata picha.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">&ldquo;I already have a screenshot of you &mdash; send more or I&rsquo;ll post it&rdquo; &mdash; Sextortion</span><span class="sw">&ldquo;Tayari nina picha yako ya skrini &mdash; tuma zaidi au nitaichapisha&rdquo; &mdash; Sextortion</span><span class="sh">&ldquo;Nina screenshot yako already &mdash; tuma zaidi au nitapost&rdquo; &mdash; Sextortion</span></strong>
+  <span class="en">Using existing images as leverage to demand more. This is a crime under CMCA 2018.</span>
+  <span class="sw">Kutumia picha zilizopo kama nguvu kudai zaidi. Hii ni kosa la jinai chini ya CMCA 2018.</span>
+  <span class="sh">Kutumia existing images kama leverage kudai zaidi. Hii ni crime chini ya CMCA 2018.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">&ldquo;Everyone on TikTok does this &mdash; stop being old-fashioned&rdquo; &mdash; Online normalising</span><span class="sw">&ldquo;Kila mtu kwa TikTok anafanya hivi &mdash; acha kuwa wa zamani&rdquo; &mdash; Kukawaisha mtandaoni</span><span class="sh">&ldquo;Kila mtu kwa TikTok anado hivi &mdash; acha kuwa old-fashioned&rdquo; &mdash; Online normalising</span></strong>
+  <span class="en">Claiming risky behaviour is common online to reduce your resistance.</span>
+  <span class="sw">Kudai kwamba tabia hatari ni ya kawaida mtandaoni kupunguza upinzani wako.</span>
+  <span class="sh">Kudai kwamba risky behaviour ni common online kupunguza resistance yako.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">&ldquo;It&rsquo;s just between us &mdash; I&rsquo;ll never share it&rdquo; &mdash; False privacy promise</span><span class="sw">&ldquo;Ni siri yetu tu &mdash; sitashiriki kamwe&rdquo; &mdash; Ahadi ya uongo ya faragha</span><span class="sh">&ldquo;Ni kati yetu tu &mdash; sitashare kamwe&rdquo; &mdash; False privacy promise</span></strong>
+  <span class="en">No online promise of privacy can be trusted. Screenshots can be taken any time.</span>
+  <span class="sw">Hakuna ahadi ya faragha ya mtandaoni inayoweza kuaminiwa. Picha za skrini zinaweza kupigwa wakati wowote.</span>
+  <span class="sh">Hakuna online privacy promise inayoweza ku-trust. Screenshots zinaweza kupigwa wakati wowote.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">&ldquo;I&rsquo;ll unfollow / block you if you don&rsquo;t respond&rdquo; &mdash; Social threat</span><span class="sw">&ldquo;Nitakuacha kufuata / kukuzuia usipomjibu&rdquo; &mdash; Tishio la kijamii</span><span class="sh">&ldquo;Nitakuunfollow / block kama hutarespond&rdquo; &mdash; Social threat</span></strong>
+  <span class="en">Using social rejection as leverage. Real connection does not require compromising your safety.</span>
+  <span class="sw">Kutumia kukataliwa kijamii kama nguvu. Uhusiano wa kweli hauhitaji hatari ya usalama wako.</span>
+  <span class="sh">Kutumia social rejection kama leverage. Real connection haihitaji kucompromisize usalama wako.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> If someone threatens to share your images &mdash; that is sextortion. Do not send more. Report immediately.</span>
+  <span class="sw"> Mtu akitishia kushiriki picha zako &mdash; hiyo ni sextortion. Usitume zaidi. Ripoti mara moja.</span>
+  <span class="sh"> Mtu akitishia kushare picha zako &mdash; hiyo ni sextortion. Usitume zaidi. Report mara moja.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR for Online Situations -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR for Online Situations</span><span class="sw">DEAR kwa Hali za Mtandaoni</span><span class="sh">DEAR kwa Online Situations</span></div>
+<p class="tp"><span class="en">DEAR works online just as powerfully as in person. Use it when you receive unwanted pressure on any platform.</span><span class="sw">DEAR inafanya kazi mtandaoni kwa nguvu sawa na ana kwa ana. Itumie unapopokea shinikizo usiloliomba kwenye jukwaa lolote.</span><span class="sh">DEAR inafanya kazi online just as powerfully kama in person. Itumie unapopokea unwanted pressure kwa platform yoyote.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You are asking me to send an intimate photo / you sent sexual content without permission.&rdquo;</span><span class="sw">&ldquo;Unaniniomba nitume picha ya karibu / umetuma maudhui ya ngono bila ruhusa.&rdquo;</span><span class="sh">&ldquo;Unaniniomba nitume intimate photo / umetuma sexual content bila permission.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel uncomfortable, violated, and pressured.&rdquo;</span><span class="sw">&ldquo;Nahisi vibaya, nimekiukwa, na kushikiliwa.&rdquo;</span><span class="sh">&ldquo;Nahisi uncomfortable, violated, na pressured.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;No. I will not send images. I am blocking you and reporting this.&rdquo;</span><span class="sw">&ldquo;Hapana. Sitatuma picha. Ninakuzuia na kuripoti hili.&rdquo;</span><span class="sh">&ldquo;No. Sitatuma images. Ninakublock na kurepoti hii.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">&ldquo;Sharing or threatening to share my images without consent is a crime in Kenya.&rdquo;</span><span class="sw">&ldquo;Kushiriki au kutishia kushiriki picha zangu bila ridhaa ni kosa la jinai Kenya.&rdquo;</span><span class="sh">&ldquo;Kushare au kutishia kushare picha zangu bila consent ni crime Kenya.&rdquo;</span></div>
+  </div>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Specific to Sextortion:</span><span class="sw">&#9888; Kuhusu Sextortion Hasa:</span><span class="sh">&#9888; Kuhusu Sextortion Hasa:</span></strong>
+  <span class="en"> Do <strong>NOT</strong> pay. Do <strong>NOT</strong> send more images. Block + Report + Tell a trusted adult.</span>
+  <span class="sw"> <strong>USILIPPE</strong>. <strong>USITUME</strong> picha zaidi. Zuia + Ripoti + Mwambie mtu mzima unayemwamini.</span>
+  <span class="sh"> <strong>USILIPPE</strong>. <strong>USITUME</strong> picha zaidi. Block + Report + Ambia trusted adult.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts for Online Situations -->
+<div class="slide">
+<div class="slide-head">&#128226; <span class="en">Refusal Scripts for Online Situations</span><span class="sw">Misemo ya Kukataa kwa Hali za Mtandaoni</span><span class="sh">Refusal Scripts kwa Online Situations</span></div>
+<p class="tp"><span class="en">Having a ready response removes the panic of the moment. Practise these until they feel natural:</span><span class="sw">Kuwa na jibu tayari huondoa hofu ya wakati huo. Fanya mazoezi ya haya mpaka yaonekane ya kawaida:</span><span class="sh">Kuwa na ready response huremove panic ya moment. Practice hizi mpaka ziwe natural:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Sexting Request</span><span class="sw">Ombi la Sexting</span><span class="sh">Sexting Request</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. I don&rsquo;t send intimate photos to anyone. Don&rsquo;t ask again.&rdquo;</span><span class="sw">&ldquo;Hapana. Situmi picha za karibu kwa mtu yeyote. Usiniulize tena.&rdquo;</span><span class="sh">&ldquo;No. Situmi intimate photos kwa mtu yeyote. Usiulize tena.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Sextortion Threat</span><span class="sw">Tishio la Sextortion</span><span class="sh">Sextortion Threat</span></div>
+  <div class="phrase"><span class="en">&ldquo;You threatening me with images is sextortion &mdash; a criminal offence. I am reporting you to DCI: cybercrime@dci.go.ke.&rdquo;</span><span class="sw">&ldquo;Kunikusudia na picha ni sextortion &mdash; kosa la jinai. Ninakuripoti kwa DCI: cybercrime@dci.go.ke.&rdquo;</span><span class="sh">&ldquo;Kuthreatena na picha ni sextortion &mdash; criminal offence. Ninakureport kwa DCI: cybercrime@dci.go.ke.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Unsolicited Sexual Content</span><span class="sw">Maudhui ya Ngono Yasiyoulizwa</span><span class="sh">Unsolicited Sexual Content</span></div>
+  <div class="phrase"><span class="en">&ldquo;Sending sexual content without consent is harassment. I am blocking you and reporting this.&rdquo;</span><span class="sw">&ldquo;Kutuma maudhui ya ngono bila ridhaa ni unyanyasaji. Ninakuzuia na kuripoti.&rdquo;</span><span class="sh">&ldquo;Kutuma sexual content bila consent ni harassment. Ninakublock na kurepoti.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Just a selfie&rdquo; Pressure</span><span class="sw">Shinikizo la &ldquo;Selfie tu&rdquo;</span><span class="sh">&ldquo;Selfie tu&rdquo; Pressure</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. My photos are private. No means no &mdash; online and offline.&rdquo;</span><span class="sw">&ldquo;Hapana. Picha zangu ni za faragha. Hapana maana yake hapana &mdash; mtandaoni na nje ya mtandao.&rdquo;</span><span class="sh">&ldquo;No. Photos zangu ni private. No inamaanisha no &mdash; online na offline.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Order of Actions</span><span class="sw">&#128161; Mpangilio wa Hatua</span><span class="sh">&#128161; Order ya Actions</span></strong>
+  <span class="en"> Block &rarr; Screenshot evidence &rarr; Report &rarr; Tell a trusted adult. In that order.</span>
+  <span class="sw"> Zuia &rarr; Piga picha ya skrini kama ushahidi &rarr; Ripoti &rarr; Mwambie mtu mzima unayemwamini. Kwa utaratibu huo.</span>
+  <span class="sh"> Block &rarr; Screenshot evidence &rarr; Report &rarr; Ambia trusted adult. Kwa order hiyo.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario — WhatsApp Pressure -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario: WhatsApp Pressure</span><span class="sw">Hali: Shinikizo la WhatsApp</span><span class="sh">Scenario: WhatsApp Pressure</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Hassan, Form 3, Eldoret</span><span class="sw">Hali &mdash; Hassan, Kidato cha 3, Eldoret</span><span class="sh">Scenario &mdash; Hassan, Form 3, Eldoret</span></div>
+  <div class="scenario">
+    <span class="en">Hassan (Form 3, Eldoret) receives a WhatsApp message from a girl he met online asking him to video call and take off his shirt. She says everyone does it and threatens to tell his friends he&rsquo;s &ldquo;not man enough.&rdquo;</span>
+    <span class="sw">Hassan (Kidato cha 3, Eldoret) anapokea ujumbe wa WhatsApp kutoka kwa msichana aliyemkutana naye mtandaoni akimwomba aitane kwa video na avue shati lake. Anasema kila mtu anafanya hivyo na anatishia kuwaeleza marafiki zake kwamba yeye &ldquo;si mtu wa kutosha.&rdquo;</span>
+    <span class="sh">Hassan (Form 3, Eldoret) anapokea WhatsApp message kutoka kwa msichana aliyemeet online akimomba avideo call na avue shati yake. Anasema kila mtu anado hivyo na anathreatena kuwaeleza marafiki zake kwamba yeye &ldquo;si man enough.&rdquo;</span>
+  </div>
+  <div class="sc-q"><span class="en">What should Hassan do?</span><span class="sw">Hassan afanye nini?</span><span class="sh">Hassan afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')"><span class="en">A. Comply &mdash; she&rsquo;s just teasing and it&rsquo;s harmless</span><span class="sw">A. Kubali &mdash; anachekesha tu na si hatari</span><span class="sh">A. Comply &mdash; anachekesha tu na si hatari</span></button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')"><span class="en">B. Decline firmly, do not video call, block the account, and report to a parent or teacher</span><span class="sw">B. Kataa kwa uthabiti, asiitane kwa video, azuie akaunti, na amripoti mzazi au mwalimu</span><span class="sh">B. Decline firmly, asiitane kwa video, ablock account, na areport kwa parent au mwalimu</span></button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')"><span class="en">C. Do the video call but don&rsquo;t take off his shirt</span><span class="sw">C. Aitane kwa video lakini asivue shati lake</span><span class="sh">C. Aitane kwa video lakini asivue shati yake</span></button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Why B is Correct</span><span class="sw">&#128161; Kwa Nini B ni Sahihi</span><span class="sh">&#128161; Kwa Nini B ni Correct</span></strong>
+  <span class="en">Online grooming often starts with small requests that escalate. Hassan&rsquo;s refusal and report is the right response. Even if the request seems small, complying signals that further pressure will work.</span>
+  <span class="sw">Udanganyifu wa mtandaoni huanza mara nyingi na maombi madogo yanayopanda. Kukataa kwa Hassan na kuripoti ni jibu sahihi. Hata ombi likionekana dogo, kukubaliana kunaashiria kwamba shinikizo zaidi litafanya kazi.</span>
+  <span class="sh">Online grooming huanza mara nyingi na small requests ambazo zinaescalate. Kukataa kwa Hassan na kurepoti ni right response. Hata request ikionekana ndogo, complying inasignal kwamba more pressure itafanya kazi.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: Reporting Online Harassment in Kenya -->
+<div class="slide">
+<div class="slide-head">&#128222; <span class="en">Reporting Online Harassment in Kenya</span><span class="sw">Kuripoti Unyanyasaji wa Mtandaoni Kenya</span><span class="sh">Kuripoti Online Harassment Kenya</span></div>
+<p class="tp"><span class="en">You are never alone. Kenya has dedicated resources to help young people report online abuse safely.</span><span class="sw">Hujapotezwa kamwe. Kenya ina rasilimali maalum kusaidia vijana kuripoti unyanyasaji wa mtandaoni kwa usalama.</span><span class="sh">Hujapotezwa kamwe. Kenya ina dedicated resources kusaidia vijana kuripoti online abuse kwa usalama.</span></p>
+<div class="key-term">
+  <strong>&#128222; <span class="en">DCI Cyber Crime Unit</span><span class="sw">Kitengo cha Uhalifu wa Mtandaoni cha DCI</span><span class="sh">DCI Cyber Crime Unit</span></strong>
+  <p><span class="en">Email: <strong>cybercrime@dci.go.ke</strong> &mdash; Report sextortion and online sexual offences.</span><span class="sw">Barua pepe: <strong>cybercrime@dci.go.ke</strong> &mdash; Ripoti sextortion na makosa ya ngono ya mtandaoni.</span><span class="sh">Email: <strong>cybercrime@dci.go.ke</strong> &mdash; Report sextortion na online sexual offences.</span></p>
+</div>
+<div class="key-term">
+  <strong>&#128222; <span class="en">Communications Authority</span><span class="sw">Mamlaka ya Mawasiliano</span><span class="sh">Communications Authority</span></strong>
+  <p><span class="en"><strong>0800 721 577</strong> (toll-free) &mdash; Report harmful online content.</span><span class="sw"><strong>0800 721 577</strong> (bila malipo) &mdash; Ripoti maudhui hatari ya mtandaoni.</span><span class="sh"><strong>0800 721 577</strong> (toll-free) &mdash; Report harmful online content.</span></p>
+</div>
+<div class="key-term">
+  <strong>&#128222; <span class="en">Childline Kenya</span><span class="sw">Childline Kenya</span><span class="sh">Childline Kenya</span></strong>
+  <p><span class="en"><strong>116</strong> (free, 24/7) &mdash; Also handles online abuse of minors.</span><span class="sw"><strong>116</strong> (bure, masaa 24/7) &mdash; Pia inashughulikia unyanyasaji wa mtandaoni wa watoto wadogo.</span><span class="sh"><strong>116</strong> (free, 24/7) &mdash; Pia inashughulikia online abuse ya minors.</span></p>
+</div>
+<div class="key-term">
+  <strong>&#128247; <span class="en">Report On-Platform</span><span class="sw">Ripoti Ndani ya Jukwaa</span><span class="sh">Report On-Platform</span></strong>
+  <p><span class="en">Use the &ldquo;Report&rdquo; button on WhatsApp, TikTok, Instagram, and Facebook. Screenshot evidence <strong>BEFORE</strong> blocking &mdash; needed for a police report.</span><span class="sw">Tumia kitufe cha &ldquo;Ripoti&rdquo; kwenye WhatsApp, TikTok, Instagram, na Facebook. Piga picha ya skrini kama ushahidi <strong>KABLA</strong> ya kuzuia &mdash; inahitajika kwa ripoti ya polisi.</span><span class="sh">Tumia &ldquo;Report&rdquo; button kwa WhatsApp, TikTok, Instagram, na Facebook. Screenshot evidence <strong>KABLA</strong> ya kublock &mdash; inahitajika kwa police report.</span></p>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Legal Note:</span><span class="sw">&#9888; Dokezo la Kisheria:</span><span class="sh">&#9888; Legal Note:</span></strong>
+  <span class="en"> Sextortion of minors is prosecuted under both the CMCA 2018 and the Children Act 2022 in Kenya.</span>
+  <span class="sw"> Sextortion ya watoto wadogo inashindaniwa chini ya CMCA 2018 na Sheria ya Watoto 2022 Kenya.</span>
+  <span class="sh"> Sextortion ya minors inashindaniwa chini ya CMCA 2018 na Children Act 2022 Kenya.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Staying Safe Online -->
+<div class="slide">
+<div class="slide-head">&#128274; <span class="en">Staying Safe Online</span><span class="sw">Kukaa Salama Mtandaoni</span><span class="sh">Kukaa Safe Online</span></div>
+<p class="tp"><span class="en">Protecting yourself online requires active, daily choices. Safety is not just about refusing &mdash; it starts with prevention.</span><span class="sw">Kujilinda mtandaoni kunahitaji maamuzi ya makusudi kila siku. Usalama si tu kukataa &mdash; unaanza na kuzuia.</span><span class="sh">Kujilinda online kunahitaji active, daily choices. Safety si tu kukataa &mdash; inaanza na prevention.</span></p>
+<div class="key-term">
+  <strong>&#128272; <span class="en">Privacy Settings</span><span class="sw">Mipangilio ya Faragha</span><span class="sh">Privacy Settings</span></strong>
+  <p><span class="en">Set all accounts to private; never share your location publicly.</span><span class="sw">Weka akaunti zote kuwa za faragha; kamwe usishiriki mahali ulipo hadharani.</span><span class="sh">Set accounts zote private; usishare location yako publicly.</span></p>
+</div>
+<div class="key-term">
+  <strong>&#128101; <span class="en">Trusted Contacts Only</span><span class="sw">Mawasiliano ya Kuaminika Pekee</span><span class="sh">Trusted Contacts Only</span></strong>
+  <p><span class="en">Do not accept friend requests from strangers.</span><span class="sw">Usikubali maombi ya urafiki kutoka kwa wageni.</span><span class="sh">Usikubali friend requests kutoka kwa strangers.</span></p>
+</div>
+<div class="key-term">
+  <strong>&#128241; <span class="en">Device Hygiene</span><span class="sw">Usafi wa Kifaa</span><span class="sh">Device Hygiene</span></strong>
+  <p><span class="en">Never share phone passwords; log out of shared devices.</span><span class="sw">Kamwe usishiriki nywila za simu; toka kwenye vifaa vya pamoja.</span><span class="sh">Usishare phone passwords; log out kwa shared devices.</span></p>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Digital Footprint</span><span class="sw">&#128273; Neno Muhimu: Alama ya Kidijitali</span><span class="sh">&#128273; Key Term: Digital Footprint</span></strong>
+  <p><span class="en">The trail of data you leave online. Intimate images can last forever and reach anyone.</span><span class="sw">Mkondo wa data unaoacha mtandaoni. Picha za karibu zinaweza kudumu milele na kufikia mtu yeyote.</span><span class="sh">Trail ya data unayoacha online. Intimate images zinaweza kudumu milele na kufikia mtu yeyote.</span></p>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Real Story &mdash; Zawadi, Form 4, Nairobi</span><span class="sw">Hadithi Halisi &mdash; Zawadi, Kidato cha 4, Nairobi</span><span class="sh">Real Story &mdash; Zawadi, Form 4, Nairobi</span></strong>
+  <span class="en">Zawadi received sextortion threats. She did not pay. She reported to DCI. The perpetrator was arrested. She said: <em>&ldquo;Reporting saved me.&rdquo;</em></span>
+  <span class="sw">Zawadi alipokea vitisho vya sextortion. Hakupay. Aliripoti kwa DCI. Mtenda akakamatwa. Alisema: <em>&ldquo;Kuripoti kunilinda.&rdquo;</em></span>
+  <span class="sh">Zawadi alipokea sextortion threats. Hakupay. Alirepoti kwa DCI. Mtenda akakamatwa. Alisema: <em>&ldquo;Kuripoti kulinisave.&rdquo;</em></span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Reminder</div>
+  <span class="en" style="display:block;">Online NO ni as real as offline NO. Mtu anayekushikilia baada ya NO online &mdash; block na report mara moja.</span>
+  <span class="sw" style="display:none;">HAPANA ya mtandaoni ni ya kweli sawa na HAPANA nje ya mtandao. Mtu anayekushikilia baada ya HAPANA mtandaoni &mdash; zuia na ripoti mara moja.</span>
+  <span class="sh" style="display:none;">Online NO ni as real as offline NO. Mtu anayekushikilia baada ya NO online &mdash; block na report mara moja.</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Social Media &amp; SRH video loading&hellip;</span><span class="sw">Video ya Mitandao ya Kijamii &amp; SRH inapakia&hellip;</span><span class="sh">Social Media &amp; SRH video inaload&hellip;</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; Caption:</span><span class="sw">&#128196; Maelezo:</span><span class="sh">&#128196; Caption:</span></strong>
+    <span class="en"> Social Media &amp; SRH &mdash; Online Safety and Refusal</span>
+    <span class="sw"> Mitandao ya Kijamii &amp; SRH &mdash; Usalama wa Mtandaoni na Kukataa</span>
+    <span class="sh"> Social Media &amp; SRH &mdash; Online Safety na Refusal</span>
+  </div>
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one online pressure tactic shown in the video and explain how you would use DEAR to respond. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya shinikizo ya mtandaoni iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kujibu. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua online pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kujibu. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Amina, 15, Mombasa, receives a WhatsApp message from an unknown person asking her to send a photo of herself. Which of the following are CORRECT steps for Amina to take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Ignore the request and do not send any photo</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Block the unknown number immediately</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Send a harmless selfie to see if the person is trustworthy</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Screenshot the conversation as evidence</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Report to a parent or trusted adult</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Brian, 16, Nakuru, receives a threatening message: &ldquo;I have a screenshot of you &mdash; pay me KES 5,000 or I&rsquo;ll post it.&rdquo; What is this called?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Cyberbullying</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Online grooming</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Sextortion</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Phishing</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. Fatuma, 17, Kisumu, wants to protect her privacy on TikTok. Which of the following are CORRECT online safety practices? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Set her account to private</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Never share her phone location publicly</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Accept all follow requests to grow her audience</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Avoid sharing her phone password with anyone</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Log out of shared devices after use</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. David, Form 3, Eldoret, is being pressured on Instagram with the message: &ldquo;Everyone posts these kinds of photos &mdash; you&rsquo;re the only one who doesn&rsquo;t.&rdquo; Which pressure tactic is this?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Guilt trip</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Normalising</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Direct request</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Reward / bribe</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. Grace, 16, Thika, receives an unsolicited sexual image on WhatsApp. Which of the following are CORRECT responses? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Do not respond or engage with the sender</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Screenshot the message for evidence</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Forward the image to her friends to warn them</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Block the sender</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Report to a trusted adult or the DCI cyber crime unit</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Hassan wants to apply DEAR to refuse a sexting request on WhatsApp. What does the &ldquo;A&rdquo; in DEAR stand for in this context?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Avoid the conversation entirely</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Ask the sender to stop</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Assert &mdash; say &ldquo;No. I will not send images. I am blocking you and reporting this.&rdquo;</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Agree to a compromise</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. Zawadi, 17, Nairobi, is being sextorted. Which of the following are CORRECT actions for her to take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Do NOT pay the blackmailer</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Do NOT send any more images</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Pay once and hope they stop</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Report to DCI at cybercrime@dci.go.ke</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Tell a trusted adult immediately</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. Which Kenyan government resource should Omondi, 15, Kisumu, contact FIRST after experiencing online sexual harassment?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> NACADA &mdash; 1192</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Childline Kenya &mdash; 116 (free, 24/7)</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Kenya Red Cross</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> County government offices</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. Rehema, Form 2, Malindi, wants to use the DEAR method to respond to a TikTok user pressuring her to share intimate photos. Which elements of DEAR should her response include? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Describe what the person is asking her to do</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Express how the request makes her feel</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Apologise for not complying to keep the peace</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Assert a clear &ldquo;No&rdquo; and state she is blocking and reporting</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Reinforce by stating it is a criminal offence in Kenya</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. A new student at a Nairobi school says: &ldquo;Saying NO online does not really count &mdash; the internet is not real life.&rdquo; Which statement BEST challenges this belief?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Online interactions are harmless because you cannot see the other person</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Online pressure only affects people who are weak</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Social media pressure is less serious than face-to-face pressure</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Online NO is as valid as in-person NO; online harm is real and punishable by Kenyan law</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Online grooming often starts with small requests that escalate. Hassan\'s refusal and report is the right response.</span><span class="sw">Udanganyifu wa mtandaoni huanza mara nyingi na maombi madogo yanayopanda. Kukataa kwa Hassan na kuripoti ni jibu sahihi.</span><span class="sh">Online grooming huanza mara nyingi na small requests ambazo zinaescalate. Kukataa kwa Hassan na kurepoti ni right response.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Even if the request seems small, complying signals that further pressure will work. Decline, block, and report.</span><span class="sw">Hata ombi likionekana dogo, kukubaliana kunaashiria kwamba shinikizo zaidi litafanya kazi. Kataa, zuia, na ripoti.</span><span class="sh">Hata request ikionekana ndogo, complying inasignal kwamba more pressure itafanya kazi. Decline, block, na report.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,B,D,E','mcq10':'D'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand online refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

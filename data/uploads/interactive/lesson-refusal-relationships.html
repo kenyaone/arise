@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills &mdash; Healthy Relationships | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-relationships">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Healthy Relationships &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Relationships</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Mahusiano</span><span class="sh" style="display:none;">Refusal Skills &mdash; Relationships</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify unhealthy relationship patterns that require assertive refusal</span><span class="sw">Tambua mifumo ya mahusiano yasiyofaa ambayo inahitaji kukataa kwa ujasiri</span><span class="sh">Tambua unhealthy relationship patterns zinazoitaji assertive refusal</span></li>
+    <li><span class="en">Use the DEAR method to set and maintain relationship boundaries</span><span class="sw">Tumia njia ya DEAR kuweka na kudumisha mipaka ya mahusiano</span><span class="sh">Tumia DEAR method kuweka na kudumisha relationship boundaries</span></li>
+    <li><span class="en">Distinguish between healthy compromise and harmful compliance</span><span class="sw">Tofautisha kati ya maelewano ya afya na utiifu unaosababisha madhara</span><span class="sh">Tofautisha kati ya healthy compromise na harmful compliance</span></li>
+    <li><span class="en">Practise refusal scripts for relationship pressure specific to Kenyan adolescents</span><span class="sw">Fanya mazoezi ya misemo ya kukataa kwa shinikizo la mahusiano linalohusu vijana wa Kenya</span><span class="sh">Practice refusal scripts za relationship pressure specific kwa vijana wa Kenya</span></li>
+    <li><span class="en">Know when to seek help: Childline 116, school counsellor, trusted adult</span><span class="sw">Jua wakati wa kutafuta msaada: Childline 116, mshauri wa shule, mtu mzima wa kuamini</span><span class="sh">Jua wakati wa kutafuta help: Childline 116, school counsellor, trusted adult</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Have you ever stayed in a friendship or relationship longer than you should have because you didn&rsquo;t know how to say &ldquo;enough is enough&rdquo;?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Je, umewahi kukaa katika urafiki au mahusiano kwa muda mrefu zaidi ya ulivyopaswa kwa sababu hukujua jinsi ya kusema &ldquo;imetosha&rdquo;?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Je, umewahi kukaa kwa urafiki au relationship longer than ulipaswa kwa sababu hukujua kusema &ldquo;bado inatosha&rdquo;?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Healthy vs Unhealthy Relationships -->
+<div class="slide">
+<div class="slide-head">&#10084;&#65039; <span class="en">Healthy vs Unhealthy Relationships</span><span class="sw">Mahusiano ya Afya dhidi ya Yasiyofaa</span><span class="sh">Healthy vs Unhealthy Relationships</span></div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Boundary</span><span class="sw">&#128273; Mpaka</span><span class="sh">&#128273; Boundary</span></strong>
+  <span class="en">A clear limit that defines what behaviour you will and will not accept from others.</span>
+  <span class="sw">Kikomo wazi kinachoelezea tabia utakayokubali na usiokubali kutoka kwa wengine.</span>
+  <span class="sh">Clear limit inayodefine tabia utakayoaccept na hautaaccept kutoka kwa wengine.</span>
+</div>
+<p class="tp">
+  <span class="en"><strong>Healthy relationships</strong> have: mutual respect, trust, honesty, shared decision-making, and space for individuality.</span>
+  <span class="sw"><strong>Mahusiano ya afya</strong> yana: heshima ya pande zote, uaminifu, uwazi, maamuzi ya pamoja, na nafasi ya utu binafsi.</span>
+  <span class="sh"><strong>Healthy relationships</strong> zina: mutual respect, trust, honesty, shared decision-making, na nafasi ya individuality.</span>
+</p>
+<p class="tp">
+  <span class="en"><strong>Unhealthy relationships</strong> show: jealousy disguised as care, pressure, control, disrespect, and exclusion of other friendships.</span>
+  <span class="sw"><strong>Mahusiano yasiyofaa</strong> yanaonyesha: wivu uliofichwa kama huduma, shinikizo, udhibiti, kukosa heshima, na kuwatenga marafiki wengine.</span>
+  <span class="sh"><strong>Unhealthy relationships</strong> zinaonyesha: jealousy iliyofichwa kama care, pressure, control, disrespect, na ku-exclude marafiki wengine.</span>
+</p>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> An unhealthy friendship or romantic relationship can cause depression, a drop in grades, risky behaviour, and isolation from your support network.</span>
+  <span class="sw"> Urafiki au mahusiano ya kimapenzi yasiyofaa yanaweza kusababisha unyogovu, kushuka kwa daraja, tabia hatari, na kutengwa na mtandao wako wa msaada.</span>
+  <span class="sh"> Unhealthy friendship au romantic relationship inaweza kusababisha depression, kushuka kwa grades, risky behaviour, na isolation kutoka kwa support network yako.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Wisdom</div>
+  <span class="en" style="display:block;">&ldquo;Relationship nzuri inakuinua &mdash; si kukubembeleza tu. Ukijisikia mdogo karibu na mtu, tathmini hiyo relationship.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Mahusiano mazuri yanakuinua &mdash; si kukupendeza tu. Ukijisikia mdogo karibu na mtu, tathmini mahusiano hayo.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Relationship nzuri inakuinua &mdash; si kukubembeleza tu. Ukijisikia mdogo karibu na mtu, tathmini hiyo relationship.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Scenarios -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure in Relationships &mdash; Common Scenarios in Kenya</span><span class="sw">Shinikizo katika Mahusiano &mdash; Hali Zinazojitokeza Kenya</span><span class="sh">Pressure katika Relationships &mdash; Common Scenarios Kenya</span></div>
+<p class="tp"><span class="en">Learn to recognise these patterns before they trap you:</span><span class="sw">Jifunze kutambua mifumo hii kabla haijakukamata:</span><span class="sh">Jifunza kutambua patterns hizi kabla hazijaku-trap:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">&ldquo;If you don&rsquo;t come to my house today, you don&rsquo;t love me&rdquo; &mdash; Emotional Blackmail</span><span class="sw">&ldquo;Usipokuja nyumbani kwangu leo, hunipenzi&rdquo; &mdash; Vitisho vya Kihisia</span><span class="sh">&ldquo;Usipokuja kwangu leo, hunipenzi&rdquo; &mdash; Emotional Blackmail</span></strong>
+  <span class="en">Using love as a condition to force compliance. Real love does not come with ultimatums.</span>
+  <span class="sw">Kutumia upendo kama sharti la kulazimisha utiifu. Upendo wa kweli hauja na vitisho.</span>
+  <span class="sh">Kutumia love kama condition ku-force compliance. Real love haji na ultimatums.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">&ldquo;Stop talking to your other friends &mdash; you only need me&rdquo; &mdash; Isolation</span><span class="sw">&ldquo;Acha kuzungumza na marafiki zako wengine &mdash; unahitaji mimi tu&rdquo; &mdash; Kutengwa</span><span class="sh">&ldquo;Acha kuongea na marafiki wako wengine &mdash; unahitaji mimi tu&rdquo; &mdash; Isolation</span></strong>
+  <span class="en">Cutting you off from support networks is a key warning sign of coercive control.</span>
+  <span class="sw">Kukukatia kutoka kwa mitandao ya msaada ni ishara muhimu ya onyo ya udhibiti wa kulazimisha.</span>
+  <span class="sh">Kukukata kutoka kwa support networks ni key warning sign ya coercive control.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">&ldquo;Everyone in our relationship group does it &mdash; why are you different?&rdquo; &mdash; Peer Normalising</span><span class="sw">&ldquo;Kila mtu katika kikundi chetu anafanya &mdash; kwa nini wewe ni tofauti?&rdquo; &mdash; Kawaida ya Rika</span><span class="sh">&ldquo;Kila mtu kwa group yetu anafanya &mdash; kwa nini wewe ni different?&rdquo; &mdash; Peer Normalising</span></strong>
+  <span class="en">Claiming harmful behaviour is normal to reduce your resistance. It is not normal &mdash; it is pressure.</span>
+  <span class="sw">Kudai tabia hatari ni ya kawaida kupunguza upinzani wako. Si ya kawaida &mdash; ni shinikizo.</span>
+  <span class="sh">Kudai harmful behaviour ni normal kupunguza resistance yako. Si normal &mdash; ni pressure.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">&ldquo;You owe me &mdash; I&rsquo;ve done so much for you&rdquo; &mdash; Entitlement / Debt Framing</span><span class="sw">&ldquo;Unanidaiwa &mdash; nimefanya mengi sana kwa ajili yako&rdquo; &mdash; Fremu ya Deni</span><span class="sh">&ldquo;Unanidaiwa &mdash; nimefanya mengi sana kwa ajili yako&rdquo; &mdash; Debt Framing</span></strong>
+  <span class="en">Gifts or favours do not create an obligation to comply with harmful demands. You owe no one your body or safety.</span>
+  <span class="sw">Zawadi au upendeleo haulazimishi kukubaliana na mahitaji yenye madhara. Huna deni mwili wako au usalama wako kwa mtu yeyote.</span>
+  <span class="sh">Gifts au favours hazikulazimishi kukubaliana na harmful demands. Huna-deni mwili wako au safety yako kwa mtu yeyote.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">&ldquo;Share your location with me at all times&rdquo; &mdash; Digital Control</span><span class="sw">&ldquo;Nishirikishe eneo lako wakati wote&rdquo; &mdash; Udhibiti wa Kidijitali</span><span class="sh">&ldquo;Share location yako nami wakati wote&rdquo; &mdash; Digital Control</span></strong>
+  <span class="en">Demanding constant access to your phone, location, or passwords is surveillance, not love.</span>
+  <span class="sw">Kudai upatikanaji wa kudumu wa simu yako, eneo, au nywila ni ufuatiliaji, si upendo.</span>
+  <span class="sh">Kudai constant access ya phone yako, location, au passwords ni surveillance, si love.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Remember:</span><span class="sw">&#128161; Kumbuka:</span><span class="sh">&#128161; Remember:</span></strong>
+  <span class="en"> Any relationship that makes you feel guilty for having boundaries is not healthy.</span>
+  <span class="sw"> Mahusiano yoyote yanayokufanya uhisi hatia kwa kuwa na mipaka si ya afya.</span>
+  <span class="sh"> Relationship yoyote inayokufanya uhisi guilty kwa kuwa na boundaries si healthy.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR for Relationship Situations -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR for Relationship Situations</span><span class="sw">DEAR kwa Hali za Mahusiano</span><span class="sh">DEAR kwa Relationship Situations</span></div>
+<p class="tp"><span class="en">Apply the DEAR method when you face controlling or harmful pressure in any relationship:</span><span class="sw">Tumia njia ya DEAR unapokabiliwa na shinikizo la udhibiti au lenye madhara katika mahusiano yoyote:</span><span class="sh">Apply DEAR method ukikabiliwa na controlling au harmful pressure katika relationship yoyote:</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You are asking me to stop seeing my friends / share my password / skip school for you.&rdquo;</span><span class="sw">&ldquo;Unaniumba niache kuona marafiki zangu / nishirikishe nywila yangu / niache shule kwa ajili yako.&rdquo;</span><span class="sh">&ldquo;Unaniambia niache kuona marafiki zangu / nishare password yangu / niache shule kwa ajili yako.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel controlled and I don&rsquo;t think this is fair.&rdquo;</span><span class="sw">&ldquo;Nahisi ninadhibitiwa na sidhani hii ni haki.&rdquo;</span><span class="sh">&ldquo;Nahisi ninacontrolliwa na sidhani hii ni fair.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;No. I will not do that. My friendships / privacy / education are important to me.&rdquo;</span><span class="sw">&ldquo;Hapana. Sitafanya hivyo. Urafiki wangu / faragha / elimu ni muhimu kwangu.&rdquo;</span><span class="sh">&ldquo;No. Sitafanya hivyo. Marafiki zangu / privacy / elimu ni muhimu kwangu.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">&ldquo;If you cannot accept my boundaries, I need to reconsider this relationship.&rdquo;</span><span class="sw">&ldquo;Usipoweza kukubali mipaka yangu, ninahitaji kutathmini upya mahusiano haya.&rdquo;</span><span class="sh">&ldquo;Kama huwezi kuaccept boundaries zangu, ninahitaji kureconsider relationship hii.&rdquo;</span></div>
+  </div>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Real Example &mdash; Otieno</span><span class="sw">Mfano Halisi &mdash; Otieno</span><span class="sh">Real Example &mdash; Otieno</span></strong>
+  <span class="en">Otieno told his girlfriend he needed time with his football team and male friends. She threatened to post his private photos. He reported it to a teacher and blocked her. He was right to do so. <em>Sharing intimate images without consent is a criminal offence under Kenya&rsquo;s Computer Misuse and Cybercrimes Act 2018.</em></span>
+  <span class="sw">Otieno alimwambia msichana wake alihitaji muda na timu yake ya soka na marafiki wa kiume. Alitishia kuchapisha picha zake za kibinafsi. Aliripoti kwa mwalimu na kumzuia. Alikuwa sahihi kufanya hivyo. <em>Kushiriki picha za karibu bila ridhaa ni kosa la jinai chini ya Sheria ya Matumizi ya Kompyuta na Uhalifu wa Mtandao ya Kenya 2018.</em></span>
+  <span class="sh">Otieno alimwambia girlfriend yake alihitaji muda na football team yake na marafiki wa kiume. Alitishia kupost picha zake za private. Aliripoti kwa mwalimu na kumblock. Alifanya vizuri. <em>Kushare intimate images bila consent ni criminal offence chini ya Computer Misuse and Cybercrimes Act 2018.</em></span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#128483; <span class="en">Refusal Scripts for Relationship Pressure</span><span class="sw">Misemo ya Kukataa kwa Shinikizo la Mahusiano</span><span class="sh">Refusal Scripts za Relationship Pressure</span></div>
+<p class="tp"><span class="en">Practise these until they feel natural. A ready phrase removes the panic of the moment:</span><span class="sw">Fanya mazoezi ya haya mpaka yaonekane ya kawaida. Msemo ulio tayari huondoa hofu ya wakati huo:</span><span class="sh">Practice hizi mpaka ziwe natural. Ready phrase huremove panic ya moment:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Stop seeing your friends&rdquo;</span><span class="sw">&ldquo;Acha kuwaona marafiki zako&rdquo;</span><span class="sh">&ldquo;Acha kuona marafiki zako&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. My other friendships matter to me and I will not give them up.&rdquo;</span><span class="sw">&ldquo;Hapana. Urafiki wangu mwingine ni muhimu kwangu na sitauacha.&rdquo;</span><span class="sh">&ldquo;No. Marafiki zangu wengine ni muhimu kwangu na sitawacha.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Share your phone password&rdquo;</span><span class="sw">&ldquo;Nishirikishe nywila ya simu yako&rdquo;</span><span class="sh">&ldquo;Share password ya simu yako&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. That&rsquo;s private. Trust doesn&rsquo;t require access to my phone.&rdquo;</span><span class="sw">&ldquo;Hapana. Hiyo ni ya kibinafsi. Uaminifu hauhitaji ufikiaji wa simu yangu.&rdquo;</span><span class="sh">&ldquo;No. Hiyo ni ya private. Trust haihitaji access ya simu yangu.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Skip school for me&rdquo;</span><span class="sw">&ldquo;Acha shule kwa ajili yangu&rdquo;</span><span class="sh">&ldquo;Skip school kwa ajili yangu&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. My education is my priority and it&rsquo;s not negotiable.&rdquo;</span><span class="sw">&ldquo;Hapana. Elimu yangu ni kipaumbele changu na haijadiliwa.&rdquo;</span><span class="sh">&ldquo;No. Elimu yangu ni priority yangu na haijadiliwa.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Post our relationship publicly or I&rsquo;ll break up with you&rdquo;</span><span class="sw">&ldquo;Chapisha mahusiano yetu hadharani au nitakuvunja&rdquo;</span><span class="sh">&ldquo;Post relationship yetu publicly au nitakuacha&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;I don&rsquo;t respond to ultimatums. My answer is no.&rdquo;</span><span class="sw">&ldquo;Sijibu vitisho. Jibu langu ni hapana.&rdquo;</span><span class="sh">&ldquo;Sirespond kwa ultimatums. Jibu langu ni no.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Key Truth:</span><span class="sw">&#128161; Ukweli Muhimu:</span><span class="sh">&#128161; Key Truth:</span></strong>
+  <span class="en"> You can love someone and still say no to them. Love without respect is not love.</span>
+  <span class="sw"> Unaweza kumpenda mtu na bado kumsemea hapana. Upendo bila heshima si upendo.</span>
+  <span class="sh"> Unaweza kumpenda mtu na bado kumsemea no. Love bila respect si love.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario — Jealous Partner (interactive) -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario: Jealous Partner &mdash; What Should Fatuma Do?</span><span class="sw">Hali: Mwenzi Mwenye Wivu &mdash; Fatuma Afanye Nini?</span><span class="sh">Scenario: Jealous Partner &mdash; Fatuma Afanye Nini?</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Fatuma, Form 3, Mombasa</span><span class="sw">Hali &mdash; Fatuma, Kidato cha 3, Mombasa</span><span class="sh">Scenario &mdash; Fatuma, Form 3, Mombasa</span></div>
+  <div class="scenario">
+    <span class="en">Fatuma has a boyfriend who messages her 30 times a day during school, demands she stay home on weekends, and gets angry when she talks to male classmates. He says he does this &ldquo;because he loves her.&rdquo;</span>
+    <span class="sw">Fatuma ana mchumba anayemtumia ujumbe mara 30 kwa siku wakati wa shule, anadai akae nyumbani wikendi, na hukasirika anapozungumza na wanafunzi wa kiume. Anasema anafanya hivi &ldquo;kwa sababu anampenda.&rdquo;</span>
+    <span class="sh">Fatuma ana boyfriend anayemessage mara 30 kwa siku wakati wa shule, anadai akae home wikendi, na hukasirika akizungumza na male classmates. Anasema anafanya hivi &ldquo;kwa sababu anampenda.&rdquo;</span>
+  </div>
+  <div class="sc-q"><span class="en">What should Fatuma do?</span><span class="sw">Fatuma afanye nini?</span><span class="sh">Fatuma afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">A. Accept it &mdash; he just loves her a lot</span>
+      <span class="sw">A. Kukubali &mdash; anampenda tu sana</span>
+      <span class="sh">A. Kukubali &mdash; anampenda tu sana</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')">
+      <span class="en">B. Clearly name the controlling behaviours using DEAR, set firm boundaries, and end the relationship if he doesn&rsquo;t change</span>
+      <span class="sw">B. Taja waziwazi tabia za udhibiti kwa kutumia DEAR, weka mipaka imara, na maliza mahusiano asipobadilika</span>
+      <span class="sh">B. Clearly taja controlling behaviours using DEAR, weka firm boundaries, na end relationship asipobadilika</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">C. Reduce her time with male classmates to keep the peace</span>
+      <span class="sw">C. Punguza muda wake na wanafunzi wa kiume kudumisha amani</span>
+      <span class="sh">C. Punguza time yake na male classmates ku-keep peace</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: Ending Unhealthy Relationships Safely -->
+<div class="slide">
+<div class="slide-head">&#128683; <span class="en">Ending Unhealthy Relationships Safely</span><span class="sw">Kumalizia Mahusiano Yasiyofaa kwa Usalama</span><span class="sh">Kumaliza Unhealthy Relationships kwa Usalama</span></div>
+<p class="tp"><span class="en">You have the right to end any relationship at any time. Here is how to do it safely:</span><span class="sw">Una haki ya kumaliza mahusiano yoyote wakati wowote. Hivi ndivyo unavyofanya kwa usalama:</span><span class="sh">Una haki ya kumaliza relationship yoyote wakati wowote. Hivi ndivyo unavyofanya kwa usalama:</span></p>
+<ul class="bl">
+  <li><span class="en">Do it in a public place or with a trusted person nearby</span><span class="sw">Fanya katika mahali pa watu au na mtu wa kuamini karibu</span><span class="sh">Fanya mahali pa watu au na trusted person karibu</span></li>
+  <li><span class="en">Be clear and final: &ldquo;I am ending this relationship. Please do not contact me again.&rdquo;</span><span class="sw">Kuwa wazi na wa mwisho: &ldquo;Ninamaliza mahusiano haya. Tafadhali usiniwasiliane tena.&rdquo;</span><span class="sh">Kuwa clear na final: &ldquo;Ninamaliza relationship hii. Tafadhali usiwasiliane nami tena.&rdquo;</span></li>
+  <li><span class="en">Block on all platforms if needed</span><span class="sw">Zuia kwenye majukwaa yote ikiwa inahitajika</span><span class="sh">Block kwa platforms zote kama inahitajika</span></li>
+  <li><span class="en">If they threaten you: screenshot evidence, report to a trusted adult, Childline 116, or police</span><span class="sw">Wakikutishia: piga picha ya ushahidi, ripoti kwa mtu mzima wa kuamini, Childline 116, au polisi</span><span class="sh">Wakikutishia: screenshot evidence, ripoti kwa trusted adult, Childline 116, au polisi</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Know the Law:</span><span class="sw">&#9888; Jua Sheria:</span><span class="sh">&#9888; Jua Sheria:</span></strong>
+  <span class="en"> &ldquo;Revenge porn&rdquo; (sharing private images without consent) is a criminal offence under Kenya&rsquo;s Computer Misuse and Cybercrimes Act 2018. You can report to Childline 116, the school, or police &mdash; and screenshots are valid evidence.</span>
+  <span class="sw"> &ldquo;Picha za kulipiza kisasi&rdquo; (kushiriki picha za kibinafsi bila ridhaa) ni kosa la jinai chini ya Sheria ya Matumizi ya Kompyuta na Uhalifu wa Mtandao ya Kenya 2018. Unaweza kuripoti kwa Childline 116, shule, au polisi &mdash; na picha za skrini ni ushahidi halali.</span>
+  <span class="sh"> &ldquo;Revenge porn&rdquo; (kushare private images bila consent) ni criminal offence chini ya Computer Misuse and Cybercrimes Act 2018. Unaweza kuripoti kwa Childline 116, shule, au polisi &mdash; na screenshots ni valid evidence.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128222; Immediate Help:</span><span class="sw">&#128222; Msaada wa Haraka:</span><span class="sh">&#128222; Immediate Help:</span></strong>
+  <span class="en"> Childline 116 &mdash; free, any phone, for anyone under 18 &bull; Police 999 / 112</span>
+  <span class="sw"> Childline 116 &mdash; bure, simu yoyote, chini ya miaka 18 &bull; Polisi 999 / 112</span>
+  <span class="sh"> Childline 116 &mdash; free, simu yoyote, chini ya miaka 18 &bull; Polisi 999 / 112</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Building Positive Relationship Habits -->
+<div class="slide">
+<div class="slide-head">&#127775; <span class="en">Building Positive Relationship Habits</span><span class="sw">Kujenga Tabia Nzuri za Mahusiano</span><span class="sh">Kujenga Positive Relationship Habits</span></div>
+<ul class="bl">
+  <li><span class="en">Choose friends and partners who celebrate your growth</span><span class="sw">Chagua marafiki na washirika wanaosherehekea ukuaji wako</span><span class="sh">Chagua marafiki na partners wanaocelebrate growth yako</span></li>
+  <li><span class="en">Regular self-check: &ldquo;Do I feel free, safe, and respected in this relationship?&rdquo;</span><span class="sw">Ukaguzi wa mara kwa mara wa nafsi: &ldquo;Je, nahisi huru, salama, na kuheshimiwa katika mahusiano haya?&rdquo;</span><span class="sh">Regular self-check: &ldquo;Je, nahisi free, safe, na respected katika relationship hii?&rdquo;</span></li>
+  <li><span class="en">Maintain friendships outside any romantic relationship &mdash; isolation is a GBV warning sign</span><span class="sw">Dumisha urafiki nje ya mahusiano yoyote ya kimapenzi &mdash; kutengwa ni ishara ya onyo ya GBV</span><span class="sh">Maintain friendships nje ya romantic relationship yoyote &mdash; isolation ni GBV warning sign</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Mutual Respect</span><span class="sw">&#128273; Heshima ya Pande Zote</span><span class="sh">&#128273; Mutual Respect</span></strong>
+  <span class="en">Treating each other&rsquo;s feelings, choices, and boundaries as equally important.</span>
+  <span class="sw">Kuchukulia hisia, maamuzi, na mipaka ya kila mmoja kama muhimu sawa.</span>
+  <span class="sh">Kuchukulia feelings, choices, na boundaries za kila mmoja kama muhimu sawa.</span>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Example &mdash; Wanjiku &amp; Her Boyfriend</span><span class="sw">Mfano &mdash; Wanjiku &amp; Mchumba Wake</span><span class="sh">Example &mdash; Wanjiku &amp; Boyfriend Wake</span></strong>
+  <span class="en">Wanjiku and her boyfriend agreed early on: no phone checking, separate friend groups, study time is sacred. Two years later, both got their KCSE results and joined university together.</span>
+  <span class="sw">Wanjiku na mchumba wake walikubaliana mapema: hakuna kuangalia simu, vikundi tofauti vya marafiki, muda wa kusoma ni mtakatifu. Miaka miwili baadaye, wote wawili walipata matokeo ya KCSE na kujiunga na chuo kikuu pamoja.</span>
+  <span class="sh">Wanjiku na boyfriend wake walikubaliana mapema: hakuna ku-check simu, separate friend groups, study time ni sacred. Miaka miwili baadaye, wote wawili walipata KCSE results na kujoin university pamoja.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Wisdom</div>
+  <span class="en" style="display:block;">&ldquo;Relationship yenye boundaries hazifanyi katu iwe less loving &mdash; inafanya iwe more real.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Mahusiano yenye mipaka hayafanyi katu yawe na upendo mdogo &mdash; yanafanya yawe ya kweli zaidi.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Relationship yenye boundaries hazifanyi katu iwe less loving &mdash; inafanya iwe more real.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Healthy Relationships &mdash; Boundaries and Refusal</span><span class="sw">Mahusiano ya Afya &mdash; Mipaka na Kukataa</span><span class="sh">Healthy Relationships &mdash; Boundaries and Refusal</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one controlling behaviour shown in the video and explain how you would use DEAR to respond. Share with a partner.</span>
+    <span class="sw"> Tambua tabia moja ya udhibiti iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kujibu. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua controlling behaviour moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kujibu. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Akinyi, 16, Kisumu, feels her boyfriend controls everything she does. Which of the following are signs of an unhealthy relationship? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Demanding access to her phone password at all times</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Getting angry when she spends time with her female friends</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Giving her space to pursue her hobbies independently</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Threatening to share her private photos if she disagrees</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Using guilt to make her cancel plans with family</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Otieno&rsquo;s girlfriend says &ldquo;You owe me &mdash; I&rsquo;ve bought you many gifts.&rdquo; She is using this to pressure him into staying in the relationship. What is the BEST name for this pressure tactic?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Normalising</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Entitlement / debt framing</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Daring</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Broken record</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. A peer educator in Nakuru explains how to use the DEAR method to set relationship boundaries. Which of the following steps are part of the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Describe the situation or behaviour clearly</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Express how you feel about it</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Apologise for setting the boundary to avoid conflict</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Assert your boundary clearly and firmly</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Reinforce the consequence if the boundary is not respected</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Zawadi, Form 2 Nairobi, tells her friend: &ldquo;Post our relationship publicly or I will break up with you.&rdquo; What is the BEST refusal response her friend should give?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Post immediately to avoid the breakup</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Ask her friends to decide</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> &ldquo;I don&rsquo;t respond to ultimatums. My answer is no.&rdquo;</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Agree for now and explain later</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. A life-skills facilitator in Mombasa asks the class: &ldquo;What makes a healthy relationship?&rdquo; Which of the following are features of a healthy relationship? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Mutual respect and trust between both people</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Space to maintain separate friendships outside the relationship</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> One person making all the decisions for both</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Shared decision-making and open communication</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Honesty even when the truth is difficult</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Fatuma&rsquo;s boyfriend messages her 30 times a day during school and forbids her from talking to male classmates. Which term BEST describes this behaviour pattern?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Healthy jealousy</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Coercive control</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Mutual care</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Constructive criticism</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. Adhiambo wants to end an unhealthy friendship safely. Which of the following are safe steps she should take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Have the conversation in a public place or with someone she trusts nearby</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Agree to continue the friendship to avoid confrontation</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Be clear and final: &ldquo;I am ending this friendship. Please do not contact me again.&rdquo;</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Block on all social platforms if the other person continues to harass her</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Screenshot any threatening messages as evidence before blocking</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. Juma&rsquo;s ex-girlfriend threatens to share his private photos if he does not take her back. Under which Kenyan law is this a criminal offence?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> The Children Act 2022</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> The Sexual Offences Act 2006</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> The Computer Misuse and Cybercrimes Act 2018</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> The Public Health Act</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. During a Form 3 class in Eldoret, students discuss the difference between healthy compromise and harmful compliance. Which of the following are examples of healthy compromise? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Two friends agree to meet halfway between their homes</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> A partner gives up her education because her boyfriend asks her to</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> A couple agrees on a time limit for calls on school nights</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Partners alternate whose family event to attend each holiday</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> A student abandons her friendships because her boyfriend demands exclusivity</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. Wanjiku notices that since dating her new boyfriend she has stopped attending debate club, cut off her best friends, and her KCSE revision has suffered. What is the MOST important first step she should take?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Continue as normal &mdash; relationships require sacrifice</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Ask her boyfriend&rsquo;s friends whether the relationship is normal</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Post about the relationship on social media for advice</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Do a self-check, talk to a trusted adult or school counsellor, and reassess the relationship</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Excessive messaging, isolation, and anger at normal social interaction are signs of coercive control, not love.</span><span class="sw">Ujumbe kupita kiasi, kutengwa, na hasira kwa mwingiliano wa kijamii wa kawaida ni ishara za udhibiti wa kulazimisha, si upendo.</span><span class="sh">Excessive messaging, isolation, na hasira kwa normal social interaction ni signs za coercive control, si love.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Adjusting your behaviour to manage an insecure partner escalates the control rather than resolving it. Coercive control requires clear DEAR boundaries, not accommodation.</span><span class="sw">Kurekebisha tabia yako kudhibiti mwenzi asiye na uhakika huongeza udhibiti badala ya kuusuluhisha. Udhibiti wa kulazimisha unahitaji mipaka ya DEAR wazi, si kukubaliana.</span><span class="sh">Kurekebisha behaviour yako ku-manage insecure partner huescalate control badala ya kuisolve. Coercive control inahitaji clear DEAR boundaries, si accommodation.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,C,D,E','mcq8':'C','mcq9':'A,C,D','mcq10':'D'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand healthy relationship boundaries very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

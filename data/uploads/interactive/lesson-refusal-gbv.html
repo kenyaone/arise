@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Gender-Based Violence | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-gbv">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Gender-Based Violence &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; GBV &amp; Coercion</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; GBV na Udhibiti</span><span class="sh" style="display:none;">Refusal Skills &mdash; GBV &amp; Coercion</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Recognise warning signs of GBV and coercive control in relationships</span><span class="sw">Tambua ishara za onyo za GBV na udhibiti wa kulazimisha katika mahusiano</span><span class="sh">Tambua warning signs za GBV na coercive control kwa relationships</span></li>
+    <li><span class="en">Apply the DEAR method to refuse violent, abusive, or controlling behaviour</span><span class="sw">Tumia njia ya DEAR kukataa tabia ya jeuri, ukatili, au udhibiti</span><span class="sh">Apply DEAR method kukataa violent, abusive, au controlling behaviour</span></li>
+    <li><span class="en">Know the difference between healthy conflict and GBV</span><span class="sw">Jua tofauti kati ya ugomvi wa kawaida na GBV</span><span class="sh">Jua difference kati ya healthy conflict na GBV</span></li>
+    <li><span class="en">Identify safe exits from dangerous situations</span><span class="sw">Tambua njia salama za kutoka katika hali hatari</span><span class="sh">Tambua safe exits kutoka kwa dangerous situations</span></li>
+    <li><span class="en">Know GBV reporting channels in Kenya: Childline 116, gender desk, FIDA Kenya, National Gender Helpline 0800 720 601</span><span class="sw">Jua njia za kuripoti GBV Kenya: Childline 116, meza ya jinsia, FIDA Kenya, Msaada wa Kitaifa wa Jinsia 0800 720 601</span><span class="sh">Jua GBV reporting channels Kenya: Childline 116, gender desk, FIDA Kenya, National Gender Helpline 0800 720 601</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> What would you do if a partner or family member threatened you &mdash; would you know where to go for help?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Ungefanya nini ikiwa mwenzi au mwanafamilia akikutishia &mdash; ungejua wapi kwenda kupata msaada?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Ungefanya nini kama partner au family member akikuthreatia &mdash; ungejua wapi kwenda kupata help?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: What Is GBV and Why Refusal Skills Matter -->
+<div class="slide">
+<div class="slide-head">&#128683; <span class="en">What Is GBV and Why Refusal Skills Matter</span><span class="sw">GBV ni Nini na Kwa Nini Ujuzi wa Kukataa Unamaanisha</span><span class="sh">GBV ni Nini na Kwa Nini Refusal Skills Zinamaanisha</span></div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Definition: Gender-Based Violence (GBV)</span><span class="sw">&#128273; Maana: Ukatili wa Kijinsia (GBV)</span><span class="sh">&#128273; Definition: Gender-Based Violence (GBV)</span></strong>
+  <span class="en">GBV is any harmful act directed at a person because of their gender. In Kenyan adolescent contexts this includes: physical violence by partners, sexual coercion, emotional/psychological abuse, FGM, forced marriage, and online harassment.</span>
+  <span class="sw">GBV ni tendo lolote la madhara linaloelekezwa kwa mtu kwa sababu ya jinsia yake. Katika mazingira ya vijana Kenya, hii ni pamoja na: jeuri ya kimwili na mwenzi, kulazimishwa kingono, unyanyasaji wa kihisia/kisaikolojia, ukeketaji, ndoa ya kulazimishwa, na unyanyasaji mtandaoni.</span>
+  <span class="sh">GBV ni any harmful act inayoelekezwa kwa mtu kwa sababu ya gender yao. Kwa Kenyan adolescent contexts hii ni pamoja na: physical violence na partners, sexual coercion, emotional/psychological abuse, FGM, forced marriage, na online harassment.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Coercive Control</span><span class="sw">&#128273; Neno Muhimu: Udhibiti wa Kulazimisha</span><span class="sh">&#128273; Key Term: Coercive Control</span></strong>
+  <span class="en">A pattern of behaviour used to dominate, isolate, and control a partner. It is often invisible at first but escalates over time.</span>
+  <span class="sw">Mfumo wa tabia unaotumiwa kutawala, kutengwa, na kudhibiti mwenzi. Mara nyingi hauonekani mwanzoni lakini unakuwa mbaya zaidi kadri muda unavyopita.</span>
+  <span class="sh">Pattern ya behaviour inayotumiwa ku-dominate, ku-isolate, na ku-control partner. Mara nyingi haionekani mwanzoni lakini inaescalate over time.</span>
+</div>
+<p class="tp">
+  <span class="en"><strong>KDHS 2022:</strong> 34% of Kenyan women aged 15&ndash;49 have experienced physical violence. GBV does NOT only happen to women &mdash; boys and men can also be victims.</span>
+  <span class="sw"><strong>KDHS 2022:</strong> 34% ya wanawake Kenya wenye umri wa miaka 15&ndash;49 wamepata jeuri ya kimwili. GBV HAIZUII wanawake peke yao &mdash; wavulana na wanaume pia wanaweza kuwa waathirika.</span>
+  <span class="sh"><strong>KDHS 2022:</strong> 34% ya wanawake Kenya wenye umri wa miaka 15&ndash;49 wamepitia physical violence. GBV HAIFANYIKI kwa wanawake tu &mdash; wavulana na wanaume pia wanaweza kuwa victims.</span>
+</p>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Corner</div>
+  <span class="en" style="display:block;">"Relationship si prison. Ukijisikia trapped &mdash; hiyo si love."</span>
+  <span class="sw" style="display:none;">"Uhusiano si gereza. Ukijisikia umefungwa &mdash; hiyo si upendo."</span>
+  <span class="sh" style="display:none;">"Relationship si prison. Ukijisikia trapped &mdash; hiyo si love."</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Warning Signs of an Abusive Situation -->
+<div class="slide">
+<div class="slide-head">&#128680; <span class="en">Warning Signs of an Abusive Situation</span><span class="sw">Ishara za Onyo za Hali ya Ukatili</span><span class="sh">Warning Signs za Abusive Situation</span></div>
+<p class="tp"><span class="en">Red flags are warning signs that a relationship is becoming abusive. Know these patterns:</span><span class="sw">Alama nyekundu ni ishara za onyo kwamba mahusiano yanakuwa ya ukatili. Jua mifumo hii:</span><span class="sh">Red flags ni warning signs kwamba relationship inakuwa abusive. Jua patterns hizi:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Jealousy disguised as love &mdash; &ldquo;I check your phone because I love you&rdquo;</span><span class="sw">Wivu uliofichwa kama upendo &mdash; &ldquo;Nakagua simu yako kwa sababu nakupenda&rdquo;</span><span class="sh">Jealousy iliyofichwa kama love &mdash; &ldquo;Nakagua phone yako kwa sababu nakupenda&rdquo;</span></strong>
+  <span class="en">Checking your phone, messages, and location is control, not love.</span>
+  <span class="sw">Kukagua simu yako, ujumbe, na mahali ulipo ni udhibiti, si upendo.</span>
+  <span class="sh">Kukagua phone yako, messages, na location ni control, si love.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Isolation from family and friends &mdash; &ldquo;Your friends are bad for you&rdquo;</span><span class="sw">Kutengwa na familia na marafiki &mdash; &ldquo;Marafiki wako ni wabaya kwako&rdquo;</span><span class="sh">Isolation kutoka kwa family na friends &mdash; &ldquo;Marafiki wako ni wabaya kwako&rdquo;</span></strong>
+  <span class="en">Cutting you off from support systems makes you easier to control.</span>
+  <span class="sw">Kukukata kutoka kwa mifumo ya msaada inakufanya iwe rahisi zaidi kukudhibiti.</span>
+  <span class="sh">Kukukata kutoka kwa support systems inakufanya iwe easier ku-control.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">Threats &mdash; &ldquo;If you leave me, I will hurt you / tell everyone about you&rdquo;</span><span class="sw">Vitisho &mdash; &ldquo;Ukinicha, nitakudhuru / nitawaambia watu wote kuhusu wewe&rdquo;</span><span class="sh">Threats &mdash; &ldquo;Ukinicha, nitakudhuru / nitawaambia watu wote kuhusu wewe&rdquo;</span></strong>
+  <span class="en">Any threat to harm you or damage your reputation is a serious warning sign.</span>
+  <span class="sw">Tishio lolote la kukudhuru au kudhuru sifa yako ni ishara ya onyo kubwa.</span>
+  <span class="sh">Any threat ya kukudhuru au ku-damage reputation yako ni serious warning sign.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Physical intimidation &mdash; grabbing, pushing, blocking exits</span><span class="sw">Vitisho vya kimwili &mdash; kukushika, kukusukuma, kuzuia njia za kutoka</span><span class="sh">Physical intimidation &mdash; kukushika, kukupush, ku-block exits</span></strong>
+  <span class="en">You have the right to move freely and leave any situation.</span>
+  <span class="sw">Una haki ya kutembea kwa uhuru na kutoka katika hali yoyote.</span>
+  <span class="sh">Una haki ya kutembea freely na kuondoka kwa situation yoyote.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">Controlling finances, clothing, and movement</span><span class="sw">Kudhibiti fedha, mavazi, na harakati</span><span class="sh">Ku-control finances, mavazi, na movement</span></strong>
+  <span class="en">A partner dictating what you wear, where you go, or holding your money is abuse.</span>
+  <span class="sw">Mwenzi anayeamua unavyovaa, unapoenda, au kushikilia pesa yako ni ukatili.</span>
+  <span class="sh">Partner anayeamua unavyovaa, unapoenda, au kushikilia pesa yako ni abuse.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Remember:</span><span class="sw">&#9888; Kumbuka:</span><span class="sh">&#9888; Kumbuka:</span></strong>
+  <span class="en"> These are not love. They are control. A partner who truly loves you will not harm you.</span>
+  <span class="sw"> Hizi si upendo. Ni udhibiti. Mwenzi anayekupenda kweli hatakudhuru.</span>
+  <span class="sh"> Hizi si love. Ni control. Partner anayekupenda kweli hatakudhuru.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR Method for GBV Situations -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR Method for GBV Situations</span><span class="sw">Njia ya DEAR kwa Hali za GBV</span><span class="sh">DEAR Method kwa GBV Situations</span></div>
+<p class="tp"><span class="en">DEAR is a structured assertive method. In GBV situations, safety comes FIRST &mdash; leave immediately if you are in danger, then report.</span><span class="sw">DEAR ni njia iliyopangwa ya ujasiri. Katika hali za GBV, usalama unakuja KWANZA &mdash; toka mara moja ukiwa katika hatari, kisha ripoti.</span><span class="sh">DEAR ni structured assertive method. Kwa GBV situations, safety inakuja KWANZA &mdash; toka mara moja kama uko katika danger, kisha ripoti.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You are threatening / hurting me, and that is not acceptable.&rdquo;</span><span class="sw">&ldquo;Unanitishia / kuniumiza, na hiyo haikusudiwa.&rdquo;</span><span class="sh">&ldquo;Unanithreatia / kunidhuru, na hiyo si acceptable.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel afraid and unsafe.&rdquo;</span><span class="sw">&ldquo;Nahisi hofu na kutokuwa salama.&rdquo;</span><span class="sh">&ldquo;Nahisi scared na unsafe.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;I will not accept this treatment. I am leaving.&rdquo;</span><span class="sw">&ldquo;Sitakubali matibabu haya. Ninaenda.&rdquo;</span><span class="sh">&ldquo;Sitakubali treatment hii. Naenda.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">&ldquo;I will seek help and report this.&rdquo; + LEAVE IMMEDIATELY if in danger.</span><span class="sw">&ldquo;Nitatafuta msaada na kuripoti hili.&rdquo; + TOKA MARA MOJA ukiwa katika hatari.</span><span class="sh">&ldquo;Nitatafuta help na kuripoti hii.&rdquo; + TOKA MARA MOJA kama uko katika danger.</span></div>
+  </div>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Key Difference:</span><span class="sw">&#9888; Tofauti Muhimu:</span><span class="sh">&#9888; Key Difference:</span></strong>
+  <span class="en"> In dangerous GBV situations, do not wait to complete the full DEAR method if you are in immediate danger &mdash; LEAVE FIRST, report later.</span>
+  <span class="sw"> Katika hali hatari za GBV, usisubiri kukamilisha njia nzima ya DEAR ukiwa katika hatari ya haraka &mdash; TOKA KWANZA, ripoti baadaye.</span>
+  <span class="sh"> Kwa dangerous GBV situations, usisubiri ku-complete DEAR yote kama uko katika immediate danger &mdash; TOKA KWANZA, ripoti baadaye.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Safety Bag Tip</span><span class="sw">&#128161; Kidokezo cha Mfuko wa Usalama</span><span class="sh">&#128161; Safety Bag Tip</span></strong>
+  <span class="en"> Have a safety bag ready: ID, phone, small cash, important documents. Know your safe exit route before you need it.</span>
+  <span class="sw"> Kuwa na mfuko wa usalama tayari: ID, simu, pesa kidogo, nyaraka muhimu. Jua njia yako salama ya kutoka kabla hujahitaji.</span>
+  <span class="sh"> Kuwa na safety bag ready: ID, phone, pesa kidogo, important documents. Jua safe exit route yako kabla hujahitaji.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts for GBV Situations -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts for GBV Situations</span><span class="sw">Maneno ya Kukataa kwa Hali za GBV</span><span class="sh">Refusal Scripts kwa GBV Situations</span></div>
+<p class="tp"><span class="en">Having a ready phrase removes the panic of the moment. Practise these until they feel natural:</span><span class="sw">Kuwa na msemo tayari huondoa hofu ya wakati huo. Fanya mazoezi ya haya mpaka yaonekane ya kawaida:</span><span class="sh">Kuwa na phrase ready huremove panic ya moment. Practice hizi mpaka ziwe natural:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Controlling Partner</span><span class="sw">Mwenzi wa Kudhibiti</span><span class="sh">Controlling Partner</span></div>
+  <div class="phrase"><span class="en">&ldquo;Checking my phone without permission is not acceptable. This is a boundary I am setting.&rdquo;</span><span class="sw">&ldquo;Kukagua simu yangu bila ruhusa si sahihi. Hii ni mipaka ninayoweka.&rdquo;</span><span class="sh">&ldquo;Kukagua phone yangu bila permission si acceptable. Hii ni boundary ninayoweka.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Threats of Violence</span><span class="sw">Vitisho vya Jeuri</span><span class="sh">Threats za Violence</span></div>
+  <div class="phrase"><span class="en">&ldquo;Threatening me is a crime. I am leaving and I will report this.&rdquo;</span><span class="sw">&ldquo;Kunihtishia ni uhalifu. Ninaenda na nitaripoti hili.&rdquo;</span><span class="sh">&ldquo;Kunihtishia ni crime. Naenda na nitaripoti hii.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Pressure to Drop School</span><span class="sw">Shinikizo la Kuacha Shule</span><span class="sh">Pressure ya Kudrop School</span></div>
+  <div class="phrase"><span class="en">&ldquo;My education is not negotiable. I will not leave school.&rdquo;</span><span class="sw">&ldquo;Elimu yangu haijadiliwa. Sitaacha shule.&rdquo;</span><span class="sh">&ldquo;Education yangu si negotiable. Sitaacha school.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Online Harassment</span><span class="sw">Unyanyasaji Mtandaoni</span><span class="sh">Online Harassment</span></div>
+  <div class="phrase"><span class="en">&ldquo;Sending me threatening messages is harassment. I am screenshotting this and reporting it.&rdquo;</span><span class="sw">&ldquo;Kunitumia ujumbe wa vitisho ni unyanyasaji. Ninachukua picha ya skrini na kuripoti.&rdquo;</span><span class="sh">&ldquo;Kunitumia threatening messages ni harassment. Ninascreenshot hii na kuiripoti.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Remember</span><span class="sw">&#128161; Kumbuka</span><span class="sh">&#128161; Kumbuka</span></strong>
+  <span class="en"> Your safety is more important than preserving a relationship. A healthy relationship does not require you to accept abuse.</span>
+  <span class="sw"> Usalama wako ni muhimu zaidi kuliko kuhifadhi uhusiano. Uhusiano wenye afya hauhitaji ukubali ukatili.</span>
+  <span class="sh"> Safety yako ni more important kuliko ku-preserve relationship. Healthy relationship haitahitaji ukubali abuse.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario — Controlling Boyfriend (interactive) -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario &mdash; Controlling Boyfriend</span><span class="sw">Hali &mdash; Mpenzi wa Kudhibiti</span><span class="sh">Scenario &mdash; Controlling Boyfriend</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Miriam, Form 3, Meru</span><span class="sw">Hali &mdash; Miriam, Kidato cha 3, Meru</span><span class="sh">Scenario &mdash; Miriam, Form 3, Meru</span></div>
+  <div class="scenario">
+    <span class="en">Miriam (Form 3, Meru) has a boyfriend who checks her phone daily, gets angry when she talks to male classmates, and slapped her once after an argument. He apologised and bought her a gift.</span>
+    <span class="sw">Miriam (Kidato cha 3, Meru) ana mpenzi anayekagua simu yake kila siku, hukasirika anapoongea na wanafunzi wa kiume, na alimpiga kofi mara moja baada ya ugomvi. Aliomba msamaha na kununua zawadi.</span>
+    <span class="sh">Miriam (Form 3, Meru) ana boyfriend anayekagua phone yake kila siku, hukasirika akiongea na male classmates, na alimslap mara moja baada ya argument. Aliapologise na kumnunulia gift.</span>
+  </div>
+  <div class="sc-q"><span class="en">What should Miriam do?</span><span class="sw">Miriam afanye nini?</span><span class="sh">Miriam afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPickGBV(this,'scA','no','resA','fb_no_gift')">
+      <span class="en">A. Accept the apology &mdash; gifts mean he feels sorry</span>
+      <span class="sw">A. Kubali msamaha &mdash; zawadi inamaanisha anahuzunika</span>
+      <span class="sh">A. Accept apology &mdash; gift inamaanisha anahisi sorry</span>
+    </button>
+    <button class="choice" onclick="scPickGBV(this,'scA','ok','resA','fb_ok_report')">
+      <span class="en">B. Recognise the pattern of coercive control, safely distance herself, and report to a school counsellor or Childline 116</span>
+      <span class="sw">B. Tambua mfumo wa udhibiti wa kulazimisha, jitenga salama, na ripoti kwa mshauri wa shule au Childline 116</span>
+      <span class="sh">B. Tambua pattern ya coercive control, jitenga safely, na ripoti kwa school counsellor au Childline 116</span>
+    </button>
+    <button class="choice" onclick="scPickGBV(this,'scA','no','resA','fb_no_warn')">
+      <span class="en">C. Warn him once and stay if he promises to change</span>
+      <span class="sw">C. Mwonya mara moja na kaa akiahidi kubadilika</span>
+      <span class="sh">C. Mwarn mara moja na kaa kama akiahidi kubadilika</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: Safe Exit Planning -->
+<div class="slide">
+<div class="slide-head">&#128682; <span class="en">Safe Exit Planning</span><span class="sw">Kupanga Njia Salama ya Kutoka</span><span class="sh">Safe Exit Planning</span></div>
+<p class="tp"><span class="en">If you are in a dangerous GBV situation, follow these steps:</span><span class="sw">Ukiwa katika hali hatari ya GBV, fuata hatua hizi:</span><span class="sh">Kama uko katika dangerous GBV situation, follow steps hizi:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Tell a trusted person where you are going</span><span class="sw">Mwambie mtu unayemwamini unapoenda</span><span class="sh">Mwambie trusted person unapoenda</span></strong>
+  <span class="en">A friend, teacher, or relative should always know your plan.</span>
+  <span class="sw">Rafiki, mwalimu, au ndugu anapaswa kujua mpango wako kila wakati.</span>
+  <span class="sh">Friend, mwalimu, au relative anapaswa kujua plan yako kila wakati.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Save emergency numbers on your phone</span><span class="sw">Hifadhi nambari za dharura kwenye simu yako</span><span class="sh">Save emergency numbers kwa phone yako</span></strong>
+  <span class="en">Childline 116, National Gender Helpline 0800 720 601.</span>
+  <span class="sw">Childline 116, Msaada wa Kitaifa wa Jinsia 0800 720 601.</span>
+  <span class="sh">Childline 116, National Gender Helpline 0800 720 601.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">Report at the nearest gender desk</span><span class="sw">Ripoti kwenye meza ya jinsia iliyo karibu</span><span class="sh">Ripoti kwa gender desk iliyo karibu</span></strong>
+  <span class="en">Every police station in Kenya has a gender desk with trained officers.</span>
+  <span class="sw">Kila kituo cha polisi Kenya kina meza ya jinsia yenye maafisa waliofunzwa.</span>
+  <span class="sh">Every police station Kenya ina gender desk yenye trained officers.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Contact FIDA Kenya for free legal help</span><span class="sw">Wasiliana na FIDA Kenya kwa msaada wa kisheria bure</span><span class="sh">Wasiliana na FIDA Kenya kwa free legal help</span></strong>
+  <span class="en">FIDA Kenya: 0719 638 006 &mdash; provides free legal advice for GBV survivors.</span>
+  <span class="sw">FIDA Kenya: 0719 638 006 &mdash; hutoa ushauri wa kisheria bure kwa walionusurika GBV.</span>
+  <span class="sh">FIDA Kenya: 0719 638 006 &mdash; hutoa free legal advice kwa GBV survivors.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">If in immediate danger: call 999 (police) or 116 (Childline)</span><span class="sw">Ukiwa katika hatari ya haraka: piga simu 999 (polisi) au 116 (Childline)</span><span class="sh">Kama uko katika immediate danger: piga 999 (police) au 116 (Childline)</span></strong>
+  <span class="en">These lines are free and available 24 hours a day.</span>
+  <span class="sw">Nambari hizi ni bure na zinapatikana saa 24 kwa siku.</span>
+  <span class="sh">Lines hizi ni free na zinapatikana saa 24 kwa siku.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Important:</span><span class="sw">&#9888; Muhimu:</span><span class="sh">&#9888; Muhimu:</span></strong>
+  <span class="en"> Never return alone to collect belongings &mdash; take someone with you or ask police to accompany you.</span>
+  <span class="sw"> Usirudi peke yako kuchukua vitu vyako &mdash; chukua mtu nawe au mwombe polisi akuandamane.</span>
+  <span class="sh"> Usirudi peke yako ku-collect belongings &mdash; chukua mtu nawe au mwombe police wakuandamane.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Your Rights Under Kenyan Law -->
+<div class="slide">
+<div class="slide-head">&#9878;&#65039; <span class="en">Your Rights Under Kenyan Law</span><span class="sw">Haki Zako Chini ya Sheria ya Kenya</span><span class="sh">Haki Zako Chini ya Kenyan Law</span></div>
+<div class="key-term">
+  <strong><span class="en">Protection Against Domestic Violence Act 2015</span><span class="sw">Sheria ya Ulinzi Dhidi ya Jeuri ya Nyumbani 2015</span><span class="sh">Protection Against Domestic Violence Act 2015</span></strong>
+  <span class="en">Covers all forms of GBV including psychological abuse &mdash; you do not have to be physically harmed to access protection.</span>
+  <span class="sw">Inashughulikia aina zote za GBV ikiwemo unyanyasaji wa kisaikolojia &mdash; hauhitaji kudhuriwaa kimwili kupata ulinzi.</span>
+  <span class="sh">Inashughulikia aina zote za GBV ikiwemo psychological abuse &mdash; huhitaji kudhuriwaa physically ku-access protection.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">Sexual Offences Act 2006</span><span class="sw">Sheria ya Makosa ya Ngono 2006</span><span class="sh">Sexual Offences Act 2006</span></strong>
+  <span class="en">Criminalises sexual violence, marital rape, and defilement. Applies to all genders.</span>
+  <span class="sw">Inahalifu jeuri ya kingono, ubakaji wa ndoa, na ufisadi. Inatumika kwa jinsia zote.</span>
+  <span class="sh">Inacriminalise sexual violence, marital rape, na defilement. Inatumika kwa genders zote.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">Children Act 2022</span><span class="sw">Sheria ya Watoto 2022</span><span class="sh">Children Act 2022</span></strong>
+  <span class="en">Protects minors from all forms of violence and exploitation. Any form of GBV can be reported at a police station, hospital, or through Childline 116.</span>
+  <span class="sw">Inalinda watoto wachanga kutoka kwa aina zote za jeuri na unyonyaji. Aina yoyote ya GBV inaweza kuripotiwa kwenye kituo cha polisi, hospitali, au kupitia Childline 116.</span>
+  <span class="sh">Inalinda minors kutoka kwa aina zote za violence na exploitation. Aina yoyote ya GBV inaweza kuripotiwa kwa police station, hospitali, au through Childline 116.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Protection Order</span><span class="sw">&#128273; Neno Muhimu: Amri ya Ulinzi</span><span class="sh">&#128273; Key Term: Protection Order</span></strong>
+  <span class="en">A legal document issued by a court that prohibits an abuser from contacting or approaching the victim. You can apply for one at any magistrate&rsquo;s court.</span>
+  <span class="sw">Hati ya kisheria iliyotolewa na mahakama inayomkataza mnyanyasaji kuwasiliana na au kumkaribia mwathirika. Unaweza kuomba katika mahakama yoyote ya mahakimu.</span>
+  <span class="sh">Legal document iliyotolewa na court inayomkataza abuser kucontact au kumkaribia victim. Unaweza kuapply kwa magistrate's court yoyote.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Haki Zako</div>
+  <span class="en" style="display:block;">"Haki yako ya kuishi salama ni sheria ya Kenya. Mtu yeyote anayekunyanyasa anakiuka sheria."</span>
+  <span class="sw" style="display:none;">"Haki yako ya kuishi salama ni sheria ya Kenya. Mtu yeyote anayekunyanyasa anakiuka sheria."</span>
+  <span class="sh" style="display:none;">"Haki yako ya kuishi salama ni sheria ya Kenya. Mtu yeyote anayekunyanyasa anakiuka sheria."</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">GBV video loading&hellip;</span><span class="sw">Video ya GBV inapakia&hellip;</span><span class="sh">GBV video inaload&hellip;</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; Video Caption:</span><span class="sw">&#128196; Maelezo ya Video:</span><span class="sh">&#128196; Video Caption:</span></strong>
+    <span class="en"> Gender-Based Violence &mdash; Recognising and Refusing Coercion.</span>
+    <span class="sw"> Ukatili wa Kijinsia &mdash; Kutambua na Kukataa Kulazimishwa.</span>
+    <span class="sh"> Gender-Based Violence &mdash; Kutambua na Kukataa Coercion.</span>
+  </div>
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one warning sign shown in the video and explain how you would use DEAR to respond safely. Share with a partner.</span>
+    <span class="sw"> Tambua ishara moja ya onyo iliyoonyeshwa kwenye video na eleza jinsi ungetumia DEAR kujibu salama. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua warning sign moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kujibu safely. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Amina, 16, Mombasa, notices that her boyfriend demands to read all her messages, forbids her from visiting her aunt, and shouts at her when she disobeys. Which of the following are signs of coercive control in this relationship? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Demanding to read all her messages</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Forbidding her from visiting family</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Calling her once a day to check she is safe</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Shouting at her when she makes her own decisions</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Using jealousy as a reason to monitor her movements</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Omondi, 17, Kisumu, is in a relationship where his girlfriend slaps him when she is angry and says &ldquo;men cannot be abused.&rdquo; What is TRUE about GBV and gender?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> GBV only affects girls and women</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Men cannot be victims of GBV under Kenyan law</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> GBV can affect any gender; boys and men can also be victims and should report abuse</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Omondi should handle it privately to avoid embarrassment</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. A peer educator in Nakuru is teaching Form 2 students about safe exit planning when leaving a dangerous relationship. Which of the following are recommended steps? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Tell a trusted person your exit plan</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Save Childline 116 and the National Gender Helpline 0800 720 601 on your phone</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Return alone to collect your belongings the next day</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Report at the nearest gender desk at a police station</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Prepare a safety bag with ID, phone, cash, and documents</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Fatuma, 15, Garissa, receives repeated threatening messages from a classmate who says he will share her photos unless she agrees to meet him. Which term BEST describes this behaviour?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Normalising</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Online sexual coercion / sextortion</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Guilt tripping</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Bribery</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. Wanjiku, 17, Nyeri, wants to use the DEAR method to refuse her uncle who keeps pressuring her to skip school and help at his shop. Which actions are part of the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Describe the behaviour: &ldquo;You are pressuring me to leave school&rdquo;</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Express feelings: &ldquo;I feel disrespected and anxious about my future&rdquo;</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Assert clearly: &ldquo;My education is not negotiable&rdquo;</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Agree once to avoid conflict then reconsider later</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Reinforce: &ldquo;I will speak to my teacher if this continues&rdquo;</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Kerubo, 16, Kisii, tells her school counsellor that her boyfriend slapped her, then apologised and gave her a gift. The counsellor explains that this is a classic GBV pattern. What is this pattern called?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> The DEAR cycle</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> The normalising pattern</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> The cycle of abuse (tension, incident, reconciliation, calm)</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> The FRIES pattern</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. A health teacher in Eldoret asks students to identify GBV reporting channels available in Kenya. Which of the following are valid reporting channels? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Childline Kenya &mdash; 116 (free, any phone)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Gender desk at the nearest police station</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Posting about it on social media and waiting for likes</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> FIDA Kenya &mdash; 0719 638 006 (free legal help)</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> National Gender Helpline &mdash; 0800 720 601</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. Baraka, 17, Meru, wants to apply for a protection order after being threatened by an ex-partner. Under which Kenyan law can he seek this order?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Children Act 2022 only</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Sexual Offences Act 2006 only</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> NACADA regulations only</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Protection Against Domestic Violence Act 2015</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. Zawadi, 15, Kilifi, tells her friend she is afraid to report her stepfather&rsquo;s abuse because she thinks no one will believe her. Which of the following are TRUE reasons to report GBV? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Reporting can stop the abuse from continuing or escalating</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Childline 116 officers are trained to listen and believe survivors</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Reporting means she will definitely be removed from school</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> A protection order can legally prevent the abuser from approaching her</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> GBV is a crime under Kenyan law and the abuser can be prosecuted</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. Njeri, 16, Nairobi, is told by her boyfriend: &ldquo;If you loved me you would not need to talk to other people.&rdquo; He uses this to justify isolating her from friends. What is the BEST refusal response for Njeri?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Agree to reduce contact with friends to keep the relationship peaceful</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> &ldquo;Isolating me from my friends is not love &mdash; it is control. I will not accept it.&rdquo;</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Say nothing and hope the behaviour stops on its own</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Ask her friends to convince him to change</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPickGBV(btn,scId,type,resId,fbKey) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    var msgs = {
+      fb_ok_report: '<strong>&#10003; Correct!</strong> <span class="en">One slap followed by an apology and a gift is a classic GBV cycle. Without professional intervention, it will repeat and escalate. Miriam should safely distance herself and report to a school counsellor or Childline 116.</span><span class="sw">Kofi moja ikifuatiwa na msamaha na zawadi ni mzunguko wa kawaida wa GBV. Bila msaada wa kitaalamu, utarudiwa na kuwa mbaya zaidi. Miriam anapaswa kujitenga salama na kuripoti kwa mshauri wa shule au Childline 116.</span><span class="sh">Slap moja ikifuatiwa na apology na gift ni classic GBV cycle. Bila professional intervention, itarudiwa na kuescalate. Miriam anapaswa kujitenga safely na kuripoti kwa school counsellor au Childline 116.</span>',
+      fb_no_gift: '<strong>&#10007; Incorrect.</strong> <span class="en">Gifts and apologies do not break the cycle of abuse &mdash; they temporarily reset it. The controlling behaviour and physical violence will return, often worse. Miriam needs professional support, not a gift.</span><span class="sw">Zawadi na msamaha havivunji mzunguko wa ukatili &mdash; vinaufufua kwa muda. Tabia ya kudhibiti na jeuri ya kimwili vitarudi, mara nyingi vibaya zaidi. Miriam anahitaji msaada wa kitaalamu, si zawadi.</span><span class="sh">Gifts na apologies hazibreak cycle ya abuse &mdash; zinairesetia kwa muda. Controlling behaviour na physical violence itarudi, mara nyingi worse zaidi. Miriam anahitaji professional support, si gift.</span>',
+      fb_no_warn: '<strong>&#10007; Incorrect.</strong> <span class="en">Gifts and apologies do not break the cycle of abuse &mdash; they temporarily reset it. Promises to change without professional help are rarely kept in GBV situations. Miriam should report immediately rather than wait for another incident.</span><span class="sw">Zawadi na msamaha havivunji mzunguko wa ukatili &mdash; vinaufufua kwa muda. Ahadi za kubadilika bila msaada wa kitaalamu mara chache zinatimizwa katika hali za GBV. Miriam anapaswa kuripoti mara moja badala ya kusubiri tukio lingine.</span><span class="sh">Gifts na apologies hazibreak cycle ya abuse &mdash; zinairesetia kwa muda. Promises za kubadilika bila professional help mara chache zinafuatwa kwa GBV situations. Miriam anapaswa kuripoti mara moja badala ya kusubiri incident nyingine.</span>'
+    };
+    res.innerHTML = msgs[fbKey] || '';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,C,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'D','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'Coercive control includes monitoring messages, isolating from family, shouting to intimidate, and jealousy-driven surveillance. Calling once to check safety is a normal caring behaviour, not control.','mcq2':'GBV can affect any gender. Under Kenyan law, boys and men are also protected and should report abuse without shame.','mcq3':'Safe exit planning includes telling a trusted person, saving emergency numbers, reporting at a gender desk, and preparing a safety bag. Never return alone to collect belongings.','mcq4':'Threatening to share photos unless someone complies is online sexual coercion, also called sextortion. It is a crime under Kenya\'s Sexual Offences Act 2006.','mcq5':'DEAR: Describe the behaviour, Express feelings, Assert your position, and Reinforce with a consequence. Agreeing once to avoid conflict undermines the refusal.','mcq6':'The cycle of abuse involves four stages: tension building, an incident of violence, reconciliation (apology/gifts), and a calm phase. Without intervention, the cycle repeats and escalates.','mcq7':'Valid GBV reporting channels in Kenya include Childline 116, gender desks at police stations, FIDA Kenya (0719 638 006), and the National Gender Helpline (0800 720 601). Social media is not a formal reporting channel.','mcq8':'The Protection Against Domestic Violence Act 2015 allows any person experiencing domestic violence or threats to apply for a protection order at a magistrate\'s court.','mcq9':'Reporting stops ongoing abuse, Childline officers are trained to support survivors, protection orders can prevent contact, and GBV is prosecutable under Kenyan law. Reporting does not automatically remove a child from school.','mcq10':'Isolation from friends is a form of coercive control. The assertive response names the behaviour and refuses to accept it.'};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand GBV refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

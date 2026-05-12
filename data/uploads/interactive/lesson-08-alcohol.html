@@ -540,7 +540,7 @@ function go(n) {
   var slug3 = document.body.dataset.lessonSlug;
   if(slug3) localStorage.setItem('arise_slide_'+slug3, n);
   if(lid && lid!=='0') {
-    fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+    fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
   }
 }
 function upd() {
@@ -552,7 +552,7 @@ function setLang(l) {
   ['en','sw','sh'].forEach(function(x){ document.querySelectorAll('.'+x).forEach(function(e){ e.style.display=x===l?'block':'none'; }); });
   ['enBtn','swBtn','shBtn'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
   document.getElementById(l+'Btn').classList.add('active');
-  fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:l})}).catch(function(){});
+  fetch('/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:l})}).catch(function(){});
 }
 function setSize(s) {
   document.body.style.fontSize = s==='sm'?'13px':s==='lg'?'17px':'15px';

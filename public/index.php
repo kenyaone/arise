@@ -21,13 +21,47 @@ if ($_early_page === 'lesson') {
         $stmt->bindValue(':s', $_slug);
         $lesson = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
         if ($lesson && ($lesson['lesson_type'] ?? '') === 'interactive' && !empty($lesson['file_path'])) {
-            $vRow = db()->querySingle("SELECT file_path FROM lessons WHERE module_id=" . intval($lesson['module_id']) . " AND lesson_type='video' AND is_active=1 LIMIT 1", true);
-            $videoUrl = ($vRow && !empty($vRow['file_path'])) ? '/arise/uploads/' . $vRow['file_path'] : '';
-            $htmlFile = '/var/www/arise/data/uploads/' . $lesson['file_path'];
+            $isRefusal = strpos($lesson['slug'], 'refusal') !== false;
+            $vRow = (!$isRefusal) ? db()->querySingle("SELECT file_path FROM lessons WHERE module_id=" . intval($lesson['module_id']) . " AND lesson_type='video' AND is_active=1 LIMIT 1", true) : null;
+            $videoUrl = ($vRow && !empty($vRow['file_path'])) ? UPLOAD_URL . $vRow['file_path'] : '';
+            $htmlFile = UPLOAD_PATH . $lesson['file_path'];
             if (file_exists($htmlFile)) {
                 $html = file_get_contents($htmlFile);
-                $inject = "<script>window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";window.ARISE_MODULE_SLUG='" . addslashes($lesson['module_slug']) . "';window.ARISE_RESUME_SLIDE=0;window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';</script>";
+                $hash = getSessionHash();
+                $resumeSlide = 0;
+                if ($hash) {
+                    $prog = db()->querySingle("SELECT last_slide FROM lesson_progress WHERE session_hash='" . SQLite3::escapeString($hash) . "' AND lesson_id=" . intval($lesson['id']));
+                    if ($prog) $resumeSlide = intval($prog);
+                }
+                $modId    = intval($lesson['module_id']);
+                $modSlug  = addslashes($lesson['module_slug']);
+                $modTitle = htmlspecialchars($lesson['module_title'] ?? $lesson['module_slug'], ENT_QUOTES);
+                $alreadyVoted = $hash ? (bool)db()->querySingle("SELECT id FROM module_feedback WHERE module_id=$modId AND session_hash='" . SQLite3::escapeString($hash) . "'") : false;
+                if ($alreadyVoted) {
+                    $existingRating = (int)db()->querySingle("SELECT rating FROM module_feedback WHERE module_id=$modId AND session_hash='" . SQLite3::escapeString($hash) . "'");
+                    $pollHtml = '<p style="color:#166534;font-weight:600;margin-bottom:10px;">✅ You already rated this module (' . $existingRating . '/5 ⭐). Thanks!</p>';
+                } else {
+                    $pollHtml = '<form id="arise-poll-form" style="margin-bottom:12px;"><p style="font-size:.88rem;color:#374151;margin-bottom:8px;font-weight:600;">Rate this module:</p><div id="star-row" style="display:flex;gap:8px;margin-bottom:10px;font-size:1.6rem;cursor:pointer;"><span class="star" data-v="1">☆</span><span class="star" data-v="2">☆</span><span class="star" data-v="3">☆</span><span class="star" data-v="4">☆</span><span class="star" data-v="5">☆</span></div><input type="hidden" id="poll-rating" name="poll_rating" value=""><textarea id="poll-useful" name="most_useful" placeholder="What was most useful? (optional)" style="width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:.85rem;margin-bottom:8px;resize:none;height:60px;box-sizing:border-box;"></textarea><label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="poll-rec" name="would_recommend" value="1"> I would recommend this module</label><button id="poll-submit" type="submit" disabled style="background:#7c3aed;color:white;border:none;padding:9px 22px;border-radius:8px;font-weight:700;cursor:pointer;opacity:.5;">Submit Feedback</button></form><div id="poll-thanks" style="display:none;color:#166534;font-weight:600;">✅ Thanks for your feedback!</div><script>(function(){var stars=document.querySelectorAll(\'#arise-poll-form .star\');var ratingInput=document.getElementById(\'poll-rating\');var submitBtn=document.getElementById(\'poll-submit\');stars.forEach(function(s){s.addEventListener(\'click\',function(){var v=parseInt(s.getAttribute(\'data-v\'));ratingInput.value=v;stars.forEach(function(x,i){x.textContent=i<v?\'★\':\'☆\';x.style.color=i<v?\'#f59e0b\':\'#9ca3af\';});submitBtn.disabled=false;submitBtn.style.opacity=\'1\';});});document.getElementById(\'arise-poll-form\').addEventListener(\'submit\',function(e){e.preventDefault();var rating=ratingInput.value;if(!rating)return;var useful=document.getElementById(\'poll-useful\').value;var rec=document.getElementById(\'poll-rec\').checked?1:0;var fd=new FormData();fd.append(\'poll_rating\',rating);fd.append(\'most_useful\',useful);fd.append(\'would_recommend\',rec);fd.append(\'module_slug\',window.ARISE_MODULE_SLUG||\'\');fetch(\'/arise/?p=module&slug=\'+(window.ARISE_MODULE_SLUG||\'\'),{method:\'POST\',body:fd}).then(function(){document.getElementById(\'arise-poll-form\').style.display=\'none\';document.getElementById(\'poll-thanks\').style.display=\'block\';}).catch(function(){});});})();<\/script>';
+                }
+                $communityPanel = '<div id="arise-community" style="display:none;position:fixed;bottom:0;left:0;right:0;background:white;border-top:3px solid #7c3aed;padding:16px 20px 20px;box-shadow:0 -6px 24px rgba(0,0,0,.18);z-index:9999;max-height:70vh;overflow-y:auto;"><button onclick="document.getElementById(\'arise-community\').style.display=\'none\'" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#6b7280;">✕</button><h3 style="color:#7c3aed;margin:0 0 12px;font-size:1rem;">🎉 Great work! How was <em>' . $modTitle . '</em>?</h3>' . $pollHtml . '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;"><a href="/arise/?p=forum&module=' . $modSlug . '" style="background:#0ea271;color:white;padding:9px 16px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;">💬 Discuss this Module</a><a href="/arise/?p=ask&module=' . $modSlug . '" style="background:#6b7280;color:white;padding:9px 16px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;">🔒 Ask Anonymously</a></div></div><script>(function(){var shown=false;var _orig=window.fetch;window.fetch=function(url,opts){if(!shown&&typeof url===\'string\'&&url.indexOf(\'save_quiz_score\')!==-1){shown=true;setTimeout(function(){var el=document.getElementById(\'arise-community\');if(el)el.style.display=\'block\';},600);}return _orig.apply(this,arguments);};})();<\/script>';
+                $inject = "<script>
+window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";
+window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
+window.ARISE_MODULE_SLUG='" . $modSlug . "';
+window.ARISE_RESUME_SLIDE=" . $resumeSlide . ";
+window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
+(function(){
+  function tryFS(v){if(!v)return;if(v.requestFullscreen)v.requestFullscreen().catch(function(){});else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();}
+  document.addEventListener('DOMContentLoaded',function(){
+    var v=document.getElementById('lessonVideo');
+    if(!v)return;
+    v.removeAttribute('playsinline');
+    v.addEventListener('play',function(){if(!document.fullscreenElement&&!document.webkitFullscreenElement)tryFS(v);},{once:false});
+  });
+})();
+</script>";
                 $html = str_replace('</head>', $inject . '</head>', $html);
+                $html = str_replace('</body>', $communityPanel . '</body>', $html);
                 ob_end_clean();
                 echo $html;
                 exit;

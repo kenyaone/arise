@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills &mdash; Cyber Crimes | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-cyber">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Cyber Crimes &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Online Crime</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Uhalifu wa Mtandaoni</span><span class="sh" style="display:none;">Refusal Skills &mdash; Online Crime</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify manipulation tactics used in online scams, phishing, and cyber coercion</span><span class="sw">Tambua mbinu za udanganyifu zinazotumiwa katika ulaghai wa mtandaoni, uvuvi wa data, na kulazimishwa kwa mtandao</span><span class="sh">Tambua manipulation tactics zinazotumiwa kwa online scams, phishing, na cyber coercion</span></li>
+    <li><span class="en">Apply DEAR to refuse suspicious online requests and cyber crime recruitment</span><span class="sw">Tumia DEAR kukataa maombi ya shaka ya mtandaoni na uajiri wa uhalifu wa mtandao</span><span class="sh">Apply DEAR kukataa suspicious online requests na cyber crime recruitment</span></li>
+    <li><span class="en">Recognise M-Pesa fraud, phishing, and online con tactics targeting Kenyan youth</span><span class="sw">Tambua ulaghai wa M-Pesa, uvuvi wa data, na mbinu za udanganyifu wa mtandaoni zinazolenga vijana wa Kenya</span><span class="sh">Recognise M-Pesa fraud, phishing, na online con tactics zinazolengesha vijana wa Kenya</span></li>
+    <li><span class="en">Know reporting channels: DCI cybercrime@dci.go.ke, CA 0800 721 577, Childline 116</span><span class="sw">Jua njia za kuripoti: DCI cybercrime@dci.go.ke, CA 0800 721 577, Childline 116</span><span class="sh">Jua reporting channels: DCI cybercrime@dci.go.ke, CA 0800 721 577, Childline 116</span></li>
+    <li><span class="en">Practise scripts for refusing online manipulation in real Kenyan digital contexts</span><span class="sw">Fanya mazoezi ya misemo ya kukataa udanganyifu wa mtandaoni katika mazingira ya kidijitali ya Kenya</span><span class="sh">Practise scripts za kukataa online manipulation kwa real Kenyan digital contexts</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Have you ever received a suspicious M-Pesa message, a &ldquo;you&rsquo;ve won&rdquo; notification, or a request to share your PIN &mdash; what did you do?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Je, umewahi kupokea ujumbe wa M-Pesa wa shaka, arifa ya &ldquo;umeshinda&rdquo;, au ombi la kushiriki PIN yako &mdash; ulifanya nini?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Umewahi kupokea suspicious M-Pesa message, &ldquo;you&rsquo;ve won&rdquo; notification, au request ya kushare PIN yako &mdash; ulifanya nini?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Why Cyber Crime Refusal Skills Matter -->
+<div class="slide">
+<div class="slide-head">&#128272; <span class="en">Why Cyber Crime Refusal Skills Matter</span><span class="sw">Kwa Nini Ujuzi wa Kukataa Uhalifu wa Mtandao ni Muhimu</span><span class="sh">Kwa Nini Cyber Crime Refusal Skills Zinahusika</span></div>
+<p class="tp"><span class="en">Kenya loses over <strong>KES 29 billion</strong> annually to cyber crime (CA 2023). Kenyan youth are the primary targets.</span><span class="sw">Kenya inapoteza zaidi ya <strong>KES bilioni 29</strong> kila mwaka kwa uhalifu wa mtandao (CA 2023). Vijana wa Kenya ndio walengwa wakuu.</span><span class="sh">Kenya inapoteza zaidi ya <strong>KES bilioni 29</strong> kila mwaka kwa cyber crime (CA 2023). Vijana wa Kenya ndio main targets.</span></p>
+<div class="key-term">
+  <strong><span class="en">Most common types targeting youth:</span><span class="sw">Aina za kawaida zaidi zinazolenga vijana:</span><span class="sh">Types za kawaida zaidi zinazolengesha vijana:</span></strong>
+  <ul class="bl" style="margin-top:6px;">
+    <li><span class="en">M-Pesa scams</span><span class="sw">Ulaghai wa M-Pesa</span><span class="sh">M-Pesa scams</span></li>
+    <li><span class="en">Phishing (fake login pages)</span><span class="sw">Uvuvi wa data (kurasa bandia za kuingia)</span><span class="sh">Phishing (fake login pages)</span></li>
+    <li><span class="en">Sextortion</span><span class="sw">Sextortion (ulazimishwaji wa kingono)</span><span class="sh">Sextortion</span></li>
+    <li><span class="en">Identity theft</span><span class="sw">Wizi wa utambulisho</span><span class="sh">Identity theft</span></li>
+    <li><span class="en">Online job scams</span><span class="sw">Ulaghai wa kazi za mtandaoni</span><span class="sh">Online job scams</span></li>
+  </ul>
+</div>
+<p class="tp"><span class="en"><strong>Social engineering</strong> &mdash; manipulating people psychologically &mdash; is the #1 method used by cyber criminals.</span><span class="sw"><strong>Uhandisi wa kijamii</strong> &mdash; kudanganya watu kisaikolojia &mdash; ndiyo njia ya kwanza inayotumiwa na wahalifu wa mtandao.</span><span class="sh"><strong>Social engineering</strong> &mdash; ku-manipulate watu kisaikolojia &mdash; ndiyo method ya #1 inayotumiwa na cyber criminals.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Phishing</span><span class="sw">&#128273; Neno Muhimu: Phishing</span><span class="sh">&#128273; Key Term: Phishing</span></strong>
+  <span class="en">A deceptive attempt to steal personal information (PINs, passwords, account details) by pretending to be a trusted organisation.</span>
+  <span class="sw">Jaribio la udanganyifu la kuiba taarifa za kibinafsi (PIN, nywila, maelezo ya akaunti) kwa kujifanya kuwa shirika linaloaminiwa.</span>
+  <span class="sh">Deceptive attempt ya kuiba personal information (PINs, passwords, account details) kwa ku-pretend kuwa trusted organisation.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> Safaricom, banks, and government offices will <u>NEVER</u> ask for your PIN or password via SMS or phone call.</span>
+  <span class="sw"> Safaricom, mabenki, na ofisi za serikali <u>HAZITAOMBA KAMWE</u> PIN yako au nywila kupitia ujumbe mfupi au simu.</span>
+  <span class="sh"> Safaricom, mabenki, na government offices <u>HAZITAULIZA KAMWE</u> PIN yako au password kwa SMS au call.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Reality Check</div>
+  <span class="en" style="display:block;">&ldquo;Safaricom haikuulizi PIN yako kwa SMS. Mtu anayekuuliza PIN yako ni thief &mdash; period.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Safaricom haikuulizi PIN yako kwa SMS. Mtu anayekuuliza PIN yako ni mwizi &mdash; kipande.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Safaricom haikuulizi PIN yako kwa SMS. Mtu anayekuuliza PIN yako ni thief &mdash; period.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Online Manipulation Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Online Manipulation Tactics</span><span class="sw">Mbinu za Udanganyifu wa Mtandaoni</span><span class="sh">Online Manipulation Tactics</span></div>
+<p class="tp"><span class="en">Recognising a scam tactic is the first step to refusing it. Know these patterns:</span><span class="sw">Kutambua mbinu ya ulaghai ni hatua ya kwanza ya kuikataa. Jua mifumo hii:</span><span class="sh">Kutambua scam tactic ni first step ya kuikataa. Jua patterns hizi:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Prize Scam &mdash; &ldquo;You&rsquo;ve won a prize &mdash; send your M-Pesa PIN to claim it&rdquo;</span><span class="sw">Ulaghai wa Tuzo &mdash; &ldquo;Umeshinda tuzo &mdash; tuma PIN yako ya M-Pesa ili kudai&rdquo;</span><span class="sh">Prize Scam &mdash; &ldquo;Umeshinda prize &mdash; tuma M-Pesa PIN yako ku-claim&rdquo;</span></strong>
+  <span class="en">Legitimate draws never require a PIN. This is designed to steal your M-Pesa account immediately.</span>
+  <span class="sw">Mashindano halisi hayahitaji PIN. Hii imeundwa ili iibe akaunti yako ya M-Pesa mara moja.</span>
+  <span class="sh">Legitimate draws hazihitaji PIN. Hii imedesign kukuibia M-Pesa account yako saa hii hii.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Advance Fee Fraud &mdash; &ldquo;Send me 100 and I&rsquo;ll send 500 back&rdquo;</span><span class="sw">Ulaghai wa Malipo ya Awali &mdash; &ldquo;Nitumie 100 nitakutumia 500 kurudi&rdquo;</span><span class="sh">Advance Fee Fraud &mdash; &ldquo;Nitumie 100 nitakutumia 500 back&rdquo;</span></strong>
+  <span class="en">Once you send the money, the scammer disappears. The promised return never arrives.</span>
+  <span class="sw">Ukituma pesa, mlaghai anatoweka. Malipo yaliyoahidiwa hayafiki kamwe.</span>
+  <span class="sh">Ukituma pesa, scammer anatoweka. Return iliyoahidiwa haifiki kamwe.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">Phishing Link &mdash; &ldquo;Click this link to verify your Safaricom account&rdquo;</span><span class="sw">Kiungo cha Uvuvi &mdash; &ldquo;Bonyeza kiungo hiki kuthibitisha akaunti yako ya Safaricom&rdquo;</span><span class="sh">Phishing Link &mdash; &ldquo;Click link hii ku-verify Safaricom account yako&rdquo;</span></strong>
+  <span class="en">The link leads to a fake page that harvests your login details. Always go directly to the official app.</span>
+  <span class="sw">Kiungo kinaongoza kwenye ukurasa bandia unaokusanya maelezo yako ya kuingia. Nenda moja kwa moja kwa programu rasmi.</span>
+  <span class="sh">Link inaenda kwa fake page inayokusanya login details zako. Always nenda directly kwa official app.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Job Scam &mdash; &ldquo;I can get you a job in Dubai &mdash; just pay 5,000 for processing&rdquo;</span><span class="sw">Ulaghai wa Kazi &mdash; &ldquo;Naweza kukupata kazi Dubai &mdash; lipa tu 5,000 kwa usindikaji&rdquo;</span><span class="sh">Job Scam &mdash; &ldquo;Naweza kukupata job Dubai &mdash; lipa tu 5,000 kwa processing&rdquo;</span></strong>
+  <span class="en">Legitimate employers never ask you to pay for a job opportunity. Upfront payment = scam.</span>
+  <span class="sw">Waajiri halisi hawakuulizi kulipa kwa fursa ya kazi. Malipo ya awali = ulaghai.</span>
+  <span class="sh">Legitimate employers hawakuulizi kulipa kwa job opportunity. Upfront payment = scam.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">Cyber Crime Recruitment &mdash; &ldquo;Help us with one transaction &mdash; it&rsquo;s not illegal&rdquo;</span><span class="sw">Uajiri wa Uhalifu wa Mtandao &mdash; &ldquo;Tusaidie na muamala mmoja &mdash; si haramu&rdquo;</span><span class="sh">Cyber Crime Recruitment &mdash; &ldquo;Tusaidie na transaction moja &mdash; si illegal&rdquo;</span></strong>
+  <span class="en">Peer recruitment into money muling. You become a criminal suspect even if you did not initiate the fraud.</span>
+  <span class="sw">Uajiri wa rika kwa upigaji pesa. Unakuwa mshukiwa wa uhalifu hata kama hukuanzisha ulaghai.</span>
+  <span class="sh">Peer recruitment kwa money muling. Unakuwa criminal suspect hata kama hukuanzisha fraud.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Critical Warning:</span><span class="sw">&#9888; Onyo Muhimu:</span><span class="sh">&#9888; Critical Warning:</span></strong>
+  <span class="en"> Being used as a money mule makes <u>YOU</u> a criminal suspect &mdash; even if you didn&rsquo;t initiate the fraud.</span>
+  <span class="sw"> Kutumiwa kama mkimbia pesa hukufanya <u>WEWE</u> mshukiwa wa uhalifu &mdash; hata kama hukuanzisha ulaghai.</span>
+  <span class="sh"> Kutumiwa kama money mule hukufanya <u>WEWE</u> criminal suspect &mdash; hata kama hukuanzisha fraud.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR Method for Cyber Situations -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR Method for Cyber Situations</span><span class="sw">Njia ya DEAR kwa Hali za Mtandaoni</span><span class="sh">DEAR Method kwa Cyber Situations</span></div>
+<p class="tp"><span class="en">DEAR works in online and offline situations alike. Apply it whenever you feel pressured or suspicious online.</span><span class="sw">DEAR inafanya kazi katika hali za mtandaoni na nje ya mtandao. Itekeleze wakati wowote unapohisi kulazimishwa au una shaka mtandaoni.</span><span class="sh">DEAR inafanya kazi kwa online na offline situations zote. Itekeleze wakati wowote unapohisi pressured au suspicious online.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You are asking me to share my PIN / click a link / send money / help with a transaction I don&rsquo;t understand.&rdquo;</span><span class="sw">&ldquo;Unaniliza kushiriki PIN yangu / kubonyeza kiungo / kutuma pesa / kusaidia muamala nisiouelewa.&rdquo;</span><span class="sh">&ldquo;Unaniiomba nishare PIN yangu / niclick link / nitume pesa / nisaidie transaction siielewi.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel suspicious and pressured.&rdquo;</span><span class="sw">&ldquo;Nahisi shaka na kulazimishwa.&rdquo;</span><span class="sh">&ldquo;Nahisi suspicious na pressured.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;No. I will not share my PIN / click that link / send money. I am ending this conversation.&rdquo;</span><span class="sw">&ldquo;Hapana. Sitashiriki PIN yangu / kubonyeza kiungo / kutuma pesa. Ninamaliza mazungumzo haya.&rdquo;</span><span class="sh">&ldquo;No. Sita-share PIN yangu / click link hiyo / tuma pesa. Ninaend conversation hii.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce &amp; Report</span><span class="sw">Thibitisha &amp; Ripoti</span><span class="sh">Reinforce &amp; Report</span></div>
+    <div class="desc"><span class="en">&ldquo;I am reporting this to DCI or the Communications Authority.&rdquo; Then BLOCK.</span><span class="sw">&ldquo;Ninaripoti hili kwa DCI au Mamlaka ya Mawasiliano.&rdquo; Kisha FUNGA.</span><span class="sh">&ldquo;Ninaripoti hii kwa DCI au Communications Authority.&rdquo; Kisha BLOCK.</span></div>
+  </div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Golden Rule</span><span class="sw">&#128161; Kanuni ya Dhahabu</span><span class="sh">&#128161; Golden Rule</span></strong>
+  <span class="en"> When in doubt, hang up. No legitimate organisation will pressure you to act immediately. Urgency is a manipulation tactic.</span>
+  <span class="sw"> Ukiwa na shaka, kata simu. Hakuna shirika halisi litakalokushinikiza kuchukua hatua mara moja. Haraka ni mbinu ya udanganyifu.</span>
+  <span class="sh"> Ukiwa na doubt, kata simu. Hakuna legitimate organisation itakayokushikilia ku-act immediately. Urgency ni manipulation tactic.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#128483; <span class="en">Refusal Scripts for Cyber Crime Situations</span><span class="sw">Misemo ya Kukataa kwa Hali za Uhalifu wa Mtandao</span><span class="sh">Refusal Scripts kwa Cyber Crime Situations</span></div>
+<p class="tp"><span class="en">Having a ready phrase removes the panic of the moment. Practise these until they feel natural:</span><span class="sw">Kuwa na msemo ulio tayari huondoa hofu ya wakati huo. Fanya mazoezi hadi ionekane ya kawaida:</span><span class="sh">Kuwa na phrase ready huremove panic ya moment. Practise hizi mpaka ziwe natural:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">M-Pesa PIN Request</span><span class="sw">Ombi la PIN ya M-Pesa</span><span class="sh">M-Pesa PIN Request</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. Safaricom never asks for PINs. I&rsquo;m reporting this number.&rdquo;</span><span class="sw">&ldquo;Hapana. Safaricom haulizi PIN. Ninaripoti nambari hii.&rdquo;</span><span class="sh">&ldquo;No. Safaricom haulizi PINs. Ninaripoti number hii.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Advance Fee Fraud</span><span class="sw">Ulaghai wa Malipo ya Awali</span><span class="sh">Advance Fee Fraud</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. That&rsquo;s an advance fee scam. Goodbye.&rdquo;</span><span class="sw">&ldquo;Hapana. Hiyo ni ulaghai wa malipo ya awali. Kwaheri.&rdquo;</span><span class="sh">&ldquo;No. Hiyo ni advance fee scam. Goodbye.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Suspicious Bank Link</span><span class="sw">Kiungo cha Benki cha Shaka</span><span class="sh">Suspicious Bank Link</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. I&rsquo;m going directly to the Equity Bank app. I&rsquo;m not clicking unknown links.&rdquo;</span><span class="sw">&ldquo;Hapana. Ninaenda moja kwa moja kwa programu ya Equity Bank. Sibonyezi viungo visivyojulikana.&rdquo;</span><span class="sh">&ldquo;No. Ninaenda directly kwa Equity Bank app. Siclick unknown links.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Peer Recruitment (Money Muling)</span><span class="sw">Uajiri wa Rika (Upigaji Pesa)</span><span class="sh">Peer Recruitment (Money Muling)</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. Being a money mule is a crime. I&rsquo;m not doing it.&rdquo;</span><span class="sw">&ldquo;Hapana. Kuwa mkimbia pesa ni uhalifu. Sitafanya.&rdquo;</span><span class="sh">&ldquo;No. Being a money mule ni crime. Sifanyi.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Remember</span><span class="sw">&#128161; Kumbuka</span><span class="sh">&#128161; Remember</span></strong>
+  <span class="en"> Legitimate opportunities don&rsquo;t require urgency, secrecy, or upfront payment. If it feels wrong, it IS wrong.</span>
+  <span class="sw"> Fursa halisi hazihitaji haraka, usiri, au malipo ya awali. Ikihisi vibaya, NI vibaya.</span>
+  <span class="sh"> Legitimate opportunities hazihitaji urgency, secrecy, au upfront payment. Kama inahisi vibaya, NI vibaya.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Interactive Scenario -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario: &ldquo;You&rsquo;ve Won&rdquo;</span><span class="sw">Hali: &ldquo;Umeshinda&rdquo;</span><span class="sh">Scenario: &ldquo;You&rsquo;ve Won&rdquo;</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Nairobi, Form 4</span><span class="sw">Hali &mdash; Nairobi, Kidato cha 4</span><span class="sh">Scenario &mdash; Nairobi, Form 4</span></div>
+  <div class="scenario"><span class="en">Akinyi (Form 4, Nairobi) receives an SMS saying she has won KES 50,000 in a Safaricom draw. The message asks her to call a number and give her M-Pesa PIN to release the prize.</span><span class="sw">Akinyi (Kidato cha 4, Nairobi) anapokea ujumbe mfupi ukisema ameshinda KES 50,000 katika bahati nasibu ya Safaricom. Ujumbe unomba apige nambari na kutoa PIN yake ya M-Pesa ili kutoa tuzo.</span><span class="sh">Akinyi (Form 4, Nairobi) anapokea SMS ikisema ameshinda KES 50,000 kwa Safaricom draw. Message inaomba ampigie number na ampe M-Pesa PIN yake ku-release prize.</span></div>
+  <div class="sc-q"><span class="en">What should Akinyi do?</span><span class="sw">Akinyi afanye nini?</span><span class="sh">Akinyi afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPickCyber(this,'scA','no','resA')">
+      <span class="en">A. Call the number &mdash; she could really have won</span>
+      <span class="sw">A. Piga nambari &mdash; huenda ameshinda kweli</span>
+      <span class="sh">A. Piga number &mdash; anaweza kuwa ameshinda kweli</span>
+    </button>
+    <button class="choice" onclick="scPickCyber(this,'scA','ok','resA')">
+      <span class="en">B. Delete the message, do NOT call or share any details, and report the number to Safaricom by calling 100</span>
+      <span class="sw">B. Futa ujumbe, USIPIGE au kushiriki maelezo yoyote, na ripoti nambari kwa Safaricom kwa kupiga 100</span>
+      <span class="sh">B. Delete message, USIPIGE au kushare details yoyote, na ripoti number kwa Safaricom kwa kupiga 100</span>
+    </button>
+    <button class="choice" onclick="scPickCyber(this,'scA','no','resA')">
+      <span class="en">C. Call but give a fake PIN to test if it&rsquo;s real</span>
+      <span class="sw">C. Piga lakini toa PIN bandia kujaribu kama ni ya kweli</span>
+      <span class="sh">C. Piga lakini toa fake PIN ku-test kama ni ya kweli</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+  <div class="example-box" style="margin-top:10px;">
+    <strong>&#128161; <span class="en">Why B is correct:</span><span class="sw">Kwa nini B ni sahihi:</span><span class="sh">Kwa nini B ni correct:</span></strong>
+    <span class="en">This is a classic prize scam. Safaricom legitimate draws <strong>never</strong> require a PIN to claim a prize. Calling the number (even with a fake PIN) validates your number to the scammer and invites further manipulation. Report &rarr; Delete &rarr; Ignore.</span>
+    <span class="sw">Hii ni ulaghai wa kawaida wa tuzo. Bahati nasibu halisi za Safaricom <strong>hazihitaji</strong> PIN kudai tuzo. Kupiga nambari (hata na PIN bandia) kunathibitisha nambari yako kwa mlaghai na kukaribisha udanganyifu zaidi. Ripoti &rarr; Futa &rarr; Puuza.</span>
+    <span class="sh">Hii ni classic prize scam. Legitimate Safaricom draws <strong>hazihitaji</strong> PIN ku-claim prize. Kupiga number (hata na fake PIN) ku-validate number yako kwa scammer na ku-invite manipulation zaidi. Report &rarr; Delete &rarr; Ignore.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: Reporting Cyber Crime in Kenya -->
+<div class="slide">
+<div class="slide-head">&#128222; <span class="en">Reporting Cyber Crime in Kenya</span><span class="sw">Kuripoti Uhalifu wa Mtandao Kenya</span><span class="sh">Reporting Cyber Crime Kenya</span></div>
+<p class="tp"><span class="en">Report even if you lost money &mdash; your report helps police build a case and may prevent others from being scammed.</span><span class="sw">Ripoti hata kama ulipoteza pesa &mdash; ripoti yako inasaidia polisi kujenga kesi na inaweza kuzuia wengine kudanganywa.</span><span class="sh">Report hata kama ulipoteza pesa &mdash; report yako inasaidia police kujenga case na inaweza kuzuia wengine kudanganywa.</span></p>
+<div class="key-term">
+  <strong>&#128272; <span class="en">DCI Cyber Crime Unit</span><span class="sw">Kitengo cha Uhalifu wa Mtandao cha DCI</span><span class="sh">DCI Cyber Crime Unit</span></strong>
+  <span class="en"><strong>cybercrime@dci.go.ke</strong> &mdash; Report online fraud, hacking, sextortion. Include screenshots and transaction records.</span>
+  <span class="sw"><strong>cybercrime@dci.go.ke</strong> &mdash; Ripoti ulaghai wa mtandaoni, uvamizi wa kompyuta, sextortion. Jumuisha picha za skrini na rekodi za muamala.</span>
+  <span class="sh"><strong>cybercrime@dci.go.ke</strong> &mdash; Report online fraud, hacking, sextortion. Jumuisha screenshots na transaction records.</span>
+</div>
+<div class="key-term">
+  <strong>&#128222; <span class="en">Communications Authority Kenya</span><span class="sw">Mamlaka ya Mawasiliano Kenya</span><span class="sh">Communications Authority Kenya</span></strong>
+  <span class="en"><strong>0800 721 577</strong> (toll-free) &mdash; Report phishing, fake websites, and online fraud platforms.</span>
+  <span class="sw"><strong>0800 721 577</strong> (bure) &mdash; Ripoti uvuvi wa data, tovuti bandia, na majukwaa ya ulaghai wa mtandaoni.</span>
+  <span class="sh"><strong>0800 721 577</strong> (toll-free) &mdash; Report phishing, fake websites, na online fraud platforms.</span>
+</div>
+<div class="key-term">
+  <strong>&#128241; <span class="en">Safaricom Fraud Line</span><span class="sw">Laini ya Ulaghai ya Safaricom</span><span class="sh">Safaricom Fraud Line</span></strong>
+  <span class="en">Call <strong>100</strong> (free from any Safaricom line) &mdash; Report M-Pesa scams and suspicious Safaricom-related messages.</span>
+  <span class="sw">Piga <strong>100</strong> (bure kutoka kwa laini yoyote ya Safaricom) &mdash; Ripoti ulaghai wa M-Pesa na ujumbe wa shaka unaohusiana na Safaricom.</span>
+  <span class="sh">Call <strong>100</strong> (free kutoka kwa Safaricom line yoyote) &mdash; Report M-Pesa scams na suspicious Safaricom-related messages.</span>
+</div>
+<div class="key-term">
+  <strong>&#128156; <span class="en">Childline</span><span class="sw">Childline</span><span class="sh">Childline</span></strong>
+  <span class="en">Call <strong>116</strong> &mdash; If a minor is targeted by online predators, sextortion, or cyber exploitation. Free, confidential.</span>
+  <span class="sw">Piga <strong>116</strong> &mdash; Ikiwa mtoto analenga na wanyanyasaji wa mtandaoni, sextortion, au unyonyaji wa mtandao. Bure, siri.</span>
+  <span class="sh">Call <strong>116</strong> &mdash; Kama mtoto analenga na online predators, sextortion, au cyber exploitation. Free, siri.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128247; Evidence to Collect</span><span class="sw">&#128247; Ushahidi wa Kukusanya</span><span class="sh">&#128247; Evidence ya Kukusanya</span></strong>
+  <span class="en"> Screenshots, phone numbers, URLs, transaction records, dates and times of contact. Save everything before blocking.</span>
+  <span class="sw"> Picha za skrini, nambari za simu, URL, rekodi za muamala, tarehe na nyakati za mawasiliano. Hifadhi kila kitu kabla ya kufunga.</span>
+  <span class="sh"> Screenshots, phone numbers, URLs, transaction records, dates na times za contact. Save kila kitu kabla ya blocking.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Protecting Yourself -->
+<div class="slide">
+<div class="slide-head">&#128737; <span class="en">Protecting Yourself from Cyber Crime</span><span class="sw">Kujilinda Dhidi ya Uhalifu wa Mtandao</span><span class="sh">Kujilinda Dhidi ya Cyber Crime</span></div>
+<ul class="bl">
+  <li><span class="en">Never share PINs, passwords, or OTPs with <strong>ANYONE</strong> &mdash; including people claiming to be from banks or Safaricom</span><span class="sw">Usishiriki PIN, nywila, au OTP na <strong>MTU YEYOTE</strong> &mdash; ikiwemo watu wanaodai kutoka kwa mabenki au Safaricom</span><span class="sh">Usishare PINs, passwords, au OTPs na <strong>MTU YEYOTE</strong> &mdash; ikiwemo watu wanaodai kutoka kwa banks au Safaricom</span></li>
+  <li><span class="en">Enable <strong>two-factor authentication (2FA)</strong> on all accounts</span><span class="sw">Washa <strong>uthibitishaji wa hatua mbili (2FA)</strong> kwenye akaunti zote</span><span class="sh">Enable <strong>two-factor authentication (2FA)</strong> kwa accounts zote</span></li>
+  <li><span class="en">Use unique passwords for each platform &mdash; a password manager helps</span><span class="sw">Tumia nywila tofauti kwa kila jukwaa &mdash; kidhibiti nywila husaidia</span><span class="sh">Tumia unique passwords kwa kila platform &mdash; password manager inasaidia</span></li>
+  <li><span class="en">Be suspicious of urgency: <em>&ldquo;Act NOW or lose your account&rdquo;</em> is a manipulation tactic</span><span class="sw">Kuwa na shaka kuhusu haraka: <em>&ldquo;Chukua hatua SASA au upoteze akaunti yako&rdquo;</em> ni mbinu ya udanganyifu</span><span class="sh">Be suspicious ya urgency: <em>&ldquo;Act NOW au upoteze account yako&rdquo;</em> ni manipulation tactic</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Social Engineering</span><span class="sw">&#128273; Neno Muhimu: Uhandisi wa Kijamii</span><span class="sh">&#128273; Key Term: Social Engineering</span></strong>
+  <span class="en">Psychological manipulation to get people to reveal confidential information or take harmful actions &mdash; without hacking any device.</span>
+  <span class="sw">Udanganyifu wa kisaikolojia kupata watu kufichua taarifa za siri au kuchukua hatua zenye madhara &mdash; bila kuivamia kifaa chochote.</span>
+  <span class="sh">Psychological manipulation kupata watu wareveal confidential information au wachukue harmful actions &mdash; bila ku-hack device yoyote.</span>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Real Example</span><span class="sw">Mfano Halisi</span><span class="sh">Real Example</span></strong>
+  <span class="en">Brian received a &ldquo;Safaricom&rdquo; call asking for his M-Pesa PIN. He <strong>hung up immediately</strong>, called 100, and reported the number. He was told it was a known scam number. His account was safe.</span>
+  <span class="sw">Brian alipata simu ya &ldquo;Safaricom&rdquo; ikiomba PIN yake ya M-Pesa. <strong>Alikata simu mara moja</strong>, akapiga 100, na kuripoti nambari. Aliambiwa ilikuwa nambari ya ulaghai inayojulikana. Akaunti yake ilikuwa salama.</span>
+  <span class="sh">Brian alipata call ya &ldquo;Safaricom&rdquo; ikiomba M-Pesa PIN yake. <strong>Alikata simu mara moja</strong>, akapiga 100, na kuripoti number. Aliambiwa ilikuwa known scam number. Account yake ilikuwa safe.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Wisdom</div>
+  <span class="en" style="display:block;">&ldquo;Urgency online = red flag. Kama wanasema &lsquo;haraka haraka&rsquo; &mdash; simama. Legitimate kitu haiharakishwi.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Haraka mtandaoni = dalili nyekundu. Wakisema &lsquo;haraka haraka&rsquo; &mdash; simama. Kitu halisi haifanyiwi haraka.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Urgency online = red flag. Kama wanasema &lsquo;haraka haraka&rsquo; &mdash; simama. Legitimate kitu haiharakishwi.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Cyber Crimes &mdash; Online Safety and Refusal</span><span class="sw">Uhalifu wa Mtandao &mdash; Usalama wa Mtandaoni na Kukataa</span><span class="sh">Cyber Crimes &mdash; Online Safety na Refusal</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one cyber crime tactic shown in the video and explain how you would use DEAR to refuse it. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya uhalifu wa mtandao iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kuikataa. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua cyber crime tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kuikataa. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Fatuma, 17, Mombasa, receives a WhatsApp message saying she has won a Safaricom promotion. The sender asks for her M-Pesa PIN to release the prize money. Which of the following are warning signs that this is a scam? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> The message asks for her M-Pesa PIN</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> She never entered any Safaricom competition</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> The message came through official Safaricom channels</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> The message creates urgency to act immediately</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> No legitimate prize requires a PIN to be claimed</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Otieno, 16, Kisumu, is pressured by an older student to pass money through his M-Pesa account for a &ldquo;business deal.&rdquo; The student says, &ldquo;You won&rsquo;t get in trouble &mdash; you&rsquo;re just helping.&rdquo; What is the MOST accurate statement about this situation?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Since Otieno did not start the deal, he cannot be in legal trouble</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Otieno is being recruited as a money mule, which is a criminal offence even if he did not initiate the fraud</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> It is fine as long as Otieno receives some money for helping</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> The situation is only a problem if the police find out</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. A cyber safety facilitator in Eldoret asks learners to identify characteristics of a phishing attack. Which of the following describe phishing? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> It pretends to be a trusted organisation like a bank or Safaricom</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> It tries to steal personal information such as PINs or passwords</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> It always arrives as a formal printed letter</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> It often uses fake links that look like real websites</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> It frequently uses urgency to pressure the victim into acting fast</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Zawadi, 15, Nairobi, receives a text claiming to be from Equity Bank saying her account will be closed unless she clicks a link and verifies her details immediately. What is the BEST action for Zawadi to take?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Click the link quickly so her account is not closed</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Ignore the text, go directly to the Equity Bank app or branch to verify, and report the number to the CA on 0800 721 577</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Forward the link to her friends to warn them</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Reply to the text asking for more information before deciding</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. A peer educator in Thika asks the class what steps protect someone from cyber crime. Which of the following are effective cyber safety practices? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Never sharing PINs, passwords, or OTPs with anyone</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Enabling two-factor authentication on all accounts</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Using the same password for all platforms for convenience</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Being suspicious of urgent messages demanding immediate action</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Going directly to official apps instead of clicking links in messages</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Njeri, 16, Nyeri, is offered a job &ldquo;in Dubai&rdquo; by someone she met online. The recruiter asks her to pay KES 8,000 for processing fees. Njeri is excited but her friend is suspicious. Which response BEST demonstrates refusal skills?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Pay half the fee first to show good faith</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Ask for more time and then pay later</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> &ldquo;No. Legitimate employers never ask job seekers to pay fees. This is a scam. I am reporting this to the DCI.&rdquo;</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Ask a parent to pay instead so she is not personally responsible</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. During a school club meeting in Nakuru, learners discuss the DEAR method applied to online scam situations. Which of the following correctly describe steps in the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Describe what is being asked of you without blaming the other person</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Express how you feel, for example &ldquo;I feel suspicious and pressured&rdquo;</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Agree to the request but delay until you gather more information</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Assert your refusal clearly: &ldquo;No. I will not do this.&rdquo;</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Reinforce by reporting to the relevant authority and blocking the contact</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. Kamau, 17, Thika, receives a call from someone claiming to be a Safaricom agent who says his line will be deactivated unless he shares his M-Pesa PIN within five minutes. What does the five-minute deadline tell Kamau about this call?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> It is a sign that the situation is genuine and urgent</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Artificial urgency is a classic manipulation tactic used by scammers; he should hang up and call 100 to verify</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> He should share the PIN quickly to avoid losing his line</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Safaricom sometimes gives five minutes for security checks</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. Achieng, 16, Kisumu, has been receiving threatening messages from someone who has her private photos and is demanding money or he will share them online. Which of the following actions should Achieng take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Screenshot and save all threatening messages as evidence</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Report to a trusted adult, the DCI Cyber Crime Unit, or Childline 116</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Pay the money demanded so the photos are not shared</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Do NOT pay &mdash; paying encourages further demands</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Block the contact on all platforms after collecting evidence</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. A cyber safety lesson in Malindi summarises key reporting contacts for cyber crime in Kenya. Which of the following correctly matches the contact to its function?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Call 116 to report M-Pesa scams to Safaricom</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Call 100 to report M-Pesa fraud; email cybercrime@dci.go.ke for online crime; call 0800 721 577 to report phishing to the Communications Authority</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Call 0800 721 577 to report M-Pesa fraud to Safaricom</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Email cybercrime@dci.go.ke only for hacking, not for scams or phishing</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPickCyber(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Well done! This is a classic prize scam. Safaricom legitimate draws never require a PIN to claim. Report &rarr; Delete &rarr; Ignore.</span><span class="sw">Vizuri! Hii ni ulaghai wa kawaida wa tuzo. Bahati nasibu halisi za Safaricom hazihitaji PIN. Ripoti &rarr; Futa &rarr; Puuza.</span><span class="sh">Vizuri! Hii ni classic prize scam. Legitimate Safaricom draws hazihitaji PIN. Report &rarr; Delete &rarr; Ignore.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Calling the number (even with a fake PIN) validates your number to the scammer and invites further manipulation. The safe action is: Delete, report to Safaricom on 100, and ignore.</span><span class="sw">Kupiga nambari (hata na PIN bandia) kunathibitisha nambari yako kwa mlaghai. Hatua salama ni: Futa, ripoti kwa Safaricom kwa 100, na puuza.</span><span class="sh">Kupiga number (hata na fake PIN) ku-validate number yako kwa scammer. Safe action ni: Delete, ripoti kwa Safaricom kwa 100, na ignore.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,B,D,E','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand cyber crime refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -17,7 +17,7 @@ $passwordConfirm = $_POST['password_confirm'] ?? '';
 // ============================================================
 // Basic field validation
 // ============================================================
-if (empty($name) || empty($school) || empty($class)) {
+if (empty($name) || empty($school)) {
     header('Location: /arise/?p=register&error=1');
     exit;
 }

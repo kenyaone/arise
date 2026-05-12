@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Abstinence &amp; Sexual Pressure | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-abstinence">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Abstinence &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Sexual Pressure</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Shinikizo la Ngono</span><span class="sh" style="display:none;">Refusal Skills &mdash; Sexual Pressure</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo hili:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify 5 sexual pressure tactics used on Kenyan adolescents</span><span class="sw">Tambua mbinu 5 za shinikizo la kingono zinazotumiwa kwa vijana wa Kenya</span><span class="sh">Tambua pressure tactics 5 za kingono zinazotumiwa kwa vijana wa Kenya</span></li>
+    <li><span class="en">Apply the DEAR method to refuse sexual advances assertively</span><span class="sw">Tumia njia ya DEAR kukataa maombi ya kingono kwa ujasiri</span><span class="sh">Apply DEAR method kurefuse sexual advances kwa confidence</span></li>
+    <li><span class="en">Practise 4 abstinence refusal phrases for real-life situations</span><span class="sw">Fanya mazoezi ya misemo 4 ya kukataa kwa abstinence kwa hali halisi</span><span class="sh">Practice abstinence refusal phrases 4 kwa real-life situations</span></li>
+    <li><span class="en">Understand that abstinence is a right, not a weakness</span><span class="sw">Elewa kwamba abstinence ni haki, si udhaifu</span><span class="sh">Elewa kwamba abstinence ni haki, si udhaifu</span></li>
+    <li><span class="en">Know support contacts: Childline 116, NACADA 1192, gender desk at nearest police station</span><span class="sw">Jua nambari za msaada: Childline 116, NACADA 1192, dawati la jinsia katika kituo cha polisi kilicho karibu</span><span class="sh">Jua support contacts: Childline 116, NACADA 1192, gender desk kwa police station iliyo karibu</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Has anyone ever made you feel that saying NO to sex means you are not mature or not in love? What was that like?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Je, mtu amewahi kukufanya uhisi kwamba kusema HAPANA kwa ngono kunamaanisha huna ukomavu au hupendi? Ilikuwaje?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Je, mtu amewahi kukufanya uhisi kwamba kusema NO kwa sex inamaanisha huna maturity au hupendi? Ilikuwa aje?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Why Abstinence Refusal Skills Matter -->
+<div class="slide">
+<div class="slide-head">&#9888;&#65039; <span class="en">Why Abstinence Refusal Skills Matter</span><span class="sw">Kwa Nini Ujuzi wa Kukataa kwa Abstinence ni Muhimu</span><span class="sh">Kwa Nini Abstinence Refusal Skills Zinafaa</span></div>
+<ul class="bl">
+  <li><span class="en">Kenya has one of the highest rates of adolescent pregnancy in Sub-Saharan Africa</span><span class="sw">Kenya ina moja ya viwango vya juu zaidi vya ujauzito wa ujana katika Afrika Kusini mwa Jangwa la Sahara</span><span class="sh">Kenya ina moja ya highest rates za adolescent pregnancy kwa Sub-Saharan Africa</span></li>
+  <li><span class="en">Most first sexual experiences among Kenyan teenagers are reported as unplanned or under pressure</span><span class="sw">Uzoefu mwingi wa kwanza wa ngono miongoni mwa vijana wa Kenya unaripotiwa kuwa wa bahati mbaya au chini ya shinikizo</span><span class="sh">Most first sexual experiences za Kenya teenagers zinaripotiwa kama unplanned au under pressure</span></li>
+  <li><span class="en">Abstinence = choosing to delay sexual activity &mdash; it is the most effective protection against STIs and pregnancy</span><span class="sw">Abstinence = kuchagua kuahirisha shughuli za ngono &mdash; ni ulinzi mzuri zaidi dhidi ya magonjwa ya zinaa na ujauzito</span><span class="sh">Abstinence = kuchagua ku-delay sexual activity &mdash; ni protection bora zaidi dhidi ya STIs na pregnancy</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Sexual Coercion</span><span class="sw">&#128273; Neno Muhimu: Kulazimishwa Kingono</span><span class="sh">&#128273; Key Term: Sexual Coercion</span></strong>
+  <span class="en">Any pressure, manipulation, or threat used to get someone to have sex. It is never acceptable &mdash; and it is never your fault.</span>
+  <span class="sw">Shinikizo lolote, udanganyifu, au tishio linalotumiwa kumfanya mtu afanye ngono. Halikubaliwi kamwe &mdash; na si kosa lako kamwe.</span>
+  <span class="sh">Pressure yoyote, manipulation, au threat ya kukufanya ufanye sex. Halikubaliwi kamwe &mdash; na si kosa lako kamwe.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Important:</span><span class="sw">&#9888; Muhimu:</span><span class="sh">&#9888; Important:</span></strong>
+  <span class="en"> Agreeing to sex because you felt too scared or embarrassed to say no is NOT consent.</span>
+  <span class="sw"> Kukubaliana na ngono kwa sababu ulikuwa na hofu sana au aibu kusema hapana si ridhaa halali.</span>
+  <span class="sh"> Kukubaliana na sex kwa sababu ulikuwa na hofu au aibu kusema no si consent.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng / Kiswahili</div>
+  <span class="en" style="display:block;">"Kusema NO kwa sex ni HAKI yako. Mtu yeyote anayekushikilia baada ya NO anakuvunja sheria."</span>
+  <span class="sw" style="display:none;">"Kusema HAPANA kwa ngono ni HAKI yako. Mtu yeyote anayekushinikiza baada ya HAPANA anakudhulumu na anakiuka sheria."</span>
+  <span class="sh" style="display:none;">"Kusema NO kwa sex ni HAKI yako. Mtu yeyote anayekushikilia baada ya NO anakuvunja sheria."</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Sexual Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">5 Sexual Pressure Tactics</span><span class="sw">Mbinu 5 za Shinikizo la Kingono</span><span class="sh">Sexual Pressure Tactics 5</span></div>
+<p class="tp"><span class="en">Recognising these tactics gives you power to respond &mdash; not react.</span><span class="sw">Kutambua mbinu hizi hukupa nguvu ya kujibu &mdash; si kujibu kwa msongo.</span><span class="sh">Kutambua tactics hizi hukupa nguvu ya kurespond &mdash; si ku-react.</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">"If you loved me you would" &mdash; Emotional Manipulation</span><span class="sw">"Kama upendapo mimi ungefanya" &mdash; Udanganyifu wa Kihisia</span><span class="sh">"Ukinipenda ungedoa" &mdash; Emotional Manipulation</span></strong>
+  <span class="en">Using your feelings for them against you. Love does not require you to sacrifice your safety.</span>
+  <span class="sw">Kutumia hisia zako dhidi yako. Upendo hauhitaji utoe usalama wako.</span>
+  <span class="sh">Ku-use feelings zako dhidi yako. Love haihitaji utoe safety yako.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">"Everyone our age is doing it" &mdash; Normalising</span><span class="sw">"Wote wa umri wetu wanafanya" &mdash; Kudai Kawaida</span><span class="sh">"Wote wa umri wetu wanado" &mdash; Normalising</span></strong>
+  <span class="en">Exaggerating how common sex is among peers to reduce your resistance. "Everyone" is rarely everyone.</span>
+  <span class="sw">Kupiga chumvi jinsi ngono inavyoenea miongoni mwa rika kupunguza upinzani wako. "Wote" mara chache ni wote.</span>
+  <span class="sh">Ku-exaggerate jinsi sex inavyoenea kwa rika kupunguza resistance yako. "Wote" mara chache ni wote.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">"I'll leave you for someone else" &mdash; Threat / Ultimatum</span><span class="sw">"Nitakuacha kwa mwingine" &mdash; Tishio / Ultimatamu</span><span class="sh">"Nitakuacha kwa mwingine" &mdash; Threat / Ultimatum</span></strong>
+  <span class="en">Using the fear of losing the relationship to force compliance. Real love does not issue ultimatums.</span>
+  <span class="sw">Kutumia hofu ya kupoteza uhusiano kulazimisha utiifu. Upendo wa kweli hautoi ultimatamu.</span>
+  <span class="sh">Ku-use hofu ya kupoteza relationship ku-force compliance. Real love haitoi ultimatums.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">"We've been together so long &mdash; it's time" &mdash; Entitlement</span><span class="sw">"Tumekaa pamoja muda mrefu &mdash; ni wakati" &mdash; Haki ya Uongo</span><span class="sh">"Tumekaa pamoja muda mrefu &mdash; ni time" &mdash; Entitlement</span></strong>
+  <span class="en">Claiming that the length of a relationship entitles them to sex. No one is ever owed sex.</span>
+  <span class="sw">Kudai kwamba muda wa uhusiano huwapa haki ya ngono. Hakuna anayestahili ngono.</span>
+  <span class="sh">Kudai kwamba muda wa relationship inawapa haki ya sex. Hakuna anayestahili sex.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">"Just this once &mdash; I promise I won't tell anyone" &mdash; Secrecy + Minimising</span><span class="sw">"Mara hii moja tu &mdash; Naahidi sitamwambia mtu" &mdash; Siri + Kupunguza Uzito</span><span class="sh">"Once tu &mdash; Naahidi sitaanybody" &mdash; Secrecy + Minimising</span></strong>
+  <span class="en">Making the act seem small and secret to lower your guard. If it were truly harmless, secrecy would not be needed.</span>
+  <span class="sw">Kufanya kitendo kionekane kidogo na cha siri kupunguza ulinzi wako. Kama kingelikuwa kisicho na hatari, siri haingehitajika.</span>
+  <span class="sh">Kufanya kitendo kionekane kidogo na cha siri ku-lower guard yako. Kama kilikuwa harmless, secrecy haingehitajika.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Remember:</span><span class="sw">&#9888; Kumbuka:</span><span class="sh">&#9888; Kumbuka:</span></strong>
+  <span class="en"> These are manipulation tactics, NOT signs of love. Real love respects your NO.</span>
+  <span class="sw"> Hizi ni mbinu za udanganyifu, SI dalili za upendo. Upendo wa kweli unaheshimu HAPANA yako.</span>
+  <span class="sh"> Hizi ni manipulation tactics, SI signs za love. Real love ina-respect NO yako.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR Method for Sexual Refusal -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">The DEAR Method for Sexual Refusal</span><span class="sw">Njia ya DEAR ya Kukataa Kingono</span><span class="sh">DEAR Method ya Sexual Refusal</span></div>
+<p class="tp"><span class="en">DEAR is a structured, assertive method for refusing sexual pressure clearly and with confidence.</span><span class="sw">DEAR ni njia iliyopangwa ya ujasiri ya kukataa shinikizo la kingono kwa uwazi na ujasiri.</span><span class="sh">DEAR ni structured, assertive method ya kurefuse sexual pressure clearly na kwa confidence.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">"You are asking me to have sex with you."</span><span class="sw">"Unaniomba nifanye ngono nawe."</span><span class="sh">"Unaniomba nifanye sex nawe."</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">"I feel pressured and disrespected."</span><span class="sw">"Nahisi ninashikiliwa na kudharauliwa."</span><span class="sh">"Nahisi pressured na kudisrespected."</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">"No. I have chosen to wait. That is my decision."</span><span class="sw">"Hapana. Nimechagua kusubiri. Hiyo ni uamuzi wangu."</span><span class="sh">"No. Nimechagua kusubiri. Hiyo ni decision yangu."</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">"I need you to respect my choice. If you cannot, this relationship is not healthy for me."</span><span class="sw">"Ninahitaji uheshimu chaguo langu. Kama huwezi, uhusiano huu si mzuri kwangu."</span><span class="sh">"Ninahitaji u-respect choice yangu. Kama huwezi, relationship hii si healthy kwangu."</span></div>
+  </div>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Example &mdash; Akinyi, Form 3, Kisumu</span><span class="sw">Mfano &mdash; Akinyi, Kidato cha 3, Kisumu</span><span class="sh">Example &mdash; Akinyi, Form 3, Kisumu</span></strong>
+  <span class="en">Akinyi used DEAR when her boyfriend threatened to leave if she refused. He left. Six months later, she said it was the best decision she ever made. Her health, her future &mdash; protected.</span>
+  <span class="sw">Akinyi alitumia DEAR bwana wake alipotishia kwenda kama atakataa. Alienda. Miezi sita baadaye, alisema ilikuwa uamuzi bora zaidi aliopata kufanya. Afya yake, mustakabali wake &mdash; vilipolindwa.</span>
+  <span class="sh">Akinyi alitumia DEAR boyfriend yake alipotishia kuenda kama atakataa. Alienda. Miezi sita baadaye, alisema ilikuwa best decision aliyowahi fanya. Health yake, future yake &mdash; protected.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Broken Record Technique</span><span class="sw">&#128161; Mbinu ya Rekodi Iliyovunjika</span><span class="sh">&#128161; Broken Record Technique</span></strong>
+  <span class="en"> If they keep asking, calmly repeat your NO. You do not owe anyone a reason beyond "I don't want to."</span>
+  <span class="sw"> Wakiendelea kuomba, rudia HAPANA yako kwa utulivu. Huna deni la sababu zaidi ya "Sitaki."</span>
+  <span class="sh"> Wakiendelea kuomba, repeat NO yako kwa calm. Huna-deni reason zaidi ya "Sitaki."</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts for Sexual Situations -->
+<div class="slide">
+<div class="slide-head">&#128483; <span class="en">Refusal Scripts for Sexual Situations</span><span class="sw">Misemo ya Kukataa kwa Hali za Kingono</span><span class="sh">Refusal Scripts kwa Sexual Situations</span></div>
+<p class="tp"><span class="en">Having a ready phrase removes the panic of the moment. Practise these until they feel natural:</span><span class="sw">Kuwa na msemo ulio tayari huondoa hofu ya wakati huo. Fanya mazoezi ya haya mpaka yaonekane ya kawaida:</span><span class="sh">Kuwa na phrase ready huremove panic ya moment. Practice hizi mpaka ziwe natural:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Partner Pressure</span><span class="sw">Shinikizo la Mwenzi</span><span class="sh">Partner Pressure</span></div>
+  <div class="phrase"><span class="en">"No. I'm not ready, and my decision is final. If you care about me, you'll respect that."</span><span class="sw">"Hapana. Sijawa tayari, na uamuzi wangu ni wa mwisho. Ukijali, utaheshimu hivyo."</span><span class="sh">"No. Sijawa ready, na decision yangu ni final. Ukijali, uta-respect hivyo."</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">"Just once" Pressure</span><span class="sw">Shinikizo la "Mara Moja Tu"</span><span class="sh">"Just once" Pressure</span></div>
+  <div class="phrase"><span class="en">"No. Once is enough to get pregnant or get an STI. I choose my health."</span><span class="sw">"Hapana. Mara moja inatosha kupata mimba au ugonjwa. Nachagua afya yangu."</span><span class="sh">"No. Once inatosha kupata pregnant au STI. Nachagua health yangu."</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">"Everyone does it"</span><span class="sw">"Kila Mtu Anafanya"</span><span class="sh">"Everyone anado"</span></div>
+  <div class="phrase"><span class="en">"That's not true &mdash; and even if it were, I make my own choices."</span><span class="sw">"Hiyo si kweli &mdash; na hata kama ingekuwa, ninafanya maamuzi yangu mwenyewe."</span><span class="sh">"Hiyo si kweli &mdash; na hata kama ingekuwa, nafanya choices zangu mwenyewe."</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Threats &amp; Ultimatums</span><span class="sw">Vitisho &amp; Ultimatamu</span><span class="sh">Threats &amp; Ultimatums</span></div>
+  <div class="phrase"><span class="en">"If you leave me for this, you were never the right person for me. Goodbye."</span><span class="sw">"Ukinicha kwa sababu ya hili, hukuwa mtu sahihi kwangu kamwe. Kwa heri."</span><span class="sh">"Ukinicha kwa hili, hukuwa right person kwangu. Bye."</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Key Rule</span><span class="sw">&#128161; Kanuni Muhimu</span><span class="sh">&#128161; Key Rule</span></strong>
+  <span class="en"> Your NO is complete in itself. You don't need a reason beyond "I don't want to." Do NOT apologise for protecting yourself.</span>
+  <span class="sw"> HAPANA yako ni kamili yenyewe. Huhitaji sababu zaidi ya "Sitaki." USITOE msamaha kwa kujilinda.</span>
+  <span class="sh"> NO yako ni complete yenyewe. Huhitaji reason zaidi ya "Sitaki." USITOE apology kwa kujilinda.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario — Sponsor Pressure (interactive) -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario &mdash; Sponsor Pressure</span><span class="sw">Hali &mdash; Shinikizo la Mdhamini</span><span class="sh">Scenario &mdash; Sponsor Pressure</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Grace, Form 4, Nairobi</span><span class="sw">Hali &mdash; Grace, Kidato cha 4, Nairobi</span><span class="sh">Scenario &mdash; Grace, Form 4, Nairobi</span></div>
+  <div class="scenario">
+    <span class="en">Grace has an older man who has been paying her school fees. He now says she must "be with him" sexually, or he will stop paying her fees. Grace feels trapped.</span>
+    <span class="sw">Grace ana mtu mzee ambaye amekuwa akilipa ada zake za shule. Sasa anasema lazima "awe naye" kingono, au atakata kulipa ada zake. Grace anahisi amefungwa.</span>
+    <span class="sh">Grace ana mtu mzee ambaye amekuwa akilipa fees zake. Sasa anasema lazima "awe naye" kisexually, au atakata kulipa fees zake. Grace anahisi amefungwa.</span>
+  </div>
+  <div class="sc-q"><span class="en">What is Grace's BEST next step?</span><span class="sw">Hatua BORA ya Grace inayofuata ni gani?</span><span class="sh">Next step BEST ya Grace ni gani?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">A. Comply &mdash; she cannot afford to lose the fees</span>
+      <span class="sw">A. Kubali &mdash; hawezi kupoteza ada</span>
+      <span class="sh">A. Kubali &mdash; hawezi kupoteza fees</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')">
+      <span class="en">B. Refuse clearly, leave the situation, and report to a trusted adult, school counsellor, or Childline 116</span>
+      <span class="sw">B. Kataa wazi, ondoka katika hali hiyo, na ripoti kwa mtu mzima anayeaminika, mshauri wa shule, au Childline 116</span>
+      <span class="sh">B. Kataa clearly, toka hali hiyo, na report kwa trusted adult, school counsellor, au Childline 116</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">C. Ignore him and hope he forgets</span>
+      <span class="sw">C. Mmpuuze na tumaini atasahau</span>
+      <span class="sh">C. Mignore na utumaini atasahau</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; This is Sexual Exploitation:</span><span class="sw">&#9888; Hii ni Unyonyaji wa Kingono:</span><span class="sh">&#9888; Hii ni Sexual Exploitation:</span></strong>
+  <span class="en"> Transactional sex puts Grace at serious risk of pregnancy, STIs, and continued exploitation. She has the legal right to report &mdash; social services and bursary programmes can help with alternative funding.</span>
+  <span class="sw"> Ngono ya malipo inaweka Grace katika hatari kubwa ya ujauzito, magonjwa ya zinaa, na unyonyaji unaoendelea. Ana haki ya kisheria ya kuripoti &mdash; huduma za jamii na mipango ya bursari inaweza kusaidia na ufadhili mbadala.</span>
+  <span class="sh"> Transactional sex inaweka Grace kwa hatari kubwa ya pregnancy, STIs, na exploitation inayoendelea. Ana haki ya kisheria ya kuripoti &mdash; social services na bursary programmes zinaweza kusaidia na alternative funding.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: When NO Is Not Enough -->
+<div class="slide">
+<div class="slide-head">&#128222; <span class="en">When NO Is Not Enough &mdash; Getting Help</span><span class="sw">HAPANA Haitoshi &mdash; Kupata Msaada</span><span class="sh">NO Haitoshi &mdash; Kupata Help</span></div>
+<p class="tp"><span class="en">If someone continues sexual pressure after you have clearly said NO &mdash; that is sexual harassment or assault, and you deserve support.</span><span class="sw">Mtu akiendelea na shinikizo la kingono baada ya kusema HAPANA wazi &mdash; hiyo ni unyanyasaji wa kingono au shambulio, na unastahili msaada.</span><span class="sh">Mtu akiendelea na sexual pressure baada ya kusema NO clearly &mdash; hiyo ni sexual harassment au assault, na unastahili support.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#10004; Where to Report in Kenya</span><span class="sw">&#10004; Mahali pa Kuripoti Kenya</span><span class="sh">&#10004; Wapi ku-Report Kenya</span></strong>
+  <ul class="bl">
+    <li><span class="en">School counsellor, trusted teacher, or parent</span><span class="sw">Mshauri wa shule, mwalimu anayeaminika, au mzazi</span><span class="sh">School counsellor, trusted teacher, au parent</span></li>
+    <li><span class="en">Local chief or village elder</span><span class="sw">Mkuu wa eneo au mzee wa kijiji</span><span class="sh">Local chief au village elder</span></li>
+    <li><span class="en"><strong>Childline Kenya: 116</strong> &mdash; Free, 24/7, any phone</span><span class="sw"><strong>Childline Kenya: 116</strong> &mdash; Bure, masaa 24/7, simu yoyote</span><span class="sh"><strong>Childline Kenya: 116</strong> &mdash; Free, 24/7, simu yoyote</span></li>
+    <li><span class="en"><strong>NACADA: 1192</strong> &mdash; Counselling and referral</span><span class="sw"><strong>NACADA: 1192</strong> &mdash; Ushauri na rufaa</span><span class="sh"><strong>NACADA: 1192</strong> &mdash; Counselling na referral</span></li>
+    <li><span class="en">Gender desk at the nearest police station</span><span class="sw">Dawati la jinsia katika kituo cha polisi kilicho karibu</span><span class="sh">Gender desk kwa police station iliyo karibu</span></li>
+    <li><span class="en"><strong>FIDA Kenya</strong> &mdash; Free legal help for women and girls</span><span class="sw"><strong>FIDA Kenya</strong> &mdash; Msaada wa kisheria bila malipo kwa wanawake na wasichana</span><span class="sh"><strong>FIDA Kenya</strong> &mdash; Free legal help kwa wanawake na wasichana</span></li>
+  </ul>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Know the Law:</span><span class="sw">&#9888; Jua Sheria:</span><span class="sh">&#9888; Jua Sheria:</span></strong>
+  <span class="en"> Rape and sexual assault are criminal offences under Kenya's <strong>Sexual Offences Act 2006</strong>. It is NEVER the victim's fault. Report without fear.</span>
+  <span class="sw"> Ubakaji na shambulio la kingono ni makosa ya jinai chini ya <strong>Sheria ya Makosa ya Ngono 2006</strong> ya Kenya. Kamwe si kosa la mwathirika. Ripoti bila hofu.</span>
+  <span class="sh"> Rape na sexual assault ni criminal offences chini ya <strong>Sexual Offences Act 2006</strong> ya Kenya. Kamwe si kosa la mwathirika. Report bila hofu.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Abstinence Is Strength -->
+<div class="slide">
+<div class="slide-head">&#128170; <span class="en">Abstinence Is Strength</span><span class="sw">Abstinence ni Nguvu</span><span class="sh">Abstinence ni Strength</span></div>
+<ul class="bl">
+  <li><span class="en">Abstinence is the ONLY 100% effective method of preventing both pregnancy and STIs</span><span class="sw">Abstinence ndiyo NJIA PEKEE yenye ufanisi wa 100% kuzuia ujauzito na magonjwa ya zinaa</span><span class="sh">Abstinence ni NJIA PEKEE yenye 100% effectiveness kuzuia pregnancy na STIs</span></li>
+  <li><span class="en">In Kenya, over 17,000 girls drop out of school every year due to pregnancy (UNICEF 2023)</span><span class="sw">Kenya, wasichana zaidi ya 17,000 huacha shule kila mwaka kwa sababu ya ujauzito (UNICEF 2023)</span><span class="sh">Kenya, wasichana zaidi ya 17,000 hudrop out ya shule kila year kwa sababu ya pregnancy (UNICEF 2023)</span></li>
+</ul>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Protective Strategies</span><span class="sw">&#128161; Mikakati ya Kujilinda</span><span class="sh">&#128161; Protective Strategies</span></strong>
+  <ul class="bl" style="margin-bottom:0;">
+    <li><span class="en">Avoid being alone with pressure partners late at night</span><span class="sw">Epuka kukaa peke yako na washirika wanaoshikilia usiku wa manane</span><span class="sh">Epuka kukaa peke yako na pressure partners usiku wa manane</span></li>
+    <li><span class="en">Have trusted friends know your whereabouts</span><span class="sw">Waache marafiki wanaokuamini wajue uko wapi</span><span class="sh">Waache trusted friends wajue uko wapi</span></li>
+    <li><span class="en">Plan your exits from uncomfortable situations before they arise</span><span class="sw">Panga njia zako za kutoka katika hali zisizofaa kabla hazijatokea</span><span class="sh">Plan exits zako kutoka kwa uncomfortable situations kabla hazijatokea</span></li>
+  </ul>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Secondary Abstinence</span><span class="sw">&#128273; Neno Muhimu: Abstinence ya Pili</span><span class="sh">&#128273; Key Term: Secondary Abstinence</span></strong>
+  <span class="en">Recommitting to abstinence after a previous sexual experience. It is always possible, and it is always valid.</span>
+  <span class="sw">Kujitolea tena kwa abstinence baada ya uzoefu wa awali wa kingono. Inawezekana daima, na ni halali daima.</span>
+  <span class="sh">Kujitolea tena kwa abstinence baada ya previous sexual experience. Inawezekana daima, na ni valid daima.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng / Kiswahili</div>
+  <span class="en" style="display:block;">"Kusubiri si outdated — ni choice ya nguvu. Real love inasubiri."</span>
+  <span class="sw" style="display:none;">"Kusubiri si kizamani — ni chaguo cha nguvu. Upendo wa kweli unasubiri."</span>
+  <span class="sh" style="display:none;">"Kusubiri si outdated — ni choice ya nguvu. Real love inasubiri."</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Abstinence &mdash; Saying No to Sexual Pressure</span><span class="sw">Abstinence &mdash; Kusema Hapana kwa Shinikizo la Kingono</span><span class="sh">Abstinence &mdash; Kusema No kwa Sexual Pressure</span></div>
+  <div style="color:rgba(255,255,255,.45);font-size:.78rem;margin-top:4px;"><span class="en">Video loading&hellip;</span><span class="sw">Video inapakia&hellip;</span><span class="sh">Video inaload&hellip;</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one sexual pressure tactic shown in the video and explain how you would use DEAR to refuse it. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya shinikizo la kingono iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kuikataa. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua sexual pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kuirefuse. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<div class="mcq-block">
+<div class="q-text">1. Wanjiru, 16, Nyeri, is told by her boyfriend: "If you loved me, you would not say no." Which of the following correctly describes what her boyfriend is doing? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Using emotional manipulation to pressure her</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Equating love with sex — a common pressure tactic</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Demonstrating that he respects her decision</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Disrespecting her right to say no</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Engaging in a form of sexual coercion</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. Otieno, 17, Kisumu, uses the DEAR method when a classmate pressures him to have sex. Which step is Otieno applying when he says: "No. I have chosen to wait. That is my decision."?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Describe — naming what is happening</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Assert — stating a clear, firm NO</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Express — sharing his feelings</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Reinforce — stating a consequence</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. Achieng, Form 3, Homa Bay, is learning about sexual pressure tactics. Which of the following are recognised sexual pressure tactics adolescents in Kenya commonly face? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> "Everyone our age is doing it" (normalising)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> "I'll leave you for someone else" (threat/ultimatum)</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> "Let me teach you how to cook" (life skills support)</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> "Just this once — I promise I won't tell anyone" (secrecy + minimising)</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> "We've been together so long — it's time" (entitlement)</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. Baraka, 15, Mombasa, is at a party where older students are pressuring him to have sex to "prove he is a man." What is the BEST response for Baraka?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Comply to avoid being mocked by his peers</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Agree to just watch but not participate</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Firmly say no, leave the situation, and speak to a trusted adult</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Stay quiet and hope they move on to pressuring someone else</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. Njoki, Form 2, Thika, wants to understand what secondary abstinence means. Which of the following statements about secondary abstinence are TRUE? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> It means recommitting to abstinence after previous sexual experience</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> It is a valid and healthy choice at any time</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> It only applies to girls, not boys</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> It protects against further risk of STIs and unintended pregnancy</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> It can be chosen at any point in a young person's life</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. Amina, 17, Garissa, has been receiving gifts from an older man who now demands sex in return. Which statement BEST describes this situation?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> This is a normal relationship because he has been generous</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> This is sexual exploitation — Amina should refuse, leave, and report to Childline 116 or the gender desk</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Amina should comply to avoid losing the gifts</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> This only becomes a problem if she tells someone</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. Kavkavya's peer education class in Machakos discusses what makes a sexual refusal effective. Which of the following are features of an effective refusal? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> The NO is stated clearly and directly</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> The person leaves the situation if pressure continues</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> The refusal includes an apology to avoid hurting feelings</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> The person repeats the NO calmly if pushed (broken record technique)</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> The refusal is given without excessive explanation</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. Silas, 16, Eldoret, said NO to his girlfriend's pressure for sex. She has now ignored him for a week. According to what you have learned, Silas should feel:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Ashamed — a real boyfriend would have agreed</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Regretful — he should apologise and reconsider</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Afraid — she may tell others he is immature</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Confident — he exercised his right to abstinence and a healthy relationship respects that</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. A health talk at Dagoretti High School, Nairobi, covers support options when a young person's NO is not respected. Which of the following are correct reporting options in Kenya? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Childline Kenya: 116 (free, 24/7)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Gender desk at the nearest police station</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Keep the experience private to protect the perpetrator's reputation</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> FIDA Kenya for free legal help</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> A trusted teacher, school counsellor, or parent</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. Fatuma, Form 4, Mombasa, tells her friend: "Choosing abstinence means I'm old-fashioned and boys won't like me." Which response BEST corrects this misconception?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> She is right — abstinence makes young people socially unpopular</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Abstinence is a right and a strength — someone who rejects her for it is not the right person for her</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> She should reconsider abstinence to keep her relationships</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Abstinence is only for religious people, not everyone</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">This is sexual exploitation. Grace has the right to report &mdash; social services can help with alternative bursaries. Childline 116 is free and available 24/7.</span><span class="sw">Hii ni unyonyaji wa kingono. Grace ana haki ya kuripoti &mdash; huduma za jamii zinaweza kusaidia na bursari mbadala. Childline 116 ni bure na inapatikana masaa 24/7.</span><span class="sh">Hii ni sexual exploitation. Grace ana haki ya kuripoti &mdash; social services zinaweza kusaidia na alternative bursaries. Childline 116 ni free na inapatikana 24/7.</span>'
+      : '<strong>&#10007; Not the best choice.</strong> <span class="en">Transactional sex puts Grace at serious risk of pregnancy, STIs, and continued exploitation. Compliance or ignoring the situation will not make it stop. She should refuse, leave, and report.</span><span class="sw">Ngono ya malipo inaweka Grace katika hatari kubwa ya ujauzito, magonjwa ya zinaa, na unyonyaji unaoendelea. Kukubali au kupuuza hali hiyo hakutaifanya ikome. Anapaswa kukataa, kuondoka, na kuripoti.</span><span class="sh">Transactional sex inaweka Grace kwa hatari kubwa ya pregnancy, STIs, na exploitation inayoendelea. Kukubali au kuignore hali hiyo haitaifanya ikome. Anapaswa kukataa, kuondoka, na kuripoti.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'D','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand abstinence refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

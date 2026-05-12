@@ -770,7 +770,7 @@ function showTotalScore() {
   if (window.ariseSaveScore) {
     ariseSaveScore(slug, mslug, total, max);
   } else {
-    fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_score', {
+    fetch('/arise/?p=api_lesson&action=save_score', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({lesson_slug:slug, module_slug:mslug, score:total, total:max, percent:pct})
     }).catch(function(){});

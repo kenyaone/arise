@@ -862,7 +862,7 @@ function setLang(l) {
   });
   localStorage.setItem('arise_lang', l);
   try {
-    fetch('http://192.168.0.118/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});
+    fetch('/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});
   } catch(e){}
 }
 setLang(lang);
@@ -924,7 +924,7 @@ function go(n) {
   var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
   if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
   if(lid && lid!=='0') {
-    fetch('http://192.168.0.118/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+    fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
   }
 }
 function upd() {

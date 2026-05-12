@@ -427,8 +427,21 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- SLIDE 9: Practice -->
+<!-- SLIDE 9: Video -->
 <div class="slide" id="slide-9">
+  <div class="slide-head">🎬 <span data-en="Watch: Drugs & Substance Abuse" data-sw="Tazama: Madawa ya Kulevya" data-sh="Watch: Drug Abuse Video"></span></div>
+  <div style="background:#1a1a2e;border-radius:10px;margin:14px 0;overflow:hidden;">
+    <video id="lessonVideo" controls style="display:none;width:100%;max-height:360px;background:#000;"></video>
+    <div id="videoPlaceholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;">
+      <div style="font-size:3rem;opacity:.5;margin-bottom:10px;">▶</div>
+      <p style="color:rgba(255,255,255,.6);font-size:.85rem;" data-en="Video will play here when connected." data-sw="Video itacheza hapa unapounganishwa." data-sh="Video itacheza hapa ukiwa connected."></p>
+    </div>
+    <div style="background:rgba(0,0,0,.5);color:rgba(255,255,255,.7);font-size:.75rem;padding:7px 14px;text-align:center;" data-en="Miraa / Khat — Culture & Consequences" data-sw="Miraa / Khat — Utamaduni na Matokeo" data-sh="Miraa / Khat — Culture na Consequences"></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Practice -->
+<div class="slide" id="slide-10">
   <div class="slide-head">✏️ <span data-en="Practice Questions" data-sw="Maswali ya Mazoezi" data-sh="Practice Questions"></span></div>
 
   <div class="teach-block">
@@ -585,7 +598,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 <script>
 // ── STATE ──
 let currentSlide = 1;
-const TOTAL = 9;
+const TOTAL = 10;
 let lang = 'en';
 let visited = new Set([1]);
 
@@ -672,6 +685,21 @@ function applyLang(l) {
     }
   });
 }
+
+// ── VIDEO INIT ──
+(function(){
+  var vid = document.getElementById('lessonVideo');
+  var ph = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var s = document.createElement('source'); s.src = vurl; s.type = 'video/mp4';
+    vid.appendChild(s); vid.load();
+    vid.addEventListener('loadeddata', function(){ if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else {
+    if(ph) ph.style.display='flex'; if(vid) vid.style.display='none';
+  }
+})();
 
 // ── INIT ──
 applyLang('en');

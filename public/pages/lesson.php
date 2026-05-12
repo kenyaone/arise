@@ -21,7 +21,7 @@ if ($modInfo && !empty($modInfo['content_warning'])) {
 
 $lessonType = $lesson['lesson_type'] ?? 'text';
 $filePath   = $lesson['file_path'] ?? null;
-$baseUpload = '/arise/uploads/';
+$baseUpload = '/arise/data/uploads/';
 
 if ($lessonType === 'interactive' && $filePath) {
     // Find video lesson in same module to inject into slide 6
@@ -142,6 +142,22 @@ window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
 window.ARISE_MODULE_SLUG='" . addslashes($lesson['module_slug']) . "';
 window.ARISE_RESUME_SLIDE=" . $resumeSlide . ";
 window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
+(function(){
+  function tryFS(v){
+    if(!v)return;
+    if(v.requestFullscreen) v.requestFullscreen().catch(function(){});
+    else if(v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+    else if(v.mozRequestFullScreen) v.mozRequestFullScreen();
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var v=document.getElementById('lessonVideo');
+    if(!v)return;
+    v.removeAttribute('playsinline');
+    v.addEventListener('play',function(){
+      if(!document.fullscreenElement&&!document.webkitFullscreenElement){tryFS(v);}
+    },{once:false});
+  });
+})();
 </script>";
         // Inject before </head>
         $html = str_replace('</head>', $inject . '</head>', $html);
@@ -197,7 +213,7 @@ $nextLesson = $currentIndex < count($allLessons) - 1 ? $allLessons[$currentIndex
         <h1 style="font-size:1.35rem;margin-bottom:20px;"><?= e($lesson['title']) ?></h1>
         <?php if ($lessonType === 'video' && $filePath): ?>
             <div style="background:#000;border-radius:var(--r2);overflow:hidden;margin-bottom:20px;">
-                <video controls playsinline style="width:100%;max-height:520px;display:block;" preload="metadata">
+                <video controls style="width:100%;max-height:520px;display:block;" preload="metadata" onclick="this.requestFullscreen&&this.requestFullscreen()">
                     <source src="<?= $baseUpload . e($filePath) ?>" type="video/mp4">
                 </video>
             </div>

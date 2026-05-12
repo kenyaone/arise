@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — HIV/AIDS &amp; STI Prevention | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-hiv">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; HIV/AIDS &amp; STIs &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; HIV &amp; STI Prevention</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Kinga ya VVU &amp; Magonjwa ya Zinaa</span><span class="sh" style="display:none;">Refusal Skills &mdash; HIV &amp; STI Prevention</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify pressure tactics that increase HIV/STI risk among Kenyan adolescents</span><span class="sw">Tambua mbinu za shinikizo zinazoongeza hatari ya VVU/magonjwa ya zinaa kwa vijana wa Kenya</span><span class="sh">Tambua pressure tactics zinazoongeza risk ya HIV/STI kwa vijana wa Kenya</span></li>
+    <li><span class="en">Apply DEAR to refuse unprotected sex and sexual coercion</span><span class="sw">Tumia DEAR kukataa ngono isiyo salama na kulazimishwa kwa ngono</span><span class="sh">Apply DEAR kukataa unprotected sex na sexual coercion</span></li>
+    <li><span class="en">Practise refusal scripts for condom negotiation situations</span><span class="sw">Fanya mazoezi ya misemo ya kukataa katika hali za mazungumzo ya kondomu</span><span class="sh">Practise refusal scripts kwa condom negotiation situations</span></li>
+    <li><span class="en">Know HIV/STI testing and support contacts in Kenya</span><span class="sw">Jua nambari za upimaji wa VVU/magonjwa ya zinaa na msaada Kenya</span><span class="sh">Jua HIV/STI testing na support contacts Kenya</span></li>
+    <li><span class="en">Understand that refusing unprotected sex protects both partners</span><span class="sw">Elewa kwamba kukataa ngono isiyo salama hulinda washirika wote wawili</span><span class="sh">Elewa kwamba kukataa unprotected sex inaweza-protect washirika wote wawili</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> If a partner said &ldquo;If you really trusted me, you wouldn&rsquo;t ask me to use a condom&rdquo; &mdash; how would you respond?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Ikiwa mwenzi alisema &ldquo;Kama ungenamini kweli, usingeniomba kutumia kondomu&rdquo; &mdash; ungejibu vipi?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Kama partner akisema &ldquo;Kama ungeniamini kweli, usingeomba nitumie condom&rdquo; &mdash; ungerespond vipi?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Why HIV/STI Refusal Skills Matter -->
+<div class="slide">
+<div class="slide-head">&#128204; <span class="en">Why HIV/STI Refusal Skills Matter</span><span class="sw">Kwa Nini Ujuzi wa Kukataa VVU/Magonjwa ya Zinaa ni Muhimu</span><span class="sh">Kwa Nini HIV/STI Refusal Skills Zinahusika</span></div>
+<ul class="bl">
+  <li><span class="en">Kenya has approximately 1.4 million people living with HIV; young people aged 15&ndash;24 account for a disproportionate number of new infections</span><span class="sw">Kenya ina takriban watu milioni 1.4 wanaoishi na VVU; vijana wa miaka 15&ndash;24 wanachangia idadi kubwa ya maambukizi mapya</span><span class="sh">Kenya ina approximately watu milioni 1.4 wanaoishi na HIV; vijana wa miaka 15&ndash;24 wanacontribute idadi kubwa ya new infections</span></li>
+  <li><span class="en">Most new HIV infections among youth are through unprotected heterosexual sex</span><span class="sw">Maambukizi mengi mapya ya VVU miongoni mwa vijana ni kupitia ngono isiyo salama kati ya wanaume na wanawake</span><span class="sh">Most new HIV infections kwa vijana ni kupitia unprotected heterosexual sex</span></li>
+  <li><span class="en">Condom use prevents HIV, gonorrhoea, syphilis, chlamydia, and HPV</span><span class="sw">Matumizi ya kondomu huzuia VVU, kisonono, kaswende, klamidia, na HPV</span><span class="sh">Kutumia condom kunapreventa HIV, gonorrhoea, syphilis, chlamydia, na HPV</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Unprotected Sex</span><span class="sw">&#128273; Neno Muhimu: Ngono Isiyo Salama</span><span class="sh">&#128273; Key Term: Unprotected Sex</span></strong>
+  <span class="en">Sexual intercourse without a condom or other barrier method.</span>
+  <span class="sw">Kujamiiana bila kondomu au kizuizi kingine chochote.</span>
+  <span class="sh">Ku-have sex bila condom au barrier method nyingine yoyote.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> STIs including HIV have no visible symptoms initially &mdash; you cannot tell if someone is positive by looking at them.</span>
+  <span class="sw"> Magonjwa ya zinaa ikiwemo VVU hayana dalili za kuonekana mwanzoni &mdash; huwezi kuambia kama mtu ana maambukizi kwa kumwangalia.</span>
+  <span class="sh"> STIs ikiwemo HIV hazina visible symptoms mwanzoni &mdash; huwezi kuambia kama mtu ni positive kwa kumuangalia tu.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng</div>
+  <span class="en" style="display:block;">&ldquo;Ukimwi hauna uso. Mtu wa &lsquo;clean&rsquo; appearance anaweza kuwa positive. Condom ni protection yako.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;VVU haina uso. Mtu mwenye mwonekano wa &lsquo;safi&rsquo; anaweza kuwa na maambukizi. Kondomu ni kinga yako.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Ukimwi hauna uso. Mtu wa &lsquo;clean&rsquo; appearance anaweza kuwa positive. Condom ni protection yako.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics That Increase STI Risk -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics That Increase STI Risk</span><span class="sw">Mbinu za Shinikizo Zinazoongeza Hatari ya Magonjwa ya Zinaa</span><span class="sh">Pressure Tactics Zinazoongeza STI Risk</span></div>
+<div class="key-term">
+  <strong>1. <span class="en">&ldquo;Condoms reduce pleasure &mdash; real lovers don&rsquo;t use them&rdquo;</span><span class="sw">&ldquo;Kondomu hupunguza raha &mdash; wapenzi wa kweli hawazitumii&rdquo;</span><span class="sh">&ldquo;Condoms zinapunguza pleasure &mdash; real lovers hawazitumii&rdquo;</span></strong>
+  <span class="en">Minimising safety. Pleasure is temporary; HIV is lifelong.</span>
+  <span class="sw">Kupunguza umuhimu wa usalama. Furaha ni ya muda; VVU ni ya maisha yote.</span>
+  <span class="sh">Ku-minimise safety. Pleasure ni ya muda; HIV ni ya maisha yote.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">&ldquo;I was tested last year &mdash; I&rsquo;m clean&rdquo;</span><span class="sw">&ldquo;Nilifanyiwa kipimo mwaka jana &mdash; mimi ni safi&rdquo;</span><span class="sh">&ldquo;Nilitest mwaka jana &mdash; niko clean&rdquo;</span></strong>
+  <span class="en">False assurance. HIV status changes with new exposures &mdash; a year-old test means nothing today.</span>
+  <span class="sw">Uhakika wa uongo. Hali ya VVU hubadilika na mfiduo mpya &mdash; kipimo cha mwaka uliopita hakina maana leo.</span>
+  <span class="sh">False assurance. HIV status inabadilika na new exposures &mdash; test ya mwaka jana haina maana leo.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">&ldquo;If you loved me, you&rsquo;d trust me&rdquo;</span><span class="sw">&ldquo;Kama ungenipenda, ungenamini&rdquo;</span><span class="sh">&ldquo;Kama ungenipenda, ungeniamini&rdquo;</span></strong>
+  <span class="en">Guilt/trust manipulation. Love does not require risking your health.</span>
+  <span class="sw">Udanganyifu wa hatia/uaminifu. Upendo hauhitaji kuhatarisha afya yako.</span>
+  <span class="sh">Guilt/trust manipulation. Love haihitaji ku-risk health yako.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">&ldquo;I&rsquo;ll withdraw before &mdash; it&rsquo;s fine&rdquo;</span><span class="sw">&ldquo;Nitatoka kabla &mdash; sawa tu&rdquo;</span><span class="sh">&ldquo;Nitatoka kabla &mdash; ni fine&rdquo;</span></strong>
+  <span class="en">Dangerous myth. Withdrawal does not prevent STIs or HIV transmission.</span>
+  <span class="sw">Hadithi hatari. Kutoka kabla hakuzuii magonjwa ya zinaa au maambukizi ya VVU.</span>
+  <span class="sh">Dangerous myth. Withdrawal haipreventi STIs au HIV transmission.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">&ldquo;We&rsquo;ve done it before without &mdash; nothing happened&rdquo;</span><span class="sw">&ldquo;Tumefanya bila hapo awali &mdash; hakuna kilichotokea&rdquo;</span><span class="sh">&ldquo;Tumefanya bila hapo awali &mdash; hakuna kilitokea&rdquo;</span></strong>
+  <span class="en">Normalising risk. Each unprotected exposure carries real risk regardless of past luck.</span>
+  <span class="sw">Kawaida ya hatari. Kila mfiduo usio na kinga una hatari halisi bila kujali bahati ya zamani.</span>
+  <span class="sh">Ku-normalise risk. Kila unprotected exposure ina real risk bila kujali bahati ya zamani.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Remember:</span><span class="sw">&#9888; Kumbuka:</span><span class="sh">&#9888; Remember:</span></strong>
+  <span class="en"> None of these are valid reasons to have unprotected sex. Your health is not negotiable.</span>
+  <span class="sw"> Hakuna hata moja kati ya hizi ni sababu halali ya kufanya ngono isiyo salama. Afya yako haiwezi kujadiliwa.</span>
+  <span class="sh"> Hakuna hata moja kati ya hizi ni valid reason ya ku-have unprotected sex. Health yako si negotiable.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR Method for Condom Negotiation -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR Method for Condom Negotiation</span><span class="sw">Njia ya DEAR kwa Mazungumzo ya Kondomu</span><span class="sh">DEAR Method kwa Condom Negotiation</span></div>
+<p class="tp"><span class="en">Use the DEAR framework to hold your position firmly and protect your health:</span><span class="sw">Tumia mfumo wa DEAR kushikilia msimamo wako kwa uthabiti na kulinda afya yako:</span><span class="sh">Tumia DEAR framework kushikilia position yako firmly na ku-protect health yako:</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You&rsquo;re asking me to have sex without a condom.&rdquo;</span><span class="sw">&ldquo;Unanisomba kufanya ngono bila kondomu.&rdquo;</span><span class="sh">&ldquo;Unaniona nitoke bila condom.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel pressured and concerned about my health.&rdquo;</span><span class="sw">&ldquo;Nahisi shinikizo na wasiwasi kuhusu afya yangu.&rdquo;</span><span class="sh">&ldquo;Nahisi pressured na concerned kuhusu health yangu.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;No. We either use a condom or we do not have sex. That is final.&rdquo;</span><span class="sw">&ldquo;Hapana. Tutatumia kondomu au hatutafanya ngono. Hiyo ni ya mwisho.&rdquo;</span><span class="sh">&ldquo;No. Tutatumia condom au hatutafanya sex. Hiyo ni final.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">&ldquo;My health is not negotiable. If this is a problem, we need to talk about this relationship.&rdquo;</span><span class="sw">&ldquo;Afya yangu haiwezi kujadiliwa. Ikiwa hii ni tatizo, tunahitaji kuzungumza kuhusu uhusiano huu.&rdquo;</span><span class="sh">&ldquo;Health yangu si negotiable. Kama hii ni problem, tunahitaji ku-talk kuhusu relationship hii.&rdquo;</span></div>
+  </div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Tip</span><span class="sw">&#128161; Kidokezo</span><span class="sh">&#128161; Tip</span></strong>
+  <span class="en"> Carrying a condom is responsible &mdash; not an invitation to sex.</span>
+  <span class="sw"> Kubeba kondomu ni kuwajibika &mdash; si mwaliko wa ngono.</span>
+  <span class="sh"> Kubeba condom ni responsible &mdash; si invitation ya sex.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts for HIV/STI Situations -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts for HIV/STI Situations</span><span class="sw">Misemo ya Kukataa kwa Hali za VVU/Magonjwa ya Zinaa</span><span class="sh">Refusal Scripts kwa HIV/STI Situations</span></div>
+<p class="tp"><span class="en">Practise these scripts until they feel natural. A prepared phrase removes the panic of the moment:</span><span class="sw">Fanya mazoezi ya misemo hii mpaka ionekane ya kawaida. Msemo ulio tayari huondoa hofu ya wakati huo:</span><span class="sh">Practise scripts hizi mpaka ziwe natural. Phrase iliyoandaliwa huremove panic ya moment:</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Firm Boundary</span><span class="sw">Mpaka Imara</span><span class="sh">Firm Boundary</span></div>
+  <div class="phrase"><span class="en">&ldquo;No condom, no sex &mdash; that&rsquo;s my boundary and it is not changing.&rdquo;</span><span class="sw">&ldquo;Bila kondomu, bila ngono &mdash; hiyo ni mpaka wangu na haubadiliki.&rdquo;</span><span class="sh">&ldquo;No condom, no sex &mdash; hiyo ni boundary yangu na haibadiliki.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Respond to Old Test Claim</span><span class="sw">Jibu kwa Dai la Kipimo cha Zamani</span><span class="sh">Respond kwa Old Test Claim</span></div>
+  <div class="phrase"><span class="en">&ldquo;Your test from last year doesn&rsquo;t protect us now. We both get tested together, or we use condoms.&rdquo;</span><span class="sw">&ldquo;Kipimo chako cha mwaka jana hakitulindi sasa. Tupimwe wote wawili pamoja, au tutatumia kondomu.&rdquo;</span><span class="sh">&ldquo;Test yako ya mwaka jana haitulindi sasa. Tutest wote wawili pamoja, au tutatumia condoms.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Respond to Withdrawal Myth</span><span class="sw">Jibu kwa Hadithi ya Kutoka Kabla</span><span class="sh">Respond kwa Withdrawal Myth</span></div>
+  <div class="phrase"><span class="en">&ldquo;Withdrawal is not safe. It does not protect against STIs. No.&rdquo;</span><span class="sw">&ldquo;Kutoka kabla si salama. Hakuzuii magonjwa ya zinaa. Hapana.&rdquo;</span><span class="sh">&ldquo;Withdrawal si safe. Haipreventi STIs. No.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Respond to Pleasure Argument</span><span class="sw">Jibu kwa Hoja ya Starehe</span><span class="sh">Respond kwa Pleasure Argument</span></div>
+  <div class="phrase"><span class="en">&ldquo;You saying condoms reduce pleasure tells me you care more about your comfort than my health. No.&rdquo;</span><span class="sw">&ldquo;Kusema kondomu hupunguza raha kunaonyesha unajali starehe yako zaidi ya afya yangu. Hapana.&rdquo;</span><span class="sh">&ldquo;Kusema condoms zinapunguza pleasure inaonyesha unajali comfort yako zaidi ya health yangu. No.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Shared Responsibility</span><span class="sw">&#128161; Wajibu wa Pamoja</span><span class="sh">&#128161; Shared Responsibility</span></strong>
+  <span class="en"> Both partners are equally responsible for safer sex. It is not only the woman&rsquo;s responsibility.</span>
+  <span class="sw"> Washirika wote wawili wana wajibu sawa wa ngono salama. Si wajibu wa mwanamke peke yake.</span>
+  <span class="sh"> Washirika wote wawili wana equal responsibility ya safer sex. Si wajibu wa mwanamke peke yake.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario — "I'll Pull Out" (interactive) -->
+<div class="slide">
+<div class="slide-head">&#127918; <span class="en">Scenario: &ldquo;I&rsquo;ll Pull Out&rdquo;</span><span class="sw">Hali: &ldquo;Nitatoka Kabla&rdquo;</span><span class="sh">Scenario: &ldquo;Nitatoka Kabla&rdquo;</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Kamau &mdash; Form 4, Nakuru</span><span class="sw">Kamau &mdash; Kidato cha 4, Nakuru</span><span class="sh">Kamau &mdash; Form 4, Nakuru</span></div>
+  <div class="scenario">
+    <span class="en">Kamau (Form 4, Nakuru) agrees to meet his girlfriend. She says she is &ldquo;not comfortable with condoms&rdquo; and suggests withdrawal instead. Kamau knows withdrawal doesn&rsquo;t prevent STIs.</span>
+    <span class="sw">Kamau (Kidato cha 4, Nakuru) anakubaliana kukutana na msichana wake. Yeye anasema hana raha na kondomu na anapendekeza kutoka kabla. Kamau anajua kutoka kabla hakuzuii magonjwa ya zinaa.</span>
+    <span class="sh">Kamau (Form 4, Nakuru) anakubaliana kukutana na girlfriend yake. Yeye anasema hana comfort na condoms na anapendekeza withdrawal. Kamau anajua withdrawal haipreventi STIs.</span>
+  </div>
+  <div class="sc-q"><span class="en">What should Kamau do?</span><span class="sw">Kamau afanye nini?</span><span class="sh">Kamau afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">A. Agree &mdash; she&rsquo;s his girlfriend and he trusts her</span>
+      <span class="sw">A. Kukubaliana &mdash; yeye ni msichana wake na anamwamini</span>
+      <span class="sh">A. Kukubaliana &mdash; yeye ni girlfriend yake na ananamini</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')">
+      <span class="en">B. Firmly say &ldquo;No condom, no sex &mdash; withdrawal doesn&rsquo;t protect against STIs&rdquo; and suggest they both get tested together if they want to continue</span>
+      <span class="sw">B. Sema kwa uthabiti &ldquo;Bila kondomu, bila ngono &mdash; kutoka kabla hakuzuii magonjwa ya zinaa&rdquo; na kupendekeza wapimwe wote wawili ikiwa wanataka kuendelea</span>
+      <span class="sh">B. Sema firmly &ldquo;No condom, no sex &mdash; withdrawal haipreventi STIs&rdquo; na kupendekeza watest wote wawili kama wanataka kuendelea</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">C. Use withdrawal this once and buy condoms next time</span>
+      <span class="sw">C. Tumia kutoka kabla wakati huu na nunua kondomu wakati ujao</span>
+      <span class="sh">C. Tumia withdrawal mara hii na buy condoms next time</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: HIV Testing and Treatment in Kenya -->
+<div class="slide">
+<div class="slide-head">&#127973; <span class="en">HIV Testing &amp; Treatment in Kenya</span><span class="sw">Upimaji &amp; Matibabu ya VVU Kenya</span><span class="sh">HIV Testing &amp; Treatment Kenya</span></div>
+<ul class="bl">
+  <li><span class="en">HIV testing is free and confidential at all public health facilities in Kenya</span><span class="sw">Upimaji wa VVU ni bure na wa siri katika vituo vyote vya afya vya umma Kenya</span><span class="sh">HIV testing ni free na confidential kwa all public health facilities Kenya</span></li>
+  <li><span class="en">VCT (Voluntary Counselling and Testing) centres are available in most towns</span><span class="sw">Vituo vya VCT (Ushauri wa Hiari na Upimaji) vinapatikana katika miji mingi</span><span class="sh">VCT (Voluntary Counselling and Testing) centres zinapatikana kwa miji mingi</span></li>
+  <li><span class="en">If HIV positive: antiretroviral therapy (ART) is free in Kenya &mdash; people on ART live long, healthy lives</span><span class="sw">Kama VVU-chanya: tiba ya antiretroviral (ART) ni bure Kenya &mdash; watu wanaotumia ART wanaishi maisha marefu na yenye afya</span><span class="sh">Kama HIV positive: antiretroviral therapy (ART) ni free Kenya &mdash; watu wa ART wanaishi maisha marefu na yenye afya</span></li>
+  <li><span class="en">Emergency: PEP (Post-Exposure Prophylaxis) must be started within 72 hours of potential exposure</span><span class="sw">Dharura: PEP (Kinga Baada ya Mfiduo) lazima ianzishwe ndani ya masaa 72 baada ya mfiduo unaowezekana</span><span class="sh">Emergency: PEP (Post-Exposure Prophylaxis) lazima ianze ndani ya masaa 72 ya potential exposure</span></li>
+  <li><span class="en">NASCOP hotline: 0800 723 253 (toll-free) for HIV/AIDS information</span><span class="sw">Nambari ya NASCOP: 0800 723 253 (bila malipo) kwa maelezo ya VVU/UKIMWI</span><span class="sh">NASCOP hotline: 0800 723 253 (toll-free) kwa HIV/AIDS information</span></li>
+</ul>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng</div>
+  <span class="en" style="display:block;">&ldquo;Test si scary &mdash; ni smart. Kujua status yako ni nguvu, si udhaifu.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Upimaji si wa kutisha &mdash; ni busara. Kujua hali yako ni nguvu, si udhaifu.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Test si scary &mdash; ni smart. Kujua status yako ni nguvu, si udhaifu.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Protecting Yourself and Others -->
+<div class="slide">
+<div class="slide-head">&#128737; <span class="en">Protecting Yourself &amp; Others</span><span class="sw">Kujilinda &amp; Kuwinda Wengine</span><span class="sh">Kujilinda &amp; Kulinda Wengine</span></div>
+<ul class="bl">
+  <li><span class="en">Know your HIV status &mdash; test every 3&ndash;6 months if sexually active</span><span class="sw">Jua hali yako ya VVU &mdash; pimwa kila miezi 3&ndash;6 ukiwa na uhusiano wa kingono</span><span class="sh">Jua HIV status yako &mdash; test kila miezi 3&ndash;6 kama una sexual activity</span></li>
+  <li><span class="en">Consistent and correct condom use reduces HIV transmission by over 90%</span><span class="sw">Matumizi thabiti na sahihi ya kondomu hupunguza maambukizi ya VVU kwa zaidi ya 90%</span><span class="sh">Consistent na correct condom use inapunguza HIV transmission kwa zaidi ya 90%</span></li>
+  <li><span class="en">Avoid alcohol before sex &mdash; intoxication reduces your ability to negotiate or refuse</span><span class="sw">Epuka pombe kabla ya ngono &mdash; ulevi hupunguza uwezo wako wa kujadiliana au kukataa</span><span class="sh">Avoid alcohol kabla ya sex &mdash; ulevi unapunguza uwezo wako wa ku-negotiate au kukataa</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Mutual Testing</span><span class="sw">&#128273; Neno Muhimu: Upimaji wa Pamoja</span><span class="sh">&#128273; Key Term: Mutual Testing</span></strong>
+  <span class="en">Both partners testing together before a new relationship becomes sexual.</span>
+  <span class="sw">Washirika wote wawili kupimwa pamoja kabla uhusiano mpya kuwa wa kingono.</span>
+  <span class="sh">Washirika wote wawili kutest pamoja kabla relationship mpya isiwe ya kisexual.</span>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Example &mdash; Kisumu</span><span class="sw">Mfano &mdash; Kisumu</span><span class="sh">Example &mdash; Kisumu</span></strong>
+  <span class="en">Aisha and her boyfriend agreed to test together at Kisumu District Hospital before becoming sexually active. She said it made her feel genuinely respected.</span>
+  <span class="sw">Aisha na rafiki yake wa kiume walikubaliana kupimwa pamoja katika Hospitali ya Wilaya ya Kisumu kabla ya kuwa na uhusiano wa kingono. Alisema ilimfanya ahisi heshima ya kweli.</span>
+  <span class="sh">Aisha na boyfriend yake walikubaliana kutest pamoja kwa Kisumu District Hospital kabla ya kuwa sexually active. Alisema ilifanya ahisi genuinely respected.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng</div>
+  <span class="en" style="display:block;">&ldquo;Mtu anayekupenda atakubaliana na test. Mtu anayekataa ana kitu cha kuficha.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Mtu anayekupenda atakubaliana na upimaji. Mtu anayekataa ana kitu cha kuficha.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Mtu anayekupenda atakubaliana na test. Mtu anayekataa ana kitu cha kuficha.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">HIV/AIDS &amp; STIs &mdash; Prevention and Refusal Skills</span><span class="sw">VVU/UKIMWI &amp; Magonjwa ya Zinaa &mdash; Kinga na Ujuzi wa Kukataa</span><span class="sh">HIV/AIDS &amp; STIs &mdash; Prevention na Refusal Skills</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one pressure tactic shown in the video and explain how you would use DEAR to refuse unprotected sex. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya shinikizo iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kukataa ngono isiyo salama. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kukataa unprotected sex. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Wanjiku, 17, Kiambu, tells her peer educator that a boyfriend keeps saying &ldquo;condoms reduce pleasure.&rdquo; Which of the following are valid responses Wanjiku can use? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> &ldquo;My health is not negotiable &mdash; no condom, no sex.&rdquo;</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> &ldquo;Both of us getting tested together is another option before we go further.&rdquo;</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Agree just this once because he seems sincere</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> &ldquo;You caring more about pleasure than my health tells me a lot about you.&rdquo;</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Walk away from the situation if he continues to pressure her</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Otieno, 16, Siaya, says his older cousin told him &ldquo;I was tested last year &mdash; I&rsquo;m clean, no need for a condom.&rdquo; What is the most accurate response?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> A test from last year is good enough &mdash; trust him</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> He should still use a condom because HIV status can change and a year-old test gives no protection now</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> HIV testing is unnecessary if someone looks healthy</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Only women need to worry about HIV testing</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. A peer education session in Nakuru covers condom negotiation. Which of the following are TRUE about correct condom use? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Condoms protect against HIV when used consistently and correctly</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Condoms also reduce the risk of gonorrhoea, syphilis, and chlamydia</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Using two condoms at once gives double protection</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Consistent condom use reduces HIV transmission by over 90%</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Carrying a condom is a responsible health action, not an invitation to sex</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Fatuma, 17, Mombasa, is told by her boyfriend &ldquo;If you loved me you would trust me &mdash; condoms are for strangers.&rdquo; Which pressure tactic is he using?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Daring &mdash; challenging her courage</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Guilt/trust manipulation &mdash; linking love to health risk</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Reward/bribe &mdash; offering her something in return</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Normalising &mdash; claiming everyone skips condoms</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. David, 18, Eldoret, wants to approach HIV testing responsibly. Which of the following actions reflect responsible HIV testing behaviour? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Testing every 3&ndash;6 months if sexually active</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Suggesting mutual testing with a new partner before becoming sexually active</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Assuming he is negative because he feels healthy</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Calling NASCOP 0800 723 253 for free HIV/AIDS information and guidance</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Going to the nearest public health facility knowing testing is free and confidential</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Amina, 16, Garissa, hears from a classmate that &ldquo;withdrawal is just as safe as a condom.&rdquo; What should Amina understand about the withdrawal method?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Withdrawal is equally effective to condoms for STI prevention</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Withdrawal prevents pregnancy but is not a risk during teenage years</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Withdrawal does not protect against HIV or other STIs &mdash; only barrier methods like condoms do</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Withdrawal is approved by health authorities as a safe STI prevention method</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. Grace, 17, Kisumu, wants to protect herself from HIV and STIs. Which of the following are evidence-based protective actions? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Using condoms consistently and correctly every time</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Knowing her HIV status by testing regularly</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Relying on a partner&rsquo;s appearance to judge their HIV status</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Avoiding alcohol before sex to maintain her ability to negotiate and refuse</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Suggesting mutual testing with any new partner before sexual activity</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. Kamau, 18, Nakuru, had a potential HIV exposure last night. He visits a clinic today. What is the most important information a health worker should give him?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Wait 3 months before doing anything &mdash; nothing can be done now</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> PEP (Post-Exposure Prophylaxis) must be started within 72 hours of potential exposure to be effective</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Only test in 6 months &mdash; there is no emergency treatment</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> He only needs treatment if he develops symptoms</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. A health facilitator in Nairobi is teaching adolescents about DEAR for condom negotiation. Which of the following are steps in the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Describe what is being asked of you without blame</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Agree to the request to avoid conflict before raising concerns later</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Express how you feel about the situation</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Assert your refusal clearly and firmly</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Reinforce your position with a reason or consequence</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. Akinyi, 16, Homa Bay, is HIV positive and on ART. Her classmates say she will die soon and cannot have a future. What is TRUE about HIV and ART in Kenya?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> HIV always leads to death within a few years regardless of treatment</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> ART is expensive and only available in Nairobi hospitals</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> ART is free in Kenya and people living with HIV on treatment can live long, healthy, and productive lives</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Akinyi should stop her treatment once she feels healthy</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Kamau\'s health matters. Testing together and using condoms is the responsible choice. "Just this once" is how STIs are transmitted.</span><span class="sw">Afya ya Kamau ni muhimu. Kupimwa pamoja na kutumia kondomu ni chaguo la busara. "Mara moja tu" ndiyo jinsi magonjwa ya zinaa yanavyoambukizwa.</span><span class="sh">Health ya Kamau inahusika. Kutest pamoja na kutumia condoms ni responsible choice. "Just this once" ndivyo STIs zinavyotransmitwa.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">"Just this once" is how STIs are transmitted. One exposure is enough to contract HIV or another STI. Kamau must insist on condoms or mutual testing.</span><span class="sw">"Mara moja tu" ndiyo jinsi magonjwa ya zinaa yanavyoambukizwa. Mfiduo mmoja unatosha kupata VVU au ugonjwa mwingine wa zinaa. Kamau lazima asimame kwenye kondomu au upimaji wa pamoja.</span><span class="sh">"Just this once" ndivyo STIs zinavyotransmitwa. Exposure moja inatosha ku-contract HIV au STI nyingine. Kamau lazima asimame kwenye condoms au mutual testing.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'C','mcq7':'A,B,D,E','mcq8':'B','mcq9':'A,C,D,E','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand HIV/STI refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

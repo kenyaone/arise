@@ -13,6 +13,7 @@ define('ARISE_NAME', 'ARISE');
 define('ARISE_FULL', 'Adolescent Reproductive Health Information Support and Empowerment');
 define('DB_PATH', __DIR__ . '/../data/arise.db');
 define('UPLOAD_PATH', __DIR__ . '/../data/uploads/');
+define('UPLOAD_URL', '/arise/uploads/');
 define('DATAPOST_PATH', __DIR__ . '/../data/datapost/');
 define('CONTENT_PATH', __DIR__ . '/../data/content/');
 define('LOGO_PATH', __DIR__ . '/../data/uploads/logos/');

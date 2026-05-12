@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Gambling | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-gambling">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Gambling &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Gambling</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Kamari</span><span class="sh" style="display:none;">Refusal Skills &mdash; Gambling</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify 5 social and peer tactics used to draw young people into gambling</span><span class="sw">Tambua mbinu 5 za kijamii na za rika zinazotumiwa kuwavuta vijana katika kamari</span><span class="sh">Tambua tactics 5 za social na peer zinazotumiwa kuwavuta vijana kwa gambling</span></li>
+    <li><span class="en">Apply DEAR to refuse gambling invitations from peers, betting agents, and online platforms</span><span class="sw">Tumia DEAR kukataa mialiko ya kamari kutoka kwa wenzio, mawakala wa dau, na majukwaa ya mtandaoni</span><span class="sh">Apply DEAR kukataa gambling invitations kutoka kwa peers, betting agents, na online platforms</span></li>
+    <li><span class="en">Recognise early warning signs of gambling addiction in yourself and friends</span><span class="sw">Tambua dalili za mapema za uraibu wa kamari kwako na kwa marafiki</span><span class="sh">Recognise early warning signs za gambling addiction kwako na kwa marafiki</span></li>
+    <li><span class="en">Know where to get help: NACADA 0800 723 253</span><span class="sw">Jua mahali pa kupata msaada: NACADA 0800 723 253</span><span class="sh">Jua mahali pa kupata help: NACADA 0800 723 253</span></li>
+    <li><span class="en">Build healthy alternatives to gambling as social activities</span><span class="sw">Jenga shughuli mbadala zenye afya badala ya kamari kama shughuli za kijamii</span><span class="sh">Build healthy alternatives za gambling kama social activities</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> Have you ever been to a SportPesa outlet or downloaded a betting app &mdash; what made you go, and what made you stop (or not stop)?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Je, umewahi kwenda duka la SportPesa au kupakua programu ya kubeti &mdash; ni nini kilikufanya uende, na ni nini kilikufanya uache (au usiacha)?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Je, umewahi kwenda SportPesa outlet au ku-download betting app &mdash; ni nini ilikufanya uende, na ni nini ilikufanya ustop (au usistop)?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Why Gambling Refusal Skills Matter in Kenya -->
+<div class="slide">
+<div class="slide-head">&#127922; <span class="en">Why Gambling Refusal Skills Matter in Kenya</span><span class="sw">Kwa Nini Ujuzi wa Kukataa Kamari Una Umuhimu Kenya</span><span class="sh">Kwa Nini Gambling Refusal Skills Zina Umuhimu Kenya</span></div>
+<p class="tp">
+  <span class="en">Kenya has one of the highest rates of youth gambling in Africa &mdash; over 50% of youth aged 17&ndash;35 have gambled (NACADA 2023). SportPesa, Betika, Odibets, and Mcheza are heavily marketed on radio, TV, and social media targeting youth.</span>
+  <span class="sw">Kenya ina moja ya viwango vya juu zaidi vya kamari ya vijana barani Afrika &mdash; zaidi ya 50% ya vijana wenye umri wa miaka 17&ndash;35 wameshiriki kamari (NACADA 2023). SportPesa, Betika, Odibets, na Mcheza zinafanywa matangazo makubwa kwenye redio, TV, na mitandao ya kijamii inayolenga vijana.</span>
+  <span class="sh">Kenya ina moja ya highest rates ya youth gambling Afrika &mdash; zaidi ya 50% ya vijana wenye miaka 17&ndash;35 wamegamble (NACADA 2023). SportPesa, Betika, Odibets, na Mcheza zinafanyiwa marketing kubwa kwa radio, TV, na social media inayotarget vijana.</span>
+</p>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Problem Gambling</span><span class="sw">&#128273; Neno Muhimu: Kamari ya Tatizo</span><span class="sh">&#128273; Key Term: Problem Gambling</span></strong>
+  <span class="en">Gambling that causes significant distress, debt, or harm to the person or their family. Problem gambling develops quickly: the brain&rsquo;s reward system responds to gambling similarly to drugs.</span>
+  <span class="sw">Kamari inayosababisha dhiki kubwa, madeni, au madhara kwa mtu au familia yake. Kamari ya tatizo hukua haraka: mfumo wa thawabu wa ubongo hujibu kamari kwa njia inayofanana na dawa za kulevya.</span>
+  <span class="sh">Gambling inayosababisha distress kubwa, madeni, au harm kwa mtu au family yake. Problem gambling inakua haraka: brain&rsquo;s reward system inajibu gambling kwa njia inayofanana na drugs.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; The House Always Wins:</span><span class="sw">&#9888; Nyumba Inashinda Daima:</span><span class="sh">&#9888; House Inashinda Daima:</span></strong>
+  <span class="en"> Betting companies are profitable because they are designed for you to lose over time. The odds are built against you.</span>
+  <span class="sw"> Makampuni ya dau yanafanya faida kwa sababu yameundwa ili upoteze kwa muda. Uwezekano umejengwa dhidi yako.</span>
+  <span class="sh"> Betting companies zinafanya profit kwa sababu zimedesign kukufanya upoteze kwa muda. Odds zimejengwa dhidi yako.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Reality Check</div>
+  <span class="en" style="display:block;">&ldquo;Betika na SportPesa hazijabuild viwanda &mdash; zimebuild off losses zenu. House inashinda daima.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Betika na SportPesa hazijatengeneza viwanda &mdash; zimejengwa kutokana na hasara zenu. Nyumba inashinda daima.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Betika na SportPesa hazijabuild viwanda &mdash; zimebuild off losses zenu. House inashinda daima.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics That Pull Youth Into Gambling</span><span class="sw">Mbinu za Shinikizo Zinazovuta Vijana kwa Kamari</span><span class="sh">Pressure Tactics Zinazoingiza Vijana kwa Gambling</span></div>
+<p class="tp"><span class="en">Recognising these tactics is the first step to refusing them:</span><span class="sw">Kutambua mbinu hizi ni hatua ya kwanza ya kuzikataa:</span><span class="sh">Kutambua tactics hizi ni first step ya kuzikataa:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">&ldquo;Just put 50 bob &mdash; you could win 5,000&rdquo;</span><span class="sw">&ldquo;Weka 50 bob tu &mdash; unaweza kushinda 5,000&rdquo;</span><span class="sh">&ldquo;Weka 50 bob tu &mdash; unaweza kushinda 5,000&rdquo;</span></strong>
+  <span class="en">Minimising entry cost, exaggerating returns. Starting with small bets is intentional design &mdash; it builds the habit before the financial damage begins.</span>
+  <span class="sw">Kupunguza gharama ya kuanza, kupiga chumvi faida. Kuanza na dau ndogo ni muundo wa makusudi &mdash; unajenga tabia kabla uharibu wa kifedha haujaanza.</span>
+  <span class="sh">Ku-minimise entry cost, ku-exaggerate returns. Kuanza na small bets ni intentional design &mdash; inabuild habit kabla financial damage haijanza.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">&ldquo;Everyone in our estate bets &mdash; it&rsquo;s how we made our M-Pesa&rdquo;</span><span class="sw">&ldquo;Kila mtu katika mtaa wetu anabeti &mdash; ndivyo tulivyotengeneza M-Pesa yetu&rdquo;</span><span class="sh">&ldquo;Kila mtu kwa estate yetu anabet &mdash; ndivyo tulivyomake M-Pesa yetu&rdquo;</span></strong>
+  <span class="en">Social normalising &mdash; making gambling seem universal and profitable when it is neither.</span>
+  <span class="sw">Kufanya kawaida &mdash; kufanya kamari ionekane ya ulimwengu wote na yenye faida wakati haiji hivyo.</span>
+  <span class="sh">Social normalising &mdash; kufanya gambling ionekane universal na yenye profit wakati si hivyo.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">&ldquo;I&rsquo;ll teach you &mdash; I win every weekend&rdquo;</span><span class="sw">&ldquo;Nitakufundisha &mdash; ninashinda kila wikendi&rdquo;</span><span class="sh">&ldquo;Nitakufunza &mdash; ninashinda kila weekend&rdquo;</span></strong>
+  <span class="en">False expert reassurance &mdash; presenting gambling as a skill rather than chance.</span>
+  <span class="sw">Uhakikisho wa uongo wa mtaalamu &mdash; kuwasilisha kamari kama ujuzi badala ya bahati.</span>
+  <span class="sh">False expert reassurance &mdash; ku-present gambling kama skill badala ya chance.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">&ldquo;It&rsquo;s just for fun &mdash; not real gambling&rdquo;</span><span class="sw">&ldquo;Ni kwa burudani tu &mdash; si kamari halisi&rdquo;</span><span class="sh">&ldquo;Ni kwa fun tu &mdash; si real gambling&rdquo;</span></strong>
+  <span class="en">Minimising &mdash; all betting is gambling, regardless of how it is framed.</span>
+  <span class="sw">Kupunguza &mdash; dau lolote ni kamari, bila kujali jinsi linavyoelezwa.</span>
+  <span class="sh">Ku-minimise &mdash; bet yoyote ni gambling, bila kujali jinsi inavyoframed.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">Betting Shop Culture</span><span class="sw">Utamaduni wa Duka la Dau</span><span class="sh">Betting Shop Culture</span></strong>
+  <span class="en">Social bonding in betting outlets, watching matches together &mdash; the social atmosphere normalises gambling participation.</span>
+  <span class="sw">Uhusiano wa kijamii katika maduka ya dau, kutazama mechi pamoja &mdash; mazingira ya kijamii yanafanya ushiriki wa kamari uonekane wa kawaida.</span>
+  <span class="sh">Social bonding kwa betting shops, kuwatch matches pamoja &mdash; social atmosphere inafanya gambling participation ionekane normal.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> Starting with small bets is intentional design &mdash; it builds the habit before the financial damage begins. Once you are inside a betting shop, the pressure to place a bet increases dramatically.</span>
+  <span class="sw"> Kuanza na dau ndogo ni muundo wa makusudi &mdash; unajenga tabia kabla uharibu wa kifedha haujaanza. Ukiingia duka la dau, shinikizo la kuweka dau linaongezeka sana.</span>
+  <span class="sh"> Kuanza na small bets ni intentional design &mdash; inabuild habit kabla financial damage haijanza. Ukiingia betting shop, pressure ya kuweka bet inaongezeka dramatically.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: DEAR Method -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">DEAR Method for Gambling Refusal</span><span class="sw">Njia ya DEAR ya Kukataa Kamari</span><span class="sh">DEAR Method ya Kukataa Gambling</span></div>
+<p class="tp"><span class="en">DEAR gives you a structured, confident way to refuse gambling pressure from peers, betting agents, or online platforms:</span><span class="sw">DEAR inakupa njia iliyopangwa na ya ujasiri ya kukataa shinikizo la kamari kutoka kwa wenzio, mawakala wa dau, au majukwaa ya mtandaoni:</span><span class="sh">DEAR inakupa structured, confident way ya kukataa gambling pressure kutoka kwa peers, betting agents, au online platforms:</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">&ldquo;You are inviting me to place bets / come to the betting shop.&rdquo;</span><span class="sw">&ldquo;Unaniomba niweke dau / niende dukani pa dau.&rdquo;</span><span class="sh">&ldquo;Unaniinvite kuweka bets / kwenda betting shop.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">&ldquo;I feel pressured and I know gambling is risky for my finances and mental health.&rdquo;</span><span class="sw">&ldquo;Nahisi shinikizo na najua kamari ni hatari kwa fedha zangu na afya ya akili.&rdquo;</span><span class="sh">&ldquo;Nahisi pressured na najua gambling ni risky kwa finances na mental health yangu.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">&ldquo;No. I don&rsquo;t bet. It&rsquo;s a decision I&rsquo;ve made for myself.&rdquo;</span><span class="sw">&ldquo;Hapana. Sisifanyi dau. Ni uamuzi niliofanya mwenyewe.&rdquo;</span><span class="sh">&ldquo;No. Sibeti. Ni decision nilifanya kwa ajili yangu mwenyewe.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">&ldquo;I&rsquo;d rather we find something else to do &mdash; football, gaming, or hanging out &mdash; but not betting.&rdquo;</span><span class="sw">&ldquo;Ningependa tupate kitu kingine cha kufanya &mdash; mpira, michezo, au kukaa pamoja &mdash; lakini si dau.&rdquo;</span><span class="sh">&ldquo;Ningependa tupate kitu kingine cha kufanya &mdash; football, gaming, au ku-hang out &mdash; lakini si betting.&rdquo;</span></div>
+  </div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Tip</span><span class="sw">&#128161; Kidokezo</span><span class="sh">&#128161; Tip</span></strong>
+  <span class="en"> Offering an alternative activity makes refusal social and easier to sustain. You keep the friendship while protecting yourself.</span>
+  <span class="sw"> Kutoa shughuli mbadala kunafanya kukataa kwa njia ya kijamii na rahisi kudumisha. Unahifadhi urafiki huku ukijilinda.</span>
+  <span class="sh"> Ku-offer alternative activity inafanya refusal iwe social na rahisi ku-sustain. Unakeep urafiki huku ukijiprotect.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts for Gambling Situations</span><span class="sw">Misemo ya Kukataa kwa Hali za Kamari</span><span class="sh">Refusal Scripts za Gambling Situations</span></div>
+<p class="tp"><span class="en">Practise these phrases until they feel natural. <strong>No + a reason + an alternative = the most effective social refusal.</strong></span><span class="sw">Fanya mazoezi ya misemo hii mpaka iwe ya kawaida. <strong>Hapana + sababu + mbadala = kukataa kwa kijamii kwa ufanisi zaidi.</strong></span><span class="sh">Practise phrases hizi mpaka ziwe natural. <strong>No + reason + alternative = most effective social refusal.</strong></span></p>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Put in kitu kidogo with us&rdquo;</span><span class="sw">&ldquo;Weka kidogo pamoja nasi&rdquo;</span><span class="sh">&ldquo;Put in kitu kidogo with us&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;No thanks. I don&rsquo;t bet &mdash; I&rsquo;ve seen what it does to people I know.&rdquo;</span><span class="sw">&ldquo;Asante lakini hapana. Sifanyi dau &mdash; nimeshuhudia kinachofanyika kwa watu ninaowafahamu.&rdquo;</span><span class="sh">&ldquo;No thanks. Sibeti &mdash; nimeona kinachofanyika kwa watu najua.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;It&rsquo;s just M-Pesa &mdash; you&rsquo;ll win it back&rdquo;</span><span class="sw">&ldquo;Ni M-Pesa tu &mdash; utaipata tena&rdquo;</span><span class="sh">&ldquo;Ni M-Pesa tu &mdash; utaipata tena&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;That&rsquo;s what everyone says. No.&rdquo;</span><span class="sw">&ldquo;Hiyo ndivyo kila mtu asemavyo. Hapana.&rdquo;</span><span class="sh">&ldquo;Hiyo ndivyo kila mtu asemavyo. No.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">&ldquo;Come to the shop just to watch&rdquo;</span><span class="sw">&ldquo;Njoo dukani kutazama tu&rdquo;</span><span class="sh">&ldquo;Kuja shop kutazama tu&rdquo;</span></div>
+  <div class="phrase"><span class="en">&ldquo;No &mdash; going to the shop makes it harder to say no inside. I&rsquo;ll skip.&rdquo;</span><span class="sw">&ldquo;Hapana &mdash; kwenda dukani kunafanya iwe ngumu zaidi kusema hapana ndani. Nitaruka.&rdquo;</span><span class="sh">&ldquo;No &mdash; kwenda shop kunafanya iwe harder kusema no inside. Nitaskip.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Online betting invitation / app notification</span><span class="sw">Mwaliko wa kubeti mtandaoni / arifa ya programu</span><span class="sh">Online betting invitation / app notification</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. I&rsquo;ve uninstalled those apps and I&rsquo;m keeping it that way.&rdquo;</span><span class="sw">&ldquo;Hapana. Nimeondoa programu hizo na nitaendelea hivyo.&rdquo;</span><span class="sh">&ldquo;No. Nime-uninstall apps hizo na ninaendelea hivyo.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Key Reminder</span><span class="sw">&#128161; Ukumbusho Muhimu</span><span class="sh">&#128161; Key Reminder</span></strong>
+  <span class="en"> &ldquo;No&rdquo; + a reason + an alternative = the most effective social refusal. Do not apologise. Make eye contact. Repeat if necessary.</span>
+  <span class="sw"> &ldquo;Hapana&rdquo; + sababu + mbadala = kukataa kwa kijamii kwa ufanisi zaidi. Usitoe msamaha. Angalia machoni. Rudia iwapo inahitajika.</span>
+  <span class="sh"> &ldquo;No&rdquo; + reason + alternative = most effective social refusal. Usitoe apology. Make eye contact. Repeat kama inahitajika.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Scenario -->
+<div class="slide">
+<div class="slide-head">&#127472;&#127466; <span class="en">Scenario: Group Bet</span><span class="sw">Hali: Dau la Kikundi</span><span class="sh">Scenario: Group Bet</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Brian &mdash; Form 4, Kisumu</span><span class="sw">Brian &mdash; Kidato cha 4, Kisumu</span><span class="sh">Brian &mdash; Form 4, Kisumu</span></div>
+  <div class="scenario">
+    <span class="en">Brian is with his friends who pool 200 shillings each to bet on a football match. They say &ldquo;it&rsquo;s just for fun, everyone&rsquo;s in.&rdquo; Brian knows his father lost money gambling and struggled to pay school fees.</span>
+    <span class="sw">Brian yuko na marafiki wake ambao wanakusanya shilingi 200 kila mmoja kuweka dau kwenye mechi ya mpira. Wanasema &ldquo;ni kwa burudani tu, kila mtu yumo.&rdquo; Brian anajua baba yake alipoteza pesa kwenye kamari na alishindwa kulipa ada za shule.</span>
+    <span class="sh">Brian yuko na marafiki wake ambao wanapool 200 shillings kila mmoja kuweka bet kwa football match. Wanasema &ldquo;ni kwa fun tu, kila mtu yumo.&rdquo; Brian anajua baba yake alipoteza pesa kwa gambling na alishindwa kulipa school fees.</span>
+  </div>
+  <div class="sc-q"><span class="en">What should Brian do?</span><span class="sw">Brian afanye nini?</span><span class="sh">Brian afanye nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">A. Put in 100 shillings &mdash; half the amount &mdash; to show goodwill</span>
+      <span class="sw">A. Weka shilingi 100 &mdash; nusu ya kiasi &mdash; kuonyesha nia njema</span>
+      <span class="sh">A. Weka 100 shillings &mdash; nusu ya amount &mdash; kuonyesha goodwill</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')">
+      <span class="en">B. Firmly decline, explain he doesn&rsquo;t bet, and suggest they watch the match at a caf&eacute; instead</span>
+      <span class="sw">B. Kataa kwa uthabiti, eleza hana dau, na pendekeza watazame mechi kwenye mkahawa badala yake</span>
+      <span class="sh">B. Decline firmly, eleza sabeti, na suggest wawatch match kwa caf&eacute; badala yake</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">C. Give money but tell them not to use his name on the bet</span>
+      <span class="sw">C. Toa pesa lakini waambie wasitumie jina lake kwenye dau</span>
+      <span class="sh">C. Toa pesa lakini waambie wasitumie jina lake kwa bet</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: Warning Signs -->
+<div class="slide">
+<div class="slide-head">&#9888;&#65039; <span class="en">Warning Signs of Gambling Addiction</span><span class="sw">Dalili za Onyo za Uraibu wa Kamari</span><span class="sh">Warning Signs za Gambling Addiction</span></div>
+<p class="tp"><span class="en">Red flags in yourself or a friend &mdash; if you recognise 3 or more, seek help immediately:</span><span class="sw">Ishara nyekundu kwako au kwa rafiki &mdash; ukitambua 3 au zaidi, tafuta msaada mara moja:</span><span class="sh">Red flags kwako au kwa rafiki &mdash; ukitambua 3 au zaidi, tafuta help mara moja:</span></p>
+<ul class="bl">
+  <li><span class="en">Betting with money meant for food, transport, or school</span><span class="sw">Kuweka dau na pesa iliyokusudiwa kwa chakula, usafiri, au shule</span><span class="sh">Kuweka bet na pesa iliyokusudiwa kwa chakula, transport, au shule</span></li>
+  <li><span class="en">Lying about gambling to family or friends</span><span class="sw">Kudanganya kuhusu kamari kwa familia au marafiki</span><span class="sh">Kudanganya kuhusu gambling kwa family au marafiki</span></li>
+  <li><span class="en">Feeling excited only when gambling or thinking about gambling</span><span class="sw">Kuhisi furaha tu ukiwa unafanya kamari au ukifikiri kuhusu kamari</span><span class="sh">Kuhisi excited tu ukigamble au ukifikiri kuhusu gambling</span></li>
+  <li><span class="en">Chasing losses &mdash; betting more to try to win back what was lost</span><span class="sw">Kufuatilia hasara &mdash; kuweka dau zaidi kujaribu kupata tena kilichopotea</span><span class="sh">Kuchase losses &mdash; kubeti zaidi kujaribu ku-recover kilichopotea</span></li>
+  <li><span class="en">Neglecting school, work, or relationships due to gambling</span><span class="sw">Kupuuza shule, kazi, au uhusiano kwa sababu ya kamari</span><span class="sh">Ku-neglect shule, kazi, au relationships kwa sababu ya gambling</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Get Help Now:</span><span class="sw">&#9888; Pata Msaada Sasa:</span><span class="sh">&#9888; Pata Help Sasa:</span></strong>
+  <span class="en"> If you or a friend shows 3 or more of these signs &mdash; call NACADA: <strong>0800 723 253</strong> (free call, available 24/7).</span>
+  <span class="sw"> Wewe au rafiki akionyesha dalili 3 au zaidi hizi &mdash; piga simu NACADA: <strong>0800 723 253</strong> (simu bila malipo, inapatikana saa 24/7).</span>
+  <span class="sh"> Wewe au rafiki akionyesha signs 3 au zaidi &mdash; piga simu NACADA: <strong>0800 723 253</strong> (free call, inapatikana 24/7).</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Healthy Alternatives -->
+<div class="slide">
+<div class="slide-head">&#127944; <span class="en">Healthy Alternatives to Gambling</span><span class="sw">Mbadala za Afya Badala ya Kamari</span><span class="sh">Healthy Alternatives za Gambling</span></div>
+<ul class="bl">
+  <li><span class="en"><strong>Sport:</strong> football, basketball, athletics &mdash; natural dopamine release without financial risk</span><span class="sw"><strong>Michezo:</strong> mpira, basketball, riadha &mdash; kutoa dopamine ya asili bila hatari ya kifedha</span><span class="sh"><strong>Sport:</strong> football, basketball, athletics &mdash; natural dopamine release bila financial risk</span></li>
+  <li><span class="en"><strong>Creative hobbies:</strong> music, art, coding, writing &mdash; build skills with long-term value</span><span class="sw"><strong>Burudani za ubunifu:</strong> muziki, sanaa, uandishi wa programu, uandishi &mdash; kujenga ujuzi wenye thamani ya muda mrefu</span><span class="sh"><strong>Creative hobbies:</strong> music, art, coding, writing &mdash; kubuild skills zenye long-term value</span></li>
+  <li><span class="en"><strong>Youth savings groups (chamas):</strong> pool money to save, not gamble</span><span class="sw"><strong>Vikundi vya akiba vya vijana (chamas):</strong> kusanya pesa kuokoa, si kucheza kamari</span><span class="sh"><strong>Youth savings groups (chamas):</strong> kupool pesa ku-save, si kugamble</span></li>
+  <li><span class="en"><strong>Academic goals:</strong> use the money you&rsquo;d bet to buy revision books or data for study</span><span class="sw"><strong>Malengo ya kitaaluma:</strong> tumia pesa unayoweza kuweka dau kununua vitabu vya marudio au data ya kusoma</span><span class="sh"><strong>Academic goals:</strong> tumia pesa ungekuwa unabet kununua revision books au data ya kustudy</span></li>
+</ul>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Delayed Gratification</span><span class="sw">&#128273; Neno Muhimu: Kuridhika kwa Kuchelewa</span><span class="sh">&#128273; Key Term: Delayed Gratification</span></strong>
+  <span class="en">The ability to resist a small immediate reward for a larger future reward &mdash; the exact opposite of gambling thinking.</span>
+  <span class="sw">Uwezo wa kupinga thawabu ndogo ya sasa hivi kwa thawabu kubwa zaidi ya baadaye &mdash; kinyume kabisa cha fikira za kamari.</span>
+  <span class="sh">Uwezo wa kupinga small immediate reward kwa larger future reward &mdash; kinyume kabisa cha gambling thinking.</span>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Example &mdash; Kamau&rsquo;s Story</span><span class="sw">Mfano &mdash; Hadithi ya Kamau</span><span class="sh">Example &mdash; Story ya Kamau</span></strong>
+  <span class="en">Kamau quit betting and used his daily 100 shillings to buy a coding course. In 8 months, he built a website for a local business and earned 15,000 shillings.</span>
+  <span class="sw">Kamau aliacha kuweka dau na kutumia shilingi 100 zake za kila siku kununua kozi ya uandishi wa programu. Katika miezi 8, alitengeneza tovuti kwa biashara ya karibu na kupata shilingi 15,000.</span>
+  <span class="sh">Kamau aliacha kubeti na kutumia 100 shillings zake za kila siku kununua coding course. Kwa miezi 8, alitengeneza website kwa biashara ya karibu na kupata 15,000 shillings.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng Wisdom</div>
+  <span class="en" style="display:block;">&ldquo;Pesa ya bet ingeweza kuwa pesa ya kustudy, ya kula, ya future yako. Hesabu vizuri.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Pesa ya dau ingeweza kuwa pesa ya kusomea, ya kula, ya mustakabali wako. Hesabu vizuri.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Pesa ya bet ingeweza kuwa pesa ya kustudy, ya kula, ya future yako. Hesabu vizuri.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Gambling &mdash; Risks, Addiction, and Refusal video loading&hellip;</span><span class="sw">Video ya Kamari &mdash; Hatari, Uraibu, na Kukataa inapakia&hellip;</span><span class="sh">Gambling &mdash; Risks, Addiction, na Refusal video inaload&hellip;</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Identify one pressure tactic shown in the video and write out how you would use DEAR to refuse it. Share with a partner.</span>
+    <span class="sw"> Tambua mbinu moja ya shinikizo iliyoonyeshwa katika video na andika jinsi ungetumia DEAR kuikataa. Shiriki na mwenzako.</span>
+    <span class="sh"> Tambua pressure tactic moja iliyoonyeshwa kwa video na andika jinsi ungetumia DEAR kuikataa. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ -->
+<div class="mcq-block">
+<div class="q-text">1. Amina, 19, Mombasa, is studying at a polytechnic when friends invite her to join a sports betting group chat. They pool money weekly on Betika. Which of the following are WARNING SIGNS that someone in the group may be developing a gambling problem? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Using money meant for rent to place bets</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Lying to family about how much was bet</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Winning a bet and saving the money in a chama</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Betting more to recover previous losses</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Feeling depressed and irritable when unable to bet</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ -->
+<div class="mcq-block">
+<div class="q-text">2. Peter, 21, Eldoret, is approached by a SportPesa agent outside a supermarket who says: &ldquo;Weka 100 bob &mdash; multiplier ya 20 iko. Kila mtu anafanya.&rdquo; Which DEAR step should Peter use FIRST?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Assert &mdash; immediately say &ldquo;No&rdquo; without explanation</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Describe &mdash; name what the agent is asking him to do</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Reinforce &mdash; suggest an alternative first</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Express &mdash; share his financial worries before describing the situation</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ -->
+<div class="mcq-block">
+<div class="q-text">3. A peer educator in Nakuru is teaching Form 3 students about gambling pressure tactics. Which of the following are recognised gambling pressure tactics? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Minimising the entry cost — &ldquo;it&rsquo;s just 50 bob&rdquo;</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Normalising — &ldquo;everyone in the estate bets&rdquo;</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Encouraging someone to join a youth savings chama</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> False expert reassurance — &ldquo;I win every weekend, I&rsquo;ll teach you&rdquo;</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Minimising — &ldquo;it&rsquo;s just for fun, not real gambling&rdquo;</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ -->
+<div class="mcq-block">
+<div class="q-text">4. Faith, 17, Thika, receives a notification from Odibets offering a &ldquo;free 50 bob bonus&rdquo; to sign up. She has never gambled. What is the BEST action for Faith to take?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Sign up since it is free and there is no risk</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Sign up and only use the free bonus, not her own money</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Ignore and delete the notification &mdash; free bonuses are a tactic to start the betting habit</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Forward the offer to friends so they can benefit too</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ -->
+<div class="mcq-block">
+<div class="q-text">5. James, 20, Kisumu, wants to replace his daily habit of visiting a betting shop after school with healthier alternatives. Which of the following are healthy alternatives to gambling? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> Joining a community football team</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Starting a youth savings chama with friends</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Switching from SportPesa to Betika for lower odds</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Using the betting money to buy a coding course</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Taking up a creative hobby like music or art</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ -->
+<div class="mcq-block">
+<div class="q-text">6. Brian&rsquo;s friend Kevin tells him: &ldquo;Ukisema no, unaonekana weak mbele ya crew.&rdquo; What type of pressure tactic is Kevin using?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Normalising</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Daring / attacking pride</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Bribery</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Direct request</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ -->
+<div class="mcq-block">
+<div class="q-text">7. Aisha, 22, Nairobi, is concerned about her brother who has been gambling heavily on Mcheza. He has missed rent and lied to their mother about it. Which of the following actions should Aisha take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Talk to him privately about the warning signs she has observed</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Share the NACADA helpline number: 0800 723 253</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Give him money so he can bet more and &ldquo;win it all back&rdquo;</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Encourage him to join a chama as an alternative savings activity</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Involve a trusted family elder or counsellor if he refuses help</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ -->
+<div class="mcq-block">
+<div class="q-text">8. A NACADA counsellor explains to a youth group in Meru why &ldquo;the house always wins&rdquo; in betting. What does this phrase mean?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Betting companies always pay out more than they collect from customers</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Players who own property always win more bets</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Betting at home is safer than betting at a shop</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Betting companies design odds so they are profitable over time &mdash; players lose more than they win in the long run</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ -->
+<div class="mcq-block">
+<div class="q-text">9. During a life skills session in Malindi, the facilitator asks: &ldquo;Which of the following demonstrate the concept of delayed gratification as an alternative to gambling thinking?&rdquo; [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Saving daily 50 shillings for three months to buy school materials</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Using chama savings to start a small business after six months</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Placing a large bet today hoping for an instant payout</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Studying for a certificate course instead of spending on bets</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Practising a skill daily to earn income from it in the future</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ -->
+<div class="mcq-block">
+<div class="q-text">10. Grace, 18, Nakuru, wants to use DEAR to refuse her boyfriend&rsquo;s invitation to join a Betika jackpot pool. Which response BEST demonstrates the full DEAR method?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> &ldquo;Sorry, I can&rsquo;t this time, maybe next week.&rdquo;</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> &ldquo;Stop asking me about gambling!&rdquo;</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> &ldquo;You&rsquo;re inviting me to join a betting pool. I feel pressured and I know gambling risks my finances and mental health. No &mdash; I don&rsquo;t bet. Let&rsquo;s put the money in our chama instead.&rdquo;</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> &ldquo;I&rsquo;ll think about it and let you know later.&rdquo;</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Brian\'s family experience is a protective factor. His firm refusal and alternative suggestion keeps the friendship without enabling gambling.</span><span class="sw">Uzoefu wa familia ya Brian ni jambo la kinga. Kukataa kwake kwa uthabiti na pendekezo la mbadala kunalinda urafiki bila kuwezesha kamari.</span><span class="sh">Family experience ya Brian ni protective factor. Kukataa kwake firmly na alternative suggestion inakeep urafiki bila ku-enable gambling.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Any contribution is participation in gambling. Compromise here sets a precedent that makes future refusals harder.</span><span class="sw">Mchango wowote ni ushiriki katika kamari. Maelewano hapa yanaunda mfano ambao unafanya kukataa kwa siku zijazo kuwa ngumu zaidi.</span><span class="sh">Contribution yoyote ni participation kwa gambling. Compromise hapa inaweka precedent inayofanya future refusals ziwe harder.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'A,B,D,E','mcq6':'B','mcq7':'A,B,D,E','mcq8':'D','mcq9':'A,B,D,E','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand gambling refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

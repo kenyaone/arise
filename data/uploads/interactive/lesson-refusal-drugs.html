@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Drugs &amp; Substance Abuse | ARISE</title>
+<style>
+:root{
+  --pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;
+  --acc:#f5a623;--acc-l:#ffc85a;
+  --ok:#2e7d32;--no:#c62828;
+  --bg:#f4f7f5;--card:#fff;
+  --dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.sheng-box{background:linear-gradient(135deg,#1a2e1a,#0a5e2a);color:#fff;border-radius:8px;padding:12px 14px;font-size:.84rem;margin-top:10px;}
+.sheng-box .sheng-head{font-weight:700;font-size:.8rem;opacity:.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:420px){.method-grid{grid-template-columns:1fr;}}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
+.method-card .letter{font-size:1.8rem;font-weight:900;color:var(--acc);line-height:1;}
+.method-card .word{font-size:.88rem;font-weight:700;color:var(--pri);margin-top:2px;}
+.method-card .desc{font-size:.76rem;color:var(--soft);margin-top:4px;}
+.script-block{background:var(--card);border-left:4px solid var(--pri);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;margin-bottom:10px;font-size:.87rem;}
+.script-block .label{font-size:.72rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .phrase{font-size:.92rem;font-weight:700;color:var(--pri);}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card .sc-title{font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.sc-card .scenario{font-size:.87rem;margin-bottom:10px;line-height:1.6;}
+.sc-card .sc-q{font-size:.83rem;font-weight:700;color:var(--pri);margin-bottom:8px;}
+.choice{border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;width:100%;text-align:left;background:var(--card);margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover{border-color:var(--pri);background:#f0f8f2;}
+.choice.chosen-ok{border-color:var(--ok);background:#e8f5e9;color:#1b5e20;font-weight:700;}
+.choice.chosen-no{border-color:var(--no);background:#ffebee;color:#b71c1c;}
+.s-result{border-radius:8px;padding:10px 12px;font-size:.84rem;margin-top:8px;display:none;}
+.s-result.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.retry-btn{background:none;border:none;color:var(--pri);font-size:.78rem;font-weight:700;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;font-family:inherit;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.15s;font-family:inherit;}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
+.dot.active{background:var(--pri);transform:scale(1.25);}
+.dot.visited{background:var(--acc);}
+</style>
+</head>
+<body data-lesson-slug="refusal-drugs">
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">ARISE &middot; Drugs &amp; Substance Abuse &middot; Refusal Skills</div>
+    <div class="lesson-name">&#128683; <span class="en">Refusal Skills &mdash; Drugs &amp; Substance Abuse</span><span class="sw" style="display:none;">Ujuzi wa Kukataa &mdash; Dawa za Kulevya</span><span class="sh" style="display:none;">Refusal Skills &mdash; Drugs &amp; Substance Abuse</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 10</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">&#127760;</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span style="margin-left:auto;display:flex;gap:6px;">
+      <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+      <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    </span>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">&#128203; By the end of this lesson:</span><span class="sw">&#128203; Mwishoni mwa somo:</span><span class="sh">&#128203; Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">Identify at least 5 tactics used to pressure young people to try drugs</span><span class="sw">Tambua angalau mbinu 5 zinazotumiwa kushinikiza vijana kujaribu dawa za kulevya</span><span class="sh">Tambua angalau pressure tactics 5 zinazotumiwa ku-push vijana kujaribu drugs</span></li>
+    <li><span class="en">Apply the DEAR method to refuse offers of cannabis, alcohol, miraa, and shisha</span><span class="sw">Tumia njia ya DEAR kukataa ofa za bangi, pombe, miraa, na shisha</span><span class="sh">Apply DEAR method kukataa offers za bhang, alcohol, miraa, na shisha</span></li>
+    <li><span class="en">Practise 4 assertive refusal phrases specific to drug situations</span><span class="sw">Fanya mazoezi ya misemo 4 ya ujasiri ya kukataa mahususi kwa hali za dawa</span><span class="sh">Practice assertive refusal phrases 4 specific kwa drug situations</span></li>
+    <li><span class="en">Recognise when a situation is unsafe and know how to leave</span><span class="sw">Tambua wakati hali ni hatari na ujue jinsi ya kuondoka</span><span class="sh">Jua wakati situation ni unsafe na ujue jinsi ya kuondoka</span></li>
+    <li><span class="en">Know Kenya drug support contacts: NACADA 1192, Childline 116</span><span class="sw">Jua nambari za msaada wa dawa Kenya: NACADA 1192, Childline 116</span><span class="sh">Jua Kenya drug support contacts: NACADA 1192, Childline 116</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>&#128269; Big Question:</strong> If your closest friend offered you bhang at a party and said everyone was doing it &mdash; what would you say, and why?</span>
+    <span class="sw"><strong>&#128269; Swali Kubwa:</strong> Kama rafiki yako wa karibu akikupa bangi kwenye sherehe na kusema kila mtu anafanya &mdash; ungesema nini, na kwa nini?</span>
+    <span class="sh"><strong>&#128269; Big Question:</strong> Kama closest friend yako akikupa bhang kwa party na kusema kila mtu anado &mdash; ungesema nini, na kwa nini?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Why Drug Refusal Skills Matter -->
+<div class="slide">
+<div class="slide-head">&#128683; <span class="en">Why Drug Refusal Skills Matter</span><span class="sw">Kwa Nini Ujuzi wa Kukataa Dawa Ni Muhimu</span><span class="sh">Kwa Nini Drug Refusal Skills Ni Important</span></div>
+<p class="tp"><span class="en">In Kenya, drug offers to young people are often disguised as friendship, fun, or social belonging. Knowing how to refuse is your first line of protection.</span><span class="sw">Nchini Kenya, ofa za dawa kwa vijana mara nyingi hujificha kama urafiki, burudani, au kuhusika kijamii. Kujua jinsi ya kukataa ni ulinzi wako wa kwanza.</span><span class="sh">Kenya, drug offers kwa vijana mara nyingi zinajificha kama urafiki, fun, au social belonging. Kujua jinsi ya kukataa ni first line yako ya protection.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#128202; NACADA 2022 Fact</span><span class="sw">&#128202; Ukweli wa NACADA 2022</span><span class="sh">&#128202; NACADA 2022 Fact</span></strong>
+  <span class="en">84% of Kenyan adolescents who first used alcohol cited peer pressure as the reason. Most common substances offered to Kenyan teens: alcohol/chang&rsquo;aa, bhang/cannabis, shisha, miraa, and prescription pills.</span>
+  <span class="sw">84% ya vijana wa Kenya waliokuja pombe kwa mara ya kwanza walitaja shinikizo la rika kama sababu. Vitu vinavyotumiwa zaidi na vijana Kenya: pombe/chang&rsquo;aa, bangi/cannabis, shisha, miraa, na vidonge vya dawa.</span>
+  <span class="sh">84% ya Kenyan teens walianza kutumia alcohol kwa sababu ya peer pressure. Common zaidi substances zinazoofferiwa kwa Kenyan teens: alcohol/chang&rsquo;aa, bhang/cannabis, shisha, miraa, na prescription pills.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Gateway Drug</span><span class="sw">&#128273; Neno Kuu: Dawa ya Mlango</span><span class="sh">&#128273; Key Term: Gateway Drug</span></strong>
+  <span class="en">A substance &mdash; often cannabis, alcohol, or shisha &mdash; whose use can lead to trying harder drugs. Saying NO to the first offer breaks the chain before it starts.</span>
+  <span class="sw">Dawa &mdash; mara nyingi bangi, pombe, au shisha &mdash; ambayo matumizi yake yanaweza kusababisha kujaribu dawa ngumu zaidi. Kusema HAPANA kwa ofa ya kwanza huvunja mnyororo kabla ya kuanza.</span>
+  <span class="sh">Substance &mdash; mara nyingi bhang, alcohol, au shisha &mdash; ambayo inaweza kulead kwa kujaribu harder drugs. Kusema NO kwa first offer inafunga chain kabla haijaanza.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Warning:</span><span class="sw">&#9888; Onyo:</span><span class="sh">&#9888; Warning:</span></strong>
+  <span class="en"> The first offer is almost never the last. Saying YES once makes the next offer harder to refuse.</span>
+  <span class="sw"> Ofa ya kwanza mara chache ndiyo ya mwisho. Kusema NDIYO mara moja hufanya ofa inayofuata kuwa ngumu zaidi kukataa.</span>
+  <span class="sh"> First offer mara chache ndiyo ya mwisho. Kusema YES mara moja inafanya next offer iwe harder kukataa.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng</div>
+  <span class="en" style="display:block;">Real friends respect your NO. They will not hold it against you. If they do &mdash; they are not real friends.</span>
+  <span class="sw" style="display:none;">Marafiki wa kweli wataiheshimu NO yako. Hawatakushikilia. Wakifanya hivyo &mdash; si marafiki wa kweli.</span>
+  <span class="sh" style="display:none;">Mkisema NO mara ya kwanza, marafiki wa kweli watarespect hiyo. Hawatakushikilia.</span>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics in Drug Situations -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics in Drug Situations</span><span class="sw">Mbinu za Shinikizo katika Hali za Dawa</span><span class="sh">Pressure Tactics kwa Drug Situations</span></div>
+<p class="tp"><span class="en">Recognising a tactic is the first step to refusing it. These are the most common ones used in Kenyan drug situations:</span><span class="sw">Kutambua mbinu ni hatua ya kwanza ya kuikataa. Hizi ni za kawaida zaidi zinazotumiwa katika hali za dawa Kenya:</span><span class="sh">Kutambua tactic ni first step ya kuikataa. Hizi ni common zaidi zinazotumiwa kwa drug situations Kenya:</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Direct Minimisation &mdash; &ldquo;Just one puff / sip&rdquo;</span><span class="sw">Kupunguza Moja kwa Moja &mdash; &ldquo;Piga puff moja tu / Onja kidogo tu&rdquo;</span><span class="sh">Direct Minimisation &mdash; &ldquo;Piga puff moja tu / Onja kidogo tu&rdquo;</span></strong>
+  <span class="en">Making the offer seem tiny and harmless. One puff of bhang or one sip of chang&rsquo;aa is rarely &ldquo;just one.&rdquo;</span>
+  <span class="sw">Kufanya ofa ionekane ndogo na isiyo na madhara. Puff moja ya bangi au onja moja ya chang&rsquo;aa mara chache ni &ldquo;moja tu.&rdquo;</span>
+  <span class="sh">Kufanya offer ionekane ndogo na harmless. Puff moja ya bhang au sip moja ya chang&rsquo;aa mara chache ni &ldquo;moja tu.&rdquo;</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Masculinity / Daring &mdash; &ldquo;You&rsquo;re too scared? Real men drink&rdquo;</span><span class="sw">Uanaume / Changamoto &mdash; &ldquo;Unaogopa? Wanaume wa kweli wanakunywa&rdquo;</span><span class="sh">Masculinity / Daring &mdash; &ldquo;Unaogopa? Real men wanakunywa&rdquo;</span></strong>
+  <span class="en">Very common with chang&rsquo;aa and alcohol. Attacking your pride to force action. Real courage is saying NO.</span>
+  <span class="sw">Kawaida sana na chang&rsquo;aa na pombe. Kushambulia kiburi chako kulazimisha hatua. Ujasiri wa kweli ni kusema HAPANA.</span>
+  <span class="sh">Very common na chang&rsquo;aa na alcohol. Ku-attack pride yako ku-force action. Real courage ni kusema NO.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">False Safety &mdash; &ldquo;It&rsquo;s natural &mdash; it comes from a plant&rdquo; (about bhang/miraa)</span><span class="sw">Usalama wa Uongo &mdash; &ldquo;Ni ya asili &mdash; inatoka kwa mmea&rdquo; (kuhusu bangi/miraa)</span><span class="sh">False Safety &mdash; &ldquo;Ni natural &mdash; inatoka kwa mmea&rdquo; (kuhusu bhang/miraa)</span></strong>
+  <span class="en">Normalising with a false safety claim. Cannabis and miraa are plant-based but both affect the brain and are harmful to developing adolescent minds.</span>
+  <span class="sw">Kukawaisha na dai la usalama wa uongo. Bangi na miraa vinatoka kwa mimea lakini vyote vinaathiri ubongo na ni hatari kwa akili za vijana wanaokua.</span>
+  <span class="sh">Normalising na false safety claim. Cannabis na miraa vinatoka kwa plants lakini vyote vinaaffect brain na ni harmful kwa developing adolescent minds.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Bribe / Reward &mdash; &ldquo;I&rsquo;ll pay for your fare home if you smoke with us&rdquo;</span><span class="sw">Rushwa / Zawadi &mdash; &ldquo;Nitalipia nauli yako nyumbani ukivuta nasi&rdquo;</span><span class="sh">Bribe / Reward &mdash; &ldquo;Nitalipa fare yako nyumbani ukismoke nasi&rdquo;</span></strong>
+  <span class="en">Offering something of value in exchange for drug use. Do not trade your health and future for a bus fare.</span>
+  <span class="sw">Kutoa kitu chenye thamani kwa malipo ya kutumia dawa. Usibadilishe afya yako na mustakabali kwa nauli ya basi.</span>
+  <span class="sh">Ku-offer kitu cha value kwa drug use. Usibadilishe health yako na future kwa bus fare.</span>
+</div>
+<div class="key-term">
+  <strong>5. <span class="en">Peer Normalising &mdash; &ldquo;Everyone at this school chews miraa before exams&rdquo;</span><span class="sw">Kawaida ya Rika &mdash; &ldquo;Kila mtu shuleni anafyeka miraa kabla ya mtihani&rdquo;</span><span class="sh">Peer Normalising &mdash; &ldquo;Kila mtu shuleni anachew miraa kabla ya exams&rdquo;</span></strong>
+  <span class="en">Exaggerating how widespread drug use is. &ldquo;Everyone&rdquo; is rarely everyone. Research shows most teens who say no are not the odd ones out.</span>
+  <span class="sw">Kupiga chumvi jinsi matumizi ya dawa yanavyoenea. &ldquo;Kila mtu&rdquo; mara chache ni kila mtu. Utafiti unaonyesha vijana wengi wanaosema hapana si wageni.</span>
+  <span class="sh">Ku-exaggerate jinsi drug use inavyoenea. &ldquo;Kila mtu&rdquo; mara chache ni kila mtu. Research inaonyesha vijana wengi wanaosema no si odd ones out.</span>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Remember:</span><span class="sw">&#9888; Kumbuka:</span><span class="sh">&#9888; Remember:</span></strong>
+  <span class="en"> Continuing to pressure you after a clear NO is harassment &mdash; not friendship. You have the right to leave and report.</span>
+  <span class="sw"> Kuendelea kukushikilia baada ya HAPANA wazi ni unyakuzi &mdash; si urafiki. Una haki ya kuondoka na kuripoti.</span>
+  <span class="sh"> Kuendelea kukushikilia baada ya clear NO ni harassment &mdash; si urafiki. Una haki ya kuondoka na kuripoti.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: The DEAR Method for Drug Refusal -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">The DEAR Method for Drug Refusal</span><span class="sw">Njia ya DEAR ya Kukataa Dawa</span><span class="sh">The DEAR Method kwa Drug Refusal</span></div>
+<p class="tp"><span class="en">DEAR is a structured, assertive framework for refusing drug offers &mdash; used in health education across Kenya and East Africa.</span><span class="sw">DEAR ni mfumo ulioundwa wa ujasiri wa kukataa ofa za dawa &mdash; unaotumika katika elimu ya afya kote Kenya na Afrika Mashariki.</span><span class="sh">DEAR ni structured, assertive framework ya kukataa drug offers &mdash; inatumiwa kwa health education Kenya na East Africa.</span></p>
+<div class="method-grid">
+  <div class="method-card">
+    <div class="letter">D</div>
+    <div class="word"><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></div>
+    <div class="desc"><span class="en">Name what is being offered without blame</span><span class="sw">Taja kinachokuletwa bila kulaumiwa</span><span class="sh">Taja unachokuletwa bila ku-blame</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">E</div>
+    <div class="word"><span class="en">Express</span><span class="sw">Eleza Hisia</span><span class="sh">Express</span></div>
+    <div class="desc"><span class="en">Say how you feel &mdash; &ldquo;I feel pressured&rdquo;</span><span class="sw">Sema jinsi unavyohisi &mdash; &ldquo;Nahisi shinikizo&rdquo;</span><span class="sh">Sema jinsi unavyohisi &mdash; &ldquo;Nahisi pressured&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">A</div>
+    <div class="word"><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></div>
+    <div class="desc"><span class="en">Say NO clearly &mdash; &ldquo;No, I won&rsquo;t. Not now, not ever.&rdquo;</span><span class="sw">Sema HAPANA wazi &mdash; &ldquo;Hapana, sitafanya. Sasa wala wakati wowote.&rdquo;</span><span class="sh">Sema NO clearly &mdash; &ldquo;No, sitafanya. Sio sasa, wala wakati wowote.&rdquo;</span></div>
+  </div>
+  <div class="method-card">
+    <div class="letter">R</div>
+    <div class="word"><span class="en">Reinforce</span><span class="sw">Thibitisha Tena</span><span class="sh">Reinforce</span></div>
+    <div class="desc"><span class="en">State your position &mdash; then LEAVE</span><span class="sw">Eleza msimamo wako &mdash; kisha ONDOKA</span><span class="sh">State position yako &mdash; kisha LEAVE</span></div>
+  </div>
+</div>
+<div class="example-box">
+  <strong>&#128101; <span class="en">DEAR Applied &mdash; Cannabis / Bhang</span><span class="sw">DEAR Imetumika &mdash; Bangi</span><span class="sh">DEAR Applied &mdash; Cannabis / Bhang</span></strong>
+  <span class="en">
+    <strong>D:</strong> &ldquo;You&rsquo;re offering me bhang and asking me to try it.&rdquo;<br>
+    <strong>E:</strong> &ldquo;I feel pressured and uncomfortable.&rdquo;<br>
+    <strong>A:</strong> &ldquo;No, I won&rsquo;t smoke bhang. Not now, not ever.&rdquo;<br>
+    <strong>R:</strong> &ldquo;I&rsquo;ve made my decision. Please respect it.&rdquo; Then LEAVE.
+  </span>
+  <span class="sw">
+    <strong>D:</strong> &ldquo;Unanipa bangi na kuniomba nijaribu.&rdquo;<br>
+    <strong>E:</strong> &ldquo;Nahisi shinikizo na usumbufu.&rdquo;<br>
+    <strong>A:</strong> &ldquo;Hapana, sitavuta bangi. Sasa wala wakati wowote.&rdquo;<br>
+    <strong>R:</strong> &ldquo;Nimefanya uamuzi wangu. Tafadhali uiheshimu.&rdquo; Kisha ONDOKA.
+  </span>
+  <span class="sh">
+    <strong>D:</strong> &ldquo;Unanipa bhang na kuniomba nijaribu.&rdquo;<br>
+    <strong>E:</strong> &ldquo;Nahisi pressured na uncomfortable.&rdquo;<br>
+    <strong>A:</strong> &ldquo;No, sitasmoke bhang. Sio sasa, wala wakati wowote.&rdquo;<br>
+    <strong>R:</strong> &ldquo;Nimefanya decision yangu. Tafadhali respect hiyo.&rdquo; Kisha LEAVE.
+  </span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Key Tip</span><span class="sw">&#128161; Ushauri Muhimu</span><span class="sh">&#128161; Key Tip</span></strong>
+  <span class="en"> You don&rsquo;t owe anyone an explanation for refusing drugs. &ldquo;No&rdquo; is a complete answer.</span>
+  <span class="sw"> Huna deni la maelezo kwa mtu yeyote kwa kukataa dawa. &ldquo;Hapana&rdquo; ni jibu kamili.</span>
+  <span class="sh"> Huna-deni maelezo kwa mtu yeyote kwa kukataa drugs. &ldquo;No&rdquo; ni complete answer.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts for Drug Situations -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts for Drug Situations</span><span class="sw">Misemo ya Kukataa Dawa</span><span class="sh">Refusal Scripts kwa Drug Situations</span></div>
+<p class="tp"><span class="en">Having a ready phrase removes the panic of the moment. Say it once, firmly &mdash; you do not need to justify yourself.</span><span class="sw">Kuwa na msemo ulio tayari huondoa hofu ya wakati huo. Sema mara moja, kwa uthabiti &mdash; huhitaji kujitetea.</span><span class="sh">Kuwa na phrase ready huremove panic ya moment. Sema mara moja, firmly &mdash; huhitaji ku-justify yourself.</span></p>
+<div class="script-block">
+  <div class="label"><span class="en">Cannabis / Bhang</span><span class="sw">Bangi</span><span class="sh">Cannabis / Bhang</span></div>
+  <div class="phrase"><span class="en">&ldquo;No thanks. Bhang is not for me &mdash; and it&rsquo;s illegal for minors in Kenya.&rdquo;</span><span class="sw">&ldquo;Asante, hapana. Bangi si yangu &mdash; na ni kinyume cha sheria kwa wadogo Kenya.&rdquo;</span><span class="sh">&ldquo;No thanks. Bhang si yangu &mdash; na ni illegal kwa minors Kenya.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Alcohol / Chang&rsquo;aa</span><span class="sw">Pombe / Chang&rsquo;aa</span><span class="sh">Alcohol / Chang&rsquo;aa</span></div>
+  <div class="phrase"><span class="en">&ldquo;No, I don&rsquo;t drink. And I&rsquo;m serious &mdash; please don&rsquo;t ask again.&rdquo;</span><span class="sw">&ldquo;Hapana, sikunywi. Na ninamaanisha &mdash; tafadhali usiulize tena.&rdquo;</span><span class="sh">&ldquo;No, sikunywi. Na ninamaanisha &mdash; tafadhali usiulize tena.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Shisha</span><span class="sw">Shisha</span><span class="sh">Shisha</span></div>
+  <div class="phrase"><span class="en">&ldquo;No. Shisha has the same chemicals as cigarettes &mdash; I&rsquo;m not interested.&rdquo;</span><span class="sw">&ldquo;Hapana. Shisha ina kemikali sawa na sigara &mdash; sinavutiwa.&rdquo;</span><span class="sh">&ldquo;No. Shisha ina same chemicals kama cigarettes &mdash; sinavutiwa.&rdquo;</span></div>
+</div>
+<div class="script-block">
+  <div class="label"><span class="en">Miraa</span><span class="sw">Miraa</span><span class="sh">Miraa</span></div>
+  <div class="phrase"><span class="en">&ldquo;No thanks. I don&rsquo;t chew &mdash; it&rsquo;s my decision and I&rsquo;d like you to respect it.&rdquo;</span><span class="sw">&ldquo;Asante, hapana. Sifyeki &mdash; ni uamuzi wangu na ningependa uuheshimu.&rdquo;</span><span class="sh">&ldquo;No thanks. Sichew &mdash; ni decision yangu na ningependa uirespect.&rdquo;</span></div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Say it once, firmly</span><span class="sw">&#128161; Sema mara moja, kwa uthabiti</span><span class="sh">&#128161; Sema mara moja, firmly</span></strong>
+  <span class="en"> Do NOT apologise for saying no. Do NOT over-explain. Make eye contact. Keep your voice calm and steady.</span>
+  <span class="sw"> USITOE msamaha kwa kusema hapana. USIELEZEEE sana. Angalia machoni. Weka sauti yako tulivu na imara.</span>
+  <span class="sh"> USITOE apology kwa kusema no. USIELEZEE sana. Make eye contact. Weka voice yako calm na steady.</span>
+</div>
+</div>
+
+<!-- SLIDE 6: Practice Scenario — The Party -->
+<div class="slide">
+<div class="slide-head">&#127979; <span class="en">Practice Scenario: The Party</span><span class="sw">Hali ya Mazoezi: Sherehe</span><span class="sh">Practice Scenario: The Party</span></div>
+<div class="sc-card">
+  <div class="sc-title"><span class="en">Scenario &mdash; Nairobi, Form 3</span><span class="sw">Hali &mdash; Nairobi, Kidato cha 3</span><span class="sh">Scenario &mdash; Nairobi, Form 3</span></div>
+  <div class="scenario">
+    <span class="en">Brian (Form 3, Nairobi) is at a house party. His cousin hands him a bottle of chang&rsquo;aa and says: &ldquo;Don&rsquo;t embarrass me in front of my friends &mdash; just take one sip.&rdquo;</span>
+    <span class="sw">Brian (Kidato cha 3, Nairobi) yuko kwenye karamu ya nyumba. Binamu yake anampa chupa ya chang&rsquo;aa na kusema: &ldquo;Usinidhalilishe mbele ya marafiki zangu &mdash; onja kidogo tu.&rdquo;</span>
+    <span class="sh">Brian (Form 3, Nairobi) yuko kwa house party. Cousin yake anampa bottle ya chang&rsquo;aa na kusema: &ldquo;Usinidisgracia mbele ya marafiki zangu &mdash; onja sip moja tu.&rdquo;</span>
+  </div>
+  <div class="sc-q"><span class="en">What is Brian&rsquo;s BEST response?</span><span class="sw">Jibu BORA la Brian ni lipi?</span><span class="sh">BEST response ya Brian ni nini?</span></div>
+  <div id="scA">
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">A. Take a small sip to avoid embarrassment</span>
+      <span class="sw">A. Onja kidogo ili kuepuka aibu</span>
+      <span class="sh">A. Onja kidogo ku-avoid embarrassment</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','ok','resA')">
+      <span class="en">B. Use DEAR: &ldquo;You&rsquo;re asking me to drink and I feel pressured. No, I won&rsquo;t. Please respect my decision.&rdquo; Walk away.</span>
+      <span class="sw">B. Tumia DEAR: &ldquo;Unaniomba nikunywe na nahisi shinikizo. Hapana, sitakunywa. Tafadhali heshimu uamuzi wangu.&rdquo; Ondoka.</span>
+      <span class="sh">B. Tumia DEAR: &ldquo;Unaniomba nikunywe na nahisi pressured. No, sitakunywa. Tafadhali respect decision yangu.&rdquo; Ondoka.</span>
+    </button>
+    <button class="choice" onclick="scPick(this,'scA','no','resA')">
+      <span class="en">C. Agree but pour the drink away secretly</span>
+      <span class="sw">C. Kubali lakini mwage pombe kwa siri</span>
+      <span class="sh">C. Agree lakini pour drink kwa siri</span>
+    </button>
+    <div id="resA" class="s-result" style="display:none;"></div>
+    <button class="retry-btn" onclick="scRetry('scA')"><span class="en">&#8635; Try again</span><span class="sw">&#8635; Jaribu tena</span><span class="sh">&#8635; Try again</span></button>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: When NO Is Not Enough — Safety Planning -->
+<div class="slide">
+<div class="slide-head">&#128721; <span class="en">When NO Is Not Enough: Safety Planning</span><span class="sw">Wakati HAPANA Haitoshi: Mpango wa Usalama</span><span class="sh">When NO Haitoshi: Safety Planning</span></div>
+<p class="tp"><span class="en">Sometimes one NO is not enough &mdash; the pressure continues or becomes threatening. Have a safety plan ready.</span><span class="sw">Wakati mwingine HAPANA moja haitoshi &mdash; shinikizo linaendelea au kuwa la kutisha. Kuwa na mpango wa usalama tayari.</span><span class="sh">Wakati mwingine NO moja haitoshi &mdash; pressure inaendelea au kuwa threatening. Kuwa na safety plan ready.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#128203; Safety Plan Steps</span><span class="sw">&#128203; Hatua za Mpango wa Usalama</span><span class="sh">&#128203; Safety Plan Steps</span></strong>
+  <ol class="bl" style="margin-top:8px;">
+    <li><span class="en">Leave the situation immediately</span><span class="sw">Ondoka hali mara moja</span><span class="sh">Ondoka situation mara moja</span></li>
+    <li><span class="en">Call a trusted adult (parent, teacher, neighbour)</span><span class="sw">Piga simu mtu mzima unayemwamini (mzazi, mwalimu, jirani)</span><span class="sh">Piga simu trusted adult (mzazi, mwalimu, neighbour)</span></li>
+    <li><span class="en">Call NACADA: <strong>1192</strong> &mdash; free, 24/7, confidential</span><span class="sw">Piga simu NACADA: <strong>1192</strong> &mdash; bure, 24/7, siri</span><span class="sh">Piga simu NACADA: <strong>1192</strong> &mdash; free, 24/7, confidential</span></li>
+    <li><span class="en">Call Childline: <strong>116</strong> if you feel in danger</span><span class="sw">Piga simu Childline: <strong>116</strong> ukihisi uko hatarini</span><span class="sh">Piga simu Childline: <strong>116</strong> ukihisi uko hatarini</span></li>
+  </ol>
+</div>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Important:</span><span class="sw">&#9888; Muhimu:</span><span class="sh">&#9888; Important:</span></strong>
+  <span class="en"> If someone physically forces drugs on you, that is assault under Kenyan law. Report to police or Childline 116 immediately.</span>
+  <span class="sw"> Mtu akikufanyia dawa kwa nguvu, hiyo ni shambulio chini ya sheria ya Kenya. Ripoti kwa polisi au Childline 116 mara moja.</span>
+  <span class="sh"> Mtu akikufanyia drugs kwa nguvu, hiyo ni assault chini ya Kenyan law. Report kwa polisi au Childline 116 mara moja.</span>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">&#127472;&#127466; Sheng</div>
+  <span class="en" style="display:block;">Leaving is not weakness. It is the smart move. Just go.</span>
+  <span class="sw" style="display:none;">Kuondoka si udhaifu. Ni hatua ya busara. Enda tu.</span>
+  <span class="sh" style="display:none;">Kuondoka si udhaifu. Ni smart move. Enda tu.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Building Your Drug-Free Identity -->
+<div class="slide">
+<div class="slide-head">&#127919; <span class="en">Building Your Drug-Free Identity</span><span class="sw">Kujenga Utambulisho Wako Usio na Dawa</span><span class="sh">Kujenga Drug-Free Identity Yako</span></div>
+<p class="tp"><span class="en">Refusal is easier when you know who you are. Your values, goals, and community are your strongest protection against drug pressure.</span><span class="sw">Kukataa ni rahisi zaidi ukijua wewe ni nani. Maadili yako, malengo, na jamii yako ni ulinzi wako mkubwa dhidi ya shinikizo la dawa.</span><span class="sh">Kukataa ni easier ukijua wewe ni nani. Values yako, goals, na community yako ni protection yako kubwa zaidi dhidi ya drug pressure.</span></p>
+<div class="key-term">
+  <strong><span class="en">&#128273; Key Term: Protective Factor</span><span class="sw">&#128273; Neno Kuu: Kipengele cha Ulinzi</span><span class="sh">&#128273; Key Term: Protective Factor</span></strong>
+  <span class="en">Something in your life that reduces your risk of drug use &mdash; such as a supportive family, faith, sport, or academic goals.</span>
+  <span class="sw">Kitu katika maisha yako kinachopunguza hatari yako ya kutumia dawa &mdash; kama familia inayokuunga mkono, imani, michezo, au malengo ya kitaaluma.</span>
+  <span class="sh">Kitu kwa maisha yako kinachopunguza risk yako ya drug use &mdash; kama supportive family, faith, sport, au academic goals.</span>
+</div>
+<ul class="bl">
+  <li><span class="en">Choose friends who share your values and drug-free lifestyle</span><span class="sw">Chagua marafiki wanaoshiriki maadili yako na mtindo wa maisha usio na dawa</span><span class="sh">Chagua friends wanaoshare values yako na drug-free lifestyle</span></li>
+  <li><span class="en">Avoid environments where drug use is normalised (late-night parties with no adult supervision)</span><span class="sw">Epuka mazingira ambapo matumizi ya dawa yanaonekana kawaida (karamu za usiku na hakuna usimamizi wa watu wazima)</span><span class="sh">Epuka environments ambapo drug use ni normal (late-night parties bila adult supervision)</span></li>
+  <li><span class="en">Replace drug social events with sport, church, youth groups, or academic clubs</span><span class="sw">Badilisha matukio ya kijamii ya dawa na michezo, kanisa, vikundi vya vijana, au vilabu vya kitaaluma</span><span class="sh">Replace drug social events na sport, church, youth groups, au academic clubs</span></li>
+  <li><span class="en">Have a pre-planned excuse ready: &ldquo;I have training tomorrow morning&rdquo;</span><span class="sw">Kuwa na udhuru ulioundwa tayari: &ldquo;Nina mafunzo asubuhi ya kesho&rdquo;</span><span class="sh">Kuwa na pre-planned excuse ready: &ldquo;Nina training asubuhi ya kesho&rdquo;</span></li>
+</ul>
+<div class="example-box">
+  <strong>&#128101; <span class="en">Aisha&rsquo;s Story &mdash; Mombasa, Form 4</span><span class="sw">Hadithi ya Aisha &mdash; Mombasa, Kidato cha 4</span><span class="sh">Story ya Aisha &mdash; Mombasa, Form 4</span></strong>
+  <span class="en">Aisha joined a debate club and says it gave her identity and purpose: &ldquo;I don&rsquo;t need bhang to feel confident. I already know who I am.&rdquo;</span>
+  <span class="sw">Aisha alijiunga na klabu ya mjadala na anasema ilikupa utambulisho na kusudi: &ldquo;Sihitaji bangi kujisikia na ujasiri. Najua tayari mimi ni nani.&rdquo;</span>
+  <span class="sh">Aisha alijoin debate club na anasema ilikupa identity na purpose: &ldquo;Sihitaji bhang kujisikia confident. Najua tayari mimi ni nani.&rdquo;</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Video -->
+<div class="slide">
+<div class="slide-head">&#127909; <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div id="videoPlaceholder" style="background:#1a2e1a;border-radius:10px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;">
+  <div style="font-size:2.5rem;">&#127909;</div>
+  <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Drugs &amp; Substance Abuse &mdash; Risks and Refusal</span><span class="sw">Dawa za Kulevya &mdash; Hatari na Kukataa</span><span class="sh">Drugs &amp; Substance Abuse &mdash; Risks and Refusal</span></div>
+</div>
+<video id="lessonVideo" controls playsinline style="width:100%;border-radius:10px;display:none;max-height:420px;" preload="metadata"></video>
+<div style="margin-top:12px;">
+  <div class="tip-box">
+    <strong><span class="en">&#128196; After watching:</span><span class="sw">&#128196; Baada ya kutazama:</span><span class="sh">&#128196; After kuwatch:</span></strong>
+    <span class="en"> Name one drug pressure tactic shown in the video and explain how you would use DEAR to respond. Share with a partner.</span>
+    <span class="sw"> Taja mbinu moja ya shinikizo la dawa iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kujibu. Shiriki na mwenzako.</span>
+    <span class="sh"> Taja drug pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kujibu. Share na mwenzako.</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<!-- Q1 MSQ — correct: A,B,D,E -->
+<div class="mcq-block">
+<div class="q-text">1. Chebet, 15, Eldoret, is learning about drug pressure tactics at a peer education session. Which of the following are recognised pressure tactics used to push young people towards drug use? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Minimising the risk: &ldquo;Just one puff won&rsquo;t hurt&rdquo;</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Daring: &ldquo;Real men drink chang&rsquo;aa — are you scared?&rdquo;</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Encouraging someone to set academic goals</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Peer normalising: &ldquo;Everyone at our school chews miraa before exams&rdquo;</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Bribery: &ldquo;I&rsquo;ll pay your matatu fare if you smoke with us&rdquo;</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">2. Ochieng, 16, Kisumu, is offered bhang at a peer&rsquo;s house and told: &ldquo;It&rsquo;s natural — it comes from a plant, so it can&rsquo;t hurt you.&rdquo; What type of pressure tactic is this?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Guilt trip</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Daring</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> False safety / normalising with a misleading claim</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Bribery</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MSQ — correct: A,B,D,E -->
+<div class="mcq-block">
+<div class="q-text">3. A health educator in Nakuru teaches Form 2 students the DEAR refusal method. Which of the following steps are part of the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> Describe what is being asked of you</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Express how you feel</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Apologise for refusing and explain at length</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Assert a clear NO</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Reinforce your position and leave if necessary</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">4. Njeri, 17, Nairobi, is at a house party when her cousin hands her a bottle of chang&rsquo;aa and says: &ldquo;Don&rsquo;t embarrass me — just one sip.&rdquo; What is Njeri&rsquo;s MOST effective response?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Take a sip to avoid causing a scene</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Use DEAR: name what is happening, say she feels pressured, firmly say No, and walk away</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Accept the bottle and pour it away when no one is watching</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Laugh it off and change the subject without saying No clearly</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MSQ — correct: A,B,D,E -->
+<div class="mcq-block">
+<div class="q-text">5. A peer educator in Thika explains protective factors against drug use to Form 3 students. Which of the following are protective factors that reduce a young person&rsquo;s risk of drug use? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">A</span> A supportive and communicative family</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">B</span> Membership in a sports team or academic club</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">C</span> Spending unsupervised evenings with peers who use drugs</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">D</span> Clear academic or career goals</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq5')"><span class="opt-letter">E</span> Strong personal values and faith</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ — correct: D -->
+<div class="mcq-block">
+<div class="q-text">6. Baraka, 16, Mombasa, is with a group of older students who keep offering him shisha even after he has said no twice. The pressure becomes uncomfortable. What should Baraka do NEXT?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Give in to end the discomfort</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Argue loudly with the group</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> Stay and hope they stop asking</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Leave immediately and call a trusted adult or NACADA 1192</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ — correct: A,B,D,E -->
+<div class="mcq-block">
+<div class="q-text">7. A Form 4 student in Meru asks her teacher what makes an assertive drug refusal effective. Which of the following are features of an effective assertive refusal? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Said clearly and without lengthy apology</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Backed by willingness to leave the situation</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Always followed by a detailed justification of your values</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Delivered with calm, steady voice and eye contact</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Repeated firmly if the offer continues (broken record technique)</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">8. Wanjiku, 15, Nyeri, wants to refuse miraa but is nervous about what her friends will think. Which statement BEST describes why she should still say no?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Friends will admire her more if she gives in once</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> She can always start and stop miraa use at will</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Real friends respect her NO, and the first yes makes future refusal harder</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> She should agree this once to protect the friendship</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ — correct: A,B,D,E -->
+<div class="mcq-block">
+<div class="q-text">9. During a life skills class in Kisumu, students discuss the concept of a gateway drug. Which of the following statements about gateway drugs are correct? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Cannabis, alcohol, and shisha are commonly identified as gateway drugs</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Use of a gateway drug can increase the likelihood of trying harder substances</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Gateway drugs are safe because they are the weakest substances available</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> Saying no to the first offer helps prevent the gateway effect</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> Gateway drugs are harmful to the developing adolescent brain</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">10. Auma, 14, Nairobi, is physically forced by an older student to inhale from a shisha pipe at a party. What is the CORRECT description of what has happened and what she should do?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> This was peer pressure; she should try to avoid that student in future</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> This is assault under Kenyan law; she should report to a trusted adult, Childline 116, or the police</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> She should keep quiet to avoid embarrassing the other student</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> This is a minor incident that does not need to be reported</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) {
+    document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; });
+  });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.classList.toggle('active', id === l+'Btn');
+  });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+
+function setSize(s) {
+  var map = {sm:'13px', md:'15px', lg:'17px'};
+  document.body.style.fontSize = map[s] || '15px';
+  ['sm','md','lg'].forEach(function(k) { var b=document.getElementById('sz-'+k); if(b) b.classList.toggle('active',k===s); });
+  localStorage.setItem('arise_textsize', s);
+}
+setSize(localStorage.getItem('arise_textsize') || 'md');
+
+var cur = 0, slides = [];
+function init() {
+  slides = document.querySelectorAll('.slide');
+  var dw = document.getElementById('dotsWrap');
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = function() { go(i); };
+    dw.appendChild(d);
+  });
+  upd();
+  var vid = document.getElementById('lessonVideo');
+  var ph  = document.getElementById('videoPlaceholder');
+  var vurl = window.ARISE_VIDEO_URL || '';
+  if (vurl && vid) {
+    var src = document.createElement('source'); src.src = vurl; src.type = 'video/mp4';
+    vid.appendChild(src); vid.load();
+    vid.addEventListener('loadeddata', function() { if(ph) ph.style.display='none'; vid.style.display='block'; });
+    vid.style.display = 'none';
+  } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
+  var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
+  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+}
+function navigate(dir) { go(cur + dir); }
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[cur].classList.remove('active');
+  var dots = document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('visited');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited'); dots[cur].classList.add('active');
+  upd(); window.scrollTo(0,0);
+  var slug2 = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
+  if(slug2) localStorage.setItem('arise_slide_'+slug2, n);
+  var lid = window.ARISE_LESSON_ID;
+  if(lid) fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd() {
+  document.getElementById('slideCounter').textContent = (cur+1)+' / '+slides.length;
+  document.getElementById('prevBtn').disabled = cur===0;
+  document.getElementById('nextBtn').disabled = cur===slides.length-1;
+}
+function scPick(btn,scId,type,resId) {
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res = document.getElementById(resId);
+  if(res) {
+    res.className = 's-result ' + type;
+    res.style.display = 'block';
+    res.innerHTML = type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">DEAR + walking away = assertive and safe. You named the situation, expressed how you felt, said No clearly, and removed yourself.</span><span class="sw">DEAR + kuondoka = ujasiri na usalama. Uliitaja hali, ulisema jinsi unavyohisi, ulisema Hapana wazi, na ulijiondoa.</span><span class="sh">DEAR + kuondoka = assertive na safe. Ulitaja situation, ulisema jinsi unavyohisi, ulisema No clearly, na ulijiondoa.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Brian\'s discomfort is valid. Drinking to please others, or secretly disposing of the drink, are both passive responses. DEAR + leaving is the assertive and safe choice.</span><span class="sw">Usumbufu wa Brian ni wa halali. Kunywa ili kuwafurahisha wengine, au kumwaga pombe kwa siri, zote ni majibu ya utulivu. DEAR + kuondoka ndiyo chaguo la ujasiri na usalama.</span><span class="sh">Discomfort ya Brian ni valid. Kunywa ku-please wengine, au kumwaga drink kwa siri, zote ni passive responses. DEAR + kuondoka ndiyo assertive na safe choice.</span>';
+  }
+}
+function scRetry(id) {
+  var w = document.querySelector('#'+id+' .s-result');
+  if(w) w.style.display = 'none';
+  document.querySelectorAll('#'+id+' .choice').forEach(function(b) { b.disabled=false; b.className='choice'; });
+}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'C','mcq3':'A,B,D,E','mcq4':'B','mcq5':'A,B,D,E','mcq6':'D','mcq7':'A,B,D,E','mcq8':'C','mcq9':'A,B,D,E','mcq10':'B'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'msq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand drug refusal skills very well.':pct>=60?'👍 Good! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
