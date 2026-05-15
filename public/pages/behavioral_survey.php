@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
 
     if ($q1c !== null && $q2s !== null && $q3c !== null) {
         $st = db()->prepare(
-            "INSERT INTO behavioral_surveys
+            "INSERT OR IGNORE INTO behavioral_surveys
                 (student_id, session_hash, module_id,
                  q1_changed, q1_detail,
                  q2_shared,  q2_detail,
@@ -59,7 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         $st->bindValue(':q3d',  $q3d,        SQLITE3_TEXT);
         $st->execute();
 
-        header('Location: /arise/module&slug=' . urlencode($moduleSlug));
+        $doneUrl = '/arise/?p=module&slug=' . urlencode($moduleSlug) . '&survey_done=1';
+        while (ob_get_level()) ob_end_clean();
+        header('Location: ' . $doneUrl);
+        echo '<meta http-equiv="refresh" content="0;url=' . htmlspecialchars($doneUrl) . '">';
         exit;
     }
     // Validation failed — fall through to show form with error
@@ -130,24 +133,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
     color: #92400e;
 }
 .detail-area {
-    margin-top: 4px;
+    margin-top: 10px;
 }
+.detail-area .detail-prompt {
+    font-size: .8rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 6px;
+    display: none;
+    padding: 5px 10px;
+    background: #ecfdf5;
+    border-left: 3px solid #0ea271;
+    border-radius: 0 6px 6px 0;
+}
+.detail-area .detail-prompt.visible { display: block; }
 .detail-area textarea {
     width: 100%;
-    border: 1px solid #e5e7eb;
+    border: 2px solid #e5e7eb;
     border-radius: 8px;
-    padding: 9px 12px;
-    font-size: .84rem;
+    padding: 10px 12px;
+    font-size: .88rem;
     font-family: inherit;
     resize: vertical;
-    min-height: 64px;
+    min-height: 80px;
     color: #374151;
     box-sizing: border-box;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+    background: #fafafa;
+}
+.detail-area textarea.active {
+    border-color: #0ea271;
+    background: #f0fdf4;
+    box-shadow: 0 0 0 3px rgba(14,162,113,.1);
+}
+.detail-area textarea.no-active {
+    border-color: #f59e0b;
+    background: #fffbeb;
+    box-shadow: 0 0 0 3px rgba(245,158,11,.1);
 }
 .detail-area textarea:focus {
     outline: none;
     border-color: var(--green, #0ea271);
-    box-shadow: 0 0 0 3px rgba(14,162,113,.1);
+    box-shadow: 0 0 0 3px rgba(14,162,113,.15);
 }
 .survey-header {
     text-align: center;
@@ -237,13 +264,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
 
     <?php else: ?>
 
+    <?php
+    $fromPct  = isset($_GET['pct'])  ? (int)$_GET['pct']  : null;
+    $fromGain = isset($_GET['gain']) ? (int)$_GET['gain'] : null;
+    if ($fromPct !== null): ?>
+    <div style="background:<?= $fromPct>=60?'#d1fae5':'#fff7ed' ?>;border:2px solid <?= $fromPct>=60?'#34d399':'#fcd34d' ?>;border-radius:14px;padding:16px 20px;margin-bottom:20px;text-align:center;">
+      <div style="font-size:2rem;font-weight:900;color:<?= $fromPct>=60?'#065f46':'#92400e' ?>"><?= $fromPct ?>%</div>
+      <div style="font-size:.85rem;color:#555;margin-top:2px;">Post-Test Score &mdash; <?= e($module['title']) ?></div>
+      <?php if ($fromGain !== null): ?>
+      <div style="display:inline-block;background:#e0fdf4;color:#065f46;border-radius:20px;padding:4px 14px;font-size:.82rem;font-weight:700;margin-top:8px;">
+        <?= $fromGain >= 0 ? '+' . $fromGain : $fromGain ?>% knowledge gain from pre-test
+      </div>
+      <?php endif; ?>
+      <?php if ($fromPct >= 60): ?>
+      <div style="margin-top:8px;font-size:.82rem;color:#166534;font-weight:700;">&#127881; You passed &mdash; certificate will be ready after this survey</div>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
     <div class="survey-header">
       <div class="icon-wrap">&#128172;</div>
-      <h2>Reflection Survey</h2>
-      <p>
-        <?= e($module['icon'] ?? '') ?> <?= e($module['title']) ?> &mdash;
-        Quick 3-question check-in
-      </p>
+      <h2>Did This Change You?</h2>
+      <p style="font-size:.9rem;color:#374151;font-weight:600;"><?= e($module['icon'] ?? '') ?> <?= e($module['title']) ?></p>
+      <p style="margin-top:4px;">Your honest answers help us measure real-world impact &mdash; takes 60 seconds.</p>
     </div>
 
     <?php if (!empty($formError)): ?>
@@ -271,8 +314,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
             <label for="q1_no">&#10007; No</label>
           </div>
         </div>
-        <div class="detail-area">
-          <textarea name="q1_detail" placeholder="Optional: tell us more..." rows="2"></textarea>
+        <div class="detail-area" id="detail-q1">
+          <div class="detail-prompt" id="prompt-q1"></div>
+          <textarea name="q1_detail" id="ta-q1" placeholder="Select Yes or No above, then type your answer here..." rows="3"></textarea>
         </div>
       </div>
 
@@ -292,8 +336,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
             <label for="q2_no">&#10007; No</label>
           </div>
         </div>
-        <div class="detail-area">
-          <textarea name="q2_detail" placeholder="Optional: who did you share with and what did you share?" rows="2"></textarea>
+        <div class="detail-area" id="detail-q2">
+          <div class="detail-prompt" id="prompt-q2"></div>
+          <textarea name="q2_detail" id="ta-q2" placeholder="Select Yes or No above, then type your answer here..." rows="3"></textarea>
         </div>
       </div>
 
@@ -313,8 +358,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
             <label for="q3_no">&#10007; No</label>
           </div>
         </div>
-        <div class="detail-area">
-          <textarea name="q3_detail" placeholder="Optional: what still feels uncertain or difficult?" rows="2"></textarea>
+        <div class="detail-area" id="detail-q3">
+          <div class="detail-prompt" id="prompt-q3"></div>
+          <textarea name="q3_detail" id="ta-q3" placeholder="Select Yes or No above, then type your answer here..." rows="3"></textarea>
         </div>
       </div>
 
@@ -322,11 +368,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         &#128172; Submit Reflection
       </button>
 
-      <div style="text-align:center;margin-top:12px;">
-        <a href="/arise/?p=module&slug=<?= e($moduleSlug) ?>" style="font-size:.82rem;color:#9ca3af;">
-          Skip for now &rarr;
-        </a>
-      </div>
     </form>
 
     <?php endif; ?>
@@ -335,13 +376,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
 </div><!-- /container -->
 
 <script>
-// Highlight selected radio pills on change
+// Dynamic prompts and textarea activation per question
+var qConfig = {
+    q1_changed:  { yes: 'What changes did you make to your behaviour or habits? Describe what you did differently:', no:  'What is making it difficult to change? What would help you take that step?' },
+    q2_shared:   { yes: 'Who did you share with? What did you tell them or discuss?',                                no:  'What would encourage you to share what you have learned with others?' },
+    q3_confident:{ yes: 'What are you now more confident about? Give a specific example if you can:',               no:  'What still feels uncertain or difficult for you? What would help you feel more confident?' }
+};
+var qMap = {
+    q1_changed:   { prompt: 'prompt-q1', ta: 'ta-q1' },
+    q2_shared:    { prompt: 'prompt-q2', ta: 'ta-q2' },
+    q3_confident: { prompt: 'prompt-q3', ta: 'ta-q3' }
+};
+
 document.querySelectorAll('.radio-pill input[type=radio]').forEach(function(radio) {
     radio.addEventListener('change', function() {
-        var name = this.name;
-        document.querySelectorAll('input[name="' + name + '"]').forEach(function(r) {
-            r.closest('.radio-pill').querySelector('label').style.fontWeight = '';
-        });
+        var name  = this.name;
+        var val   = this.value;   // '1' = yes, '0' = no
+        var cfg   = qConfig[name];
+        var ids   = qMap[name];
+        if (!cfg || !ids) return;
+
+        var promptEl = document.getElementById(ids.prompt);
+        var taEl     = document.getElementById(ids.ta);
+        if (!promptEl || !taEl) return;
+
+        var isYes = val === '1';
+        promptEl.textContent = isYes ? '✏ ' + cfg.yes : '✏ ' + cfg.no;
+        promptEl.classList.add('visible');
+        taEl.placeholder = isYes ? cfg.yes : cfg.no;
+        taEl.classList.remove('active', 'no-active');
+        taEl.classList.add(isYes ? 'active' : 'no-active');
+        setTimeout(function() { taEl.focus(); }, 60);
     });
 });
 </script>

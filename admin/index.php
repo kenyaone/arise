@@ -24,6 +24,24 @@ if ($_api_page === 'datapost' && isset($_GET['action'])) {
     exit;
 }
 
+// ── Save school coordinates (AJAX from location picker) ──
+if ($_api_page === 'schools' && ($_POST['save_coords'] ?? '') === '1') {
+    session_start();
+    header('Content-Type: application/json');
+    if (!isset($_SESSION['arise_admin_id'])) { echo json_encode(['ok'=>false,'error'=>'Not logged in']); exit; }
+    $sid = intval($_POST['school_id'] ?? 0);
+    $lat = (float)($_POST['lat'] ?? 0);
+    $lng = (float)($_POST['lng'] ?? 0);
+    if (!$sid || $lat < -5 || $lat > 5 || $lng < 33 || $lng > 42) {
+        echo json_encode(['ok'=>false,'error'=>'Invalid coordinates or school ID']); exit;
+    }
+    require_once dirname(__DIR__).'/includes/config.php';
+    $cs = db()->prepare("UPDATE schools SET lat=?, lng=? WHERE id=?");
+    $cs->bindValue(1,$lat,SQLITE3_FLOAT); $cs->bindValue(2,$lng,SQLITE3_FLOAT); $cs->bindValue(3,$sid,SQLITE3_INTEGER);
+    $cs->execute();
+    echo json_encode(['ok'=>true,'lat'=>$lat,'lng'=>$lng]); exit;
+}
+
 $isLoggedIn = isset($_SESSION['arise_admin_id']);
 $page = $_GET['p'] ?? '';
 if (!$page) {
@@ -868,6 +886,48 @@ elseif ($page === 'schools'):
     // Schools & Classes management — inline
     $smsg = '';
 
+    // Ensure manager password column exists
+    try { db()->exec("ALTER TABLE schools ADD COLUMN password_hash TEXT DEFAULT NULL"); } catch(Exception $e) {}
+
+    // Edit school (name / county / manager password)
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_school'])) {
+        $eid    = (int)($_POST['edit_school_id']     ?? 0);
+        $ename  = trim($_POST['edit_school_name']    ?? '');
+        $ecounty= trim($_POST['edit_school_county']  ?? '');
+        $epw    = trim($_POST['edit_school_pw']      ?? '');
+        if ($eid && $ename) {
+            $st = db()->prepare("UPDATE schools SET name=?,county=? WHERE id=?");
+            $st->bindValue(1,$ename,SQLITE3_TEXT);
+            $st->bindValue(2,$ecounty,SQLITE3_TEXT);
+            $st->bindValue(3,$eid,SQLITE3_INTEGER);
+            $st->execute();
+            if ($epw !== '') {
+                $st2 = db()->prepare("UPDATE schools SET password_hash=? WHERE id=?");
+                $st2->bindValue(1, hash('sha256',$epw), SQLITE3_TEXT);
+                $st2->bindValue(2, $eid, SQLITE3_INTEGER);
+                $st2->execute();
+            }
+            $smsg = "✅ Project updated.";
+        }
+    }
+
+    function geocodeSchool(string $name, string $county): ?array {
+        if (!function_exists('curl_init')) return null;
+        // Try specific name first, then county only as fallback
+        $queries = array_filter(["$name $county Kenya", "$county Kenya"]);
+        foreach ($queries as $q) {
+            $ch = curl_init('https://nominatim.openstreetmap.org/search?q='.urlencode($q).'&format=json&limit=1&countrycodes=ke');
+            curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>4,CURLOPT_SSL_VERIFYPEER=>false,CURLOPT_HTTPHEADER=>['User-Agent: ARISE-Platform/1.0']]);
+            $r = curl_exec($ch); curl_close($ch);
+            if (!$r) continue;
+            $d = json_decode($r, true);
+            if (empty($d[0]['lat'])) continue;
+            $lat = (float)$d[0]['lat']; $lng = (float)$d[0]['lon'];
+            if ($lat >= -5 && $lat <= 5 && $lng >= 33 && $lng <= 42) return [$lat, $lng];
+        }
+        return null;
+    }
+
     // Create school
     if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['add_school'])) {
         $sname = trim($_POST['school_name']??'');
@@ -877,8 +937,19 @@ elseif ($page === 'schools'):
                 $stmt = db()->prepare('INSERT INTO schools (name,county) VALUES (:n,:c)');
                 $stmt->bindValue(':n',$sname); $stmt->bindValue(':c',$county);
                 $stmt->execute();
-                $smsg = "✅ School '".e($sname)."' added!";
-            } catch(Exception $e) { $smsg = '❌ School already exists.'; }
+                $newId = db()->lastInsertRowID();
+                $smsg = "✅ Project '".e($sname)."' added!";
+                // Auto-geocode: drop approximate pin by county
+                $geo = geocodeSchool($sname, $county);
+                if ($geo) {
+                    $gs = db()->prepare("UPDATE schools SET lat=?,lng=? WHERE id=?");
+                    $gs->bindValue(1,$geo[0],SQLITE3_FLOAT); $gs->bindValue(2,$geo[1],SQLITE3_FLOAT); $gs->bindValue(3,$newId,SQLITE3_INTEGER);
+                    $gs->execute();
+                    $smsg .= " 📍 Location auto-detected.";
+                } else {
+                    $smsg .= " Use <strong>Set Location</strong> to pin it on the map.";
+                }
+            } catch(Exception $e) { $smsg = '❌ Project already exists.'; }
         }
     }
 
@@ -897,7 +968,16 @@ elseif ($page === 'schools'):
 
     // Delete school
     if (isset($_GET['del_school'])) {
-        db()->exec("UPDATE schools SET is_active=0 WHERE id=".intval($_GET['del_school']));
+        $delId = intval($_GET['del_school']);
+        $delName = db()->querySingle("SELECT name FROM schools WHERE id=$delId");
+        db()->exec("UPDATE schools SET is_active=0 WHERE id=$delId");
+        // Sync removal to live server
+        if ($delName && function_exists('curl_init')) {
+            $ch = curl_init('https://ariseci.org/public/api_school_remove.php');
+            curl_setopt_array($ch, [CURLOPT_POST=>true, CURLOPT_RETURNTRANSFER=>true, CURLOPT_TIMEOUT=>6, CURLOPT_SSL_VERIFYPEER=>false, CURLOPT_POSTFIELDS=>['key'=>'arise_school_sync_2026_xK9mP','name'=>$delName]]);
+            curl_exec($ch);
+            curl_close($ch);
+        }
         $smsg = '✅ School removed.';
     }
 
@@ -910,6 +990,13 @@ elseif ($page === 'schools'):
     echo '<h1 class="page-title">🏫 Projects & Clusters</h1>';
     echo '<p class="text-muted" style="margin-top:-16px;margin-bottom:20px;">Create projects and clusters so learners can self-enroll by selecting from a dropdown — no typing needed.</p>';
     echo showMsg($smsg);
+    $missingCoords = (int)db()->querySingle("SELECT COUNT(*) FROM schools WHERE is_active=1 AND (lat IS NULL OR lng IS NULL)");
+    if ($missingCoords > 0) {
+        echo "<div style='background:#fef3c7;border:1.5px solid #fcd34d;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.9rem;'>
+            📍 <strong>$missingCoords project".($missingCoords>1?'s':'')."</strong> ".($missingCoords>1?'have':'has')." no map location.
+            Click <strong>Set Location</strong> on each to place it on the map — no coordinates to type, just search and click.
+        </div>";
+    }
 
     // Add project form
     echo '<div class="dp-card"><h2 class="section-title">➕ Add Project</h2>
@@ -937,9 +1024,23 @@ elseif ($page === 'schools'):
         if ($school['county']) echo " <span class='text-small text-muted'>— ".e($school['county'])."</span>";
         echo " <span class='chip' style='margin-left:8px;'>$sc cluster".($sc!=1?'s':'')."</span>";
         echo " <span class='chip' style='margin-left:4px;'>$stc learner".($stc!=1?'s':'')."</span></div>";
-        echo "<div style='display:flex;gap:6px;'>";
+        echo "<div style='display:flex;gap:6px;align-items:center;flex-wrap:wrap;'>";
+        $hasPin = !empty($school['lat']) && !empty($school['lng']);
+        $pinLabel = $hasPin ? '📍 Repin' : '📍 Set Location';
+        $pinStyle = $hasPin ? 'background:#dcfce7;color:#166534;' : 'background:#fef3c7;color:#92400e;';
+        $scCounty = addslashes($school['county'] ?? '');
+        $scName   = addslashes($school['name']);
+        $scLat    = $school['lat'] ?? '';
+        $scLng    = $school['lng'] ?? '';
+        $sid2 = $school['id'];
+        echo "<button class='btn btn-sm' style='$pinStyle' data-school-id='$sid2' onclick='openPicker($sid2,\"".e($scName)."\",\"$scLat\",\"$scLng\",\"$scCounty\")'>$pinLabel</button>";
+        $hasPw = !empty($school['password_hash']);
+        $pwBadge = $hasPw ? '<span style="background:#dcfce7;color:#166534;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:8px;vertical-align:middle;margin-left:4px;">🔑 Password set</span>' : '<span style="background:#fef3c7;color:#92400e;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:8px;vertical-align:middle;margin-left:4px;">No password</span>';
+        echo "<button class='btn btn-sm' style='background:#ede9fe;color:#4c1d95;' onclick='openEditSchool(".json_encode(['id'=>(int)$school['id'],'name'=>$school['name'],'county'=>$school['county']??'']).">✏ Edit / 🔑 Password</button>";
         echo "<a href='?p=schools&del_school={$school['id']}' class='btn btn-sm' style='background:#fee2e2;color:#991b1b;' onclick='return confirm(\"Remove project?\")'>Remove</a>";
-        echo "</div></div>";
+        echo "</div>";
+        echo "<div style='margin-top:4px;'>$pwBadge</div>";
+        echo "</div>";
 
         // Existing clusters
         $classes = db()->query("SELECT * FROM classes WHERE school_id={$school['id']} AND is_active=1 ORDER BY name");
@@ -969,6 +1070,48 @@ elseif ($page === 'schools'):
         </form>";
         echo '</div>';
     endwhile;
+
+    // ── Edit Project Modal ─────────────────────────────────────────────────────
+    echo '
+    <div id="editSchoolModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:14px;padding:28px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.25);">
+        <h3 style="color:#0a5e2a;margin-bottom:18px;font-size:1.05rem;">✏ Edit Project</h3>
+        <form method="POST">
+          <input type="hidden" name="edit_school" value="1">
+          <input type="hidden" name="edit_school_id" id="esId">
+          <div style="margin-bottom:12px;">
+            <label style="font-size:.78rem;font-weight:700;color:#6b7280;display:block;margin-bottom:5px;text-transform:uppercase;">Project Name *</label>
+            <input type="text" name="edit_school_name" id="esName" required style="width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:.9rem;box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:.78rem;font-weight:700;color:#6b7280;display:block;margin-bottom:5px;text-transform:uppercase;">County / Region</label>
+            <input type="text" name="edit_school_county" id="esCounty" placeholder="e.g. Nairobi" style="width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:.9rem;box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:18px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:8px;padding:14px;">
+            <label style="font-size:.78rem;font-weight:700;color:#166534;display:block;margin-bottom:5px;text-transform:uppercase;">🔑 Project Manager Map Password</label>
+            <input type="password" name="edit_school_pw" id="esPw" placeholder="Leave blank to keep existing password" autocomplete="new-password" style="width:100%;padding:9px 12px;border:1.5px solid #bbf7d0;border-radius:7px;font-size:.9rem;box-sizing:border-box;">
+            <p style="font-size:.75rem;color:#166534;margin-top:6px;margin-bottom:0;">This password lets the project manager log in to the Projects Map and see <strong>only this project\'s data</strong>. Share it only with that manager.</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button type="submit" style="flex:1;padding:11px;background:#0a5e2a;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Save Changes</button>
+            <button type="button" onclick="document.getElementById(\'editSchoolModal\').style.display=\'none\'" style="padding:11px 20px;background:#f3f4f6;color:#333;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+    function openEditSchool(data) {
+      document.getElementById("esId").value     = data.id;
+      document.getElementById("esName").value   = data.name;
+      document.getElementById("esCounty").value = data.county || "";
+      document.getElementById("esPw").value     = "";
+      var m = document.getElementById("editSchoolModal");
+      m.style.display = "flex";
+    }
+    document.getElementById("editSchoolModal").addEventListener("click", function(e){
+      if(e.target===this) this.style.display="none";
+    });
+    </script>';
 
 elseif ($page === 'students'):
     // ── Reset PIN handler (added here because admin_students.php is not writable by deploy user) ──
@@ -1386,5 +1529,162 @@ endif;
 </div><!-- /page-content -->
 </div><!-- /main-wrap -->
 <script src="/arise/js/qr_helper.js"></script>
+
+<?php if ($page === 'schools'): ?>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+#loc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center;}
+#loc-overlay.open{display:flex;}
+#loc-box{background:#fff;border-radius:14px;width:min(700px,95vw);max-height:92vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+#loc-head{padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;}
+#loc-head h3{margin:0;color:#0a5e2a;font-size:1.05rem;}
+#loc-subname{font-size:.82rem;color:#666;margin:3px 0 0;}
+#loc-search-bar{padding:10px 16px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;gap:8px;}
+#loc-q{flex:1;padding:8px 12px;border:1.5px solid #d1d5db;border-radius:7px;font-size:.9rem;}
+#loc-qbtn{background:#0ea271;color:#fff;border:none;padding:8px 16px;border-radius:7px;font-weight:700;cursor:pointer;white-space:nowrap;}
+#loc-map-wrap{flex:1;min-height:380px;position:relative;}
+#loc-map{height:100%;min-height:380px;}
+#loc-hint{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-size:.78rem;padding:4px 12px;border-radius:20px;pointer-events:none;white-space:nowrap;}
+#loc-foot{padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;}
+#loc-coords{font-size:.8rem;color:#666;font-family:monospace;}
+#loc-save{background:#0ea271;color:#fff;border:none;padding:9px 20px;border-radius:7px;font-weight:700;cursor:pointer;}
+#loc-save:disabled{opacity:.45;cursor:default;}
+#loc-cancel{background:#f3f4f6;color:#374151;border:none;padding:9px 16px;border-radius:7px;cursor:pointer;font-weight:600;margin-right:6px;}
+</style>
+
+<div id="loc-overlay">
+  <div id="loc-box">
+    <div id="loc-head">
+      <div>
+        <h3>📍 Set Project Location</h3>
+        <div id="loc-subname"></div>
+      </div>
+      <button onclick="closePicker()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#9ca3af;line-height:1;">×</button>
+    </div>
+    <div id="loc-search-bar">
+      <input id="loc-q" type="text" placeholder="Search for a place, e.g. 'Busia' or 'Kakamega'…">
+      <button id="loc-qbtn" onclick="searchLoc()">Search</button>
+    </div>
+    <div id="loc-map-wrap">
+      <div id="loc-map"></div>
+      <div id="loc-hint">Click anywhere on the map to place the pin</div>
+    </div>
+    <div id="loc-foot">
+      <span id="loc-coords">No pin placed yet</span>
+      <div>
+        <button id="loc-cancel" onclick="closePicker()">Cancel</button>
+        <button id="loc-save" disabled onclick="saveLoc()">Save Location</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+let _lmap, _lmarker, _lschoolId;
+
+function openPicker(id, name, lat, lng, county) {
+    _lschoolId = id;
+    document.getElementById('loc-subname').textContent = name;
+    document.getElementById('loc-coords').textContent = 'No pin placed yet';
+    document.getElementById('loc-save').disabled = true;
+    document.getElementById('loc-overlay').classList.add('open');
+    document.getElementById('loc-q').value = county ? county + ', Kenya' : '';
+
+    requestAnimationFrame(() => {
+        if (!_lmap) {
+            _lmap = L.map('loc-map').setView([-0.5, 37.0], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19, attribution: '© OpenStreetMap'
+            }).addTo(_lmap);
+            _lmap.on('click', e => dropPin(e.latlng.lat, e.latlng.lng));
+        }
+        _lmap.invalidateSize();
+        if (_lmarker) { _lmap.removeLayer(_lmarker); _lmarker = null; }
+
+        if (lat && lng) {
+            dropPin(parseFloat(lat), parseFloat(lng));
+            _lmap.setView([parseFloat(lat), parseFloat(lng)], 12);
+        } else if (county) {
+            fetch('https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(county + ', Kenya') + '&format=json&limit=1&countrycodes=ke')
+                .then(r => r.json())
+                .then(d => { if (d[0]) _lmap.setView([parseFloat(d[0].lat), parseFloat(d[0].lon)], 10); })
+                .catch(() => {});
+        }
+    });
+}
+
+function closePicker() {
+    document.getElementById('loc-overlay').classList.remove('open');
+}
+
+function dropPin(lat, lng) {
+    if (_lmarker) _lmap.removeLayer(_lmarker);
+    _lmarker = L.marker([lat, lng], {draggable: true}).addTo(_lmap);
+    _lmarker.on('dragend', e => { const p = e.target.getLatLng(); updatePin(p.lat, p.lng); });
+    updatePin(lat, lng);
+    document.getElementById('loc-hint').style.display = 'none';
+}
+
+function updatePin(lat, lng) {
+    document.getElementById('loc-coords').textContent = '📍 ' + lat.toFixed(5) + ', ' + lng.toFixed(5);
+    document.getElementById('loc-save').disabled = false;
+}
+
+function searchLoc() {
+    const q = document.getElementById('loc-q').value.trim();
+    if (!q) return;
+    const btn = document.getElementById('loc-qbtn');
+    btn.textContent = '…'; btn.disabled = true;
+    fetch('https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(q) + '&format=json&limit=1&countrycodes=ke')
+        .then(r => r.json())
+        .then(d => {
+            btn.textContent = 'Search'; btn.disabled = false;
+            if (d[0]) {
+                const lat = parseFloat(d[0].lat), lng = parseFloat(d[0].lon);
+                _lmap.setView([lat, lng], 12);
+                dropPin(lat, lng);
+            } else {
+                alert('Not found in Kenya. Try a broader term like the county name.');
+            }
+        }).catch(() => { btn.textContent = 'Search'; btn.disabled = false; });
+}
+
+function saveLoc() {
+    if (!_lmarker) return;
+    const pos = _lmarker.getLatLng();
+    const btn = document.getElementById('loc-save');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+    fetch('?p=schools', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'save_coords=1&school_id=' + _lschoolId + '&lat=' + pos.lat + '&lng=' + pos.lng
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.ok) {
+            closePicker();
+            // Update button style to reflect pinned state
+            const schBtn = document.querySelector('[data-school-id="' + _lschoolId + '"]');
+            if (schBtn) { schBtn.textContent = '📍 Repin'; schBtn.style.cssText += 'background:#dcfce7;color:#166534;'; }
+            // Remove warning banner if all now pinned — simple refresh approach
+            const warn = document.querySelector('[style*="fef3c7"]');
+            if (warn) warn.remove();
+        } else {
+            alert('Error saving: ' + (d.error || 'unknown'));
+            btn.textContent = 'Save Location'; btn.disabled = false;
+        }
+    }).catch(() => { alert('Network error'); btn.textContent = 'Save Location'; btn.disabled = false; });
+}
+
+// Close on backdrop click
+document.getElementById('loc-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('loc-overlay')) closePicker();
+});
+// Enter key in search
+document.getElementById('loc-q').addEventListener('keydown', e => { if (e.key === 'Enter') searchLoc(); });
+</script>
+<?php endif; ?>
+
 </body>
 </html>

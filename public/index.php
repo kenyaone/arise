@@ -17,7 +17,7 @@ if ($_early_page === 'lesson') {
     $_slug = $_GET['slug'] ?? '';
     if ($_slug) {
         require_once __DIR__ . '/../includes/config.php';
-        $stmt = db()->prepare('SELECT l.*, m.slug AS module_slug, m.id AS module_id FROM lessons l JOIN modules m ON l.module_id=m.id WHERE l.slug=:s AND l.is_active=1');
+        $stmt = db()->prepare('SELECT l.*, m.slug AS module_slug, m.id AS module_id, m.title AS module_title FROM lessons l JOIN modules m ON l.module_id=m.id WHERE l.slug=:s AND l.is_active=1');
         $stmt->bindValue(':s', $_slug);
         $lesson = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
         if ($lesson && ($lesson['lesson_type'] ?? '') === 'interactive' && !empty($lesson['file_path'])) {
@@ -27,6 +27,10 @@ if ($_early_page === 'lesson') {
             $htmlFile = UPLOAD_PATH . $lesson['file_path'];
             if (file_exists($htmlFile)) {
                 $html = file_get_contents($htmlFile);
+                if ($isRefusal) {
+                    $html = preg_replace('/<!-- SLIDE 9: Video -->.*?<!-- SLIDE 10:/s', '<!-- SLIDE 9:', $html);
+                    $html = str_replace('>1 / 10<', '>1 / 9<', $html);
+                }
                 $hash = getSessionHash();
                 $resumeSlide = 0;
                 if ($hash) {
@@ -41,9 +45,23 @@ if ($_early_page === 'lesson') {
                     $existingRating = (int)db()->querySingle("SELECT rating FROM module_feedback WHERE module_id=$modId AND session_hash='" . SQLite3::escapeString($hash) . "'");
                     $pollHtml = '<p style="color:#166534;font-weight:600;margin-bottom:10px;">✅ You already rated this module (' . $existingRating . '/5 ⭐). Thanks!</p>';
                 } else {
-                    $pollHtml = '<form id="arise-poll-form" style="margin-bottom:12px;"><p style="font-size:.88rem;color:#374151;margin-bottom:8px;font-weight:600;">Rate this module:</p><div id="star-row" style="display:flex;gap:8px;margin-bottom:10px;font-size:1.6rem;cursor:pointer;"><span class="star" data-v="1">☆</span><span class="star" data-v="2">☆</span><span class="star" data-v="3">☆</span><span class="star" data-v="4">☆</span><span class="star" data-v="5">☆</span></div><input type="hidden" id="poll-rating" name="poll_rating" value=""><textarea id="poll-useful" name="most_useful" placeholder="What was most useful? (optional)" style="width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:.85rem;margin-bottom:8px;resize:none;height:60px;box-sizing:border-box;"></textarea><label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="poll-rec" name="would_recommend" value="1"> I would recommend this module</label><button id="poll-submit" type="submit" disabled style="background:#7c3aed;color:white;border:none;padding:9px 22px;border-radius:8px;font-weight:700;cursor:pointer;opacity:.5;">Submit Feedback</button></form><div id="poll-thanks" style="display:none;color:#166534;font-weight:600;">✅ Thanks for your feedback!</div><script>(function(){var stars=document.querySelectorAll(\'#arise-poll-form .star\');var ratingInput=document.getElementById(\'poll-rating\');var submitBtn=document.getElementById(\'poll-submit\');stars.forEach(function(s){s.addEventListener(\'click\',function(){var v=parseInt(s.getAttribute(\'data-v\'));ratingInput.value=v;stars.forEach(function(x,i){x.textContent=i<v?\'★\':\'☆\';x.style.color=i<v?\'#f59e0b\':\'#9ca3af\';});submitBtn.disabled=false;submitBtn.style.opacity=\'1\';});});document.getElementById(\'arise-poll-form\').addEventListener(\'submit\',function(e){e.preventDefault();var rating=ratingInput.value;if(!rating)return;var useful=document.getElementById(\'poll-useful\').value;var rec=document.getElementById(\'poll-rec\').checked?1:0;var fd=new FormData();fd.append(\'poll_rating\',rating);fd.append(\'most_useful\',useful);fd.append(\'would_recommend\',rec);fd.append(\'module_slug\',window.ARISE_MODULE_SLUG||\'\');fetch(\'/arise/?p=module&slug=\'+(window.ARISE_MODULE_SLUG||\'\'),{method:\'POST\',body:fd}).then(function(){document.getElementById(\'arise-poll-form\').style.display=\'none\';document.getElementById(\'poll-thanks\').style.display=\'block\';}).catch(function(){});});})();<\/script>';
+                    $pollHtml = '<form id="arise-poll-form" style="margin-bottom:12px;"><p style="font-size:.88rem;color:#374151;margin-bottom:8px;font-weight:600;">Rate this module:</p><div id="star-row" style="display:flex;gap:8px;margin-bottom:10px;font-size:1.6rem;cursor:pointer;"><span class="star" data-v="1">☆</span><span class="star" data-v="2">☆</span><span class="star" data-v="3">☆</span><span class="star" data-v="4">☆</span><span class="star" data-v="5">☆</span></div><input type="hidden" id="poll-rating" name="poll_rating" value=""><textarea id="poll-useful" name="most_useful" placeholder="What was most useful? (optional)" style="width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px;font-size:.85rem;margin-bottom:8px;resize:none;height:60px;box-sizing:border-box;"></textarea><label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="poll-rec" name="would_recommend" value="1"> I would recommend this module</label><button id="poll-submit" type="submit" disabled style="background:#7c3aed;color:white;border:none;padding:9px 22px;border-radius:8px;font-weight:700;cursor:pointer;opacity:.5;">Submit Feedback</button></form><div id="poll-thanks" style="display:none;color:#166534;font-weight:600;">✅ Thanks for your feedback!</div><script>(function(){var stars=document.querySelectorAll(\'#arise-poll-form .star\');var ratingInput=document.getElementById(\'poll-rating\');var submitBtn=document.getElementById(\'poll-submit\');stars.forEach(function(s){s.addEventListener(\'click\',function(){var v=parseInt(s.getAttribute(\'data-v\'));ratingInput.value=v;stars.forEach(function(x,i){x.textContent=i<v?\'★\':\'☆\';x.style.color=i<v?\'#f59e0b\':\'#9ca3af\';});submitBtn.disabled=false;submitBtn.style.opacity=\'1\';});});document.getElementById(\'arise-poll-form\').addEventListener(\'submit\',function(e){e.preventDefault();var rating=ratingInput.value;if(!rating)return;var useful=document.getElementById(\'poll-useful\').value;var rec=document.getElementById(\'poll-rec\').checked?1:0;var fd=new FormData();fd.append(\'poll_rating\',rating);fd.append(\'most_useful\',useful);fd.append(\'would_recommend\',rec);fd.append(\'module_slug\',window.ARISE_MODULE_SLUG||\'\');fetch(\'/arise/?p=module&slug=\'+(window.ARISE_MODULE_SLUG||\'\'),{method:\'POST\',body:fd}).then(function(){document.getElementById(\'arise-poll-form\').style.display=\'none\';document.getElementById(\'poll-thanks\').style.display=\'block\';}).catch(function(){});});})();</script>';
                 }
-                $communityPanel = '<div id="arise-community" style="display:none;position:fixed;bottom:0;left:0;right:0;background:white;border-top:3px solid #7c3aed;padding:16px 20px 20px;box-shadow:0 -6px 24px rgba(0,0,0,.18);z-index:9999;max-height:70vh;overflow-y:auto;"><button onclick="document.getElementById(\'arise-community\').style.display=\'none\'" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#6b7280;">✕</button><h3 style="color:#7c3aed;margin:0 0 12px;font-size:1rem;">🎉 Great work! How was <em>' . $modTitle . '</em>?</h3>' . $pollHtml . '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;"><a href="/arise/?p=forum&module=' . $modSlug . '" style="background:#0ea271;color:white;padding:9px 16px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;">💬 Discuss this Module</a><a href="/arise/?p=ask&module=' . $modSlug . '" style="background:#6b7280;color:white;padding:9px 16px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;">🔒 Ask Anonymously</a></div></div><script>(function(){var shown=false;var _orig=window.fetch;window.fetch=function(url,opts){if(!shown&&typeof url===\'string\'&&url.indexOf(\'save_quiz_score\')!==-1){shown=true;setTimeout(function(){var el=document.getElementById(\'arise-community\');if(el)el.style.display=\'block\';},600);}return _orig.apply(this,arguments);};})();<\/script>';
+                // Check if behavioral survey already done for this session + module
+                $surveydone = $hash ? (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='" . SQLite3::escapeString($hash) . "' AND module_id=$modId") : false;
+                $surveyBlock = $surveydone
+                    ? '<div style="background:#dcfce7;border:2px solid #34d399;border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:1.4rem;">✅</span><div><div style="font-size:.92rem;font-weight:800;color:#166534;">Impact Survey Complete</div><div style="font-size:.78rem;color:#4ade80;margin-top:1px;">Your voice has been recorded — thank you!</div></div></div>'
+                    : '<div style="margin-bottom:16px;"><style>@keyframes pulse-survey{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.45)}50%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}</style><a href="/arise/?p=survey&module=' . $modSlug . '" style="display:block;background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;padding:16px 18px;border-radius:12px;text-decoration:none;animation:pulse-survey 2s infinite;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.6rem;">🔴</span><div style="flex:1;"><div style="font-size:1rem;font-weight:900;letter-spacing:.01em;">Did This Change You? Tell Us Now</div><div style="font-size:.78rem;opacity:.9;margin-top:3px;font-weight:600;">3 questions · 60 seconds · Required before you continue</div></div><span style="font-size:1.2rem;">→</span></div></a></div>';
+
+                // Community section injected INSIDE score-box — appears automatically when quiz is submitted, no JS trigger needed
+                $communityInside = '<div id="arise-community" style="margin-top:18px;padding-top:16px;border-top:2px solid #c4b5fd;">'
+                    . '<h3 style="color:#7c3aed;margin:0 0 10px;font-size:.95rem;font-weight:700;">🎉 How was <em>' . $modTitle . '</em>?</h3>'
+                    . $surveyBlock
+                    . $pollHtml
+                    . '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">'
+                    . '<a href="/arise/?p=forum&module=' . $modSlug . '" style="background:#0ea271;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">💬 Discuss this Module</a>'
+                    . '<a href="/arise/?p=ask&module=' . $modSlug . '" style="background:#6b7280;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">🔒 Ask Anonymously</a>'
+                    . '</div></div>';
                 $inject = "<script>
 window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";
 window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
@@ -61,7 +79,12 @@ window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
 })();
 </script>";
                 $html = str_replace('</head>', $inject . '</head>', $html);
-                $html = str_replace('</body>', $communityPanel . '</body>', $html);
+                // Inject community section inside score-box, right after score-detail
+                $html = str_replace(
+                    '<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>',
+                    '<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>' . $communityInside,
+                    $html
+                );
                 ob_end_clean();
                 echo $html;
                 exit;
@@ -112,7 +135,7 @@ if ($student || !empty($_SESSION['arise_admin_id'])) {
 $isAdminSession = !empty($_SESSION['arise_admin_id']);
 
 // Redirect to login if not logged in and page requires login
-if (!$student && !$isAdminSession && !in_array($page, ['login', 'register', 'register_submit', '', 'datapost', 'donor_report'])) {
+if (!$student && !$isAdminSession && !in_array($page, ['login', 'register', 'register_submit', '', 'datapost', 'donor_report', 'forum', 'ask', 'ask_submit', 'survey'])) {
     header('Location: /arise/login');
     exit;
 }

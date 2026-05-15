@@ -102,6 +102,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // After post-test: redirect to behavioral survey if not yet done
+    if ($testType === 'post') {
+        $surveyDone = (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id']));
+        if (!$surveyDone) {
+            $prePctRaw = db()->querySingle("SELECT percentage FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1");
+            $gainParam = $prePctRaw !== null ? '&gain=' . ($pct - (int)$prePctRaw) : '';
+            $surveyUrl = '/arise/?p=survey&module=' . urlencode($moduleSlug) . '&pct=' . $pct . $gainParam;
+            // Clear any buffered HTML (navbar etc.) so the redirect goes cleanly
+            while (ob_get_level()) ob_end_clean();
+            header('Location: ' . $surveyUrl);
+            echo '<meta http-equiv="refresh" content="0;url=' . htmlspecialchars($surveyUrl) . '">';
+            exit;
+        }
+    }
+
     // Show result
     $prePct = null;
     if ($testType === 'post') {
@@ -165,15 +180,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       <?php endif; ?>
 
-      <?php if ($testType === 'post'):
-        $surveyDone = (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id']));
-        if (!$surveyDone): ?>
-        <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:12px;padding:14px 18px;margin-top:12px;text-align:center;">
-          <div style="font-weight:700;font-size:.9rem;color:#92400e;margin-bottom:6px;">&#128221; One Last Step &mdash; Quick Survey</div>
-          <div style="font-size:.82rem;color:#6b7280;margin-bottom:10px;">3 questions &middot; 60 seconds</div>
-          <a href="/arise/?p=survey&module=<?= htmlspecialchars($moduleSlug) ?>" class="btn btn-primary">Take the Impact Survey &rarr;</a>
+      <?php if ($testType === 'post'): ?>
+        <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:12px 18px;margin-top:12px;text-align:center;">
+          <div style="font-size:.85rem;color:#166534;font-weight:700;">&#10003; Survey submitted &mdash; all steps complete!</div>
         </div>
-        <?php endif; ?>
       <?php endif; ?>
 
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">

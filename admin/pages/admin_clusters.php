@@ -37,7 +37,6 @@ if ($action === 'edit_cluster') {
     $name = trim($_POST['cname'] ?? '');
     $pw   = trim($_POST['cpw']   ?? '');
     if ($id && $name) {
-        $db->prepare("UPDATE clusters SET name=? WHERE id=?")->execute() ?: null;
         $stmt = $db->prepare("UPDATE clusters SET name=? WHERE id=?");
         $stmt->bindValue(1, $name, SQLITE3_TEXT);
         $stmt->bindValue(2, $id,   SQLITE3_INTEGER);
@@ -49,6 +48,21 @@ if ($action === 'edit_cluster') {
             $stmt2->execute();
         }
         $msg = 'Cluster updated.';
+    }
+}
+
+// ── EDIT PROJECT (school name / county) ──────────────────────────────────────
+if ($action === 'edit_project') {
+    $id     = (int)($_POST['pid']    ?? 0);
+    $name   = trim($_POST['pname']   ?? '');
+    $county = trim($_POST['pcounty'] ?? '');
+    if ($id && $name) {
+        $stmt = $db->prepare("UPDATE schools SET name=?, county=? WHERE id=?");
+        $stmt->bindValue(1, $name,   SQLITE3_TEXT);
+        $stmt->bindValue(2, $county, SQLITE3_TEXT);
+        $stmt->bindValue(3, $id,     SQLITE3_INTEGER);
+        $stmt->execute();
+        $msg = "Project \"$name\" updated.";
     }
 }
 
@@ -151,7 +165,8 @@ foreach ($clusters as $c) $clusterMap[$c['id']] = $c['name'];
 
 <!-- ── CREATE CLUSTER ──────────────────────────────────────────────── -->
 <div class="cl-section">
-    <h3>+ Create New Cluster</h3>
+    <h3>+ Create New Cluster / Project Group</h3>
+    <p style="font-size:.82rem;color:#6b7280;margin-bottom:14px;">A cluster groups related projects together. The <strong>Manager Password</strong> lets a project manager log in to the Projects Map (<code>/arise/?p=map</code>) to see only their cluster's data — they cannot see other clusters.</p>
     <form method="POST">
         <input type="hidden" name="action" value="create_cluster">
         <div class="form-row">
@@ -160,7 +175,7 @@ foreach ($clusters as $c) $clusterMap[$c['id']] = $c['name'];
                 <input type="text" name="cname" placeholder="e.g. Nairobi Cluster" required>
             </div>
             <div>
-                <label>Manager Password</label>
+                <label>Manager Password <span style="font-weight:400;color:#999;">(used to log in to the map)</span></label>
                 <input type="password" name="cpw" placeholder="Set a password" required>
             </div>
             <div style="padding-bottom:1px;">
@@ -237,7 +252,10 @@ foreach ($clusters as $c) $clusterMap[$c['id']] = $c['name'];
         <?php foreach ($projects as $p): ?>
         <tr>
             <td><input type="checkbox" name="school_ids[]" value="<?= $p['id'] ?>"></td>
-            <td><?= htmlspecialchars($p['name']) ?></td>
+            <td>
+                <?= htmlspecialchars($p['name']) ?>
+                <button class="btn-sm btn-sec" style="margin-left:6px;padding:3px 8px;font-size:.72rem;" onclick="openEditProject(<?= $p['id'] ?>, '<?= htmlspecialchars($p['name'], ENT_QUOTES) ?>', '<?= htmlspecialchars($p['county'] ?? '', ENT_QUOTES) ?>')">✏</button>
+            </td>
             <td><?= htmlspecialchars($p['county'] ?? '—') ?></td>
             <td>
                 <?php if ($p['cluster_id']): ?>
@@ -276,12 +294,32 @@ foreach ($clusters as $c) $clusterMap[$c['id']] = $c['name'];
             <input type="hidden" name="action" value="edit_cluster">
             <input type="hidden" name="cid"    id="editCid">
             <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:3px;">Cluster Name</label>
-            <input type="text"     name="cname" id="editName" required>
-            <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:3px;">New Password <span style="color:#999;font-weight:400;">(leave blank to keep current)</span></label>
-            <input type="password" name="cpw"   placeholder="Leave blank to keep">
+            <input type="text" name="cname" id="editName" required>
+            <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:3px;">Map Login Password <span style="color:#999;font-weight:400;">(leave blank to keep current)</span></label>
+            <input type="password" name="cpw" placeholder="Leave blank to keep" autocomplete="new-password">
+            <p style="font-size:.75rem;color:#6b7280;margin-bottom:10px;">Project managers use this password at <code>/arise/?p=map</code> to see only this cluster's projects and data.</p>
             <div class="modal-actions">
                 <button type="submit" class="btn-sm btn-pri" style="padding:9px 18px;">Save Changes</button>
                 <button type="button" class="btn-sm btn-sec" style="padding:9px 18px;" onclick="closeEdit()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ── EDIT PROJECT MODAL ───────────────────────────────────────────── -->
+<div class="modal-overlay" id="editProjectModal">
+    <div class="modal-box">
+        <h3>✏ Edit Project</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="edit_project">
+            <input type="hidden" name="pid" id="editPid">
+            <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:3px;">Project Name</label>
+            <input type="text" name="pname" id="editPname" required>
+            <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:3px;">County / Location</label>
+            <input type="text" name="pcounty" id="editPcounty" placeholder="e.g. Nairobi">
+            <div class="modal-actions">
+                <button type="submit" class="btn-sm btn-pri" style="padding:9px 18px;">Save Project</button>
+                <button type="button" class="btn-sm btn-sec" style="padding:9px 18px;" onclick="closeEditProject()">Cancel</button>
             </div>
         </form>
     </div>
@@ -293,13 +331,19 @@ function openEdit(id, name) {
     document.getElementById('editName').value = name;
     document.getElementById('editModal').classList.add('open');
 }
-function closeEdit() {
-    document.getElementById('editModal').classList.remove('open');
+function closeEdit() { document.getElementById('editModal').classList.remove('open'); }
+
+function openEditProject(id, name, county) {
+    document.getElementById('editPid').value    = id;
+    document.getElementById('editPname').value  = name;
+    document.getElementById('editPcounty').value = county;
+    document.getElementById('editProjectModal').classList.add('open');
 }
+function closeEditProject() { document.getElementById('editProjectModal').classList.remove('open'); }
+
 function toggleAll(cb) {
     document.querySelectorAll('input[name="school_ids[]"]').forEach(c => c.checked = cb.checked);
 }
-document.getElementById('editModal').addEventListener('click', function(e) {
-    if (e.target === this) closeEdit();
-});
+document.getElementById('editModal').addEventListener('click', function(e) { if (e.target === this) closeEdit(); });
+document.getElementById('editProjectModal').addEventListener('click', function(e) { if (e.target === this) closeEditProject(); });
 </script>

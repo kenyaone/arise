@@ -111,7 +111,7 @@ tr:nth-child(even) td{background:#fff7ed}
   <tr><td>Post-test answers &amp; scores</td><td>Test submission</td><td>pretest_attempts, quiz_answers</td></tr>
   <tr><td>Quiz attempts</td><td>Quiz submission</td><td>quiz_attempts, quiz_answers</td></tr>
   <tr><td>Certificates earned</td><td>Post-test pass</td><td>certificates</td></tr>
-  <tr><td>Behavioral survey</td><td>After post-test</td><td>behavioral_surveys</td></tr>
+  <tr><td>Impact survey (3 yes/no + text responses)</td><td>After lesson quiz &amp; after post-test</td><td>behavioral_surveys</td></tr>
   <tr><td>Retention test</td><td>30 days after cert</td><td>retention_tests</td></tr>
   <tr><td>Forum posts</td><td>Forum submission</td><td>forum_posts</td></tr>
   <tr><td>Anonymous questions</td><td>Ask Us form</td><td>anon_questions</td></tr>
@@ -148,15 +148,26 @@ tr:nth-child(even) td{background:#fff7ed}
 <div class="formula">NGI = (62 − 35) ÷ (100 − 35) × 100 = 27 ÷ 65 × 100 ≈ 41.5%</div>
 <p>Interpretation: <strong>Moderate gain</strong> — the cohort achieved 42% of the maximum possible improvement.</p>
 
-<h2>7. Behavioral Survey</h2>
-<p>After completing a module's post-test, learners are prompted to answer 3 yes/no questions:</p>
+<h2>7. Impact Survey — "Did This Change You?"</h2>
+<p>The Impact Survey is a mandatory 3-question survey that appears prominently at the end of every lesson quiz and immediately after the post-test. It is displayed as a bold pulsing red button labelled <strong>"Did This Change You? Tell Us Now"</strong> so learners cannot miss it.</p>
+<h3>Survey questions</h3>
 <ol>
-  <li><strong>Behaviour change:</strong> "Have you changed any of your behaviours based on what you learned in this module?"</li>
-  <li><strong>Knowledge sharing:</strong> "Have you shared what you learned with friends, family, or peers?"</li>
-  <li><strong>Confidence:</strong> "Do you feel more confident making decisions related to your health after this module?"</li>
+  <li><strong>Behaviour change (q1_changed):</strong> "Since starting this module, have you made any changes to your behaviour or habits?"</li>
+  <li><strong>Knowledge sharing (q2_shared):</strong> "Have you shared what you learned with a friend, family member, or peer?"</li>
+  <li><strong>Self-efficacy (q3_confident):</strong> "Do you feel more confident handling situations related to this topic?"</li>
 </ol>
-<p>Each question has an optional free-text detail field. Aggregate percentages appear in the Analytics dashboard under <em>Behavioral Survey Results</em>.</p>
-<div class="tip">Self-reported behaviour change (Level 3) is inherently subject to social desirability bias. Use these results directionally, not as absolute measures. Cross-reference with external observation data where possible.</div>
+<p>Each Yes/No response automatically opens a contextual text field prompting the learner to describe their answer in their own words. For example, a "Yes" on question 1 prompts: <em>"What changes did you make? Describe what you did differently."</em></p>
+<h3>Calculated indicators</h3>
+<table>
+  <tr><th>Indicator</th><th>Formula</th><th>Where displayed</th></tr>
+  <tr><td>% Behavior Change</td><td>q1_changed=1 ÷ total responses × 100</td><td>Analytics dashboard, Project Map</td></tr>
+  <tr><td>% Knowledge Shared</td><td>q2_shared=1 ÷ total responses × 100</td><td>Analytics dashboard, Project Map</td></tr>
+  <tr><td>% Feel Confident</td><td>q3_confident=1 ÷ total responses × 100</td><td>Analytics dashboard</td></tr>
+</table>
+<h3>Text responses</h3>
+<p>The free-text fields (q1_detail, q2_detail, q3_detail) are stored in the <code>behavioral_surveys</code> table and exported via DataPost. They provide qualitative evidence for donor reports and programme reviews — quote these in reporting to illustrate impact beyond the numbers.</p>
+<div class="tip">Self-reported behaviour change (Level 3) is inherently subject to social desirability bias. Use these results directionally, not as absolute measures. The text responses are more valuable for qualitative reporting than the binary percentages alone.</div>
+<div class="note">The survey is submitted once per learner per module. Duplicate submissions are silently ignored. After submission, the pulsing red button is replaced with a green <em>"Impact Survey Complete"</em> badge.</div>
 
 <h2>8. Completion Funnel Analysis</h2>
 <p>The completion funnel tracks the proportion of learners who progress through each stage:</p>
@@ -166,7 +177,8 @@ tr:nth-child(even) td{background:#fff7ed}
   <li>Pre-Test Done</li>
   <li>Lessons Completed</li>
   <li>Post-Test Done</li>
-  <li>Certified</li>
+  <li>Certified (≥60%)</li>
+  <li><strong>Impact Survey Submitted</strong></li>
 </ol>
 <p>Drop-off percentages between steps identify where learners disengage. Common patterns:</p>
 <table>
@@ -175,6 +187,7 @@ tr:nth-child(even) td{background:#fff7ed}
   <tr><td>Pre-Test → Lessons</td><td>Discouraging pre-test score; confusing module navigation</td></tr>
   <tr><td>Lessons → Post-Test</td><td>Session ended before completion; content too long</td></tr>
   <tr><td>Post-Test → Certified</td><td>Score below 60% threshold — needs remediation or re-attempt</td></tr>
+  <tr><td>Post-Test → Survey</td><td>Should be near-zero — survey is auto-triggered after post-test and displayed as a pulsing red button after every lesson quiz; low survey rates indicate learners are closing the page before completing</td></tr>
 </table>
 
 <h2>9. Cohort Comparison</h2>

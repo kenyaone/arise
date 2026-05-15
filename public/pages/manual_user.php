@@ -65,8 +65,9 @@ tr:nth-child(even) td{background:#f9fafb}
   <li>Introduction to ARISE</li>
   <li>Getting Started — Learner Registration</li>
   <li>Navigating the Platform</li>
-  <li>Learning Modules</li>
+  <li>The 5-Step Learning Journey</li>
   <li>Pre-Test &amp; Post-Test</li>
+  <li>Impact Survey — "Did This Change You?"</li>
   <li>Quizzes</li>
   <li>Challenges &amp; Activities</li>
   <li>Forum &amp; Ask Us</li>
@@ -110,15 +111,16 @@ tr:nth-child(even) td{background:#f9fafb}
   <tr><td>Certs</td><td>Download your completion certificates</td></tr>
 </table>
 
-<h2>4. Learning Modules</h2>
-<p>Each module covers a specific health topic. When you open a module you will see:</p>
-<ol>
-  <li><strong>Knowledge Assessment</strong> section at the top — start here with the Pre-Test.</li>
-  <li><strong>Lesson List</strong> — interactive lessons, videos, and reading materials.</li>
-  <li><strong>Post-Test</strong> — appears after the Pre-Test is completed.</li>
-  <li><strong>Certificate</strong> button — unlocks after passing the Post-Test.</li>
-</ol>
-<div class="tip">Complete lessons in order. Each lesson tracks your progress and awards XP points for completion.</div>
+<h2>4. The 5-Step Learning Journey</h2>
+<p>Every module follows a structured 5-step journey. The module page shows your progress bar at the top so you always know where you are:</p>
+<table>
+  <tr><th>Step</th><th>What you do</th><th>Unlocks</th></tr>
+  <tr><td><strong>Step 1 — Pre-Test</strong></td><td>Answer 5 questions before studying. Measures what you already know.</td><td>Access to lessons</td></tr>
+  <tr><td><strong>Step 2 &amp; 3 — Lessons</strong></td><td>Work through interactive lessons, videos, and activities. A short quiz appears at the end of each lesson.</td><td>Post-Test</td></tr>
+  <tr><td><strong>Step 4 — Post-Test</strong></td><td>Answer 5 questions after completing the lessons. Measures how much you learned.</td><td>Certificate (if ≥60%) + Impact Survey</td></tr>
+  <tr><td><strong>Step 5 — Impact Survey</strong></td><td>3 short questions about how the module changed your thinking, behaviour, and confidence.</td><td>Module marked complete ✓</td></tr>
+</table>
+<div class="tip">After submitting the lesson quiz you will see a pulsing red button — <strong>"Did This Change You? Tell Us Now"</strong> — this is the Impact Survey. Do not skip it; it takes 60 seconds and helps measure the real-world impact of the programme.</div>
 
 <h2>5. Pre-Test &amp; Post-Test</h2>
 <p>The <span class="badge">Pre-Test</span> is a 5-question quiz taken <em>before</em> studying the module — it measures what you already know. The <span class="badge">Post-Test</span> is taken <em>after</em> completing the lessons. Together they show your knowledge gain.</p>
@@ -131,7 +133,23 @@ tr:nth-child(even) td{background:#f9fafb}
 </ol>
 <div class="warn">You cannot change your answers after submitting. Take your time before clicking Submit.</div>
 
-<h2>6. Quizzes</h2>
+<h2>6. Impact Survey — "Did This Change You?"</h2>
+<p>After completing a module's lesson quiz or post-test, a bold red button appears: <strong>"Did This Change You? Tell Us Now"</strong>. This is the Impact Survey — it is a required part of every module and takes about 60 seconds.</p>
+<h3>The 3 questions</h3>
+<ol>
+  <li><strong>Behaviour change:</strong> Have you made any changes to your behaviour or habits since starting this module?</li>
+  <li><strong>Knowledge sharing:</strong> Have you shared what you learned with a friend, family member, or peer?</li>
+  <li><strong>Confidence:</strong> Do you feel more confident handling situations related to this topic?</li>
+</ol>
+<p>For each question, tap <strong>Yes</strong> or <strong>No</strong>. A text box then opens — type a short explanation of your answer. For example:</p>
+<ul>
+  <li>If you answered <em>Yes</em> to behaviour change: describe what you changed.</li>
+  <li>If you answered <em>No</em>: describe what would help you make a change.</li>
+</ul>
+<div class="tip">Your written answers are confidential and are used by programme managers to understand real-world impact. Be honest — there are no right or wrong answers here.</div>
+<div class="warn">The survey can only be submitted once per module. Once submitted you will see a green <strong>"Impact Survey Complete"</strong> badge on that module's lesson page. You cannot edit your answers after submission.</div>
+
+<h2>7. Quizzes</h2>
 <p>Each module has a full quiz (10+ questions) separate from the pre/post test. It can be retaken as many times as you like — it is for practice and reinforcement.</p>
 <ul>
   <li>A score of <strong>60% or above</strong> is a pass.</li>
@@ -139,25 +157,26 @@ tr:nth-child(even) td{background:#f9fafb}
   <li>Your highest score is saved to your dashboard.</li>
 </ul>
 
-<h2>7. Challenges &amp; Activities</h2>
+<h2>8. Challenges &amp; Activities</h2>
 <p>Some modules include short reflection activities or challenges. These contribute to your XP score and are saved privately to your profile.</p>
 
-<h2>8. Forum &amp; Ask Us</h2>
+<h2>9. Forum &amp; Ask Us</h2>
 <h3>Forum</h3>
 <p>A shared space where all learners can post questions and comments. Posts are visible to everyone and are moderated.</p>
 <h3>Ask Us</h3>
 <p>Use <strong>Ask Us</strong> to send a private, anonymous question to educators. Responses appear in the admin panel.</p>
 
-<h2>9. Certificates</h2>
+<h2>10. Certificates</h2>
 <p>You earn a certificate when you:</p>
 <ol>
   <li>Complete the Pre-Test for a module.</li>
   <li>Complete all lessons in the module.</li>
-  <li>Score 60% or above on the Post-Test.</li>
+  <li>Score <strong>60% or above</strong> on the Post-Test.</li>
 </ol>
 <p>Certificates show your name, module title, score, and date. They can be printed or saved as PDF from the <strong>Certs</strong> menu.</p>
+<div class="tip">After earning your certificate you will be directed to the Impact Survey (Step 5). Complete it to mark the module fully done.</div>
 
-<h2>10. Facilitator Mode</h2>
+<h2>11. Facilitator Mode</h2>
 <h3>Starting a session</h3>
 <ol>
   <li>Log in at <code>http://arise.local/arise/admin/</code></li>
@@ -172,7 +191,7 @@ tr:nth-child(even) td{background:#f9fafb}
 <h3>Ending a session</h3>
 <p>Click <strong>End</strong> in the Facilitator panel when training is complete. Ended sessions remain in the history for reporting.</p>
 
-<h2>11. Tips for a Good Session</h2>
+<h2>12. Tips for a Good Session</h2>
 <ul>
   <li>Ask all learners to connect to WiFi <em>before</em> the session starts.</li>
   <li>Display the URL on a projector using the <strong>Project on Screen</strong> button in the admin dashboard.</li>
