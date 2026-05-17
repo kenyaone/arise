@@ -171,17 +171,35 @@ function buildSchoolRows(): array {
             if ($fallback) { $lat = $fallback[0]; $lng = $fallback[1]; }
         }
 
+        $quizCount = (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne' AND qa.test_type='quiz'");
+        $avgScore  = (float)(db()->querySingle("SELECT ROUND(AVG(qa.percentage),1) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne' AND qa.test_type='quiz' AND qa.percentage>0") ?? 0);
+        $certCount = (int)db()->querySingle("SELECT COUNT(c.id) FROM certificates c JOIN students s ON s.id=c.student_id WHERE s.school_name='$sne'");
+        $avgPre    = db()->querySingle("SELECT ROUND(AVG(qa.percentage),1) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne' AND qa.test_type='pre'");
+        $avgPost   = db()->querySingle("SELECT ROUND(AVG(qa.percentage),1) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne' AND qa.test_type='post'");
+        $surveys   = (int)db()->querySingle("SELECT COUNT(*) FROM behavioral_surveys bs JOIN students s ON s.id=bs.student_id WHERE s.school_name='$sne'");
+        $pctChg    = $surveys > 0 ? (float)db()->querySingle("SELECT ROUND(100.0*SUM(q1_changed)/COUNT(*),1) FROM behavioral_surveys bs JOIN students s ON s.id=bs.student_id WHERE s.school_name='$sne'") : null;
+        $pctShared = $surveys > 0 ? (float)db()->querySingle("SELECT ROUND(100.0*SUM(q2_shared)/COUNT(*),1) FROM behavioral_surveys bs JOIN students s ON s.id=bs.student_id WHERE s.school_name='$sne'") : null;
+        $pctConf   = $surveys > 0 ? (float)db()->querySingle("SELECT ROUND(100.0*SUM(q3_confident)/COUNT(*),1) FROM behavioral_surveys bs JOIN students s ON s.id=bs.student_id WHERE s.school_name='$sne'") : null;
+        $kg        = ($avgPre !== null && $avgPost !== null) ? round((float)$avgPost - (float)$avgPre, 1) : null;
+
         $rows[] = [
-            'school_name'    => $row['school_name'],
-            'county'         => $row['county'] ?? '',
-            'cluster'        => $row['cluster_name'] ?? '',
-            'lat'            => $lat,
-            'lng'            => $lng,
-            'has_learners'   => $learners > 0,
-            'learner_count'  => $learners,
-            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
-            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
-            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+            'school_name'     => $row['school_name'],
+            'county'          => $row['county'] ?? '',
+            'cluster'         => $row['cluster_name'] ?? '',
+            'lat'             => $lat,
+            'lng'             => $lng,
+            'has_learners'    => $learners > 0,
+            'learner_count'   => $learners,
+            'quiz_count'      => $quizCount,
+            'avg_score'       => $avgScore,
+            'cert_count'      => $certCount,
+            'avg_pre_score'   => $avgPre  !== null ? (float)$avgPre  : null,
+            'avg_post_score'  => $avgPost !== null ? (float)$avgPost : null,
+            'knowledge_gain'  => $kg,
+            'behavior_surveys'=> $surveys,
+            'pct_changed'     => $pctChg,
+            'pct_shared'      => $pctShared,
+            'pct_confident'   => $pctConf,
         ];
     }
     return $rows;
