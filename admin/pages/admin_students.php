@@ -142,6 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_student'])) {
         $stmt->bindValue(':s', $school);
         $stmt->bindValue(':c', $class);
         $stmt->execute();
+        $newId = db()->lastInsertRowID();
+        ariseAuditLog('add_student', 'student', $newId, "Added: $name | School: $school | Cluster: $class");
         $msg = '✅ Student added.';
     }
 }
@@ -157,6 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_student'])) {
     $stmt->bindValue(':c', trim($_POST['class_name']));
     $stmt->bindValue(':id', $id);
     $stmt->execute();
+    ariseAuditLog('edit_student', 'student', $id, "Updated: " . trim($_POST['full_name']) . " | School: " . trim($_POST['school_name']));
     $msg = '✅ Student updated.';
 }
 
@@ -165,8 +168,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_student'])) {
 // ============================================================
 if (isset($_GET['delete']) && is_numeric($_GET['delete']) && hasPermission('students_manage')) {
     $stmt = db()->prepare('UPDATE students SET is_active = 0 WHERE id = :id');
-    $stmt->bindValue(':id', intval($_GET['delete']));
+    $delId = intval($_GET['delete']);
+    $delName = db()->querySingle("SELECT full_name FROM students WHERE id=$delId") ?? "ID $delId";
+    $stmt->bindValue(':id', $delId);
     $stmt->execute();
+    ariseAuditLog('deactivate_student', 'student', $delId, "Deactivated: $delName");
     $msg = '✅ Student deactivated.';
 }
 

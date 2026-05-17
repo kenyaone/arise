@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_user'])) {
                     $stmt->execute();
                 }
             }
+            ariseAuditLog('create_admin_user', 'admin_user', $newUserId, "Created admin: $username | role: $role | permissions: " . implode(',', $perms));
             $msg = "✅ User '$username' created with " . count($perms) . " permissions.";
         }
     }
@@ -62,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_perms'])) {
                 $stmt->execute();
             }
         }
+        $uname = db()->querySingle("SELECT username FROM admin_users WHERE id=$userId") ?? "ID $userId";
+        ariseAuditLog('edit_admin_permissions', 'admin_user', $userId, "Updated permissions for: $uname | perms: " . implode(',', $perms));
         $msg = '✅ Permissions updated.';
     }
 }
@@ -76,6 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_password'])) {
         $stmt->bindValue(':hash', $hash);
         $stmt->bindValue(':id', $userId);
         $stmt->execute();
+        $uname = db()->querySingle("SELECT username FROM admin_users WHERE id=$userId") ?? "ID $userId";
+        ariseAuditLog('reset_admin_password', 'admin_user', $userId, "Password reset for admin: $uname");
         $msg = '✅ Password reset successfully.';
     }
 }
@@ -85,7 +90,10 @@ if (isset($_GET['toggle']) && is_numeric($_GET['toggle'])) {
     $userId = intval($_GET['toggle']);
     $userRole = db()->querySingle("SELECT role FROM admin_users WHERE id = $userId");
     if ($userRole !== 'superadmin') {
+        $uname = db()->querySingle("SELECT username FROM admin_users WHERE id=$userId") ?? "ID $userId";
+        $wasActive = db()->querySingle("SELECT is_active FROM admin_users WHERE id=$userId");
         db()->exec("UPDATE admin_users SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE id = $userId");
+        ariseAuditLog($wasActive ? 'deactivate_admin_user' : 'activate_admin_user', 'admin_user', $userId, ($wasActive ? 'Deactivated' : 'Activated') . " admin: $uname");
         $msg = '✅ User status updated.';
     }
 }

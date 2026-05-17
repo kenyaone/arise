@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_module']) && hasP
         $stmt->bindValue(':icon', $icon);
         $stmt->bindValue(':sort', $maxSort + 1);
         $stmt->bindValue(':by', $_SESSION['arise_admin_id'] ?? 0);
-        $stmt->execute();
+        $newMid = db()->lastInsertRowID();
+        ariseAuditLog('add_module', 'module', $newMid, "Created module: $title | slug: $slug");
         $msg = "✅ Module '$title' created!";
     }
 }
@@ -108,11 +109,16 @@ if ($action === 'toggle_lesson' && hasPermission('content_manage')) {
     $modId = intval($_GET['mod'] ?? 0);
     $cur = db()->querySingle("SELECT is_active FROM lessons WHERE id=$lid");
     db()->exec("UPDATE lessons SET is_active=" . ($cur ? 0 : 1) . " WHERE id=$lid");
+    $ltitle = db()->querySingle("SELECT title FROM lessons WHERE id=$lid") ?? "ID $lid";
+    ariseAuditLog($cur ? 'deactivate_lesson' : 'activate_lesson', 'lesson', $lid, ($cur ? 'Deactivated' : 'Activated') . " lesson: $ltitle");
     header("Location: ?p=content&action=edit_module&mod=$modId"); exit;
 }
 
 if (isset($_GET['deactivate_module']) && hasPermission('content_manage')) {
-    db()->exec("UPDATE modules SET is_active = 0 WHERE id = " . intval($_GET['deactivate_module']));
+    $dmid = intval($_GET['deactivate_module']);
+    $dmtitle = db()->querySingle("SELECT title FROM modules WHERE id=$dmid") ?? "ID $dmid";
+    db()->exec("UPDATE modules SET is_active = 0 WHERE id = $dmid");
+    ariseAuditLog('deactivate_module', 'module', $dmid, "Deactivated module: $dmtitle");
     $msg = '✅ Module deactivated.';
 }
 
@@ -167,6 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_lesson'])) {
         $stmt->bindValue(':fsize', $fileSize);
         $stmt->bindValue(':sort', intval($_POST['sort_order'] ?? 0));
         $stmt->execute();
+        $newLid = db()->lastInsertRowID();
+        ariseAuditLog('add_lesson', 'lesson', $newLid, "Added lesson: $title | type: $lessonType | module_id: " . intval($_POST['module_id']));
         $msg = '✅ Lesson added!';
     }
 }

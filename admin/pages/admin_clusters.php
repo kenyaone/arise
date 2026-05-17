@@ -26,8 +26,12 @@ if ($action === 'create_cluster') {
         $stmt = $db->prepare("INSERT INTO clusters (name, password_hash) VALUES (?, ?)");
         $stmt->bindValue(1, $name, SQLITE3_TEXT);
         $stmt->bindValue(2, $hash, SQLITE3_TEXT);
-        try { $stmt->execute(); $msg = "Cluster \"$name\" created."; }
-        catch(Exception $e) { $err = 'Name already exists.'; }
+        try {
+            $stmt->execute();
+            $newCid = $db->lastInsertRowID();
+            ariseAuditLog('create_cluster', 'cluster', $newCid, "Created cluster: $name");
+            $msg = "Cluster \"$name\" created.";
+        } catch(Exception $e) { $err = 'Name already exists.'; }
     }
 }
 
@@ -47,6 +51,7 @@ if ($action === 'edit_cluster') {
             $stmt2->bindValue(2, $id, SQLITE3_INTEGER);
             $stmt2->execute();
         }
+        ariseAuditLog('edit_cluster', 'cluster', $id, "Edited cluster: $name" . ($pw !== '' ? ' | password changed' : ''));
         $msg = 'Cluster updated.';
     }
 }
@@ -62,6 +67,7 @@ if ($action === 'edit_project') {
         $stmt->bindValue(2, $county, SQLITE3_TEXT);
         $stmt->bindValue(3, $id,     SQLITE3_INTEGER);
         $stmt->execute();
+        ariseAuditLog('edit_project', 'school', $id, "Edited project: $name | county: $county");
         $msg = "Project \"$name\" updated.";
     }
 }
@@ -70,8 +76,10 @@ if ($action === 'edit_project') {
 if ($action === 'delete_cluster') {
     $id = (int)($_POST['cid'] ?? 0);
     if ($id) {
+        $cname = $db->querySingle("SELECT name FROM clusters WHERE id=$id") ?? "ID $id";
         $db->exec("UPDATE schools SET cluster_id=NULL WHERE cluster_id=$id");
         $db->exec("DELETE FROM clusters WHERE id=$id");
+        ariseAuditLog('delete_cluster', 'cluster', $id, "Deleted cluster: $cname");
         $msg = 'Cluster deleted. Projects moved to Unassigned.';
     }
 }
@@ -81,13 +89,17 @@ if ($action === 'assign_project') {
     $sid = (int)($_POST['school_id']  ?? 0);
     $cid = $_POST['cluster_id'] ?? '';
     if ($sid) {
+        $sname = $db->querySingle("SELECT name FROM schools WHERE id=$sid") ?? "ID $sid";
         if ($cid === '' || $cid === '0') {
             $db->exec("UPDATE schools SET cluster_id=NULL WHERE id=$sid");
+            ariseAuditLog('assign_project', 'school', $sid, "Unassigned project: $sname from cluster");
         } else {
             $stmt = $db->prepare("UPDATE schools SET cluster_id=? WHERE id=?");
             $stmt->bindValue(1, (int)$cid, SQLITE3_INTEGER);
             $stmt->bindValue(2, $sid,      SQLITE3_INTEGER);
             $stmt->execute();
+            $cname = $db->querySingle("SELECT name FROM clusters WHERE id=" . (int)$cid) ?? "ID $cid";
+            ariseAuditLog('assign_project', 'school', $sid, "Assigned project: $sname to cluster: $cname");
         }
         $msg = 'Project assignment updated.';
     }
@@ -98,10 +110,12 @@ if ($action === 'bulk_assign') {
     $cid  = (int)($_POST['bulk_cluster_id'] ?? 0);
     $sids = $_POST['school_ids'] ?? [];
     if ($cid && !empty($sids)) {
+        $cname = $db->querySingle("SELECT name FROM clusters WHERE id=$cid") ?? "ID $cid";
         foreach ($sids as $sid) {
             $sid = (int)$sid;
             $db->exec("UPDATE schools SET cluster_id=$cid WHERE id=$sid");
         }
+        ariseAuditLog('bulk_assign', 'cluster', $cid, "Bulk assigned " . count($sids) . " project(s) to cluster: $cname | IDs: " . implode(',', array_map('intval', $sids)));
         $msg = count($sids) . ' project(s) assigned to cluster.';
     }
 }
