@@ -123,6 +123,61 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .en{display:block;}.sw{display:none;}.sh{display:none;}
 @media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Hotspot interaction ───────────────────────────────── */
+.hs-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:10px 0;}
+.hs-diagram{position:relative;width:100%;max-width:200px;}
+.hs-diagram svg{overflow:visible;}
+.hs-pin circle{transition:.15s;}
+.hs-pin:hover circle{r:12;opacity:.85;}
+.hs-pin.active circle{fill:#f5a623;}
+@keyframes hspulse{0%,100%{r:13;opacity:.35}50%{r:17;opacity:.1}}
+.hs-pulse{animation:hspulse 2s ease-in-out infinite;}
+.hs-info{width:100%;max-width:420px;min-height:80px;}
+.hs-card{display:none;background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border:2px solid var(--pri);border-radius:10px;padding:13px 15px;animation:si .2s ease;}
+.hs-card.active{display:block;}
+.hs-card-title{font-size:.92rem;font-weight:800;color:var(--pri);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hs-card-body{font-size:.84rem;color:#2a3a2a;line-height:1.65;}
+.hs-hint{font-size:.78rem;color:var(--soft);text-align:center;margin-top:4px;font-style:italic;}
+
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="utis" data-module-slug="utis-reproductive">
 <div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · UTIs · Lesson 1 of 1</div><div class="lesson-name">🔬 UTIs (Urinary Tract Infections)</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
@@ -163,7 +218,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <div class="mcq-fb" id="fb_mcq2"></div>
 </div>
 <div class="mcq-block">
-<div class="q-text">3. Esther, 16, Kisumu, is shy about discussing contraception with her parents. She finds a youth-friendly online SRH counselling service. What is the MOST important thing Esther should verify before sharing personal information?</div>
+<div class="q-text">3. Esther, 16, Kisumu, is shy about discussing sexual health and abstinence with her parents. She finds a youth-friendly online SRH counselling service. What is the MOST important thing Esther should verify before sharing personal information?</div>
 <div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq3">
 <div class="opt" data-opt="A" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span> The website has an attractive design</div>
@@ -260,6 +315,159 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 </div>
 </div>
 </div>
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_uti" data-correct='{"0": 2, "1": 3, "2": 1, "3": 4, "4": 0}' data-rights='["Drinking enough water \u2014 the most important UTI prevention", "Pain or burning sensation experienced when urinating", "Urinary Tract Infection \u2014 bacterial infection in the urinary system", "Tube through which urine exits the body", "Most common bacterium responsible for urinary tract infections"]'>
+    <div class="match-col" id="ml_uti">
+      <button class="match-item" data-term="UTI" onclick="_mL('uti',0)">UTI</button>
+      <button class="match-item" data-term="Urethra" onclick="_mL('uti',1)">Urethra</button>
+      <button class="match-item" data-term="Dysuria" onclick="_mL('uti',2)">Dysuria</button>
+      <button class="match-item" data-term="E. coli" onclick="_mL('uti',3)">E. coli</button>
+      <button class="match-item" data-term="Hydration" onclick="_mL('uti',4)">Hydration</button>
+    </div>
+    <div class="match-col" id="mr_uti">
+      <button class="match-item" onclick="_mR('uti',0)">Drinking enough water — the most important UTI prevention</button>
+      <button class="match-item" onclick="_mR('uti',1)">Pain or burning sensation experienced when urinating</button>
+      <button class="match-item" onclick="_mR('uti',2)">Urinary Tract Infection — bacterial infection in the urinary system</button>
+      <button class="match-item" onclick="_mR('uti',3)">Tube through which urine exits the body</button>
+      <button class="match-item" onclick="_mR('uti',4)">Most common bacterium responsible for urinary tract infections</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_uti" onclick="_mCheck('uti')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_uti" onclick="_mReset('uti')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_uti" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+
+/* ── Branching: ut20 ────────────────────────────── */
+function btGo_ut20(nodeId){
+  var wrap=document.getElementById('bt_ut20');
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_ut20_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart_ut20(){btGo_ut20('root');}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#128269; <span class="en">The Urinary Tract — Where UTIs Strike</span><span class="sw">The Urinary Tract — Where UTIs Strike</span><span class="sh">The Urinary Tract — Where UTIs Strike</span></div>
+  <p class="tp"><span class="en">Tap each numbered pin to learn how this area is affected.</span><span class="sw">Gonga kila nambari kujifunza jinsi eneo hilo linavyoathirika.</span><span class="sh">Tap kila number pin kujua jinsi eneo hilo linavyoathiriwa.</span></p>
+  <div class="hs-wrap">
+    <div class="hs-diagram" data-lid="uti">
+<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:160px;display:block;margin:0 auto;">
+  <ellipse cx="65" cy="80" rx="32" ry="42" fill="#d4e8f8" stroke="#5a88b8" stroke-width="1.5"/>
+  <ellipse cx="135" cy="80" rx="32" ry="42" fill="#d4e8f8" stroke="#5a88b8" stroke-width="1.5"/>
+  <text x="65" y="82" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Left</text>
+  <text x="65" y="93" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Kidney</text>
+  <text x="135" y="82" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Right</text>
+  <text x="135" y="93" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Kidney</text>
+  <path d="M76,120 Q76,155 100,160" stroke="#5a88b8" stroke-width="3" fill="none"/>
+  <path d="M124,120 Q124,155 100,160" stroke="#5a88b8" stroke-width="3" fill="none"/>
+  <ellipse cx="100" cy="210" rx="42" ry="48" fill="#c0d8f0" stroke="#5a88b8" stroke-width="1.5"/>
+  <text x="100" y="208" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Bladder</text>
+  <text x="100" y="220" text-anchor="middle" font-size="8" fill="#2a5888">(stores urine)</text>
+  <line x1="100" y1="258" x2="100" y2="308" stroke="#5a88b8" stroke-width="4" stroke-linecap="round"/>
+  <text x="100" y="320" text-anchor="middle" font-size="9" fill="#2a5888" font-weight="600">Urethra</text>
+<circle cx="65" cy="80" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,0)" style="cursor:pointer;"><circle cx="65" cy="80" r="10" fill="#2563eb" stroke="white" stroke-width="2"/><text x="65" y="80" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">1</text></g><circle cx="135" cy="80" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,1)" style="cursor:pointer;"><circle cx="135" cy="80" r="10" fill="#2563eb" stroke="white" stroke-width="2"/><text x="135" y="80" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">2</text></g><circle cx="100" cy="210" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,2)" style="cursor:pointer;"><circle cx="100" cy="210" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="100" y="210" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">3</text></g><circle cx="100" cy="285" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,3)" style="cursor:pointer;"><circle cx="100" cy="285" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="100" y="285" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">4</text></g>
+</svg>
+    </div>
+    <div class="hs-info" id="hsi_uti">
+<div class="hs-card" id="hsc_uti_0"><div class="hs-card-title">🔵 🔵 Kidneys</div><div class="hs-card-body">Filter 200 litres of blood daily, removing waste as urine. A UTI that reaches the kidneys becomes <strong>pyelonephritis</strong> — a serious infection causing fever, back pain, and kidney damage if untreated. Requires urgent medical care.</div></div>
+<div class="hs-card" id="hsc_uti_1"><div class="hs-card-title">🔵 🔵 Kidneys (Right)</div><div class="hs-card-body">Same as the left kidney — both filter blood and produce urine. Kidney infections from untreated bladder UTIs can cause permanent scarring. <strong>Hydronephrosis</strong> (kidney swelling) occurs when infection blocks urine flow.</div></div>
+<div class="hs-card" id="hsc_uti_2"><div class="hs-card-title">🟡 🟡 Bladder</div><div class="hs-card-body">Most UTIs begin here — <strong>cystitis</strong> (bladder infection). Symptoms: frequent urge to urinate, burning pain, cloudy or smelly urine, pelvic discomfort. <em>E. coli</em> from the bowel is responsible for 80% of cases.</div></div>
+<div class="hs-card" id="hsc_uti_3"><div class="hs-card-title">🔴 🔴 Urethra</div><div class="hs-card-body">The entry point for most UTIs. Women's urethras are shorter (4 cm vs 20 cm in men), making them far more susceptible. <strong>Wiping front-to-back</strong>, urinating after sex, and staying hydrated are key prevention strategies.</div></div>
+      <p class="hs-hint">&#128070; Tap a pin to see details</p>
+    </div>
+  </div>
+</div>
+<script>
+
+/* ── Hotspot interaction ───────────────────────────────── */
+function showHs(pinEl,idx){
+  var wrap=pinEl.closest('.hs-diagram');
+  var lid=wrap.dataset.lid;
+  wrap.querySelectorAll('.hs-pin').forEach(function(p){p.classList.remove('active');});
+  pinEl.classList.add('active');
+  var info=document.getElementById('hsi_'+lid);
+  info.querySelectorAll('.hs-card').forEach(function(c){c.classList.remove('active');});
+  var card=document.getElementById('hsc_'+lid+'_'+idx);
+  if(card)card.classList.add('active');
+}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127963; <span class="en">Refusal Skills &#8212; Make the Choice</span><span class="sw">Ujuzi wa Kukataa &#8212; Fanya Uamuzi</span><span class="sh">Refusal Skills &#8212; Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read scenario na uchague best response.</span></p>
+  <div class="btree-wrap" id="bt_ut20">
+    <div class="bt-scenario"><strong>Scenario:</strong> Ruth, 16, is pressured by her partner: <em>"There is nothing to worry about — I'm perfectly healthy. Staying abstinent is old-fashioned; everyone our age is doing it. You're overreacting."</em></div>
+    <div class="bt-node active" id="btn_ut20_root">
+      <div class="bt-q">What should Ruth do?</div>
+      <button class="bt-choice good" onclick="btGo_ut20('A')">A) "My decision to stay abstinent is firm. Peer pressure does not override my values or my health."</button>
+      <button class="bt-choice warn" onclick="btGo_ut20('B')">B) She's not sure about the UTI claim — she asks him to wait while she checks</button>
+      <button class="bt-choice bad" onclick="btGo_ut20('C')">C) He sounds certain about it — trust his explanation</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_A">
+      <button class="bt-back" onclick="btGo_ut20('root')">&#8592; Back</button>
+      <div class="bt-q">He says "You're making this awkward. I thought you trusted me." How does Ruth respond?</div>
+      <button class="bt-choice good" onclick="btGo_ut20('A_ok')">A1) "Trust is not the same as unprotected sex. My health is not negotiable."</button>
+      <button class="bt-choice warn" onclick="btGo_ut20('A_warn')">A2) Says nothing more but holds firm</button>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_A_ok">
+      <button class="bt-back" onclick="btGo_ut20('A')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Applied Health Knowledge — Best Outcome</div><p>Ruth is medically correct: UTIs are often triggered by sexual activity regardless of hygiene. Abstinence eliminates this risk entirely, along with pregnancy and STI risk. <strong>Choosing abstinence is not distrust — it is self-respect and the strongest health protection available.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_A_warn">
+      <button class="bt-back" onclick="btGo_ut20('A')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Held the Boundary</div><p>Staying firm was right. Ruth can build on this: next time, she can name the reason — "protection prevents UTIs, STIs, and pregnancy. All three."</p></div>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_B">
+      <button class="bt-back" onclick="btGo_ut20('root')">&#8592; Back</button>
+      <div class="bt-q">Ruth checks and confirms: UTIs are frequently triggered by sex, and protection reduces risk. She goes back to her partner with this information. He says "Fine — but it really kills the feeling." What now?</div>
+      <button class="bt-choice good" onclick="btGo_ut20('B_ok')">B1) "My health comes first. My choice is abstinence, and that is not changing."</button>
+      <button class="bt-choice bad" onclick="btGo_ut20('B_bad')">B2) She feels guilty about "killing the feeling" and gives in</button>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_B_ok">
+      <button class="bt-back" onclick="btGo_ut20('B')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Used Knowledge to Maintain Her Boundary</div><p>Ruth found the facts, returned with them, and held her ground when the response shifted from "it's not necessary medically" to "it reduces sensation." Both excuses were attempts to get unprotected sex. Ruth's health protection was correct both times. <strong>A partner who prioritises his own preferences over your health boundaries is telling you something important about the relationship.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_B_bad">
+      <button class="bt-back" onclick="btGo_ut20('B')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Guilt Was Used as a Final Override</div><p>After the medical argument failed, "it kills the feeling" is the emotional fallback. Ruth's guilt about this is understandable — but misplaced. <strong>Unprotected sex carries pregnancy risk in every encounter. The UTI complication adds to the risk, not away from it.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ut20_C">
+      <button class="bt-back" onclick="btGo_ut20('root')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Two Separate Myths — Both Wrong</div><p>First: UTIs are frequently caused and triggered by sexual activity — protection reduces, not increases, risk. Second: unprotected sex carries direct pregnancy risk, completely separate from UTI risk. <strong>Both myths work together to remove Ruth's protection on two fronts simultaneously.</strong> This is why health literacy matters: knowing the facts closes the gap that manipulation exploits.</p></div>
+      <button class="bt-restart" onclick="btRestart_ut20()">&#8635; Try Again</button>
+    </div>
+  </div>
+</div>
 <div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div><script>
 var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
 function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
@@ -267,7 +475,7 @@ setLang(lang);
 function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
 setSize(localStorage.getItem('arise_textsize')||'md');
 var cur=0,slides=[];
-function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
 function navigate(dir){go(cur+dir);}
 function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
 function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}

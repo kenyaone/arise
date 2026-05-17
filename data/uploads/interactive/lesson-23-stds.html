@@ -123,6 +123,61 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .en{display:block;}.sw{display:none;}.sh{display:none;}
 @media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Hotspot interaction ───────────────────────────────── */
+.hs-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:10px 0;}
+.hs-diagram{position:relative;width:100%;max-width:200px;}
+.hs-diagram svg{overflow:visible;}
+.hs-pin circle{transition:.15s;}
+.hs-pin:hover circle{r:12;opacity:.85;}
+.hs-pin.active circle{fill:#f5a623;}
+@keyframes hspulse{0%,100%{r:13;opacity:.35}50%{r:17;opacity:.1}}
+.hs-pulse{animation:hspulse 2s ease-in-out infinite;}
+.hs-info{width:100%;max-width:420px;min-height:80px;}
+.hs-card{display:none;background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border:2px solid var(--pri);border-radius:10px;padding:13px 15px;animation:si .2s ease;}
+.hs-card.active{display:block;}
+.hs-card-title{font-size:.92rem;font-weight:800;color:var(--pri);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hs-card-body{font-size:.84rem;color:#2a3a2a;line-height:1.65;}
+.hs-hint{font-size:.78rem;color:var(--soft);text-align:center;margin-top:4px;font-style:italic;}
+
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="stds-lesson" data-module-slug="hiv-aids-stis">
 <div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · HIV/AIDS &amp; STIs · Lesson 2 of 2</div><div class="lesson-name">&#129440; Sexually Transmitted Diseases</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
@@ -260,7 +315,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 </div>
 </div>
 
-<!-- SLIDE 6: Prevention & Condom Use -->
+<!-- SLIDE 6: Prevention — Your STD Shield -->
 <div class="slide">
 <div class="slide-head">&#128737;&#65039; <span class="en">Prevention — Your STD Shield</span><span class="sw">Kinga Yako dhidi ya STI</span><span class="sh">Prevention — Your STD Shield</span></div>
 <p class="tp">
@@ -271,20 +326,20 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <table class="info-table">
 <tr><th><span class="en">Method</span><span class="sw">Njia</span><span class="sh">Method</span></th><th><span class="en">Protects Against</span><span class="sw">Inalinda Dhidi ya</span><span class="sh">Inalinda Dhidi ya</span></th><th><span class="en">Effectiveness</span><span class="sw">Ufanisi</span><span class="sh">Effectiveness</span></th></tr>
 <tr><td><span class="en">Abstinence</span><span class="sw">Kujizuia</span><span class="sh">Abstinence</span></td><td><span class="en">All STDs</span><span class="sw">STI zote</span><span class="sh">STDs zote</span></td><td><span class="en">100%</span><span class="sw">100%</span><span class="sh">100%</span></td></tr>
-<tr><td><span class="en">Consistent correct condom use</span><span class="sw">Kutumia kondom ipasavyo kila wakati</span><span class="sh">Correct condom use kila wakati</span></td><td><span class="en">Most STDs (not skin-to-skin like HSV/HPV)</span><span class="sw">STI nyingi (si maambukizi ya ngozi kama HSV/HPV)</span><span class="sh">Most STDs (si skin-to-skin kama HSV/HPV)</span></td><td><span class="en">~85–98% depending on STD</span><span class="sw">~85–98% kulingana na STI</span><span class="sh">~85–98% depending on STD</span></td></tr>
+
 <tr><td><span class="en">Mutual fidelity (both tested)</span><span class="sw">Uaminifu wa pande zote (wote wamepima)</span><span class="sh">Mutual fidelity (wote wamepima)</span></td><td><span class="en">All STDs from that source</span><span class="sw">STI zote kutoka chanzo hicho</span><span class="sh">STDs zote kutoka chanzo hicho</span></td><td><span class="en">Very high</span><span class="sw">Juu sana</span><span class="sh">Very high</span></td></tr>
 <tr><td><span class="en">HPV Vaccine</span><span class="sw">Chanjo ya HPV</span><span class="sh">HPV Vaccine</span></td><td><span class="en">HPV types 6, 11, 16, 18</span><span class="sw">Aina za HPV 6, 11, 16, 18</span><span class="sh">HPV types 6, 11, 16, 18</span></td><td><span class="en">~90%</span><span class="sw">~90%</span><span class="sh">~90%</span></td></tr>
 <tr><td><span class="en">Regular STI testing</span><span class="sw">Kupima STI mara kwa mara</span><span class="sh">Regular STI testing</span></td><td><span class="en">Early detection &amp; treatment</span><span class="sw">Kugundua mapema na matibabu</span><span class="sh">Early detection &amp; treatment</span></td><td><span class="en">Prevents complications</span><span class="sw">Huzuia matatizo</span><span class="sh">Prevents complications</span></td></tr>
 <tr><td><span class="en">Antibiotic prophylaxis (PrEP etc)</span><span class="sw">Uzuio wa antibiotiki (PrEP n.k.)</span><span class="sh">Antibiotic prophylaxis (PrEP etc)</span></td><td><span class="en">HIV</span><span class="sw">VVU</span><span class="sh">HIV</span></td><td><span class="en">~99%</span><span class="sw">~99%</span><span class="sh">~99%</span></td></tr>
 </table>
 <div class="warn-box"><strong><span class="en">&#9888;&#65039; Important</span><span class="sw">&#9888;&#65039; Muhimu</span><span class="sh">&#9888;&#65039; Important</span></strong>
-<span class="en"> Condoms reduce risk but do NOT fully protect against herpes and HPV which spread via skin contact. Regular testing is still important.</span>
+<span class="en"> Herpes and HPV spread via skin contact — no barrier provides full protection. Abstinence is the only 100% reliable shield. Regular testing is still important.</span>
 <span class="sw"> Kondom hupunguza hatari lakini HAIZUII kikamilifu herpes na HPV ambazo husambazwa kwa mguso wa ngozi. Kupima mara kwa mara bado ni muhimu.</span>
-<span class="sh"> Condoms hupunguza risk lakini HAZIZUII kikamilifu herpes na HPV ambazo husambazwa via skin contact. Regular testing bado ni muhimu.</span>
+<span class="sh"> Herpes na HPV husambazwa via skin contact — hakuna barrier inayokinga kikamilifu. Abstinence ndiyo 100% reliable shield. Regular testing bado ni muhimu.</span>
 </div>
 <ul class="bl">
 <li><span class="en">Know your partner's STI status before engaging in sexual activity</span><span class="sw">Jua hali ya STI ya mpenzi wako kabla ya kufanya ngono</span><span class="sh">Jua STI status ya partner wako kabla ya kufanya ngono</span></li>
-<li><span class="en">Use condoms correctly from start to finish — every time</span><span class="sw">Tumia kondom ipasavyo kutoka mwanzo hadi mwisho — kila wakati</span><span class="sh">Tumia condom correctly kutoka mwanzo hadi mwisho — kila wakati</span></li>
+<li><span class="en">Choose abstinence — it is the only 100% reliable protection against STIs and pregnancy</span><span class="sw">Chagua kujizuia — ni ulinzi pekee wa 100% dhidi ya STI na ujauzito</span><span class="sh">Chagua abstinence — ni the only 100% reliable protection dhidi ya STIs na pregnancy</span></li>
 <li><span class="en">Get the HPV vaccine if you are eligible</span><span class="sw">Pata chanjo ya HPV ukistahili</span><span class="sh">Get HPV vaccine ukistahili</span></li>
 <li><span class="en">Get tested for STIs at least once a year if sexually active</span><span class="sw">Pima STI angalau mara moja kwa mwaka ukifanya ngono</span><span class="sh">Pima STIs angalau mara moja kwa mwaka ukiwa sexually active</span></li>
 <li><span class="en">Seek treatment immediately if you notice symptoms or are exposed</span><span class="sw">Tafuta matibabu mara moja ukiona dalili au kuathiriwa</span><span class="sh">Tafuta treatment mara moja ukiona symptoms au kuathiriwa</span></li>
@@ -364,9 +419,9 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <button class="retry-btn" onclick="scRetry('sc2')">&#8617; Try Again</button>
 </div>
 <div class="s-result good" id="sc2r2">
-<span class="en">Kevin did research and spoke to a health counsellor. He learnt that herpes can be transmitted even without visible sores, and many people don't know they have it. They both got tested, discussed disclosure, and Kevin used condoms consistently. Their relationship continued on honest, informed terms. ✅</span>
+<span class="en">Kevin did research and spoke to a health counsellor. He learnt that herpes can be transmitted even without visible sores, and many people don't know they have it. They both got tested. Kevin chose to wait — abstinence until the relationship was truly safe and committed. Their relationship continued on honest, responsible terms. ✅</span>
 <span class="sw">Kevin alifanya utafiti na kuzungumza na mshauri wa afya. Alijifunza kwamba herpes inaweza kusambazwa hata bila vidonda vinavyoonekana, na watu wengi hawajui wana. Wote wawili walipima, walijadili ufafanuzi, na Kevin alitumia kondom kwa uthabiti. Uhusiano wao uliendelea kwa uaminifu na maarifa. ✅</span>
-<span class="sh">Kevin alifanya research na kuzungumza na health counsellor. Alijifunza kwamba herpes inaweza kusambazwa hata bila visible sores, na watu wengi hawajui wana. Wote wawili walipima, walijadili disclosure, na Kevin alitumia condoms consistently. Relationship yao iliendelea kwa honest, informed terms. ✅</span>
+<span class="sh">Kevin alifanya research na kuzungumza na health counsellor. Alijifunza kwamba herpes inaweza kusambazwa hata bila visible sores, na watu wengi hawajui wana. Wote wawili walipima, walijadili disclosure, na Kevin alichagua kusubiri — kujizuia mpaka uhusiano ulikuwa salama na wa kweli. Relationship yao iliendelea kwa honest, responsible terms. ✅</span>
 </div>
 </div>
 </div>
@@ -470,7 +525,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <div class="q-text">7. In a community health meeting in Garissa, the facilitator discusses ways to prevent sexually transmitted infections. Which are EFFECTIVE prevention methods?</div>
 <div class="sata-badge">&#9745; Select ALL correct answers</div>
 <div class="options" id="mcq7">
-<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Consistent and correct condom use.</div>
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Abstinence — choosing not to have sex.</div>
 <div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Abstaining from sexual activity.</div>
 <div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Being in a mutually faithful relationship with both partners tested.</div>
 <div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Washing genitals after sex eliminates all STI risk.</div>
@@ -509,7 +564,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
 <div class="options" id="mcq10">
 <div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Since he tested negative, he has nothing to worry about — he is permanently protected.</div>
-<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Some STIs have 'window periods' and a negative test may need to be repeated; he should use condoms consistently and retest if exposed again.</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Some STIs have 'window periods' and a negative test may need to be repeated; he should consider abstinence until fully cleared and should retest if exposed again.</div>
 <div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> He never needs to test again.</div>
 <div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A negative result means he cannot get an STI in the future.</div>
 </div>
@@ -525,6 +580,162 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 
 </div><!-- /slides-wrap -->
 
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_std" data-correct='{"0": 4, "1": 1, "2": 3, "3": 0, "4": 2}' data-rights='["Viral STI that causes blisters \u2014 lifelong but manageable condition", "Bacterial STI causing discharge and burning \u2014 treatable with antibiotics", "Viral STI that can cause genital warts and cervical cancer", "Bacterial STI causing sores, rash and serious long-term damage", "Most common bacterial STI \u2014 often has no visible symptoms"]'>
+    <div class="match-col" id="ml_std">
+      <button class="match-item" data-term="Chlamydia" onclick="_mL('std',0)">Chlamydia</button>
+      <button class="match-item" data-term="Gonorrhoea" onclick="_mL('std',1)">Gonorrhoea</button>
+      <button class="match-item" data-term="Syphilis" onclick="_mL('std',2)">Syphilis</button>
+      <button class="match-item" data-term="Herpes" onclick="_mL('std',3)">Herpes</button>
+      <button class="match-item" data-term="HPV" onclick="_mL('std',4)">HPV</button>
+    </div>
+    <div class="match-col" id="mr_std">
+      <button class="match-item" onclick="_mR('std',0)">Viral STI that causes blisters — lifelong but manageable condition</button>
+      <button class="match-item" onclick="_mR('std',1)">Bacterial STI causing discharge and burning — treatable with antibiotics</button>
+      <button class="match-item" onclick="_mR('std',2)">Viral STI that can cause genital warts and cervical cancer</button>
+      <button class="match-item" onclick="_mR('std',3)">Bacterial STI causing sores, rash and serious long-term damage</button>
+      <button class="match-item" onclick="_mR('std',4)">Most common bacterial STI — often has no visible symptoms</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_std" onclick="_mCheck('std')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_std" onclick="_mReset('std')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_std" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+
+/* ── Branching: st23 ────────────────────────────── */
+function btGo_st23(nodeId){
+  var wrap=document.getElementById('bt_st23');
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_st23_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart_st23(){btGo_st23('root');}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#128269; <span class="en">Where STIs Show Symptoms</span><span class="sw">Where STIs Show Symptoms</span><span class="sh">Where STIs Show Symptoms</span></div>
+  <p class="tp"><span class="en">Tap each numbered pin to learn how this area is affected.</span><span class="sw">Gonga kila nambari kujifunza jinsi eneo hilo linavyoathirika.</span><span class="sh">Tap kila number pin kujua jinsi eneo hilo linavyoathiriwa.</span></p>
+  <div class="hs-wrap">
+    <div class="hs-diagram" data-lid="std">
+<svg viewBox="0 0 200 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:180px;display:block;margin:0 auto;">
+  <ellipse cx="100" cy="38" rx="30" ry="34" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="14" rx="30" ry="14" fill="#5c3a1e"/>
+  <ellipse cx="91" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <ellipse cx="109" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <path d="M93,48 Q100,54 107,48" stroke="#5c3a1e" stroke-width="1.5" fill="none" opacity=".4"/>
+  <rect x="88" y="71" width="24" height="14" rx="5" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,85 Q38,100 38,148 Q38,185 100,190 Q162,185 162,148 Q162,100 145,85 Q126,80 100,80 Q74,80 55,85Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,88 Q30,100 26,158 Q26,172 38,175 Q50,176 52,162 L60,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M145,88 Q170,100 174,158 Q174,172 162,175 Q150,176 148,162 L140,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M38,182 Q36,215 58,222 L100,226 L142,222 Q164,215 162,182Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M56,222 L50,360 Q50,372 66,373 Q82,373 82,360 L80,226Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M120,226 L118,360 Q118,372 134,373 Q150,373 150,360 L144,222Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+<circle cx="100" cy="32" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,0)" style="cursor:pointer;"><circle cx="100" cy="32" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="32" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">1</text></g><circle cx="100" cy="78" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,1)" style="cursor:pointer;"><circle cx="100" cy="78" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="100" y="78" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">2</text></g><circle cx="72" cy="95" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,2)" style="cursor:pointer;"><circle cx="72" cy="95" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="72" y="95" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">3</text></g><circle cx="115" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,3)" style="cursor:pointer;"><circle cx="115" cy="148" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="115" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">4</text></g><circle cx="100" cy="205" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,4)" style="cursor:pointer;"><circle cx="100" cy="205" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="205" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">5</text></g><circle cx="30" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,5)" style="cursor:pointer;"><circle cx="30" cy="148" r="10" fill="#0a5e2a" stroke="white" stroke-width="2"/><text x="30" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">6</text></g>
+</svg>
+    </div>
+    <div class="hs-info" id="hsi_std">
+<div class="hs-card" id="hsc_std_0"><div class="hs-card-title">🧠 🧠 Brain — Late Syphilis</div><div class="hs-card-body"><strong>Neurosyphilis</strong>: untreated syphilis reaches the brain after years, causing personality changes, dementia, blindness, and paralysis. This late stage is preventable if syphilis is treated early with penicillin.</div></div>
+<div class="hs-card" id="hsc_std_1"><div class="hs-card-title">🔴 🔴 Throat — Gonorrhoea & Herpes</div><div class="hs-card-body">Oral gonorrhoea causes a sore throat that doesn't respond to standard antibiotics — often unrecognised. Oral herpes (HSV-1) causes cold sores. Both are transmitted through oral sexual contact.</div></div>
+<div class="hs-card" id="hsc_std_2"><div class="hs-card-title">🟠 🟠 Skin & Body — Syphilis Rash</div><div class="hs-card-body">Secondary syphilis causes a <strong>widespread painless rash</strong> covering the palms, soles, and torso. Also: HPV causes <strong>genital warts</strong> — soft cauliflower-like growths — anywhere on the genital/anal area.</div></div>
+<div class="hs-card" id="hsc_std_3"><div class="hs-card-title">🟡 🟡 Lower Abdomen — Chlamydia/Gonorrhoea</div><div class="hs-card-body">Untreated chlamydia and gonorrhoea spread to the uterus, fallopian tubes, and ovaries causing <strong>Pelvic Inflammatory Disease (PID)</strong>. PID can cause infertility, chronic pain, and life-threatening ectopic pregnancy.</div></div>
+<div class="hs-card" id="hsc_std_4"><div class="hs-card-title">🟣 🟣 Genital Area — Multiple STIs</div><div class="hs-card-body">Herpes: painful blisters and ulcers. Chlamydia/gonorrhoea: discharge, burning urination. Syphilis: painless chancre (sore). HPV: warts. Most STIs have <strong>no symptoms initially</strong> — regular testing is essential.</div></div>
+<div class="hs-card" id="hsc_std_5"><div class="hs-card-title">💉 💉 Bloodstream — HIV & Hepatitis</div><div class="hs-card-body">HIV and Hepatitis B/C travel in the bloodstream and are transmitted through blood, sexual fluids and breast milk. Once in the bloodstream HIV progressively destroys the immune system without ARV treatment.</div></div>
+      <p class="hs-hint">&#128070; Tap a pin to see details</p>
+    </div>
+  </div>
+</div>
+<script>
+
+/* ── Hotspot interaction ───────────────────────────────── */
+function showHs(pinEl,idx){
+  var wrap=pinEl.closest('.hs-diagram');
+  var lid=wrap.dataset.lid;
+  wrap.querySelectorAll('.hs-pin').forEach(function(p){p.classList.remove('active');});
+  pinEl.classList.add('active');
+  var info=document.getElementById('hsi_'+lid);
+  info.querySelectorAll('.hs-card').forEach(function(c){c.classList.remove('active');});
+  var card=document.getElementById('hsc_'+lid+'_'+idx);
+  if(card)card.classList.add('active');
+}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127963; <span class="en">Refusal Skills &#8212; Make the Choice</span><span class="sw">Ujuzi wa Kukataa &#8212; Fanya Uamuzi</span><span class="sh">Refusal Skills &#8212; Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read scenario na uchague best response.</span></p>
+  <div class="btree-wrap" id="bt_st23">
+    <div class="bt-scenario"><strong>Scenario:</strong> Rose, 17, is told by her boyfriend: <em>"I've never had any disease — I can tell. You don't need to worry. Other girls trust their boyfriends. Why are you making this so difficult?"</em></div>
+    <div class="bt-node active" id="btn_st23_root">
+      <div class="bt-q">What should Rose do?</div>
+      <button class="bt-choice good" onclick="btGo_st23('A')">A) "I can't see STIs — and neither can you. My choice is abstinence until a relationship is fully safe and committed."</button>
+      <button class="bt-choice warn" onclick="btGo_st23('B')">B) Ask him to get tested first — she'll wait for results</button>
+      <button class="bt-choice bad" onclick="btGo_st23('C')">C) He seems healthy and trustworthy — trust his word</button>
+    </div>
+    <div class="bt-node" id="btn_st23_A">
+      <button class="bt-back" onclick="btGo_st23('root')">&#8592; Back</button>
+      <div class="bt-q">He says "Getting tested is insulting — it means you think I've been sleeping around." How does Rose respond?</div>
+      <button class="bt-choice good" onclick="btGo_st23('A_ok')">A1) "Testing protects both of us. If you're clean, the result takes 20 minutes and proves it."</button>
+      <button class="bt-choice warn" onclick="btGo_st23('A_warn')">A2) Holds the boundary without engaging the argument further</button>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_A_ok">
+      <button class="bt-back" onclick="btGo_st23('A')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Turned His Argument Around — Best Outcome</div><p>Rose is medically correct: many STIs, including early HIV, chlamydia, and HPV, produce no visible symptoms for months or years. A test is not an accusation — it is basic health maintenance. <strong>If he refuses to show care for your health, that tells you exactly what kind of relationship this is. Abstinence protects you completely.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_A_warn">
+      <button class="bt-back" onclick="btGo_st23('A')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Held the Line Quietly</div><p>Rose maintained her boundary without being drawn into an argument she didn't need to win. The boundary itself was the right response. The logic of "testing = accusation" is designed to bypass protection — Rose didn't accept it.</p></div>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_B">
+      <button class="bt-back" onclick="btGo_st23('root')">&#8592; Back</button>
+      <div class="bt-q">He says "I'll get tested — but can we just do it once before the results since we're both committed?" What now?</div>
+      <button class="bt-choice good" onclick="btGo_st23('B_ok')">B1) "No. Results first, then we discuss. That was the agreement."</button>
+      <button class="bt-choice bad" onclick="btGo_st23('B_bad')">B2) He's already agreed to test — one time seems reasonable</button>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_B_ok">
+      <button class="bt-back" onclick="btGo_st23('B')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Held the Conditions of Her Agreement</div><p>Rose recognised "I'll test eventually" as a way to get unprotected sex first. The agreement was results before sex — not sex while waiting for results. This is a significant difference. <strong>Holding conditions is what makes an agreement protective, not just symbolic.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_B_bad">
+      <button class="bt-back" onclick="btGo_st23('B')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">The Agreement Was Bypassed</div><p>Rose's original commitment to abstinence was bypassed. "One time before results" carries the same STI and pregnancy risk as if no boundary had been set. <strong>In Kenya, chlamydia — the most common STI among adolescents — has a 25–50% transmission rate per unprotected encounter. It also causes infertility if untreated.</strong> Wait for the results.</p></div>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_st23_C">
+      <button class="bt-back" onclick="btGo_st23('root')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">"I Can Tell" Is Not a Medical Test</div><p>Many STIs — HIV, chlamydia, gonorrhoea, HPV, herpes — are asymptomatic for months or years. A person can look, feel, and believe themselves to be "clean" while being infectious. <strong>Unprotected sex also carries direct pregnancy risk, separate from STI risk.</strong> Rose had every right to insist — and every medical reason to. "Other girls trust their boyfriends" is not a health strategy.</p></div>
+      <button class="bt-restart" onclick="btRestart_st23()">&#8635; Try Again</button>
+    </div>
+  </div>
+</div>
 <div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
 
 <script>
@@ -534,7 +745,7 @@ setLang(lang);
 function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
 setSize(localStorage.getItem('arise_textsize')||'md');
 var cur=0,slides=[];
-function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
 function navigate(dir){go(cur+dir);}
 function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
 function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}

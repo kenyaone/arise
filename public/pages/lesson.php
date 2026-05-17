@@ -136,26 +136,49 @@ HTML;
     $htmlFile = '/var/www/arise/data/uploads/' . $filePath;
     if (file_exists($htmlFile)) { error_log('ARISE: serving ' . $htmlFile . ' videoUrl=' . $videoUrl);
         $html = file_get_contents($htmlFile);
-        $inject = "<script>
+        $inject = "<style>
+/* ARISE fullscreen override — injected at serve time */
+body{margin:0!important;padding-bottom:80px!important;}
+.slides-wrap,.lang-bar-inner,.nav-inner{max-width:100%!important;width:100%!important;box-sizing:border-box!important;}
+.slide{border-radius:0!important;}
+.lang-bar,.nav-bar{left:0!important;right:0!important;}
+#arise-fs-btn{position:fixed;top:8px;right:10px;z-index:99999;background:rgba(0,0,0,.55);color:#fff;border:none;border-radius:8px;padding:6px 11px;font-size:.78rem;cursor:pointer;backdrop-filter:blur(4px);}
+#arise-fs-btn:hover{background:rgba(0,0,0,.8);}
+</style>
+<script>
 window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";
 window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
 window.ARISE_MODULE_SLUG='" . addslashes($lesson['module_slug']) . "';
 window.ARISE_RESUME_SLIDE=" . $resumeSlide . ";
 window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
 (function(){
-  function tryFS(v){
-    if(!v)return;
-    if(v.requestFullscreen) v.requestFullscreen().catch(function(){});
-    else if(v.webkitEnterFullscreen) v.webkitEnterFullscreen();
-    else if(v.mozRequestFullScreen) v.mozRequestFullScreen();
+  function tryFS(el){
+    if(!el)return;
+    var fn=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen;
+    if(fn)fn.call(el).catch(function(){});
   }
+  function exitFS(){
+    var fn=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen;
+    if(fn)fn.call(document);
+  }
+  function isFS(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
   document.addEventListener('DOMContentLoaded',function(){
+    /* fullscreen button */
+    var btn=document.createElement('button');
+    btn.id='arise-fs-btn';
+    btn.textContent='⛶ Fullscreen';
+    btn.onclick=function(){isFS()?exitFS():tryFS(document.documentElement);};
+    document.body.appendChild(btn);
+    document.addEventListener('fullscreenchange',function(){btn.textContent=isFS()?'✕ Exit Fullscreen':'⛶ Fullscreen';});
+    document.addEventListener('webkitfullscreenchange',function(){btn.textContent=isFS()?'✕ Exit Fullscreen':'⛶ Fullscreen';});
+    /* video auto-fullscreen */
     var v=document.getElementById('lessonVideo');
-    if(!v)return;
-    v.removeAttribute('playsinline');
-    v.addEventListener('play',function(){
-      if(!document.fullscreenElement&&!document.webkitFullscreenElement){tryFS(v);}
-    },{once:false});
+    if(v){
+      v.removeAttribute('playsinline');
+      v.addEventListener('play',function(){
+        if(!isFS())tryFS(v);
+      },{once:false});
+    }
   });
 })();
 </script>";
@@ -171,6 +194,8 @@ window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
         // Community panel: inject before </body>
         $html = str_replace('</body>', $communityPanel . '</body>', $html);
         ob_end_clean();
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
         echo $html;
         exit;
     }
@@ -213,10 +238,25 @@ $nextLesson = $currentIndex < count($allLessons) - 1 ? $allLessons[$currentIndex
         <h1 style="font-size:1.35rem;margin-bottom:20px;"><?= e($lesson['title']) ?></h1>
         <?php if ($lessonType === 'video' && $filePath): ?>
             <div style="background:#000;border-radius:var(--r2);overflow:hidden;margin-bottom:20px;">
-                <video controls style="width:100%;max-height:520px;display:block;" preload="metadata" onclick="this.requestFullscreen&&this.requestFullscreen()">
+                <video id="lessonVideoStd" controls style="width:100%;max-height:520px;display:block;" preload="metadata"
+                       onclick="this.requestFullscreen&&this.requestFullscreen()">
                     <source src="<?= $baseUpload . e($filePath) ?>" type="video/mp4">
                 </video>
             </div>
+            <script>
+            (function(){
+              var v=document.getElementById('lessonVideoStd');
+              var vKey='arise_vpos_<?= addslashes($lesson['slug']) ?>';
+              v.addEventListener('loadedmetadata',function(){
+                var t=parseFloat(localStorage.getItem(vKey)||'0');
+                if(t>5&&t<v.duration-5)v.currentTime=t;
+              });
+              v.addEventListener('timeupdate',function(){
+                if(v.currentTime>5)localStorage.setItem(vKey,v.currentTime);
+              });
+              v.addEventListener('ended',function(){localStorage.removeItem(vKey);});
+            })();
+            </script>
         <?php elseif ($lessonType === 'pdf' && $filePath): ?>
             <iframe src="<?= $baseUpload . e($filePath) ?>" style="width:100%;height:650px;border:none;border-radius:var(--r2);"></iframe>
         <?php else: ?>

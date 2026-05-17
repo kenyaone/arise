@@ -137,6 +137,54 @@ while ($r = $lbRes->fetchArray(SQLITE3_ASSOC)) {
     $lbRank++;
 }
 
+// ── Next Step smart action ──────────────────────────────────────────────────
+$nextAction = null;
+$postTestReady = db()->querySingle(
+    "SELECT m.id, m.title, m.icon, m.slug FROM modules m WHERE m.is_active=1
+     AND (SELECT COUNT(*) FROM pretest_attempts WHERE student_id=$sid AND module_id=m.id AND test_type='pre')>0
+     AND (SELECT COUNT(*) FROM pretest_attempts WHERE student_id=$sid AND module_id=m.id AND test_type='post')=0
+     ORDER BY m.sort_order LIMIT 1", true
+);
+if ($postTestReady) {
+    $nextAction = ['type'=>'post_test','module'=>$postTestReady];
+} else {
+    $inProgress = db()->querySingle(
+        "SELECT m.id, m.title, m.icon, m.slug FROM modules m WHERE m.is_active=1
+         AND (SELECT COUNT(*) FROM lesson_progress lp JOIN lessons l ON l.id=lp.lesson_id WHERE lp.student_id=$sid AND l.module_id=m.id AND lp.completed=1) > 0
+         AND (SELECT COUNT(*) FROM lesson_progress lp JOIN lessons l ON l.id=lp.lesson_id WHERE lp.student_id=$sid AND l.module_id=m.id AND lp.completed=1) < (SELECT COUNT(*) FROM lessons l2 WHERE l2.module_id=m.id AND l2.is_active=1)
+         ORDER BY m.sort_order LIMIT 1", true
+    );
+    if ($inProgress) {
+        $nextAction = ['type'=>'continue','module'=>$inProgress];
+    } else {
+        $unstarted = db()->querySingle(
+            "SELECT m.id, m.title, m.icon, m.slug FROM modules m WHERE m.is_active=1
+             AND (SELECT COUNT(*) FROM lesson_progress lp JOIN lessons l ON l.id=lp.lesson_id WHERE lp.student_id=$sid AND l.module_id=m.id)=0
+             ORDER BY m.sort_order LIMIT 1", true
+        );
+        if ($unstarted) $nextAction = ['type'=>'start','module'=>$unstarted];
+    }
+}
+
+// ── Pre vs Post improvement ─────────────────────────────────────────────────
+$testComparison = [];
+$tcRes = db()->query(
+    "SELECT m.title, m.icon, m.slug,
+            MAX(CASE WHEN pa.test_type='pre'  THEN pa.percentage END) AS pre_score,
+            MAX(CASE WHEN pa.test_type='post' THEN pa.percentage END) AS post_score
+     FROM pretest_attempts pa JOIN modules m ON m.id=pa.module_id
+     WHERE pa.student_id=$sid
+     GROUP BY pa.module_id
+     HAVING pre_score IS NOT NULL OR post_score IS NOT NULL
+     ORDER BY m.sort_order"
+);
+while ($r = $tcRes->fetchArray(SQLITE3_ASSOC)) $testComparison[] = $r;
+
+// ── Pregnancy prevention progress ──────────────────────────────────────────
+$pgTotal = (int)(db()->querySingle("SELECT COUNT(DISTINCT module_id) FROM quiz_questions WHERE competency='Pregnancy Prevention' AND section='post' AND is_published=1") ?? 0);
+$pgDone  = (int)(db()->querySingle("SELECT COUNT(DISTINCT pa.module_id) FROM pretest_attempts pa JOIN quiz_questions qq ON qq.module_id=pa.module_id WHERE pa.student_id=$sid AND pa.test_type='post' AND qq.competency='Pregnancy Prevention'") ?? 0);
+$pgPct   = $pgTotal > 0 ? round($pgDone / $pgTotal * 100) : 0;
+
 trackPageView('dashboard');
 ?>
 
@@ -254,6 +302,39 @@ trackPageView('dashboard');
 .empty-state{text-align:center;padding:28px 16px;color:var(--mid,#6b7280);font-size:.88rem;}
 .empty-state .e-icon{font-size:2.2rem;margin-bottom:8px;}
 
+/* Next Step card */
+.next-step-card{
+    background:linear-gradient(135deg,#0f4c35,#0ea271);
+    color:#fff;border-radius:var(--dash-radius);
+    padding:20px 22px;margin-bottom:24px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    box-shadow:0 4px 20px rgba(14,162,113,.3);
+}
+.next-step-icon{font-size:2.4rem;flex-shrink:0;}
+.next-step-body{flex:1;min-width:160px;}
+.next-step-label{font-size:.7rem;font-weight:800;opacity:.75;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.next-step-title{font-size:1.05rem;font-weight:900;margin-bottom:6px;}
+.next-step-sub{font-size:.82rem;opacity:.85;}
+.next-step-btn{background:#fff;color:#0f4c35;font-weight:800;font-size:.85rem;padding:9px 18px;border-radius:8px;text-decoration:none;flex-shrink:0;white-space:nowrap;}
+
+/* Pregnancy progress bar */
+.pg-prog-wrap{background:#fff;border-radius:var(--dash-radius);border:1.5px solid #fca5a5;padding:18px 20px;margin-bottom:24px;}
+.pg-prog-bar-outer{background:#fee2e2;border-radius:50px;height:12px;overflow:hidden;margin:10px 0 6px;}
+.pg-prog-bar-inner{background:linear-gradient(90deg,#dc2626,#991b1b);height:100%;border-radius:50px;transition:width .8s ease;}
+
+/* Improvement table */
+.imp-table{width:100%;border-collapse:collapse;}
+.imp-table th{font-size:.7rem;text-transform:uppercase;color:var(--mid,#6b7280);font-weight:700;letter-spacing:.4px;padding:8px 10px;border-bottom:2px solid var(--border,#e5e7eb);text-align:left;}
+.imp-table td{padding:10px;font-size:.88rem;border-bottom:1px solid var(--border,#e5e7eb);}
+.imp-table tr:last-child td{border-bottom:none;}
+.score-pill{display:inline-block;padding:3px 9px;border-radius:50px;font-size:.78rem;font-weight:800;}
+.score-pill.green{background:#dcfce7;color:#166534;}
+.score-pill.red{background:#fee2e2;color:#991b1b;}
+.score-pill.grey{background:#f3f4f6;color:#6b7280;}
+.imp-arrow{font-size:1rem;color:#9ca3af;margin:0 4px;}
+.imp-gain{font-size:.82rem;font-weight:800;}
+.imp-gain.pos{color:#16a34a;}.imp-gain.neg{color:#dc2626;}.imp-gain.neu{color:#6b7280;}
+
 /* ── Leaderboard ── */
 .lb-table{width:100%;border-collapse:collapse;}
 .lb-table th{
@@ -339,6 +420,42 @@ trackPageView('dashboard');
         <div style="font-size:.7rem;opacity:.6;"><?= $xpPct ?>% to next level</div>
     </div>
 
+    <!-- ── Next Step ────────────────────────────────────────────── -->
+    <?php if ($nextAction): ?>
+    <?php
+        $na = $nextAction;
+        $nm = $na['module'];
+        if ($na['type'] === 'post_test') {
+            $nsLabel = 'Ready for Post-Test';
+            $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['title']);
+            $nsSub   = 'You have completed your lessons. Take your post-test now to earn your certificate.';
+            $nsHref  = '/arise/?p=module&slug=' . urlencode($nm['slug']);
+            $nsBtn   = '🧠 Take Post-Test';
+        } elseif ($na['type'] === 'continue') {
+            $nsLabel = 'Continue Learning';
+            $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['title']);
+            $nsSub   = 'You are in the middle of this module — pick up where you left off.';
+            $nsHref  = '/arise/?p=module&slug=' . urlencode($nm['slug']);
+            $nsBtn   = '▶ Continue Module';
+        } else {
+            $nsLabel = 'Start Your Journey';
+            $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['title']);
+            $nsSub   = 'Begin your first lesson in this module.';
+            $nsHref  = '/arise/?p=module&slug=' . urlencode($nm['slug']);
+            $nsBtn   = '🚀 Start Module';
+        }
+    ?>
+    <div class="next-step-card">
+        <div class="next-step-icon">🎯</div>
+        <div class="next-step-body">
+            <div class="next-step-label"><?= $nsLabel ?></div>
+            <div class="next-step-title"><?= $nsTitle ?></div>
+            <div class="next-step-sub"><?= $nsSub ?></div>
+        </div>
+        <a href="<?= $nsHref ?>" class="next-step-btn"><?= $nsBtn ?></a>
+    </div>
+    <?php endif; ?>
+
     <!-- ── Learning Streak (prominent if active) ─────────────────── -->
     <?php if ($streakDays > 0): ?>
     <div class="streak-banner">
@@ -371,6 +488,25 @@ trackPageView('dashboard');
         </div>
     </div>
 
+
+    <!-- ── Pregnancy Prevention Progress ───────────────────────── -->
+    <div class="pg-prog-wrap">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-size:1.6rem;">🛡️</span>
+            <div style="flex:1;">
+                <div style="font-size:.75rem;font-weight:800;color:#991b1b;text-transform:uppercase;letter-spacing:.05em;">Pregnancy Prevention Journey</div>
+                <div style="font-size:.88rem;color:#374151;margin-top:2px;">
+                    You have completed post-tests covering pregnancy prevention in
+                    <strong><?= $pgDone ?> of <?= $pgTotal ?> modules</strong>.
+                </div>
+            </div>
+            <div style="font-size:1.6rem;font-weight:900;color:#dc2626;"><?= $pgPct ?>%</div>
+        </div>
+        <div class="pg-prog-bar-outer">
+            <div class="pg-prog-bar-inner" style="width:<?= $pgPct ?>%"></div>
+        </div>
+        <div style="font-size:.72rem;color:#9ca3af;">Every module connects to protecting your health and future — <?= $pgTotal - $pgDone ?> module<?= ($pgTotal-$pgDone)!==1?'s':'' ?> remaining.</div>
+    </div>
 
     <!-- ── Module Progress ───────────────────────────────────────── -->
     <div class="dp-card" style="margin-bottom:24px;">
@@ -497,6 +633,103 @@ trackPageView('dashboard');
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- ── Pre vs Post Improvement ─────────────────────────────── -->
+    <?php if (!empty($testComparison)): ?>
+    <div class="dp-card" style="margin-bottom:24px;">
+        <h2 class="section-title" style="margin-bottom:4px;">📈 Your Growth — Pre vs Post Test</h2>
+        <p style="font-size:.8rem;color:var(--mid);margin-bottom:14px;">How much you improved from before to after each module.</p>
+        <div style="overflow-x:auto;">
+            <table class="imp-table">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Pre-Test</th>
+                        <th></th>
+                        <th>Post-Test</th>
+                        <th>Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($testComparison as $tc):
+                    $pre  = $tc['pre_score']  !== null ? intval($tc['pre_score'])  : null;
+                    $post = $tc['post_score'] !== null ? intval($tc['post_score']) : null;
+                    $gain = ($pre !== null && $post !== null) ? ($post - $pre) : null;
+                ?>
+                <tr>
+                    <td style="font-weight:600;">
+                        <?= htmlspecialchars($tc['icon']??'📘') ?> <?= e($tc['title']) ?>
+                    </td>
+                    <td>
+                        <?php if ($pre !== null): ?>
+                            <span class="score-pill <?= $pre>=60?'green':'red' ?>"><?= $pre ?>%</span>
+                        <?php else: ?>
+                            <span class="score-pill grey">Pending</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="imp-arrow">→</td>
+                    <td>
+                        <?php if ($post !== null): ?>
+                            <span class="score-pill <?= $post>=60?'green':'red' ?>"><?= $post ?>%</span>
+                        <?php else: ?>
+                            <span class="score-pill grey">Not yet</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if ($gain !== null): ?>
+                            <span class="imp-gain <?= $gain>0?'pos':($gain<0?'neg':'neu') ?>">
+                                <?= $gain>0?'+':'' ?><?= $gain ?>%
+                                <?= $gain>0?'⬆':'';?><?= $gain<0?'⬇':'';?><?= $gain===0?'➡':'';?>
+                            </span>
+                        <?php else: ?>
+                            <span style="color:#9ca3af;font-size:.8rem;">—</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- ── XP Leaderboard ───────────────────────────────────────── -->
+    <?php if (!empty($leaderboard)): ?>
+    <div class="dp-card" style="margin-bottom:24px;">
+        <h2 class="section-title" style="margin-bottom:4px;">🏆 XP Leaderboard</h2>
+        <p style="font-size:.8rem;color:var(--mid);margin-bottom:14px;">
+            Top learners by XP.<?= $myLeaderboardRank ? ' You are ranked <strong>#' . $myLeaderboardRank . '</strong>.' : ' Keep going to reach the top 10!' ?>
+        </p>
+        <table class="lb-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Learner</th>
+                    <th>Level</th>
+                    <th>XP</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($leaderboard as $lb):
+                $isMe = intval($lb['id']) === intval($sid);
+                $medal = $lb['rank']===1?'🥇':($lb['rank']===2?'🥈':($lb['rank']===3?'🥉':''));
+            ?>
+            <tr class="<?= $isMe?'lb-me':'' ?>">
+                <td><span class="lb-rank"><?= $medal ?: '#'.$lb['rank'] ?></span></td>
+                <td><?= $isMe ? '<strong>You</strong>' : 'Learner #' . intval($lb['id']) ?></td>
+                <td><span class="lb-level">⚡ Lvl <?= $lb['level'] ?></span></td>
+                <td class="lb-xp"><?= number_format($lb['xp_points']) ?> XP</td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php if (!$myLeaderboardRank): ?>
+        <p style="font-size:.78rem;color:var(--mid);margin-top:10px;text-align:center;">
+            Complete lessons and quizzes to earn XP and appear on the leaderboard.
+        </p>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
 
 </div>
 <!-- End .container -->

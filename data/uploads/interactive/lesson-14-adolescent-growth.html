@@ -123,6 +123,61 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .en{display:block;}.sw{display:none;}.sh{display:none;}
 @media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Hotspot interaction ───────────────────────────────── */
+.hs-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:10px 0;}
+.hs-diagram{position:relative;width:100%;max-width:200px;}
+.hs-diagram svg{overflow:visible;}
+.hs-pin circle{transition:.15s;}
+.hs-pin:hover circle{r:12;opacity:.85;}
+.hs-pin.active circle{fill:#f5a623;}
+@keyframes hspulse{0%,100%{r:13;opacity:.35}50%{r:17;opacity:.1}}
+.hs-pulse{animation:hspulse 2s ease-in-out infinite;}
+.hs-info{width:100%;max-width:420px;min-height:80px;}
+.hs-card{display:none;background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border:2px solid var(--pri);border-radius:10px;padding:13px 15px;animation:si .2s ease;}
+.hs-card.active{display:block;}
+.hs-card-title{font-size:.92rem;font-weight:800;color:var(--pri);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hs-card-body{font-size:.84rem;color:#2a3a2a;line-height:1.65;}
+.hs-hint{font-size:.78rem;color:var(--soft);text-align:center;margin-top:4px;font-style:italic;}
+
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="adolescent-growth" data-module-slug="adolescent-growth">
 <div class="top-bar"><div class="top-bar-left"><div class="module-label">ARISE · Adolescent Growth · Lesson 1 of 2</div><div class="lesson-name">🌱 Adolescent Growth</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
@@ -260,6 +315,162 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 </div>
 </div>
 </div>
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_adg" data-correct='{"0": 3, "1": 2, "2": 4, "3": 0, "4": 1}' data-rights='["A girl's first ever menstrual period", "Rapid increase in height that occurs during adolescence", "Primary male hormone that drives puberty in boys", "Period of physical and hormonal development into adulthood", "Primary female hormone that drives puberty in girls"]'>
+    <div class="match-col" id="ml_adg">
+      <button class="match-item" data-term="Puberty" onclick="_mL('adg',0)">Puberty</button>
+      <button class="match-item" data-term="Testosterone" onclick="_mL('adg',1)">Testosterone</button>
+      <button class="match-item" data-term="Oestrogen" onclick="_mL('adg',2)">Oestrogen</button>
+      <button class="match-item" data-term="Menarche" onclick="_mL('adg',3)">Menarche</button>
+      <button class="match-item" data-term="Growth spurt" onclick="_mL('adg',4)">Growth spurt</button>
+    </div>
+    <div class="match-col" id="mr_adg">
+      <button class="match-item" onclick="_mR('adg',0)">A girl&#x27;s first ever menstrual period</button>
+      <button class="match-item" onclick="_mR('adg',1)">Rapid increase in height that occurs during adolescence</button>
+      <button class="match-item" onclick="_mR('adg',2)">Primary male hormone that drives puberty in boys</button>
+      <button class="match-item" onclick="_mR('adg',3)">Period of physical and hormonal development into adulthood</button>
+      <button class="match-item" onclick="_mR('adg',4)">Primary female hormone that drives puberty in girls</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_adg" onclick="_mCheck('adg')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_adg" onclick="_mReset('adg')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_adg" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+
+/* ── Branching: ag14 ────────────────────────────── */
+function btGo_ag14(nodeId){
+  var wrap=document.getElementById('bt_ag14');
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_ag14_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart_ag14(){btGo_ag14('root');}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#128269; <span class="en">Body Changes During Puberty</span><span class="sw">Body Changes During Puberty</span><span class="sh">Body Changes During Puberty</span></div>
+  <p class="tp"><span class="en">Tap each numbered pin to learn how this area is affected.</span><span class="sw">Gonga kila nambari kujifunza jinsi eneo hilo linavyoathirika.</span><span class="sh">Tap kila number pin kujua jinsi eneo hilo linavyoathiriwa.</span></p>
+  <div class="hs-wrap">
+    <div class="hs-diagram" data-lid="adg">
+<svg viewBox="0 0 200 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:180px;display:block;margin:0 auto;">
+  <ellipse cx="100" cy="38" rx="30" ry="34" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="14" rx="30" ry="14" fill="#5c3a1e"/>
+  <ellipse cx="91" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <ellipse cx="109" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <path d="M93,48 Q100,54 107,48" stroke="#5c3a1e" stroke-width="1.5" fill="none" opacity=".4"/>
+  <rect x="88" y="71" width="24" height="14" rx="5" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,85 Q38,100 38,148 Q38,185 100,190 Q162,185 162,148 Q162,100 145,85 Q126,80 100,80 Q74,80 55,85Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,88 Q30,100 26,158 Q26,172 38,175 Q50,176 52,162 L60,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M145,88 Q170,100 174,158 Q174,172 162,175 Q150,176 148,162 L140,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M38,182 Q36,215 58,222 L100,226 L142,222 Q164,215 162,182Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M56,222 L50,360 Q50,372 66,373 Q82,373 82,360 L80,226Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M120,226 L118,360 Q118,372 134,373 Q150,373 150,360 L144,222Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+<circle cx="100" cy="32" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,0)" style="cursor:pointer;"><circle cx="100" cy="32" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="32" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">1</text></g><circle cx="72" cy="95" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,1)" style="cursor:pointer;"><circle cx="72" cy="95" r="10" fill="#0a5e2a" stroke="white" stroke-width="2"/><text x="72" y="95" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">2</text></g><circle cx="72" cy="118" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,2)" style="cursor:pointer;"><circle cx="72" cy="118" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="72" y="118" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">3</text></g><circle cx="100" cy="78" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,3)" style="cursor:pointer;"><circle cx="100" cy="78" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="100" y="78" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">4</text></g><circle cx="100" cy="205" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,4)" style="cursor:pointer;"><circle cx="100" cy="205" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="205" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">5</text></g><circle cx="30" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,5)" style="cursor:pointer;"><circle cx="30" cy="148" r="10" fill="#2563eb" stroke="white" stroke-width="2"/><text x="30" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">6</text></g>
+</svg>
+    </div>
+    <div class="hs-info" id="hsi_adg">
+<div class="hs-card" id="hsc_adg_0"><div class="hs-card-title">🧠 🧠 Brain Development</div><div class="hs-card-body">The brain undergoes massive rewiring during adolescence. The <strong>prefrontal cortex</strong> (decision-making, impulse control) is the last part to fully develop — not complete until age 25. This explains why teenagers sometimes take risks.</div></div>
+<div class="hs-card" id="hsc_adg_1"><div class="hs-card-title">📈 📈 Height & Bone Growth</div><div class="hs-card-body">Growth hormone surges trigger a <strong>growth spurt</strong> — girls typically experience it at 10–14, boys at 12–16. Long bones lengthen rapidly. Calcium intake during this period is critical for strong bones throughout life.</div></div>
+<div class="hs-card" id="hsc_adg_2"><div class="hs-card-title">💛 💛 Chest & Body Shape</div><div class="hs-card-body">Girls: breast development (thelarche) — often the first visible sign of puberty. Boys: shoulders broaden, chest widens, muscle mass increases due to testosterone. Both sexes develop pubic and underarm hair.</div></div>
+<div class="hs-card" id="hsc_adg_3"><div class="hs-card-title">🔴 🔴 Voice & Hormones</div><div class="hs-card-body">Boys: the larynx grows rapidly causing <strong>voice breaking</strong>. Both sexes: hormones (oestrogen and testosterone) rise sharply, driving all physical changes. Mood swings are partly caused by hormone fluctuations.</div></div>
+<div class="hs-card" id="hsc_adg_4"><div class="hs-card-title">🟣 🟣 Reproductive Development</div><div class="hs-card-body">Girls: menarche (first period), usually 2–3 years after breast development. Boys: testicular growth, sperm production begins, spontaneous erections. Both become biologically capable of reproduction.</div></div>
+<div class="hs-card" id="hsc_adg_5"><div class="hs-card-title">🔵 🔵 Skin Changes</div><div class="hs-card-body">Sebaceous glands become more active (testosterone-driven), producing more oil. This causes <strong>acne</strong> — very common in both boys and girls. Sweat glands also increase activity, requiring daily hygiene.</div></div>
+      <p class="hs-hint">&#128070; Tap a pin to see details</p>
+    </div>
+  </div>
+</div>
+<script>
+
+/* ── Hotspot interaction ───────────────────────────────── */
+function showHs(pinEl,idx){
+  var wrap=pinEl.closest('.hs-diagram');
+  var lid=wrap.dataset.lid;
+  wrap.querySelectorAll('.hs-pin').forEach(function(p){p.classList.remove('active');});
+  pinEl.classList.add('active');
+  var info=document.getElementById('hsi_'+lid);
+  info.querySelectorAll('.hs-card').forEach(function(c){c.classList.remove('active');});
+  var card=document.getElementById('hsc_'+lid+'_'+idx);
+  if(card)card.classList.add('active');
+}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127963; <span class="en">Refusal Skills &#8212; Make the Choice</span><span class="sw">Ujuzi wa Kukataa &#8212; Fanya Uamuzi</span><span class="sh">Refusal Skills &#8212; Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read scenario na uchague best response.</span></p>
+  <div class="btree-wrap" id="bt_ag14">
+    <div class="bt-scenario"><strong>Scenario:</strong> Mercy, 14, is approached by Mr. Kamau, a 34-year-old man, on her way home from school: <em>"You've grown up so beautifully. Let me take you for lunch — I'll buy you new clothes and a phone. Don't tell your parents, they won't understand our friendship."</em></div>
+    <div class="bt-node active" id="btn_ag14_root">
+      <div class="bt-q">What should Mercy do?</div>
+      <button class="bt-choice good" onclick="btGo_ag14('A')">A) Something feels very wrong. She goes straight home and tells her mother.</button>
+      <button class="bt-choice warn" onclick="btGo_ag14('B')">B) She's flattered but nervous — she avoids him and says nothing</button>
+      <button class="bt-choice bad" onclick="btGo_ag14('C')">C) She goes for lunch — the phone and clothes would be helpful</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_A">
+      <button class="bt-back" onclick="btGo_ag14('root')">&#8592; Back</button>
+      <div class="bt-q">Mercy's mother says "He could just be a kind adult." Mercy shows her the phone number he gave. What should they do?</div>
+      <button class="bt-choice good" onclick="btGo_ag14('A_ok')">A1) Report to the nearest police post and the school, providing the number</button>
+      <button class="bt-choice warn" onclick="btGo_ag14('A_warn')">A2) Block the number and stay alert without filing a report</button>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_A_ok">
+      <button class="bt-back" onclick="btGo_ag14('A')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Reported — Best Possible Response</div><p>Mercy and her mother did exactly right. This man's approach — gifts, secrecy from parents, complimenting a child's physical development — is textbook grooming. Providing the number to police creates a record that may protect other girls. <strong>Sexual contact with anyone under 18 is statutory defilement in Kenya — regardless of gifts or "friendship."</strong> Well done, Mercy.</p></div>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_A_warn">
+      <button class="bt-back" onclick="btGo_ag14('A')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Safe For Now — But Incomplete</div><p>Blocking was the right first step. However, without a report, this man remains free to approach other girls in the area. If Mercy feels safe enough, a report to the Children's Officer or school safeguarding lead is the next right step.</p></div>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_B">
+      <button class="bt-back" onclick="btGo_ag14('root')">&#8592; Back</button>
+      <div class="bt-q">He finds Mercy again three days later and says "I've been thinking about you. Let me just buy you lunch — nothing more." What now?</div>
+      <button class="bt-choice good" onclick="btGo_ag14('B_ok')">B1) This is grooming escalation. Tell a parent or teacher immediately.</button>
+      <button class="bt-choice bad" onclick="btGo_ag14('B_bad')">B2) He seems persistent but harmless. She agrees to just lunch.</button>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_B_ok">
+      <button class="bt-back" onclick="btGo_ag14('B')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Recognised the Pattern and Got Help</div><p>A second approach after avoidance is a warning sign, not a sign of harmlessness. Mercy's instinct to get help was correct. This escalation pattern — repeated, persistent contact after a child has shown discomfort — is how grooming operates before abuse.</p></div>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_B_bad">
+      <button class="bt-back" onclick="btGo_ag14('B')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Grooming Completed Its First Stage</div><p>The "just lunch" framing is stage one of grooming: establish comfort, create obligation, escalate. Girls aged 14-17 are the most targeted group for this form of exploitation in Kenya. The pregnancy and STI risk from these relationships is very high because the power imbalance means a girl cannot refuse or leave safely. <strong>Report: 1195 or Childline: 116.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_ag14_C">
+      <button class="bt-back" onclick="btGo_ag14('root')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">The Request for Secrecy Was the Warning</div><p>An adult who asks a child to hide a "friendship" from her parents is not a friend — he is a predator. The gifts are grooming tools, not generosity. <strong>Men who target young girls this way are the single largest external driver of teenage pregnancy in Kenya.</strong> Mercy's physical development is not an invitation. Report: 1195 (free, 24 hours).</p></div>
+      <button class="bt-restart" onclick="btRestart_ag14()">&#8635; Try Again</button>
+    </div>
+  </div>
+</div>
 <div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div><script>
 var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
 function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);try{fetch('/arise/?p=api_lesson&action=set_language',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l})}).catch(function(){});}catch(e){}}
@@ -267,7 +478,7 @@ setLang(lang);
 function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
 setSize(localStorage.getItem('arise_textsize')||'md');
 var cur=0,slides=[];
-function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
 function navigate(dir){go(cur+dir);}
 function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
 function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}

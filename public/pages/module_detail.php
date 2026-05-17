@@ -249,6 +249,22 @@ $interactiveCount = $counts['interactive'];
     margin-bottom: 4px;
 }
 .stat-label { font-size: .72rem; font-weight: 600; color: #6b7280; }
+.pg-banner {
+    background: linear-gradient(135deg, #450a0a, #991b1b);
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 24px 0 28px;
+    color: #fff;
+    box-shadow: 0 6px 24px rgba(120,0,0,.35);
+    border-left: 6px solid #fca5a5;
+}
+.pg-banner-icon { font-size: 2.4rem; flex-shrink: 0; }
+.pg-banner-body { flex: 1; }
+.pg-banner-body strong { font-size: 1.05rem; display: block; margin-bottom: 8px; letter-spacing: .01em; }
+.pg-banner-body span { font-size: .88rem; opacity: .95; line-height: 1.6; }
 
 /* SECTION HEADER */
 .section-header {
@@ -500,6 +516,15 @@ $interactiveCount = $counts['interactive'];
         <div class="stat-card">
             <div class="stat-num">60%</div>
             <div class="stat-label">Pass Mark</div>
+        </div>
+    </div>
+
+    <!-- Teenage Pregnancy Prevention Banner -->
+    <div class="pg-banner">
+        <div class="pg-banner-icon">🚨</div>
+        <div class="pg-banner-body">
+            <strong>Kenya Teenage Pregnancy Reality</strong>
+            <span>1 in 4 Kenyan girls is pregnant or already a mother by age 19. Every healthy choice you make today protects your future. <strong>Abstinence is the only 100% reliable protection.</strong></span>
         </div>
     </div>
 

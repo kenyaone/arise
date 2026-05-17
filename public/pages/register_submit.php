@@ -11,6 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $name    = trim($_POST['full_name']   ?? '');
 $school  = trim($_POST['school_name'] ?? '');
 $class   = trim($_POST['class_name']  ?? '');
+
+// Auto-derive cluster from school if class not supplied
+if ($class === '' && $school !== '') {
+    $clusterRow = db()->querySingle(
+        "SELECT c.name FROM schools s JOIN clusters c ON c.id=s.cluster_id WHERE s.name='" . SQLite3::escapeString($school) . "' LIMIT 1"
+    );
+    if ($clusterRow) $class = $clusterRow;
+}
 $password        = $_POST['password']         ?? '';
 $passwordConfirm = $_POST['password_confirm'] ?? '';
 

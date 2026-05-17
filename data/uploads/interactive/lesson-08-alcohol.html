@@ -209,6 +209,61 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 .quiz-part-head{font-size:.95rem!important;padding:10px 16px!important;margin:20px 0 12px!important;}
 
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Hotspot interaction ───────────────────────────────── */
+.hs-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:10px 0;}
+.hs-diagram{position:relative;width:100%;max-width:200px;}
+.hs-diagram svg{overflow:visible;}
+.hs-pin circle{transition:.15s;}
+.hs-pin:hover circle{r:12;opacity:.85;}
+.hs-pin.active circle{fill:#f5a623;}
+@keyframes hspulse{0%,100%{r:13;opacity:.35}50%{r:17;opacity:.1}}
+.hs-pulse{animation:hspulse 2s ease-in-out infinite;}
+.hs-info{width:100%;max-width:420px;min-height:80px;}
+.hs-card{display:none;background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border:2px solid var(--pri);border-radius:10px;padding:13px 15px;animation:si .2s ease;}
+.hs-card.active{display:block;}
+.hs-card-title{font-size:.92rem;font-weight:800;color:var(--pri);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hs-card-body{font-size:.84rem;color:#2a3a2a;line-height:1.65;}
+.hs-hint{font-size:.78rem;color:var(--soft);text-align:center;margin-top:4px;font-style:italic;}
+
 </style>
 </head>
 <body data-lesson-id="0" data-lesson-slug="alcohol-changaa" data-module-slug="alcohol">
@@ -492,6 +547,162 @@ p.tp{font-size:1rem!important;line-height:1.82!important;margin-bottom:14px!impo
 </div>
 </div>
 </div>
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_alc" data-correct='{"0": 2, "1": 1, "2": 4, "3": 0, "4": 3}' data-rights='["Blood Alcohol Concentration \u2014 the measure of intoxication level", "Memory loss due to very high blood alcohol concentration", "Permanent liver scarring caused by long-term alcohol use", "Birth defects caused by drinking alcohol during pregnancy", "Illicit Kenyan brew that often contains toxic methanol"]'>
+    <div class="match-col" id="ml_alc">
+      <button class="match-item" data-term="Liver cirrhosis" onclick="_mL('alc',0)">Liver cirrhosis</button>
+      <button class="match-item" data-term="Blackout" onclick="_mL('alc',1)">Blackout</button>
+      <button class="match-item" data-term="Changaa" onclick="_mL('alc',2)">Changaa</button>
+      <button class="match-item" data-term="BAC" onclick="_mL('alc',3)">BAC</button>
+      <button class="match-item" data-term="Fetal alcohol syndrome" onclick="_mL('alc',4)">Fetal alcohol syndrome</button>
+    </div>
+    <div class="match-col" id="mr_alc">
+      <button class="match-item" onclick="_mR('alc',0)">Blood Alcohol Concentration — the measure of intoxication level</button>
+      <button class="match-item" onclick="_mR('alc',1)">Memory loss due to very high blood alcohol concentration</button>
+      <button class="match-item" onclick="_mR('alc',2)">Permanent liver scarring caused by long-term alcohol use</button>
+      <button class="match-item" onclick="_mR('alc',3)">Birth defects caused by drinking alcohol during pregnancy</button>
+      <button class="match-item" onclick="_mR('alc',4)">Illicit Kenyan brew that often contains toxic methanol</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_alc" onclick="_mCheck('alc')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_alc" onclick="_mReset('alc')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_alc" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+
+/* ── Branching: al8 ────────────────────────────── */
+function btGo_al8(nodeId){
+  var wrap=document.getElementById('bt_al8');
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_al8_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart_al8(){btGo_al8('root');}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#128269; <span class="en">How Alcohol Damages the Body</span><span class="sw">How Alcohol Damages the Body</span><span class="sh">How Alcohol Damages the Body</span></div>
+  <p class="tp"><span class="en">Tap each numbered pin to learn how this area is affected.</span><span class="sw">Gonga kila nambari kujifunza jinsi eneo hilo linavyoathirika.</span><span class="sh">Tap kila number pin kujua jinsi eneo hilo linavyoathiriwa.</span></p>
+  <div class="hs-wrap">
+    <div class="hs-diagram" data-lid="alc">
+<svg viewBox="0 0 200 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:180px;display:block;margin:0 auto;">
+  <ellipse cx="100" cy="38" rx="30" ry="34" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="14" rx="30" ry="14" fill="#5c3a1e"/>
+  <ellipse cx="91" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <ellipse cx="109" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <path d="M93,48 Q100,54 107,48" stroke="#5c3a1e" stroke-width="1.5" fill="none" opacity=".4"/>
+  <rect x="88" y="71" width="24" height="14" rx="5" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,85 Q38,100 38,148 Q38,185 100,190 Q162,185 162,148 Q162,100 145,85 Q126,80 100,80 Q74,80 55,85Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,88 Q30,100 26,158 Q26,172 38,175 Q50,176 52,162 L60,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M145,88 Q170,100 174,158 Q174,172 162,175 Q150,176 148,162 L140,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M38,182 Q36,215 58,222 L100,226 L142,222 Q164,215 162,182Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M56,222 L50,360 Q50,372 66,373 Q82,373 82,360 L80,226Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M120,226 L118,360 Q118,372 134,373 Q150,373 150,360 L144,222Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+<circle cx="100" cy="32" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,0)" style="cursor:pointer;"><circle cx="100" cy="32" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="32" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">1</text></g><circle cx="84" cy="105" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,1)" style="cursor:pointer;"><circle cx="84" cy="105" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="84" y="105" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">2</text></g><circle cx="115" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,2)" style="cursor:pointer;"><circle cx="115" cy="148" r="10" fill="#92400e" stroke="white" stroke-width="2"/><text x="115" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">3</text></g><circle cx="72" cy="118" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,3)" style="cursor:pointer;"><circle cx="72" cy="118" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="72" y="118" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">4</text></g><circle cx="100" cy="205" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,4)" style="cursor:pointer;"><circle cx="100" cy="205" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="205" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">5</text></g><circle cx="30" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,5)" style="cursor:pointer;"><circle cx="30" cy="148" r="10" fill="#2563eb" stroke="white" stroke-width="2"/><text x="30" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">6</text></g>
+</svg>
+    </div>
+    <div class="hs-info" id="hsi_alc">
+<div class="hs-card" id="hsc_alc_0"><div class="hs-card-title">🧠 🧠 Brain</div><div class="hs-card-body">Alcohol is a depressant that slows brain function. Long-term heavy use causes <strong>Wernicke-Korsakoff syndrome</strong> (severe memory loss), shrinkage of the cerebral cortex, and permanent cognitive decline. Teenagers' developing brains are especially vulnerable.</div></div>
+<div class="hs-card" id="hsc_alc_1"><div class="hs-card-title">❤️ ❤️ Heart</div><div class="hs-card-body">Heavy drinking causes <strong>cardiomyopathy</strong> (weakened heart muscle), irregular heartbeat (arrhythmia), and raises blood pressure — all leading to heart failure. Even moderate drinking raises stroke risk.</div></div>
+<div class="hs-card" id="hsc_alc_2"><div class="hs-card-title">🟤 🟤 Liver</div><div class="hs-card-body">The liver metabolises alcohol but is damaged in the process. Stages: <strong>fatty liver → alcoholic hepatitis → cirrhosis</strong> (permanent scarring). Cirrhosis is irreversible and fatal without a transplant.</div></div>
+<div class="hs-card" id="hsc_alc_3"><div class="hs-card-title">🟠 🟠 Stomach & Pancreas</div><div class="hs-card-body">Alcohol irritates the stomach lining causing gastritis and ulcers. It triggers <strong>pancreatitis</strong> — severe inflammation of the pancreas. Chronic pancreatitis causes diabetes and can be life-threatening.</div></div>
+<div class="hs-card" id="hsc_alc_4"><div class="hs-card-title">🟣 🟣 Reproductive System</div><div class="hs-card-body">In men: lowers testosterone, reduces sperm quality, causes erectile dysfunction. In women: disrupts menstrual cycle, damages egg quality. Alcohol during pregnancy causes <strong>Fetal Alcohol Syndrome</strong> — permanent birth defects.</div></div>
+<div class="hs-card" id="hsc_alc_5"><div class="hs-card-title">🔵 🔴 Skin</div><div class="hs-card-body">Alcohol dehydrates the body and dilates blood vessels permanently, causing facial redness, flushing, and accelerated ageing. Chronic drinkers develop a yellow skin tone (jaundice) as the liver fails.</div></div>
+      <p class="hs-hint">&#128070; Tap a pin to see details</p>
+    </div>
+  </div>
+</div>
+<script>
+
+/* ── Hotspot interaction ───────────────────────────────── */
+function showHs(pinEl,idx){
+  var wrap=pinEl.closest('.hs-diagram');
+  var lid=wrap.dataset.lid;
+  wrap.querySelectorAll('.hs-pin').forEach(function(p){p.classList.remove('active');});
+  pinEl.classList.add('active');
+  var info=document.getElementById('hsi_'+lid);
+  info.querySelectorAll('.hs-card').forEach(function(c){c.classList.remove('active');});
+  var card=document.getElementById('hsc_'+lid+'_'+idx);
+  if(card)card.classList.add('active');
+}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127963; <span class="en">Refusal Skills &#8212; Make the Choice</span><span class="sw">Ujuzi wa Kukataa &#8212; Fanya Uamuzi</span><span class="sh">Refusal Skills &#8212; Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read scenario na uchague best response.</span></p>
+  <div class="btree-wrap" id="bt_al8">
+    <div class="bt-scenario"><strong>Scenario:</strong> James, 17, is at a party and has had 3 drinks. An older girl leads him toward a bedroom: <em>"Come on — it's fine. Everyone does this at parties. You'll thank me tomorrow."</em></div>
+    <div class="bt-node active" id="btn_al8_root">
+      <div class="bt-q">What should James do?</div>
+      <button class="bt-choice good" onclick="btGo_al8('A')">A) Stop: "Alcohol is affecting my judgment. I need to leave now."</button>
+      <button class="bt-choice warn" onclick="btGo_al8('B')">B) Stay in the party area and avoid her but keep drinking</button>
+      <button class="bt-choice bad" onclick="btGo_al8('C')">C) Go along — everyone else seems to be doing the same</button>
+    </div>
+    <div class="bt-node" id="btn_al8_A">
+      <button class="bt-back" onclick="btGo_al8('root')">&#8592; Back</button>
+      <div class="bt-q">James feels unsteady but knows he needs help to get home. What should he do?</div>
+      <button class="bt-choice good" onclick="btGo_al8('A_ok')">A1) Texts a sober friend or calls a parent to come get him</button>
+      <button class="bt-choice warn" onclick="btGo_al8('A_warn')">A2) Finds a corner and waits alone for the party to end</button>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_A_ok">
+      <button class="bt-back" onclick="btGo_al8('A')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Made the Right Call</div><p>James recognised alcohol was compromising his decision-making — and asked for help. <strong>Alcohol is involved in over 50% of teenage pregnancies in Kenya.</strong> A sober exit protects everyone from choices nobody would make sober.</p></div>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_A_warn">
+      <button class="bt-back" onclick="btGo_al8('A')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Stayed Safe — But Remained at Risk</div><p>Avoiding the immediate situation was right. But staying at a party while intoxicated keeps you in danger. <strong>A trusted exit contact — someone who collects you without a lecture — could end the risk completely.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_B">
+      <button class="bt-back" onclick="btGo_al8('root')">&#8592; Back</button>
+      <div class="bt-q">James has another drink "to feel less awkward." The girl finds him again. He's now very drunk. What now?</div>
+      <button class="bt-choice good" onclick="btGo_al8('B_ok')">B1) Forces himself to leave — calls home even though it's embarrassing</button>
+      <button class="bt-choice bad" onclick="btGo_al8('B_bad')">B2) Can't think clearly anymore and goes with her</button>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_B_ok">
+      <button class="bt-back" onclick="btGo_al8('B')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Got Out — Better Late Than Never</div><p>Even while drunk, James made the harder, safer choice. An embarrassing phone call home is infinitely better than an unintended pregnancy or STI. <strong>Parents would always rather get that call.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_B_bad">
+      <button class="bt-back" onclick="btGo_al8('B')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">No Longer Able to Choose Safely</div><p>Once alcohol reaches this level, genuine consent cannot happen. An unplanned pregnancy can result from a single unprotected encounter. Both teenagers' lives change permanently. <strong>Alcohol was the first bad decision; everything after followed from it.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_al8_C">
+      <button class="bt-back" onclick="btGo_al8('root')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Followed the Crowd into a Life-Changing Risk</div><p><strong>Alcohol + unfamiliar partner + absent values = one of the most common pathways to teenage pregnancy and STIs.</strong> The "everyone is doing it" feeling is manufactured by the environment, not reality. James had time to leave. That moment matters.</p></div>
+      <button class="bt-restart" onclick="btRestart_al8()">&#8635; Try Again</button>
+    </div>
+  </div>
+</div>
 <div class="nav-bar"><div class="nav-inner">
 <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Back</span><span class="sw">Nyuma</span></button>
 <div class="dots" id="dotsWrap"></div>
@@ -524,7 +735,7 @@ function init() {
   }
   var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
   var resumeSlide = window.ARISE_RESUME_SLIDE || (slug2 ? parseInt(localStorage.getItem('arise_slide_'+slug2)||'0') : 0);
-  if (resumeSlide > 0 && resumeSlide < slides.length-1) { setTimeout(function(){ go(resumeSlide); }, 120); }
+  if (resumeSlide > 0 && resumeSlide < slides.length) { setTimeout(function(){ go(resumeSlide); }, 120); }
 }
 function navigate(dir) { go(cur + dir); }
 function go(n) {

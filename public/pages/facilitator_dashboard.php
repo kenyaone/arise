@@ -12,7 +12,7 @@ $todayTs  = date('Y-m-d H:i:s');
 // ── Fetch projects & clusters ───────────────────────────────────────────────
 $projects = [];
 try {
-    $pRes = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND school_name IS NOT NULL AND school_name != '' ORDER BY school_name");
+    $pRes = db()->query("SELECT DISTINCT s.school_name FROM students s INNER JOIN schools sc ON sc.name = s.school_name AND sc.is_active=1 WHERE s.is_active=1 AND s.school_name IS NOT NULL AND s.school_name != '' ORDER BY s.school_name");
     while ($r = $pRes->fetchArray(SQLITE3_ASSOC)) {
         $projects[] = $r['school_name'];
     }
@@ -79,6 +79,29 @@ if ($hasCluster) {
     }
     $scores = array_filter(array_column($learners, 'avg_quiz_score'), fn($v) => $v !== null && $v !== '');
     $clusterStats['avg_score'] = count($scores) > 0 ? round(array_sum($scores) / count($scores), 1) : 0;
+
+    // Pregnancy Prevention Reach — students who completed branching + passed post-test on any module
+    $pgStudentIds = [];
+    if (count($learners) > 0) {
+        $sidList = implode(',', array_map(fn($l) => intval($l['id']), $learners));
+        $pgRes = db()->query(
+            "SELECT DISTINCT li.student_id
+             FROM lesson_interactions li
+             WHERE li.student_id IN ($sidList)
+               AND li.interaction_type='branching' AND li.done=1
+               AND li.student_id IN (
+                   SELECT pa.student_id FROM pretest_attempts pa
+                   WHERE pa.student_id IN ($sidList) AND pa.test_type='post' AND pa.percentage >= 65
+               )"
+        );
+        while ($pgRow = $pgRes->fetchArray(SQLITE3_ASSOC)) {
+            $pgStudentIds[] = $pgRow['student_id'];
+        }
+    }
+    $clusterStats['pg_reach'] = count($pgStudentIds);
+    $clusterStats['pg_pct']   = $clusterStats['total'] > 0
+        ? round($clusterStats['pg_reach'] / $clusterStats['total'] * 100)
+        : 0;
 }
 
 // ── Row colour helper ────────────────────────────────────────────────────────
@@ -454,6 +477,26 @@ body { background: #f1f5f2; }
       </div>
     </div>
     <?php endforeach; ?>
+  </div>
+
+  <!-- Pregnancy Prevention Reach Card -->
+  <div class="dp-card" style="background:linear-gradient(135deg,#450a0a,#7c1d1d);color:#fff;margin-bottom:16px;border:none;">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="font-size:2rem;">🛡️</div>
+      <div style="flex:1;">
+        <div style="font-size:.78rem;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Pregnancy Prevention Reach</div>
+        <div style="font-size:1.6rem;font-weight:900;line-height:1.1;">
+          <?= $clusterStats['pg_reach'] ?? 0 ?> <span style="font-size:1rem;font-weight:600;opacity:.8;">/ <?= $clusterStats['total'] ?> learners</span>
+        </div>
+        <div style="font-size:.8rem;opacity:.85;margin-top:4px;">
+          <?= $clusterStats['pg_pct'] ?? 0 ?>% completed abstinence branching <em>and</em> passed their post-test (≥65%)
+        </div>
+      </div>
+      <div style="text-align:center;padding:10px 18px;background:rgba(255,255,255,.12);border-radius:10px;">
+        <div style="font-size:1.4rem;font-weight:900;"><?= $clusterStats['pg_pct'] ?? 0 ?>%</div>
+        <div style="font-size:.7rem;opacity:.8;">Reach Rate</div>
+      </div>
+    </div>
   </div>
 
   <!-- Legend + view toggle -->

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Teenage Pregnancy Prevention | ARISE Health Education</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,#450a0a,#7c1d1d,#991b1b);color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(124,29,29,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a0a0a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:#7c1d1d;border-color:#7c1d1d;color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:#7c1d1d;border-color:#7c1d1d;color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:#7c1d1d;padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#fef2f2,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#fef2f2,#fee2e2);border-left:4px solid #7c1d1d;border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:#7c1d1d;font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a0a0a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#fca5a5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:#7c1d1d;color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#fef2f2;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:#7c1d1d;color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:#991b1b;}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:#7c1d1d;transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+/* ── Branching Decision Tree ───────────────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#fef2f2,#fff5f5);border-left:4px solid #7c1d1d;border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:#7c1d1d;display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:#7c1d1d;color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+/* ── Matching ──────────────────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:7px;}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:9px 11px;text-align:left;font-size:.78rem;cursor:pointer;background:var(--card);font-family:inherit;transition:.15s;line-height:1.45;position:relative;}
+.match-item:hover{border-color:#7c1d1d;background:#fef2f2;}
+.match-item.msel{border-color:#7c1d1d;background:#fee2e2;}
+.match-item.correct{border-color:var(--ok);background:#e8f5e9;}
+.match-item.wrong{border-color:var(--no);background:#ffebee;}
+.match-item.mp1{border-color:#7c3aed;background:#f5f3ff;}
+.match-item.mp2{border-color:#0369a1;background:#e0f2fe;}
+.match-item.mp3{border-color:#065f46;background:#ecfdf5;}
+.match-item.mp4{border-color:#9a3412;background:#fff7ed;}
+.match-item.mp5{border-color:#3f3f46;background:#fafafa;}
+.mbadge{position:absolute;top:-7px;right:5px;background:#7c1d1d;color:#fff;font-size:.62rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.mb1{background:#7c3aed;}.mb2{background:#0369a1;}.mb3{background:#065f46;}.mb4{background:#9a3412;}.mb5{background:#3f3f46;}
+.check-mcq-btn{background:#7c1d1d;color:#fff;border:none;padding:9px 24px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.79rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.match-result-row{font-size:.78rem;padding:4px 0;border-bottom:1px solid var(--border);}
+@media(max-width:500px){.match-game{grid-template-columns:1fr;}}
+</style>
+</head>
+<body data-lesson-id="66" data-lesson-slug="teenage-pregnancy-prevention-interactive">
+
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label">🛡️ Teenage Pregnancy Prevention</div>
+    <div class="lesson-name"><span class="en">Protect Your Future</span><span class="sw">Linda Mustakabali Wako</span><span class="sh">Protect Future Yako</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 9</span>
+</div>
+
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">Lang:</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button>
+    <span class="lb-sep">|</span>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button>
+    <span class="lb-sep">|</span>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span class="lb-sep">|</span>
+    <span class="lb-label">Size:</span>
+    <button class="lb-size-btn" id="sz-sm" onclick="setSize('sm')">A-</button>
+    <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+    <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+    <a class="lb-help" href="tel:1195">📞 1195</a>
+  </div>
+</div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Objectives -->
+<div class="slide active">
+<div class="lo-box">
+  <h3><span class="en">🛡️ By the end of this lesson:</span><span class="sw">🛡️ Mwishoni mwa somo:</span><span class="sh">🛡️ Lesson hii ikisha:</span></h3>
+  <ol>
+    <li><span class="en">State key facts about teenage pregnancy in Kenya and its life consequences</span><span class="sw">Eleza ukweli muhimu kuhusu ujauzito wa ujana Kenya na matokeo yake maishani</span><span class="sh">State key facts za teenage pregnancy Kenya na life consequences zake</span></li>
+    <li><span class="en">Identify the root causes and risk factors that lead to teenage pregnancy</span><span class="sw">Tambua sababu za msingi na mambo ya hatari yanayosababisha ujauzito wa ujana</span><span class="sh">Identify root causes na risk factors zinazoelekea teenage pregnancy</span></li>
+    <li><span class="en">Explain why abstinence is the only 100% reliable protection</span><span class="sw">Eleza kwa nini kujizuia ni ulinzi pekee wa 100%</span><span class="sh">Explain kwa nini abstinence ni the only 100% reliable protection</span></li>
+    <li><span class="en">Apply the DEAR refusal method to sexual pressure scenarios</span><span class="sw">Tumia njia ya DEAR ya kukataa katika hali za shinikizo la kingono</span><span class="sh">Apply DEAR refusal method kwa sexual pressure scenarios</span></li>
+    <li><span class="en">Know the support contacts available to young people in Kenya</span><span class="sw">Jua anwani za msaada zinazopatikana kwa vijana Kenya</span><span class="sh">Jua support contacts zinazopatikana kwa vijana Kenya</span></li>
+  </ol>
+  <div class="inquiry">
+    <span class="en"><strong>🔍 Big Question:</strong> What would you say to a friend who feels pressured by a partner to have sex — and is afraid of losing the relationship if they refuse?</span>
+    <span class="sw"><strong>🔍 Swali Kubwa:</strong> Ungambie nini rafiki anayebanwa na mwenzi kufanya ngono — na anaogopa kupoteza uhusiano akikataa?</span>
+    <span class="sh"><strong>🔍 Big Question:</strong> Ungasema nini kwa friend anayepressurwa na partner kufanya sex — na anaogopa kupoteza relationship akikataa?</span>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 2: Kenya Facts -->
+<div class="slide">
+<div class="slide-head">📊 <span class="en">Teenage Pregnancy in Kenya — The Facts</span><span class="sw">Ujauzito wa Ujana Kenya — Ukweli</span><span class="sh">Teenage Pregnancy Kenya — The Facts</span></div>
+<div class="warn-box">
+  <strong><span class="en">⚠️ Kenya Reality Check</span><span class="sw">⚠️ Ukweli wa Kenya</span><span class="sh">⚠️ Kenya Reality Check</span></strong>
+  <ul class="bl" style="margin-top:6px;">
+    <li><span class="en">1 in 4 Kenyan girls is pregnant or already a mother by age 19</span><span class="sw">1 kati ya wasichana 4 wa Kenya ana ujauzito au tayari ni mama wakiwa na miaka 19</span><span class="sh">1 kati ya wasichana 4 wa Kenya ni pregnant au tayari ni mama by age 19</span></li>
+    <li><span class="en">Girls who drop out of school due to pregnancy lose an average of 9 years of income over their lifetime</span><span class="sw">Wasichana wanaoacha shule kwa sababu ya ujauzito wanapoteza wastani wa miaka 9 ya mapato</span><span class="sh">Wasichana wanaoacha shule kwa pregnancy wanapoteza average ya miaka 9 ya income</span></li>
+    <li><span class="en">Kenya has one of the highest rates of teenage pregnancy in sub-Saharan Africa</span><span class="sw">Kenya ina mojawapo ya viwango vya juu zaidi vya ujauzito wa ujana Afrika ya Kusini mwa Jangwa la Sahara</span><span class="sh">Kenya ina moja ya highest rates za teenage pregnancy sub-Saharan Africa</span></li>
+    <li><span class="en">Counties with highest rates: West Pokot, Narok, Samburu, Kilifi, Tana River</span><span class="sw">Kaunti zenye viwango vya juu zaidi: West Pokot, Narok, Samburu, Kilifi, Tana River</span><span class="sh">Counties zenye highest rates: West Pokot, Narok, Samburu, Kilifi, Tana River</span></li>
+    <li><span class="en">School-based programmes like ARISE are among the most effective interventions</span><span class="sw">Programu za shuleni kama ARISE ni miongoni mwa afua bora zaidi</span><span class="sh">School-based programmes kama ARISE ni among most effective interventions</span></li>
+  </ul>
+</div>
+<div class="sheng-box">
+  <div class="sheng-head">🇰🇪 Sheng</div>
+  <span class="en" style="display:block;">&ldquo;Kila msichana mmoja kati ya wanne anaenda home kabla ya form four kumalizika. Hiyo si statistic tu — ni maisha yanayobadilika kabisa.&rdquo;</span>
+  <span class="sw" style="display:none;">&ldquo;Kila msichana mmoja kati ya wanne anarudi nyumbani kabla ya kidato cha nne kumalizika. Hiyo si takwimu tu — ni maisha yanayobadilika kabisa.&rdquo;</span>
+  <span class="sh" style="display:none;">&ldquo;Kila msichana mmoja kati ya wanne anaenda home kabla ya form four kumalizika. Hiyo si statistic tu — ni maisha yanayobadilika kabisa.&rdquo;</span>
+</div>
+<table class="info-table">
+  <tr><th><span class="en">Consequence</span><span class="sw">Matokeo</span><span class="sh">Consequence</span></th><th><span class="en">Impact</span><span class="sw">Athari</span><span class="sh">Impact</span></th></tr>
+  <tr><td><span class="en">School dropout</span><span class="sw">Kuacha shule</span><span class="sh">Kuacha shule</span></td><td><span class="en">Loss of education, skills, and future income</span><span class="sw">Kupoteza elimu, ujuzi, na mapato ya baadaye</span><span class="sh">Kupoteza education, skills, na future income</span></td></tr>
+  <tr><td><span class="en">Health risks</span><span class="sw">Hatari za kiafya</span><span class="sh">Health risks</span></td><td><span class="en">Complications from young body not ready for pregnancy</span><span class="sw">Matatizo kutoka kwa mwili mdogo ambao hauko tayari kwa ujauzito</span><span class="sh">Complications kwa mwili mdogo ambao hauko ready kwa pregnancy</span></td></tr>
+  <tr><td><span class="en">Social stigma</span><span class="sw">Unyanyapaa wa kijamii</span><span class="sh">Social stigma</span></td><td><span class="en">Isolation, shame, reduced support from community</span><span class="sw">Kutengwa, aibu, msaada mdogo kutoka jamii</span><span class="sh">Kutengwa, aibu, msaada mdogo kutoka community</span></td></tr>
+  <tr><td><span class="en">For boys</span><span class="sw">Kwa wavulana</span><span class="sh">Kwa wavulana</span></td><td><span class="en">Legal responsibility and disrupted education and career</span><span class="sw">Wajibu wa kisheria na kukatizwa kwa elimu na kazi</span><span class="sh">Legal responsibility na disrupted education na career</span></td></tr>
+</table>
+</div>
+
+<!-- SLIDE 3: Root Causes -->
+<div class="slide">
+<div class="slide-head">🔎 <span class="en">Why Teenage Pregnancy Happens</span><span class="sw">Kwa Nini Ujauzito wa Ujana Hutokea</span><span class="sh">Kwa Nini Teenage Pregnancy Inatokea</span></div>
+<p class="tp"><span class="en">Understanding the causes helps you recognise and refuse the patterns before they lead to harm.</span><span class="sw">Kuelewa sababu kunakusaidia kutambua na kukataa mifumo kabla haisababishi madhara.</span><span class="sh">Ku-understand causes kunakusaidia kutambua na kukataa patterns kabla hazisababishi harm.</span></p>
+<div class="key-term">
+  <strong>1. <span class="en">Peer pressure — "Everyone is doing it"</span><span class="sw">Shinikizo la marafiki — "Kila mtu anafanya"</span><span class="sh">Peer pressure — "Kila mtu anafanya"</span></strong>
+  <span class="en">Research shows young people consistently overestimate how many of their peers are sexually active. This myth drives risk-taking that would not happen if the truth were known.</span>
+  <span class="sw">Utafiti unaonyesha vijana daima hukadiria kupita kiasi idadi ya rika lao wanaofanya ngono. Hadithi hii inasababisha kuchukua hatari ambayo isingeweza kutokea kama ukweli ungefahamika.</span>
+  <span class="sh">Research inaonyesha vijana daima wanaoverestimate idadi ya peers wao wanaofanya sex. Myth hii inadrivo risk-taking ambayo isingetokea kama ukweli ungefahamika.</span>
+</div>
+<div class="key-term">
+  <strong>2. <span class="en">Transactional relationships (sponsors)</span><span class="sw">Uhusiano wa kibiashara (wafadhili)</span><span class="sh">Transactional relationships (sponsors)</span></strong>
+  <span class="en">Older men offering money, school fees, or gifts in exchange for sexual favours. The power imbalance means young people cannot negotiate or refuse safely.</span>
+  <span class="sw">Wanaume wakubwa wanaotoa pesa, ada za shule, au zawadi kwa kubadilishana na huduma za kingono. Kutofautiana kwa nguvu kunamaanisha vijana hawawezi kujadiliana au kukataa salama.</span>
+  <span class="sh">Wanaume wakubwa wanaotoa pesa, school fees, au zawadi kwa sexual favours. Power imbalance inamaanisha vijana hawawezi ku-negotiate au kukataa safely.</span>
+</div>
+<div class="key-term">
+  <strong>3. <span class="en">Emotional manipulation — "If you loved me..."</span><span class="sw">Udanganyifu wa kihisia — "Kama ungenipenda..."</span><span class="sh">Emotional manipulation — "Kama ungenipenda..."</span></strong>
+  <span class="en">Using love, trust, or threat of relationship ending to pressure a partner into sex. This is a red flag — real love never demands abandonment of values.</span>
+  <span class="sw">Kutumia upendo, uaminifu, au tishio la kumaliza uhusiano kushinikiza mwenzi kufanya ngono. Hii ni ishara mbaya — upendo wa kweli kamwe hauombi kuacha maadili.</span>
+  <span class="sh">Kutumia love, trust, au tishio la kumaliza relationship kushinikiza partner kufanya sex. Hii ni red flag — real love kamwe haiombi ku-abandon values.</span>
+</div>
+<div class="key-term">
+  <strong>4. <span class="en">Alcohol and substance use</span><span class="sw">Matumizi ya pombe na vitu vya kulevya</span><span class="sh">Pombe na substance use</span></strong>
+  <span class="en">Substances lower inhibitions and impair decision-making. Many teenage pregnancies in Kenya begin at social events where alcohol is present.</span>
+  <span class="sw">Vitu vya kulevya hupunguza vizuizi na kuathiri ufanyaji maamuzi. Ujauzito mwingi wa ujana Kenya huanza katika hafla za kijamii ambapo pombe ipo.</span>
+  <span class="sh">Substances zinapunguza inhibitions na kuimpair decision-making. Teenage pregnancies nyingi Kenya zinaanza kwa social events ambapo pombe ipo.</span>
+</div>
+<div class="tip-box">
+  <strong><span class="en">💡 Protective Fact</span><span class="sw">💡 Ukweli wa Kujilinda</span><span class="sh">💡 Protective Fact</span></strong>
+  <span class="en"> Every single one of these risk factors is neutralised by one decision: choosing and maintaining abstinence. You cannot get pregnant from abstinence. You cannot get an STI from abstinence.</span>
+  <span class="sw"> Kila moja ya mambo haya ya hatari hupunguzwa na uamuzi mmoja: kuchagua na kudumisha kujizuia. Huwezi kupata ujauzito kutoka kujizuia. Huwezi kupata STI kutoka kujizuia.</span>
+  <span class="sh"> Kila moja ya hizi risk factors inafutwa na uamuzi mmoja: kuchagua na ku-maintain abstinence. Huwezi kupata pregnant kwa abstinence. Huwezi kupata STI kwa abstinence.</span>
+</div>
+</div>
+
+<!-- SLIDE 4: How Abstinence Protects -->
+<div class="slide">
+<div class="slide-head">🛡️ <span class="en">Abstinence — Your Strongest Shield</span><span class="sw">Kujizuia — Ngao Yako Kali Zaidi</span><span class="sh">Abstinence — Strongest Shield Yako</span></div>
+<p class="tp"><span class="en">Abstinence means choosing not to engage in sexual activity. It is the only method that provides 100% protection against both pregnancy and STIs — every single time.</span><span class="sw">Kujizuia kunamaanisha kuchagua kutofanya shughuli za kingono. Ni njia pekee inayotoa ulinzi wa 100% dhidi ya ujauzito na STI — kila wakati.</span><span class="sh">Abstinence inamaanisha kuchagua kutofanya sexual activity. Ni njia pekee inayotoa 100% protection dhidi ya pregnancy na STIs — kila wakati.</span></p>
+<div class="example-box">
+  <strong>🌱 <span class="en">Real Voices from Kenya</span><span class="sw">Sauti za Kweli kutoka Kenya</span><span class="sh">Real Voices kutoka Kenya</span></strong>
+  <span class="en">"I was pressured at Form 2. I said no. Four years later, I finished Form 4 with an A- and received a bursary. My friends who gave in are still trying to finish secondary school." — Grace, 19, Kisumu</span>
+  <span class="sw">"Nilibanwa katika Kidato cha 2. Nilisema hapana. Miaka minne baadaye, niliimaliza Kidato cha 4 kwa A- na kupata bursari. Marafiki zangu waliokubali bado wanajaribu kumaliza sekondari." — Grace, 19, Kisumu</span>
+  <span class="sh">"Nilibanwa Form 2. Nilisema no. Miaka minne baadaye, niliimaliza Form 4 kwa A- na kupata bursary. Friends zangu waliogive in bado wanajaribu kumaliza sec school." — Grace, 19, Kisumu</span>
+</div>
+<ul class="bl">
+  <li><span class="en">Abstinence is 100% effective when practised consistently — no other method matches this</span><span class="sw">Kujizuia ni 100% na ufanisi ukitekelezwa kwa uthabiti — hakuna njia nyingine inayolinganishwa</span><span class="sh">Abstinence ni 100% effective ukifuatwa consistently — hakuna method nyingine inayolingana</span></li>
+  <li><span class="en">Abstinence is free, always available, and has no side effects</span><span class="sw">Kujizuia ni bure, daima kinapatikana, na haina athari</span><span class="sh">Abstinence ni free, always available, na haina side effects</span></li>
+  <li><span class="en">Abstinence protects your education, career, and financial future</span><span class="sw">Kujizuia kunalinda elimu yako, kazi, na mustakabali wa kifedha</span><span class="sh">Abstinence inalinda elimu yako, kazi, na financial future yako</span></li>
+  <li><span class="en">Abstinence is a sign of emotional maturity and self-respect — not weakness or fear</span><span class="sw">Kujizuia ni ishara ya ukomavu wa kihisia na kujiheshimu — si udhaifu au hofu</span><span class="sh">Abstinence ni ishara ya emotional maturity na kujiheshimu — si udhaifu au hofu</span></li>
+  <li><span class="en">Any partner who pressures you away from abstinence does not have your best interests at heart</span><span class="sw">Mwenzi yeyote anayekushawishi kuacha kujizuia hana maslahi yako moyoni</span><span class="sh">Any partner anayekupressure kuacha abstinence hana best interests zako moyoni</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">⚠️ Myth vs. Fact</span><span class="sw">⚠️ Hadithi dhidi ya Ukweli</span><span class="sh">⚠️ Myth vs Fact</span></strong>
+  <span class="en"><strong>Myth:</strong> "Abstinence is not realistic for young people." <strong>Fact:</strong> Thousands of Kenyan students choose and maintain abstinence every day. It is a real, achievable, and empowering choice.</span>
+  <span class="sw"><strong>Hadithi:</strong> "Kujizuia si jambo la kweli kwa vijana." <strong>Ukweli:</strong> Maelfu ya wanafunzi wa Kenya huchagua na kudumisha kujizuia kila siku. Ni chaguo halisi, linawezekana, na la nguvu.</span>
+  <span class="sh"><strong>Myth:</strong> "Abstinence si realistic kwa vijana." <strong>Fact:</strong> Maelfu ya students wa Kenya wanachagua na kudumisha abstinence kila siku. Ni real, achievable, na empowering choice.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: DEAR Refusal Method -->
+<div class="slide">
+<div class="slide-head">🗣️ <span class="en">DEAR — Your Refusal Toolkit</span><span class="sw">DEAR — Zana Zako za Kukataa</span><span class="sh">DEAR — Refusal Toolkit Yako</span></div>
+<p class="tp"><span class="en">The DEAR method gives you a framework for refusing sexual pressure clearly, calmly, and firmly.</span><span class="sw">Njia ya DEAR inakupa mfumo wa kukataa shinikizo la kingono kwa uwazi, utulivu, na uthabiti.</span><span class="sh">DEAR method inakupa framework ya kukataa sexual pressure clearly, calmly, na firmly.</span></p>
+<div class="key-term">
+  <strong>D — <span class="en">Describe what is happening</span><span class="sw">Eleza kinachoendelea</span><span class="sh">Describe kinachoendelea</span></strong>
+  <span class="en">"You are pressuring me to have sex before I am ready and before I choose to."</span>
+  <span class="sw">"Unanibanisha kufanya ngono kabla sijakomaa na kabla ya kuchagua kufanya hivyo."</span>
+  <span class="sh">"Unanipressure ku-have sex kabla sijaready na kabla ya kuchagua kufanya hivyo."</span>
+</div>
+<div class="key-term">
+  <strong>E — <span class="en">Express how you feel</span><span class="sw">Eleza jinsi unavyohisi</span><span class="sh">Express jinsi unavyofeel</span></strong>
+  <span class="en">"I feel disrespected when my choice to wait is ignored."</span>
+  <span class="sw">"Nahisi kudharauliwa wakati chaguo langu la kusubiri linakosewa."</span>
+  <span class="sh">"Nahisi kudisrespected wakati choice yangu ya kusubiri inakosewa."</span>
+</div>
+<div class="key-term">
+  <strong>A — <span class="en">Assert your boundary</span><span class="sw">Thibitisha mpaka wako</span><span class="sh">Assert boundary yako</span></strong>
+  <span class="en">"No. I choose abstinence. That decision is final and it is not open for debate."</span>
+  <span class="sw">"Hapana. Ninachagua kujizuia. Uamuzi huo ni wa mwisho na hauwezi kujadiliwa."</span>
+  <span class="sh">"No. Ninachagua abstinence. Decision hiyo ni final na haiko open kwa debate."</span>
+</div>
+<div class="key-term">
+  <strong>R — <span class="en">Reinforce with consequence</span><span class="sw">Imarisha kwa matokeo</span><span class="sh">Reinforce na consequence</span></strong>
+  <span class="en">"If you cannot respect this, then I need to end this conversation — and possibly this relationship."</span>
+  <span class="sw">"Kama huwezi kuheshimu hili, basi ninahitaji kumaliza mazungumzo haya — na labda uhusiano huu."</span>
+  <span class="sh">"Kama huwezi ku-respect hili, basi ninahitaji kumaliza conversation hii — na possibly relationship hii."</span>
+</div>
+<div class="example-box">
+  <strong>🌟 <span class="en">Refusal Phrases to Practise Out Loud</span><span class="sw">Misemo ya Kukataa ya Kufanya Mazoezi Kwa Sauti</span><span class="sh">Refusal Phrases za Ku-practise Kwa Sauti</span></strong>
+  <ul class="bl">
+    <li><span class="en">"Real love waits. My answer is no."</span><span class="sw">"Upendo wa kweli husubiri. Jibu langu ni hapana."</span><span class="sh">"Real love inasubiri. Answer yangu ni no."</span></li>
+    <li><span class="en">"My future matters more than this moment."</span><span class="sw">"Mustakabali wangu una umuhimu zaidi kuliko wakati huu."</span><span class="sh">"Future yangu matters zaidi kuliko moment hii."</span></li>
+    <li><span class="en">"No means no — and I don't need to explain further."</span><span class="sw">"Hapana maana hapana — na sihitaji kuelezea zaidi."</span><span class="sh">"No maana no — na sihitaji ku-explain zaidi."</span></li>
+    <li><span class="en">"A partner who respects me will accept this. A partner who doesn't — has told me everything I need to know."</span><span class="sw">"Mwenzi anayeniheshimu atakubali hili. Mwenzi asiyekubali — ameniambia kila kitu ninachohitaji kujua."</span><span class="sh">"Partner anayeniheshimu atakubali hili. Partner asiyekubali — ameniambia kila kitu ninahitaji kujua."</span></li>
+  </ul>
+</div>
+</div>
+
+<!-- SLIDE 6: Video -->
+<div class="slide">
+<div class="slide-head">🎬 <span class="en">Module Video</span><span class="sw">Video ya Moduli</span><span class="sh">Module Video</span></div>
+<div class="video-slot">
+  <div id="videoPlaceholder" class="video-placeholder">
+    <div class="play-icon">🎬</div>
+    <div style="color:rgba(255,255,255,.7);font-size:.9rem;"><span class="en">Teenage Pregnancy Prevention — Abstinence &amp; Refusal Skills</span><span class="sw">Kuzuia Ujauzito wa Ujana — Kujizuia &amp; Ujuzi wa Kukataa</span><span class="sh">Teenage Pregnancy Prevention — Abstinence &amp; Refusal Skills</span></div>
+    <div class="upload-note">Video will appear here when uploaded by your facilitator</div>
+  </div>
+  <video id="lessonVideo" controls playsinline style="display:none;max-height:360px;" preload="metadata"></video>
+</div>
+<div class="tip-box" style="margin-top:12px;">
+  <strong><span class="en">📄 After watching:</span><span class="sw">📄 Baada ya kutazama:</span><span class="sh">📄 After kuwatch:</span></strong>
+  <span class="en"> Identify one pressure tactic shown in the video and explain how you would use DEAR to refuse it. Share your answer with a classmate.</span>
+  <span class="sw"> Tambua mbinu moja ya shinikizo iliyoonyeshwa katika video na eleza jinsi ungetumia DEAR kuikataa. Shiriki jibu lako na mwanafunzi mwenzako.</span>
+  <span class="sh"> Tambua pressure tactic moja iliyoonyeshwa kwa video na eleza jinsi ungetumia DEAR kuikataa. Share jibu lako na classmate.</span>
+</div>
+</div>
+
+<!-- SLIDE 7: Branching Decision Tree -->
+<div class="slide">
+  <div class="slide-head">🏡 <span class="en">Refusal Skills — Make the Choice</span><span class="sw">Ujuzi wa Kukataa — Fanya Uamuzi</span><span class="sh">Refusal Skills — Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read the scenario na uchague jibu bora kwa each step.</span></p>
+  <div class="btree-wrap" id="bt_tpp">
+    <div class="bt-scenario"><strong>Scenario:</strong> Amina, 16, Mombasa, has a boyfriend two years older. He has been pressuring her to have sex, saying: <em>"I'm patient but I need to know you're serious about us. If you really cared about our relationship you wouldn't keep saying no. Other girls my age don't make this difficult."</em></div>
+    <div class="bt-node active" id="btn_tpp_root">
+      <div class="bt-q">What should Amina do?</div>
+      <button class="bt-choice good" onclick="btGoTpp('A')">A) Use DEAR: "You are pressuring me. I feel disrespected. My choice is abstinence — that is final."</button>
+      <button class="bt-choice warn" onclick="btGoTpp('B')">B) Make an excuse: "I'm not feeling well this week"</button>
+      <button class="bt-choice bad" onclick="btGoTpp('root_bad')">C) Give in — afraid of losing him to someone else</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_A">
+      <button class="bt-back" onclick="btGoTpp('root')">← Back</button>
+      <div class="bt-q">He responds: "Fine, if that's how you feel, I'll find someone who actually cares." — What does Amina do?</div>
+      <button class="bt-choice good" onclick="btGoTpp('A_ok')">A1) Hold firm: "That tells me everything I need to know about you."</button>
+      <button class="bt-choice warn" onclick="btGoTpp('A_warn')">A2) Stay calm but feels hurt and uncertain</button>
+      <button class="bt-choice bad" onclick="btGoTpp('A_bad')">A3) Apologise and agree to his terms to keep him</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_A_ok">
+      <button class="bt-back" onclick="btGoTpp('A')">← Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Values-Based Refusal — Best Outcome</div><p>Amina recognised the threat for what it is: an ultimatum designed to break down her resistance. <strong>A partner who leaves because you maintain your values has revealed that they never truly respected you.</strong> Amina's education, health, and future are intact. The right partner waits — or is honest enough to leave without threats. Amina is free to find someone who genuinely respects her. Helpline: <strong>1195</strong> (free, 24/7).</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_A_warn">
+      <button class="bt-back" onclick="btGoTpp('A')">← Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Uncertain — But Boundaries Held</div><p>Amina is shaken but her boundary held this time. <strong>Feeling hurt after refusing is normal — it does not mean the refusal was wrong.</strong> Pressure tactics are designed to make you feel guilty for protecting yourself. Talk to a trusted adult or counsellor. The hurt fades; the consequences of giving in can last a lifetime. Helpline: <strong>1195</strong>.</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_A_bad">
+      <button class="bt-back" onclick="btGoTpp('A')">← Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Threat Overrode Good Refusal</div><p>Amina refused once — which was right — but the threat of abandonment broke her down. <strong>This is how most teenage pregnancies involving older partners begin.</strong> The age difference creates a power imbalance. Speak to a trusted teacher, school counsellor, or call <strong>1195</strong> for guidance on this relationship.</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_B">
+      <button class="bt-back" onclick="btGoTpp('root')">← Back</button>
+      <div class="bt-q">He says: "You're always unwell. Are you avoiding me? Just this once — after that I promise I'll stop asking." What should Amina do?</div>
+      <button class="bt-choice good" onclick="btGoTpp('B_ok')">B1) Drop the excuse and state clearly: "I'm not avoiding you. I'm choosing abstinence. That is my decision."</button>
+      <button class="bt-choice bad" onclick="btGoTpp('B_bad')">B2) Believe his promise and agree "just this once"</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_B_ok">
+      <button class="bt-back" onclick="btGoTpp('B')">← Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Upgraded to Values-Based Refusal</div><p>Amina moved from a weak excuse to a strong, honest statement of her values. <strong>Excuses can be argued against. Personal choices cannot.</strong> "I am choosing abstinence" is a complete sentence that requires no further justification. This is the most powerful refusal tool available. Helpline: <strong>1195</strong>.</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_B_bad">
+      <button class="bt-back" onclick="btGoTpp('B')">← Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">"Just This Once" — The Most Dangerous Promise</div><p>"Just this once" is one of the most common phrases preceding teenage pregnancy in Kenya. <strong>Promises to "stop asking" after one time are rarely kept.</strong> The pattern repeats, and each time saying no becomes harder. Amina's education and future are now at serious risk. If this has happened to you: call <strong>1195</strong> for confidential support.</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_tpp_root_bad">
+      <button class="bt-back" onclick="btGoTpp('root')">← Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Fear of Loss Led to a Bigger Loss</div><p>The fear of losing the relationship felt overwhelming. But by giving in, Amina has put herself at serious risk of pregnancy, STIs, and a pattern of abuse. <strong>A partner who uses jealousy and threats to get sex is showing you exactly who they are.</strong> This is not love — this is control. If this is your situation: speak to a trusted adult or call <strong>1195</strong> immediately.</p></div>
+      <button class="bt-restart" onclick="btRestartTpp()">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Practice Quiz -->
+<div class="slide">
+<div class="slide-head">📝 <span class="en">Practice Quiz — 10 Questions</span><span class="sw">Maswali ya Zoezi — 10</span><span class="sh">Practice Quiz — 10 Questions</span></div>
+<div style="font-size:.78rem;color:var(--soft);margin-bottom:12px;"><span class="en">Answer all questions, then tap <strong>Submit</strong>.</span><span class="sw">Jibu maswali yote, kisha bonyeza <strong>Wasilisha</strong>.</span><span class="sh">Answer maswali yote, then tap <strong>Submit</strong>.</span></div>
+
+<div class="mcq-block">
+<div class="q-text">1. Statistics show that 1 in 4 Kenyan girls is pregnant or already a mother by age 19. Which of the following best explains why this rate is so high? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">✅ Select ALL correct answers</div>
+<div class="sata-badge">Select All That Apply</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Peer pressure normalising early sexual activity</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Transactional relationships with older men (sponsors)</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Too much access to quality education</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Emotional manipulation using love and trust as pressure</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Alcohol and substance use reducing decision-making ability</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">2. Mary, 16, Nakuru, is pressured by her boyfriend: "If you loved me you would not make me wait — I'll find someone else." What is the MOST appropriate response for Mary?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">⬤ Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Give in — losing him would be worse than the risk</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> "A partner who threatens to leave because I maintain my values has shown me exactly who he is."</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> Make an excuse and avoid the subject</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Ask his friends to speak to him on her behalf</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">3. A teenage pregnancy has severe consequences for a Kenyan girl. Which of the following are REAL consequences that research confirms? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">✅ Select ALL correct answers</div>
+<div class="sata-badge">Select All That Apply</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">A</span> School dropout and loss of educational opportunity</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">B</span> Health complications from a young body not yet ready for pregnancy</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">C</span> Immediate access to better housing and income</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">D</span> Social stigma and reduced community support</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq3')"><span class="opt-letter">E</span> Loss of an average of 9 years of income over her lifetime</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">4. An ARISE facilitator asks: "What is the ONLY method that provides 100% protection against both pregnancy and STIs every single time?" What is the correct answer?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">⬤ Select ONE answer</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq4','A')"><span class="opt-letter">A</span> Trusting your partner's word that they are healthy</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq4','B')"><span class="opt-letter">B</span> Withdrawal before ejaculation</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq4','C')"><span class="opt-letter">C</span> Abstinence — choosing not to engage in sexual activity</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq4','D')"><span class="opt-letter">D</span> Relying on the "safe period" in the menstrual cycle</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">5. In the DEAR refusal method, the "A" step stands for "Assert." Which statement best demonstrates the Assert step?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">⬤ Select ONE answer</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span> "I have not been feeling well lately — maybe another time."</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span> "No. My choice is abstinence. That decision is final and it is not changing."</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span> "Let me think about it and get back to you."</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span> "I feel uncomfortable when you bring this up."</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">6. A Form 3 class in Eldoret discusses protective factors against teenage pregnancy. Which of the following are PROTECTIVE factors? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">✅ Select ALL correct answers</div>
+<div class="sata-badge">Select All That Apply</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">A</span> Staying in school and valuing education</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">B</span> Having at least one trusted adult to talk to</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">C</span> Socialising at unsupervised parties with older students</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">D</span> Setting and communicating personal boundaries clearly</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq6')"><span class="opt-letter">E</span> Choosing abstinence as a personal and values-based decision</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">7. Sarah, 17, Kisii, is told by classmates: "Abstinence is old-fashioned — everyone is doing it." What is the MOST accurate and empowering response for Sarah?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">⬤ Select ONE answer</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq7','A')"><span class="opt-letter">A</span> She should reconsider — peer consensus is usually right</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq7','B')"><span class="opt-letter">B</span> "Research shows people overestimate how many peers are sexually active. My choice is based on my values and my future — not on rumours."</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq7','C')"><span class="opt-letter">C</span> Ask her teacher to confirm whether "everyone" really is doing it</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq7','D')"><span class="opt-letter">D</span> Agree that abstinence is old-fashioned but say she is not ready yet</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">8. An older man is giving gifts, money, and extra attention to a 15-year-old girl at school. Which of the following are warning signs of grooming or a transactional relationship? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">✅ Select ALL correct answers</div>
+<div class="sata-badge">Select All That Apply</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq8')"><span class="opt-letter">A</span> He wants to meet her alone and away from school</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq8')"><span class="opt-letter">B</span> He asks her not to tell her parents or teachers about the gifts</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq8')"><span class="opt-letter">C</span> He helps her with homework during school hours</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq8')"><span class="opt-letter">D</span> He creates a sense of obligation — "After all I've done for you..."</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq8')"><span class="opt-letter">E</span> He is significantly older and has no connection to her school or family</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">9. Which statement about teenage pregnancy in Kenya is TRUE?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">⬤ Select ONE answer</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq9','A')"><span class="opt-letter">A</span> Girls who leave school due to pregnancy lose an average of 9 years of lifetime income</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq9','B')"><span class="opt-letter">B</span> Teenage pregnancy rates in Kenya are among the lowest in Africa</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq9','C')"><span class="opt-letter">C</span> Boys face no legal or social consequences from teenage pregnancy</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq9','D')"><span class="opt-letter">D</span> Most teenage pregnancies occur in urban areas like Nairobi</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<div class="mcq-block">
+<div class="q-text">10. James, 17, Mombasa, wants to refuse sexual pressure using DEAR. Which of the following are components of the DEAR method? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">✅ Select ALL correct answers</div>
+<div class="sata-badge">Select All That Apply</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq10')"><span class="opt-letter">A</span> Describe what is being asked of you without blaming</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq10')"><span class="opt-letter">B</span> Express how you feel about the situation</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq10')"><span class="opt-letter">C</span> Agree to the request to avoid conflict, then raise concerns later</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq10')"><span class="opt-letter">D</span> Assert your boundary clearly and firmly</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq10')"><span class="opt-letter">E</span> Reinforce your position with a consequence if the pressure continues</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:#7c1d1d;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">✓ <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#7c1d1d;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+<!-- SLIDE 9: Matching Game -->
+<div class="slide">
+  <div class="slide-head">🔗 <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_tpp" data-correct='{"0":0,"1":1,"2":2,"3":3,"4":4}' data-rights='["Claiming everyone at school is sexually active to normalise pressure","Using love or trust as pressure to have sex","Stating your refusal clearly: my choice is abstinence and it is not changing","Dropping out of school and losing years of income and opportunity","Choosing not to engage in sexual activity — the only 100% reliable protection"]'>
+    <div class="match-col" id="ml_tpp">
+      <button class="match-item" data-term="Peer normalising" onclick="_mL('tpp',0)">Peer normalising</button>
+      <button class="match-item" data-term="Guilt manipulation" onclick="_mL('tpp',1)">Guilt manipulation</button>
+      <button class="match-item" data-term="DEAR Assert step" onclick="_mL('tpp',2)">DEAR Assert step</button>
+      <button class="match-item" data-term="Pregnancy consequence" onclick="_mL('tpp',3)">Pregnancy consequence</button>
+      <button class="match-item" data-term="Abstinence" onclick="_mL('tpp',4)">Abstinence</button>
+    </div>
+    <div class="match-col" id="mr_tpp">
+      <button class="match-item" onclick="_mR('tpp',0)">Claiming everyone at school is sexually active to normalise pressure</button>
+      <button class="match-item" onclick="_mR('tpp',1)">Using love or trust as pressure to have sex</button>
+      <button class="match-item" onclick="_mR('tpp',2)">Stating your refusal clearly: my choice is abstinence and it is not changing</button>
+      <button class="match-item" onclick="_mR('tpp',3)">Dropping out of school and losing years of income and opportunity</button>
+      <button class="match-item" onclick="_mR('tpp',4)">Choosing not to engage in sexual activity — the only 100% reliable protection</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_tpp" onclick="_mCheck('tpp')">✓ Check Matches</button>
+    <button class="retry-btn" id="mrst_tpp" onclick="_mReset('tpp')" style="display:none;">↺ Try Again</button>
+  </div>
+  <div id="mfb_tpp" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div>
+
+<script>
+var lang=window.ARISE_LANG||localStorage.getItem('arise_lang')||'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('arise_lang',l);}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+/* Matching */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'✓':'✗')+'</span> '+htmlEscape(el.dataset.term)+' → <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+/* Branching */
+function btGoTpp(nodeId){var wrap=document.getElementById('bt_tpp');wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});var node=document.getElementById('btn_tpp_'+nodeId);if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}}
+function btRestartTpp(){btGoTpp('root');}
+/* MCQ */
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+var mcqAnswers={'mcq1':'A,B,D,E','mcq2':'B','mcq3':'A,B,D,E','mcq4':'C','mcq5':'B','mcq6':'A,B,D,E','mcq7':'B','mcq8':'A,B,D,E','mcq9':'A','mcq10':'A,B,D,E'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'msq','mcq4':'mcq','mcq5':'mcq','mcq6':'msq','mcq7':'mcq','mcq8':'msq','mcq9':'mcq','mcq10':'msq'};
+function submitMCQ(){var score=0,total=Object.keys(mcqAnswers).length;Object.keys(mcqAnswers).forEach(function(grp){var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';var opts=document.querySelectorAll('#'+grp+' .opt');var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});opts.forEach(function(o){o.onclick=null;});var ok=false;if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}if(ok)score++;var fb=document.getElementById('fb_'+grp);if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}});var pct=Math.round(score/total*100);var sb=document.getElementById('score-box');if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You are well prepared to protect your future.':pct>=60?'👍 Good effort! Review the highlighted answers and try again.':'📖 Keep studying! Revisit the lesson slides.';sb.scrollIntoView({behavior:'smooth'});}if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

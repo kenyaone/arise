@@ -62,19 +62,45 @@ if ($_early_page === 'lesson') {
                     . '<a href="/arise/?p=forum&module=' . $modSlug . '" style="background:#0ea271;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">💬 Discuss this Module</a>'
                     . '<a href="/arise/?p=ask&module=' . $modSlug . '" style="background:#6b7280;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">🔒 Ask Anonymously</a>'
                     . '</div></div>';
-                $inject = "<script>
+                $inject = "<style>
+body{margin:0!important;}
+.slides-wrap,.lang-bar-inner,.nav-inner{max-width:100%!important;width:100%!important;box-sizing:border-box!important;}
+.lang-bar,.nav-bar,.top-bar{width:100%!important;left:0!important;right:0!important;box-sizing:border-box!important;}
+#arise-fs-btn{position:fixed;top:8px;right:10px;z-index:99999;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.02em;}
+</style>
+<script>
 window.ARISE_LESSON_ID=" . intval($lesson['id']) . ";
 window.ARISE_LESSON_SLUG='" . addslashes($lesson['slug']) . "';
 window.ARISE_MODULE_SLUG='" . $modSlug . "';
 window.ARISE_RESUME_SLIDE=" . $resumeSlide . ";
 window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
 (function(){
-  function tryFS(v){if(!v)return;if(v.requestFullscreen)v.requestFullscreen().catch(function(){});else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();}
+  function tryFS(el){if(!el)return;var fn=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen;if(fn)fn.call(el).catch(function(){});}
+  function exitFS(){var fn=document.exitFullscreen||document.webkitExitFullscreen;if(fn)fn.call(document);}
+  function isFS(){return !!(document.fullscreenElement||document.webkitFullscreenElement);}
   document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.createElement('button');
+    btn.id='arise-fs-btn';
+    btn.textContent='⛶ Fullscreen';
+    btn.onclick=function(){isFS()?exitFS():tryFS(document.documentElement);};
+    document.body.appendChild(btn);
+    function onFSChange(){btn.textContent=isFS()?'✕ Exit Fullscreen':'⛶ Fullscreen';}
+    document.addEventListener('fullscreenchange',onFSChange);
+    document.addEventListener('webkitfullscreenchange',onFSChange);
     var v=document.getElementById('lessonVideo');
-    if(!v)return;
-    v.removeAttribute('playsinline');
-    v.addEventListener('play',function(){if(!document.fullscreenElement&&!document.webkitFullscreenElement)tryFS(v);},{once:false});
+    if(v){
+      v.removeAttribute('playsinline');
+      v.addEventListener('play',function(){if(!isFS())tryFS(v);},{once:false});
+      var vKey='arise_vpos_'+(window.ARISE_LESSON_SLUG||'unknown');
+      v.addEventListener('loadedmetadata',function(){
+        var saved=parseFloat(localStorage.getItem(vKey)||'0');
+        if(saved>5&&saved<v.duration-5)v.currentTime=saved;
+      });
+      v.addEventListener('timeupdate',function(){
+        if(v.currentTime>5)localStorage.setItem(vKey,v.currentTime);
+      });
+      v.addEventListener('ended',function(){localStorage.removeItem(vKey);});
+    }
   });
 })();
 </script>";
@@ -194,6 +220,7 @@ if ($student) {
             <li><a href="/arise/" class="<?= $page==='home'?'active':'' ?>">🏠 <?= t('home') ?></a></li>
             <li><a href="/arise/?p=modules" class="<?= in_array($page,['modules','module','lesson'])?'active':'' ?>">📚 <?= t('modules') ?></a></li>
             <li><a href="/arise/?p=forum" class="<?= in_array($page,['forum','ask'])?'active':'' ?>" title="Community &amp; discussions">💬 Community</a></li>
+            <li><a href="/arise/?p=challenge" class="<?= $page==='challenge'?'active':'' ?>" title="Weekly Challenge">💪 Challenge</a></li>
             <?php if ($studentName): ?>
                 <li><a href="/arise/?p=dashboard" class="<?= in_array($page,['dashboard','my_progress'])?'active':'' ?>" style="background:rgba(245,230,66,.15);color:var(--acc);">⭐ <?= e(explode(' ',$studentName)[0]) ?></a></li>
                 <li><a href="/arise/?logout=1" style="color:rgba(255,255,255,.5);font-size:.8rem;"><?= t('sign_out') ?></a></li>

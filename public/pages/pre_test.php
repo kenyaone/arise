@@ -80,24 +80,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $aq->execute();
     }
 
-    // Auto-issue certificate after post-test ≥60%
-    if ($testType === 'post' && $pct >= 60 && $sid) {
-        $student = getStudentBySession();
-        if ($student) {
-            $existing = db()->querySingle("SELECT id FROM certificates WHERE student_id=$sid AND module_id=" . intval($module['id']));
-            if (!$existing) {
-                do {
-                    $certNum = 'ARISE-' . date('Y') . '-' . str_pad(mt_rand(10000, 99999), 5, '0', STR_PAD_LEFT);
-                } while (db()->querySingle("SELECT id FROM certificates WHERE cert_number='" . SQLite3::escapeString($certNum) . "'"));
-                $stmt2 = db()->prepare('INSERT INTO certificates (cert_number,student_id,student_name,module_id,module_title,score,percentage) VALUES (:cert,:sid,:name,:mid,:mtitle,:score,:pct)');
-                $stmt2->bindValue(':cert',   $certNum);
-                $stmt2->bindValue(':sid',    $sid);
-                $stmt2->bindValue(':name',   $student['full_name']);
-                $stmt2->bindValue(':mid',    intval($module['id']));
-                $stmt2->bindValue(':mtitle', $module['title']);
-                $stmt2->bindValue(':score',  $score);
-                $stmt2->bindValue(':pct',    $pct);
-                $stmt2->execute();
+    // Auto-issue certificate after post-test using weighted scoring model
+    // Weights: Knowledge Gain 35%, Post-test 25%, Branching 25%, Matching 15% — threshold 65%
+    $finalPct = $pct; // default; overwritten below when weighted formula runs
+    if ($testType === 'post' && $sid) {
+        $mid = intval($module['id']);
+        $escapedHash = SQLite3::escapeString($hash);
+
+        // Knowledge gain: normalized improvement from pre-test
+        $prePctRaw = db()->querySingle(
+            "SELECT percentage FROM pretest_attempts WHERE session_hash='$escapedHash' AND module_id=$mid AND test_type='pre' ORDER BY id DESC LIMIT 1"
+        );
+        $prePct = ($prePctRaw !== null) ? (float)$prePctRaw : null;
+        if ($prePct !== null) {
+            $kgScore = $prePct < 100
+                ? max(0.0, ($pct - $prePct) / (100.0 - $prePct) * 100.0)
+                : ($pct >= 100 ? 100.0 : 0.0);
+        } else {
+            $kgScore = null;
+        }
+
+        // Matching score: average percentage across all matching interactions for this module/session
+        $matchAvg = db()->querySingle(
+            "SELECT AVG(CAST(score AS REAL)/NULLIF(total,0)*100) FROM lesson_interactions
+             WHERE session_hash='$escapedHash' AND module_id=$mid AND interaction_type='matching'"
+        );
+        $matchScore = ($matchAvg !== null && $matchAvg !== false) ? (float)$matchAvg : null;
+
+        // Branching score: 100 if student reached a good outcome at least once, else 0 (null if no branching in module)
+        $branchDone = db()->querySingle(
+            "SELECT MAX(done) FROM lesson_interactions
+             WHERE session_hash='$escapedHash' AND module_id=$mid AND interaction_type='branching'"
+        );
+        $branchScore = ($branchDone !== null && $branchDone !== false) ? (float)($branchDone * 100) : null;
+
+        // Compute weighted score — redistribute weight of absent components
+        $weighted    = 0.0;
+        $totalWeight = 0.0;
+
+        if ($kgScore !== null) { $weighted += $kgScore * 0.35; $totalWeight += 0.35; }
+        $weighted += $pct * 0.25; $totalWeight += 0.25;
+        if ($branchScore !== null) { $weighted += $branchScore * 0.25; $totalWeight += 0.25; }
+        if ($matchScore  !== null) { $weighted += $matchScore  * 0.15; $totalWeight += 0.15; }
+
+        $finalPct = $totalWeight > 0 ? round($weighted / $totalWeight) : $pct;
+
+        if ($finalPct >= 65) {
+            $student = getStudentBySession();
+            if ($student) {
+                $existing = db()->querySingle("SELECT id FROM certificates WHERE student_id=$sid AND module_id=$mid");
+                if (!$existing) {
+                    do {
+                        $certNum = 'ARISE-' . date('Y') . '-' . str_pad(mt_rand(10000, 99999), 5, '0', STR_PAD_LEFT);
+                    } while (db()->querySingle("SELECT id FROM certificates WHERE cert_number='" . SQLite3::escapeString($certNum) . "'"));
+                    $stmt2 = db()->prepare('INSERT INTO certificates (cert_number,student_id,student_name,module_id,module_title,score,percentage) VALUES (:cert,:sid,:name,:mid,:mtitle,:score,:pct)');
+                    $stmt2->bindValue(':cert',   $certNum);
+                    $stmt2->bindValue(':sid',    $sid);
+                    $stmt2->bindValue(':name',   $student['full_name']);
+                    $stmt2->bindValue(':mid',    $mid);
+                    $stmt2->bindValue(':mtitle', $module['title']);
+                    $stmt2->bindValue(':score',  $score);
+                    $stmt2->bindValue(':pct',    $finalPct);
+                    $stmt2->execute();
+                } elseif ($finalPct > (int)db()->querySingle("SELECT percentage FROM certificates WHERE student_id=$sid AND module_id=$mid")) {
+                    $stmt2 = db()->prepare('UPDATE certificates SET score=:s, percentage=:p WHERE student_id=:sid AND module_id=:mid');
+                    $stmt2->bindValue(':s', $score); $stmt2->bindValue(':p', $finalPct);
+                    $stmt2->bindValue(':sid', $sid); $stmt2->bindValue(':mid', $mid);
+                    $stmt2->execute();
+                }
             }
         }
     }
@@ -172,11 +222,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <?php endforeach; ?>
 
-      <?php if ($testType === 'post' && $pct >= 60): ?>
+      <?php if ($testType === 'post' && $finalPct >= 65): ?>
         <div style="background:#d1fae5;border:2px solid #34d399;border-radius:12px;padding:14px 18px;margin-top:12px;text-align:center;">
           <div style="font-weight:900;color:#065f46;font-size:1.1rem;margin-bottom:4px;">&#127881; Certificate Earned!</div>
-          <div style="font-size:.85rem;color:#047857;margin-bottom:10px;">You passed with <?= $pct ?>%</div>
+          <div style="font-size:.85rem;color:#047857;margin-bottom:10px;">Weighted score: <?= $finalPct ?>% &mdash; Post-test: <?= $pct ?>%</div>
           <a href="/arise/?p=certificates" class="btn btn-primary">View Your Certificate &rarr;</a>
+        </div>
+      <?php elseif ($testType === 'post' && $finalPct < 65): ?>
+        <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:12px;padding:14px 18px;margin-top:12px;text-align:center;">
+          <div style="font-weight:900;color:#92400e;font-size:1rem;margin-bottom:4px;">&#128218; Keep Going!</div>
+          <div style="font-size:.82rem;color:#78350f;">Weighted score: <?= $finalPct ?>% — need 65%+. Complete the matching &amp; refusal activities in the lessons to boost your score.</div>
         </div>
       <?php endif; ?>
 
@@ -283,3 +338,50 @@ $badgeClass = ['pre' => 'badge-pre', 'post' => 'badge-post', 'lesson' => 'badge-
     </button>
   </form>
 </div>
+<script>
+(function(){
+  var DRAFT_KEY='arise_quiz_draft_<?= addslashes($moduleSlug) ?>_<?= addslashes($testType) ?>';
+  function saveDraft(){
+    var data={};
+    document.querySelectorAll('form input[type=radio]:checked,form input[type=checkbox]:checked').forEach(function(el){
+      if(!data[el.name])data[el.name]=[];
+      data[el.name].push(el.value);
+    });
+    localStorage.setItem(DRAFT_KEY,JSON.stringify(data));
+  }
+  function restoreDraft(){
+    var raw=localStorage.getItem(DRAFT_KEY);
+    if(!raw)return;
+    try{
+      var data=JSON.parse(raw);
+      Object.keys(data).forEach(function(name){
+        data[name].forEach(function(val){
+          var el=document.querySelector('form input[name="'+name+'"][value="'+val+'"]');
+          if(el)el.checked=true;
+        });
+      });
+      showResumeBanner();
+    }catch(e){}
+  }
+  function showResumeBanner(){
+    var b=document.createElement('div');
+    b.style.cssText='background:#fef9c3;border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;font-size:.82rem;color:#92400e;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;';
+    b.innerHTML='⏸️ Your previous answers have been restored. <button onclick="clearDraft()" style="margin-left:auto;background:none;border:none;color:#92400e;font-size:.78rem;cursor:pointer;text-decoration:underline;">Start fresh</button>';
+    var form=document.querySelector('form');
+    if(form)form.insertBefore(b,form.firstChild);
+  }
+  window.clearDraft=function(){
+    localStorage.removeItem(DRAFT_KEY);
+    document.querySelectorAll('form input[type=radio],form input[type=checkbox]').forEach(function(el){el.checked=false;});
+    var b=document.querySelector('form > div[style*="fef9c3"]');
+    if(b)b.remove();
+  };
+  document.querySelectorAll('form input').forEach(function(el){
+    el.addEventListener('change',saveDraft);
+  });
+  document.querySelector('form').addEventListener('submit',function(){
+    localStorage.removeItem(DRAFT_KEY);
+  });
+  restoreDraft();
+})();
+</script>

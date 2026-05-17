@@ -38,15 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
     $q2d = trim($_POST['q2_detail'] ?? '');
     $q3c = isset($_POST['q3_confident']) ? intval($_POST['q3_confident']) : null;
     $q3d = trim($_POST['q3_detail'] ?? '');
+    $q4p = isset($_POST['q4_pregnancy']) ? intval($_POST['q4_pregnancy']) : null;
 
-    if ($q1c !== null && $q2s !== null && $q3c !== null) {
+    if ($q1c !== null && $q2s !== null && $q3c !== null && $q4p !== null) {
         $st = db()->prepare(
             "INSERT OR IGNORE INTO behavioral_surveys
                 (student_id, session_hash, module_id,
                  q1_changed, q1_detail,
                  q2_shared,  q2_detail,
-                 q3_confident, q3_detail)
-             VALUES (:sid,:hash,:mid,:q1c,:q1d,:q2s,:q2d,:q3c,:q3d)"
+                 q3_confident, q3_detail,
+                 q4_pregnancy)
+             VALUES (:sid,:hash,:mid,:q1c,:q1d,:q2s,:q2d,:q3c,:q3d,:q4p)"
         );
         $st->bindValue(':sid',  $sid ?? 0,  SQLITE3_INTEGER);
         $st->bindValue(':hash', $hash,       SQLITE3_TEXT);
@@ -57,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         $st->bindValue(':q2d',  $q2d,        SQLITE3_TEXT);
         $st->bindValue(':q3c',  $q3c,        SQLITE3_INTEGER);
         $st->bindValue(':q3d',  $q3d,        SQLITE3_TEXT);
+        $st->bindValue(':q4p',  $q4p,        SQLITE3_INTEGER);
         $st->execute();
 
         $doneUrl = '/arise/?p=module&slug=' . urlencode($moduleSlug) . '&survey_done=1';
@@ -66,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         exit;
     }
     // Validation failed — fall through to show form with error
-    $formError = 'Please answer all three questions before submitting.';
+    $formError = 'Please answer all four questions before submitting.';
 }
 
 ?>
@@ -361,6 +364,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
         <div class="detail-area" id="detail-q3">
           <div class="detail-prompt" id="prompt-q3"></div>
           <textarea name="q3_detail" id="ta-q3" placeholder="Select Yes or No above, then type your answer here..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="survey-q">
+        <div class="q-label">
+          <span class="q-num">4</span>
+          Do you feel more prepared to avoid unintended pregnancy?
+        </div>
+        <div class="radio-row">
+          <div class="radio-pill yes">
+            <input type="radio" name="q4_pregnancy" id="q4_yes" value="1" required>
+            <label for="q4_yes">&#10003; Yes</label>
+          </div>
+          <div class="radio-pill no">
+            <input type="radio" name="q4_pregnancy" id="q4_no" value="0" required>
+            <label for="q4_no">&#10007; No</label>
+          </div>
         </div>
       </div>
 
