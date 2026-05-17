@@ -548,8 +548,7 @@ $interactiveCount = $counts['interactive'];
     <?php
         if ($_surveyDone)            { $_bgCol='#f0fdf4'; $_bdCol='#86efac'; $_stepColor='#166534'; $_stepIcon='&#10003;'; $_stepLabel='All Complete &#10003;'; $_stepDesc='You have completed all steps for this module. Well done!'; }
         elseif ($_postestDone)      { $_bgCol='#fef9c3'; $_bdCol='#fde047'; $_stepColor='#854d0e'; $_stepIcon='&#128172;'; $_stepLabel='Step 5 of 5 &mdash; Complete the Reflection Survey'; $_stepDesc='Last step! Share how this module affected you — takes 60 seconds.'; }
-        elseif ($_lessonQuizDone)   { $_bgCol='#eff6ff'; $_bdCol='#93c5fd'; $_stepColor='#1d4ed8'; $_stepIcon='&#128200;'; $_stepLabel='Step 4 of 5 &mdash; Take the Post-Test'; $_stepDesc='Great work! Now complete the post-test to earn your certificate.'; }
-        elseif ($_pretestDone)      { $_bgCol='#faf5ff'; $_bdCol='#d8b4fe'; $_stepColor='#6b21a8'; $_stepIcon='&#127918;'; $_stepLabel='Step 2 &amp; 3 of 5 &mdash; Study Lessons, Then Take Lesson Quiz'; $_stepDesc='Go through the lessons below, then take the 10-question lesson quiz.'; }
+        elseif ($_pretestDone)      { $_bgCol='#eff6ff'; $_bdCol='#93c5fd'; $_stepColor='#1d4ed8'; $_stepIcon='&#128200;'; $_stepLabel='Step 2, 3 &amp; 4 &mdash; Study Lessons, Lesson Quiz &amp; Post-Test'; $_stepDesc='Go through the lessons below, take the lesson quiz for practice, then take the post-test.'; }
         else                        { $_bgCol='#fffbeb'; $_bdCol='#fcd34d'; $_stepColor='#92400e'; $_stepIcon='&#128203;'; $_stepLabel='Step 1 of 5 &mdash; Take the Pre-Test First'; $_stepDesc='Do this before lessons to measure your starting knowledge.'; }
     ?>
     <div style="background:<?= $_bgCol ?>;border:2px solid <?= $_bdCol ?>;border-radius:14px;padding:18px 20px;margin-bottom:20px;">
@@ -582,9 +581,9 @@ $interactiveCount = $counts['interactive'];
         <!-- Step 4: Post-Test -->
         <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=post"
            class="btn <?= $_postestDone ? 'btn-secondary' : 'btn-primary' ?>"
-           style="<?= (!$_lessonQuizDone) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>font-size:.82rem"
-           title="<?= !$_lessonQuizDone ? 'Complete the Lesson Quiz first' : 'Measure how much you learned' ?>">
-          &#128200; Post-Test<?= $_postestDone ? ' &#10003;' : (!$_lessonQuizDone ? ' &#128274;' : ' &rarr;') ?>
+           style="<?= (!$_pretestDone) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>font-size:.82rem"
+           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : 'Measure how much you learned' ?>">
+          &#128200; Post-Test<?= $_postestDone ? ' &#10003;' : (!$_pretestDone ? ' &#128274;' : ' &rarr;') ?>
         </a>
         <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
         <!-- Step 5: Survey -->

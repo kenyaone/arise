@@ -38,7 +38,7 @@ switch ($action) {
             if ($exists) {
                 $stmt = db()->prepare(
                     'UPDATE lesson_progress
-                     SET last_slide = :slide, updated_at = CURRENT_TIMESTAMP
+                     SET last_slide = :slide
                      WHERE session_hash = :hash AND lesson_id = :lid'
                 );
             } else {
