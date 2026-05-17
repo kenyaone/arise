@@ -232,13 +232,18 @@ if (!$db) {
                        s.cluster_id,
                        COALESCE(cl.name,'') AS cluster_name,
                        d.lat, d.lng,
-                       SUM(d.learner_count) AS learners,
-                       SUM(d.quiz_count) AS quiz_attempts,
-                       CASE WHEN SUM(d.quiz_count)>0
+                       COALESCE(NULLIF(SUM(d.learner_count),0), COUNT(DISTINCT st.id)) AS learners,
+                       COALESCE(NULLIF(SUM(d.quiz_count),0), COUNT(DISTINCT qa.id)) AS quiz_attempts,
+                       CASE WHEN SUM(d.quiz_count)>0 AND SUM(d.avg_score*d.quiz_count)>0
                             THEN ROUND(SUM(d.avg_score*d.quiz_count)/SUM(d.quiz_count),1)
+                            WHEN COUNT(CASE WHEN qa.percentage>0 THEN 1 END)>0
+                            THEN ROUND(AVG(CASE WHEN qa.percentage>0 THEN CAST(qa.percentage AS REAL) END),1)
                             ELSE 0 END AS avg_score,
-                       SUM(d.cert_count) AS certs,
-                       CASE WHEN SUM(d.learner_count)>0 THEN ROUND(100.0*SUM(d.cert_count)/SUM(d.learner_count),1) ELSE 0 END AS cert_rate,
+                       COALESCE(NULLIF(SUM(d.cert_count),0), COUNT(DISTINCT cert.id)) AS certs,
+                       CASE WHEN COALESCE(NULLIF(SUM(d.learner_count),0), COUNT(DISTINCT st.id))>0
+                            THEN ROUND(100.0*COALESCE(NULLIF(SUM(d.cert_count),0), COUNT(DISTINCT cert.id))
+                                       /COALESCE(NULLIF(SUM(d.learner_count),0), COUNT(DISTINCT st.id)),1)
+                            ELSE 0 END AS cert_rate,
                        ROUND(AVG(CASE WHEN d.avg_pre_score IS NOT NULL THEN d.avg_pre_score END),1) AS avg_pre,
                        ROUND(AVG(CASE WHEN d.avg_post_score IS NOT NULL THEN d.avg_post_score END),1) AS avg_post,
                        ROUND(AVG(CASE WHEN d.knowledge_gain IS NOT NULL THEN d.knowledge_gain END),1) AS knowledge_gain,
@@ -249,13 +254,16 @@ if (!$db) {
                        SUM(COALESCE(d.lesson_completions,0)) AS lesson_completions,
                        SUM(COALESCE(d.active_last_30_days,0)) AS active_last_30_days,
                        MAX(d.last_synced_at) AS last_synced_at,
-                       CASE WHEN SUM(d.learner_count)>0 THEN 1 ELSE 0 END AS has_learners
+                       CASE WHEN COALESCE(NULLIF(SUM(d.learner_count),0), COUNT(DISTINCT st.id))>0 THEN 1 ELSE 0 END AS has_learners
                 FROM device_sync_stats d
-                INNER JOIN schools s     ON s.name = d.school_name AND s.is_active=1
-                LEFT JOIN clusters cl    ON cl.id  = s.cluster_id
+                INNER JOIN schools s      ON s.name = d.school_name AND s.is_active=1
+                LEFT JOIN clusters cl     ON cl.id  = s.cluster_id
+                LEFT JOIN students st     ON st.school_name = s.name AND st.deleted_at IS NULL
+                LEFT JOIN certificates cert ON cert.student_id = st.id
+                LEFT JOIN quiz_attempts qa  ON qa.student_id  = st.id
                 " . ($role === 'manager' ? "WHERE s.cluster_id = $clusterId" : "") . "
                 GROUP BY d.school_name
-                ORDER BY SUM(d.learner_count) DESC";
+                ORDER BY COALESCE(NULLIF(SUM(d.learner_count),0), COUNT(DISTINCT st.id)) DESC";
             $result = $db->query($sql);
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) $projects[] = $row;
 
@@ -304,6 +312,17 @@ if (!$db) {
         if ($total_attempts > 0) {
             $global_avg_score = round(array_sum(array_map(fn($s) => ($s['avg_score'] ?? 0) * ($s['quiz_attempts'] ?? 0), $projects)) / $total_attempts, 1);
         }
+        // Supplement totals from actual local tables (covers schools not in device_sync_stats)
+        try {
+            $direct_certs = (int)$db->querySingle("SELECT COUNT(DISTINCT c.id) FROM certificates c JOIN students s ON s.id=c.student_id WHERE s.deleted_at IS NULL");
+            if ($direct_certs > $total_certs) $total_certs = $direct_certs;
+            $direct_learners = (int)$db->querySingle("SELECT COUNT(*) FROM students WHERE deleted_at IS NULL");
+            if ($direct_learners > $total_learners) $total_learners = $direct_learners;
+            if ($global_avg_score == 0) {
+                $direct_avg = (float)$db->querySingle("SELECT ROUND(AVG(CAST(percentage AS REAL)),1) FROM quiz_attempts WHERE percentage > 0");
+                if ($direct_avg > 0) $global_avg_score = $direct_avg;
+            }
+        } catch (Exception $e) {}
         if ($hasSyncedData) $lastSyncTime = $db->querySingle("SELECT MAX(last_synced_at) FROM device_sync_stats");
 
         // Load poll summary
@@ -424,6 +443,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#
                 <?php else: ?>
                 <span class="role-badge">📁 <?= htmlspecialchars($clusterName) ?></span>
                 <?php endif; ?>
+                <button class="print-btn" onclick="exportExcel()" style="background:#1d6f42;">📊 Export Excel</button>
                 <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
                 <form method="POST" style="display:inline;">
                     <button type="submit" name="logout" class="logout-btn">Logout</button>
@@ -532,12 +552,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#
             <div class="metric"><span class="metric-label">📝 Quiz Avg</span><span class="metric-value"><?= ($s['avg_score']??0)>0 ? $s['avg_score'].'%' : 'N/A' ?></span></div>
             <div class="metric"><span class="metric-label">🎓 Certificates</span><span class="metric-value"><?= (int)($s['certs']??0) ?></span></div>
             <div class="metric"><span class="metric-label">📊 Cert Rate</span><span class="metric-value"><?= ($s['certRate']??0)>0 ? number_format($s['certRate'],1).'%' : '0%' ?></span></div>
-            <?php if ($s['knowledge_gain'] !== null): ?>
-            <div class="metric"><span class="metric-label">📈 Knowledge Gain</span><span class="metric-value" style="color:#0369a1;">+<?= number_format((float)$s['knowledge_gain'],1) ?>%</span></div>
-            <?php endif; ?>
-            <?php if ((int)($s['behavior_surveys']??0) > 0): ?>
-            <div class="metric"><span class="metric-label">🔄 Behavior Change</span><span class="metric-value" style="color:#7c3aed;"><?= number_format((float)($s['pct_changed']??0),1) ?>%</span></div>
-            <?php endif; ?>
+            <div class="metric"><span class="metric-label">📋 Pre-Test Avg</span><span class="metric-value" style="color:#64748b;"><?= isset($s['avg_pre']) && $s['avg_pre'] !== null ? number_format((float)$s['avg_pre'],1).'%' : '—' ?></span></div>
+            <div class="metric"><span class="metric-label">📋 Post-Test Avg</span><span class="metric-value" style="color:#0369a1;"><?= isset($s['avg_post']) && $s['avg_post'] !== null ? number_format((float)$s['avg_post'],1).'%' : '—' ?></span></div>
+            <div class="metric"><span class="metric-label">📈 Knowledge Gain</span><span class="metric-value" style="color:#0369a1;"><?= $s['knowledge_gain'] !== null ? '+'.number_format((float)$s['knowledge_gain'],1).'%' : '—' ?></span></div>
+            <?php $bs = (int)($s['behavior_surveys']??0); ?>
+            <div style="background:#faf5ff;border-radius:6px;padding:7px 8px;margin-top:6px;">
+                <div style="font-size:.72rem;font-weight:700;color:#6d28d9;margin-bottom:4px;">🧠 Behavioral Survey<?= $bs > 0 ? ' ('.$bs.' responses)' : ' — awaiting responses' ?></div>
+                <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">🔄 Changed Behavior</span><span class="metric-value" style="color:#7c3aed;"><?= $bs > 0 ? number_format((float)($s['pct_changed']??0),1).'%' : '—' ?></span></div>
+                <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">🤝 Shared Knowledge</span><span class="metric-value" style="color:#0ea271;"><?= $bs > 0 ? number_format((float)($s['pct_shared']??0),1).'%' : '—' ?></span></div>
+                <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">💪 Feel Confident</span><span class="metric-value" style="color:#d97706;"><?= $bs > 0 ? number_format((float)($s['pct_confident']??0),1).'%' : '—' ?></span></div>
+            </div>
             <?php else: ?>
             <p style="color:#92400e;font-size:.83rem;margin-top:6px;">Device is registered — awaiting first learner registration.</p>
             <?php endif; ?>
@@ -593,6 +617,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#
         <div class="metric"><span class="metric-label">📝 Quiz Avg</span><span class="metric-value"><?= ($s['avg_score']??0)>0 ? $s['avg_score'].'%' : 'N/A' ?></span></div>
         <div class="metric"><span class="metric-label">🎓 Certificates</span><span class="metric-value"><?= (int)($s['certs']??0) ?></span></div>
         <div class="metric"><span class="metric-label">📊 Cert Rate</span><span class="metric-value"><?= ($s['certRate']??0)>0 ? number_format($s['certRate'],1).'%' : '0%' ?></span></div>
+        <div class="metric"><span class="metric-label">📋 Pre-Test Avg</span><span class="metric-value" style="color:#64748b;"><?= isset($s['avg_pre']) && $s['avg_pre'] !== null ? number_format((float)$s['avg_pre'],1).'%' : '—' ?></span></div>
+        <div class="metric"><span class="metric-label">📋 Post-Test Avg</span><span class="metric-value" style="color:#0369a1;"><?= isset($s['avg_post']) && $s['avg_post'] !== null ? number_format((float)$s['avg_post'],1).'%' : '—' ?></span></div>
+        <div class="metric"><span class="metric-label">📈 Knowledge Gain</span><span class="metric-value" style="color:#0369a1;"><?= $s['knowledge_gain'] !== null ? '+'.number_format((float)$s['knowledge_gain'],1).'%' : '—' ?></span></div>
+        <?php $bs = (int)($s['behavior_surveys']??0); ?>
+        <div style="background:#faf5ff;border-radius:6px;padding:7px 8px;margin-top:6px;">
+            <div style="font-size:.72rem;font-weight:700;color:#6d28d9;margin-bottom:4px;">🧠 Behavioral Survey<?= $bs > 0 ? ' ('.$bs.' responses)' : ' — awaiting responses' ?></div>
+            <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">🔄 Changed Behavior</span><span class="metric-value" style="color:#7c3aed;"><?= $bs > 0 ? number_format((float)($s['pct_changed']??0),1).'%' : '—' ?></span></div>
+            <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">🤝 Shared Knowledge</span><span class="metric-value" style="color:#0ea271;"><?= $bs > 0 ? number_format((float)($s['pct_shared']??0),1).'%' : '—' ?></span></div>
+            <div class="metric" style="border:none;padding:2px 0;"><span class="metric-label">💪 Feel Confident</span><span class="metric-value" style="color:#d97706;"><?= $bs > 0 ? number_format((float)($s['pct_confident']??0),1).'%' : '—' ?></span></div>
+        </div>
         <?php else: ?>
         <p style="color:#92400e;font-size:.83rem;margin-top:6px;">Device registered — awaiting first learner.</p>
         <?php endif; ?>
@@ -653,6 +687,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 const redPin    = L.icon({iconUrl:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 48"><path fill="%23dc2626" d="M16 0C9.4 0 4 5.4 4 12c0 8 12 36 12 36s12-28 12-36c0-6.6-5.4-12-12-12z"/><circle cx="16" cy="12" r="4" fill="white"/></svg>',iconSize:[32,48],iconAnchor:[16,48],popupAnchor:[0,-48]});
 const orangePin = L.icon({iconUrl:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 48"><path fill="%23f59e0b" d="M16 0C9.4 0 4 5.4 4 12c0 8 12 36 12 36s12-28 12-36c0-6.6-5.4-12-12-12z"/><circle cx="16" cy="12" r="4" fill="white"/></svg>',iconSize:[32,48],iconAnchor:[16,48],popupAnchor:[0,-48]});
@@ -681,23 +716,81 @@ projectsData.forEach(p => {
     // Only place a pin when the project has learners
     if (p.has_learners != 1) return;
     const [jLat, jLng] = jitter(p.lat, p.lng);
-    const certRate  = p.cert_rate > 0 ? p.cert_rate + '%' : (p.learners > 0 && p.certs > 0 ? Math.round(p.certs/p.learners*100)+'%' : '0%');
-    const kgLine    = p.knowledge_gain != null ? `<p>📈 Knowledge Gain: <strong style="color:#0369a1;">+${p.knowledge_gain}%</strong></p>` : '';
-    const bchgLine  = p.pct_changed > 0 ? `<p>🔄 Behavior Change: <strong style="color:#7c3aed;">${p.pct_changed}%</strong></p>` : '';
-    const sharedLine= p.pct_shared > 0  ? `<p>🤝 Knowledge Shared: <strong style="color:#0ea271;">${p.pct_shared}%</strong></p>` : '';
-    const confLine  = p.pct_confident > 0 ? `<p>💪 Feel Confident: <strong style="color:#d97706;">${p.pct_confident}%</strong></p>` : '';
+    const certRate = p.cert_rate > 0 ? p.cert_rate + '%' : (p.learners > 0 && p.certs > 0 ? Math.round(p.certs/p.learners*100)+'%' : '0%');
+    const kg       = p.knowledge_gain != null ? `+${p.knowledge_gain}%` : '—';
+    const pre      = p.avg_pre  != null ? `${p.avg_pre}%`  : '—';
+    const post     = p.avg_post != null ? `${p.avg_post}%` : '—';
+    const bs       = parseInt(p.behavior_surveys) || 0;
+    const bLabel   = bs > 0 ? `🧠 Behavioral Survey (${bs} responses)` : '🧠 Behavioral Survey — awaiting responses';
+    const bchg     = bs > 0 ? `${p.pct_changed}%`   : '—';
+    const shared   = bs > 0 ? `${p.pct_shared}%`    : '—';
+    const conf     = bs > 0 ? `${p.pct_confident}%` : '—';
     L.marker([jLat, jLng], {icon: redPin}).bindPopup(`
-        <div style="width:220px;font-size:.88rem;">
+        <div style="width:230px;font-size:.85rem;">
         <h4 style="color:#dc2626;margin-bottom:4px;">🔴 ${p.name||p.school_name}</h4>
-        <p style="margin-bottom:6px;"><strong>📌 ${p.county||'Unknown'}${p.cluster_name ? ' — '+p.cluster_name : ''}</strong></p>
-        <hr style="margin:6px 0;border:none;border-top:1px solid #e5e7eb;">
-        <p>👩‍🎓 Learners: <strong>${p.learners||0}</strong></p>
-        <p>📝 Quiz Avg: <strong>${p.avg_score>0?p.avg_score+'%':'N/A'}</strong></p>
-        <p>🎓 Certs: <strong>${p.certs||0}</strong> (${certRate})</p>
-        ${kgLine}${bchgLine}${sharedLine}${confLine}
-        <p style="margin-top:7px;padding:5px 8px;background:#dcfce7;border-radius:4px;color:#166534;font-size:.82rem;">✓ Device syncing</p>
+        <p style="margin-bottom:6px;color:#555;font-size:.8rem;">📌 ${p.county||'Unknown'}${p.cluster_name ? ' — '+p.cluster_name : ''}</p>
+        <hr style="margin:5px 0;border:none;border-top:1px solid #e5e7eb;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;font-size:.82rem;">
+          <span style="color:#555">👩‍🎓 Learners</span><strong>${p.learners||0}</strong>
+          <span style="color:#555">📝 Quiz Avg</span><strong>${p.avg_score>0?p.avg_score+'%':'N/A'}</strong>
+          <span style="color:#555">🎓 Certs</span><strong>${p.certs||0} (${certRate})</strong>
+          <span style="color:#555">📋 Pre-Test</span><strong style="color:#64748b">${pre}</strong>
+          <span style="color:#555">📋 Post-Test</span><strong style="color:#0369a1">${post}</strong>
+          <span style="color:#555">📈 Knowledge Gain</span><strong style="color:#0369a1">${kg}</strong>
+        </div>
+        <div style="background:#faf5ff;border-radius:5px;padding:5px 7px;margin-top:6px;font-size:.8rem;">
+          <div style="font-weight:700;color:#6d28d9;margin-bottom:3px;">${bLabel}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;">
+            <span style="color:#555">🔄 Changed</span><strong style="color:#7c3aed">${bchg}</strong>
+            <span style="color:#555">🤝 Shared</span><strong style="color:#0ea271">${shared}</strong>
+            <span style="color:#555">💪 Confident</span><strong style="color:#d97706">${conf}</strong>
+          </div>
+        </div>
+        <p style="margin-top:6px;padding:4px 7px;background:#dcfce7;border-radius:4px;color:#166534;font-size:.78rem;">✓ Device syncing</p>
         </div>`).addTo(map);
 });
+
+// ── Excel export ──────────────────────────────────────────────────────────
+function exportExcel() {
+    const wb   = XLSX.utils.book_new();
+    const date = new Date().toLocaleDateString('en-KE',{day:'2-digit',month:'short',year:'numeric'}).replace(/ /g,'-');
+
+    // Sheet 1: Projects with data
+    const h1 = ['Project','County','Cluster','Learners','Certificates','Cert Rate (%)','Quiz Avg (%)',
+                 'Pre-Test Avg (%)','Post-Test Avg (%)','Knowledge Gain (%)','Behavior Surveys',
+                 'Behavior Change (%)','Knowledge Shared (%)','Feel Confident (%)','Lesson Completions',
+                 'Active Last 30d','Last Synced'];
+    const r1 = projectsData.map(p => [
+        p.name||'', p.county||'', p.cluster_name||'',
+        p.learners||0, p.certs||0,
+        p.cert_rate > 0 ? parseFloat(p.cert_rate) : '',
+        p.avg_score > 0 ? parseFloat(p.avg_score) : '',
+        p.avg_pre   != null ? parseFloat(p.avg_pre)   : '',
+        p.avg_post  != null ? parseFloat(p.avg_post)  : '',
+        p.knowledge_gain != null ? parseFloat(p.knowledge_gain) : '',
+        p.behavior_surveys||0,
+        p.pct_changed  > 0 ? parseFloat(p.pct_changed)  : '',
+        p.pct_shared   > 0 ? parseFloat(p.pct_shared)   : '',
+        p.pct_confident> 0 ? parseFloat(p.pct_confident): '',
+        p.lesson_completions||0,
+        p.active_last_30_days||0,
+        p.last_synced_at||''
+    ]);
+    const ws1 = XLSX.utils.aoa_to_sheet([h1, ...r1]);
+    ws1['!cols'] = [22,14,18,10,13,13,12,15,15,16,16,18,17,16,16,14,18].map(w=>({wch:w}));
+    XLSX.utils.book_append_sheet(wb, ws1, 'Projects');
+
+    // Sheet 2: Projects without devices (if any)
+    if (noSyncData.length > 0) {
+        const h2 = ['Project','County','Cluster','Note'];
+        const r2 = noSyncData.map(p => [p.name||'', p.county||'', p.cluster_name||'', 'No device connected yet']);
+        const ws2 = XLSX.utils.aoa_to_sheet([h2, ...r2]);
+        ws2['!cols'] = [22,14,18,25].map(w=>({wch:w}));
+        XLSX.utils.book_append_sheet(wb, ws2, 'No Device Yet');
+    }
+
+    XLSX.writeFile(wb, `ARISE-Projects-${date}.xlsx`);
+}
 
 // Cluster tab filter
 function filterCluster(name, btn) {
