@@ -30,6 +30,7 @@ if ($action === 'create_cluster') {
             $stmt->execute();
             $newCid = $db->lastInsertRowID();
             ariseAuditLog('create_cluster', 'cluster', $newCid, "Created cluster: $name");
+            syncClustersToCloud();
             $msg = "Cluster \"$name\" created.";
         } catch(Exception $e) { $err = 'Name already exists.'; }
     }
@@ -52,6 +53,7 @@ if ($action === 'edit_cluster') {
             $stmt2->execute();
         }
         ariseAuditLog('edit_cluster', 'cluster', $id, "Edited cluster: $name" . ($pw !== '' ? ' | password changed' : ''));
+        syncClustersToCloud();
         $msg = 'Cluster updated.';
     }
 }
@@ -68,6 +70,7 @@ if ($action === 'edit_project') {
         $stmt->bindValue(3, $id,     SQLITE3_INTEGER);
         $stmt->execute();
         ariseAuditLog('edit_project', 'school', $id, "Edited project: $name | county: $county");
+        syncClustersToCloud();
         $msg = "Project \"$name\" updated.";
     }
 }
@@ -80,6 +83,7 @@ if ($action === 'delete_cluster') {
         $db->exec("UPDATE schools SET cluster_id=NULL WHERE cluster_id=$id");
         $db->exec("DELETE FROM clusters WHERE id=$id");
         ariseAuditLog('delete_cluster', 'cluster', $id, "Deleted cluster: $cname");
+        syncClustersToCloud();
         $msg = 'Cluster deleted. Projects moved to Unassigned.';
     }
 }
@@ -101,6 +105,7 @@ if ($action === 'assign_project') {
             $cname = $db->querySingle("SELECT name FROM clusters WHERE id=" . (int)$cid) ?? "ID $cid";
             ariseAuditLog('assign_project', 'school', $sid, "Assigned project: $sname to cluster: $cname");
         }
+        syncClustersToCloud();
         $msg = 'Project assignment updated.';
     }
 }
@@ -116,6 +121,7 @@ if ($action === 'bulk_assign') {
             $db->exec("UPDATE schools SET cluster_id=$cid WHERE id=$sid");
         }
         ariseAuditLog('bulk_assign', 'cluster', $cid, "Bulk assigned " . count($sids) . " project(s) to cluster: $cname | IDs: " . implode(',', array_map('intval', $sids)));
+        syncClustersToCloud();
         $msg = count($sids) . ' project(s) assigned to cluster.';
     }
 }

@@ -21,6 +21,10 @@ define('LOGO_PATH', __DIR__ . '/../data/uploads/logos/');
 // School config — set during first setup
 define('DEFAULT_SCHOOL_ID', 'ARISE-SETUP-000');
 
+// Cloud sync — pushes cluster/school data to live site after admin changes
+define('CLOUD_SYNC_SECRET', 'arise_sync_k3nya_2026');
+define('CLOUD_SYNC_URL',    'https://ariseci.org/arise/arise_cluster_receiver.php');
+
 function getLogoUrl(): ?string {
     foreach (['png','jpg','gif','webp','svg'] as $ext) {
         $path = LOGO_PATH . 'school_logo.' . $ext;
@@ -540,4 +544,34 @@ function markNotificationsRead(int $studentId): void {
     if (!$studentId) return;
     db()->exec("UPDATE essay_responses SET notified=1 WHERE student_id=$studentId AND is_graded=1");
     db()->exec("UPDATE anonymous_questions SET notified=1 WHERE session_hash='".SQLite3::escapeString(getSessionHash())."' AND is_answered=1");
+}
+
+function syncClustersToCloud(): void {
+    if (!CLOUD_SYNC_URL) return;
+    try {
+        $clusters = [];
+        $r = db()->query("SELECT id, name, password_hash FROM clusters ORDER BY id");
+        while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+            $clusters[] = ['id' => (int)$row['id'], 'name' => $row['name'], 'hash' => $row['password_hash']];
+        }
+        $schools = [];
+        $r = db()->query("SELECT name, county, cluster_id, is_active, password_hash FROM schools");
+        while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+            $schools[] = [
+                'name'   => $row['name'],
+                'county' => $row['county'] ?? '',
+                'cluster_id' => $row['cluster_id'] ? (int)$row['cluster_id'] : null,
+                'active' => (int)$row['is_active'],
+                'hash'   => $row['password_hash'] ?? '',
+            ];
+        }
+        $ctx = stream_context_create(['http' => [
+            'method'        => 'POST',
+            'header'        => 'Content-Type: application/x-www-form-urlencoded',
+            'content'       => http_build_query(['secret' => CLOUD_SYNC_SECRET, 'payload' => json_encode(compact('clusters', 'schools'))]),
+            'timeout'       => 5,
+            'ignore_errors' => true,
+        ]]);
+        @file_get_contents(CLOUD_SYNC_URL, false, $ctx);
+    } catch (\Throwable $e) {}
 }
