@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Mental Health | ARISE</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.dear-step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;}
+.dear-letter{font-size:1.5rem;font-weight:900;color:var(--acc);min-width:32px;}
+.dear-content strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:2px;}
+.dear-content span{font-size:.84rem;}
+.script-block{background:#f0fdf4;border:1px solid #a5d6a7;border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.script-block .speaker{font-size:.75rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .line{font-size:.88rem;font-style:italic;}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card p{font-size:.86rem;margin-bottom:10px;}
+.choice{display:block;width:100%;text-align:left;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice.chosen-ok{background:#e8f5ec;border-color:var(--ok);color:var(--ok);font-weight:700;}
+.choice.chosen-no{background:#fdecea;border-color:var(--no);color:var(--no);}
+.s-result{display:none;margin-top:8px;font-size:.84rem;padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #a5d6a7;}
+.s-result.ok{background:#e8f5ec;}
+.s-result.no{background:#fdecea;border-color:#ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.visited{background:var(--acc);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+.q-text{font-size:.88rem;font-weight:600;margin-bottom:8px;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;transition:.15s;}
+.opt:hover{border-color:var(--pri);background:#e8f5ec;}
+.opt.selected{border-color:var(--pri);background:#e8f5ec;font-weight:600;}
+.opt.correct{border-color:var(--ok);background:#e8f5ec;font-weight:600;}
+.opt.wrong{border-color:var(--no);background:#fdecea;}
+.opt-letter{font-weight:800;color:var(--pri);min-width:18px;}
+.mcq-fb{margin-top:8px;font-size:.83rem;padding:8px 10px;border-radius:6px;display:none;}
+.mcq-fb.ok{background:#e8f5ec;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#fdecea;border:1px solid #ef9a9a;}
+@media(max-width:480px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+.en-inline{display:inline;}.sw-inline{display:none;}.sh-inline{display:none;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Branching decision tree ───────────────────────────── */
+.btree-wrap{margin:10px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-question{font-weight:700;font-size:.9rem;color:var(--dark);margin:12px 0 8px;}
+.bt-choices{display:flex;flex-direction:column;gap:8px;}
+.bt-choice{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:.85rem;text-align:left;line-height:1.5;transition:.15s;font-family:inherit;width:100%;}
+.bt-choice:hover{border-color:var(--pri);background:#f0fdf4;}
+.bt-choice.good{border-color:var(--ok);background:#e8f5e9;}
+.bt-choice.bad{border-color:var(--no);background:#ffebee;}
+.bt-choice.warn{border-color:var(--acc);background:#fff8e1;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit;}
+.bt-restart:hover{background:var(--pri-l);}
+.bt-back{background:transparent;border:1px solid var(--border);color:var(--soft);padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label"><span class="en">Mental Health &amp; Wellbeing</span><span class="sw">Afya ya Akili na Ustawi</span><span class="sh">Mental Health</span></div>
+    <div class="lesson-name"><span class="en">&#128683; Refusal Skills — Mental Health</span><span class="sw">&#128683; Ujuzi wa Kukataa — Afya ya Akili</span><span class="sh">&#128683; Refusal Skills — Mental Health</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 9</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">Language:</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span class="lb-label" style="margin-left:8px;">Size:</span>
+    <button class="lb-size-btn" id="sz-sm" onclick="setSize('sm')">A-</button>
+    <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+    <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+  </div>
+</div>
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="slide-head">&#127919; <span class="en">What You Will Learn</span><span class="sw">Utakachojifunza</span><span class="sh">Utajua Nini</span></div>
+<div class="lo-box">
+  <h3><span class="en">&#9989; Learning Outcomes</span><span class="sw">&#9989; Matokeo ya Kujifunza</span><span class="sh">&#9989; Utajua</span></h3>
+  <ol>
+    <li><span class="en">Recognise signs of mental health challenges in yourself and peers</span><span class="sw">Tambua dalili za changamoto za afya ya akili kwako na kwa wenzako</span><span class="sh">Tambua signs za mental health challenges kwako na kwa marafiki zako</span></li>
+    <li><span class="en">Identify stigma and pressure tactics used to dismiss mental health concerns</span><span class="sw">Tambua unyanyapaa na mbinu za shinikizo zinazotumika kupuuza wasiwasi wa afya ya akili</span><span class="sh">Tambua stigma na pressure tactics zinazotumiwa ku-dismiss mental health concerns</span></li>
+    <li><span class="en">Apply the DEAR method to refuse pressure to hide mental health struggles</span><span class="sw">Tumia njia ya DEAR kukataa shinikizo la kuficha mapambano ya afya ya akili</span><span class="sh">Tumia DEAR method ku-refuse pressure ya ku-hide mental health struggles</span></li>
+    <li><span class="en">Know where to seek help for mental health in Kenya</span><span class="sw">Jua mahali pa kutafuta msaada wa afya ya akili Kenya</span><span class="sh">Jua mahali pa ku-seek help ya mental health Kenya</span></li>
+  </ol>
+</div>
+<div class="inquiry">
+  <span class="en">&#128161; Think: Have you ever been told to "just be strong" or "don't talk about it" when you were struggling? How did that make you feel — and who would you trust to tell?</span>
+  <span class="sw">&#128161; Fikiria: Je, umewahi kuambiwa "kuwa imara tu" au "usizungumze kuhusu hilo" ulipokuwa ukipambana? Hiyo ilikufanya uhisi vipi — na utaambia nani?</span>
+  <span class="sh">&#128161; Fikiria: Umewahi kuambiwa "kuwa strong tu" au "usizungumze kuhusu" ulipokuwa una-struggle? Hiyo ilikufanya uhisi aje — na utaambia nani?</span>
+</div>
+</div>
+
+<!-- SLIDE 2: Understanding Mental Health -->
+<div class="slide">
+<div class="slide-head">&#129504; <span class="en">Understanding Mental Health and Stigma</span><span class="sw">Kuelewa Afya ya Akili na Unyanyapaa</span><span class="sh">Kuelewa Mental Health na Stigma</span></div>
+<div class="key-term">
+  <strong><span class="en">What is mental health?</span><span class="sw">Afya ya akili ni nini?</span><span class="sh">Mental health ni nini?</span></strong>
+  <span class="en">Mental health is not just the absence of illness — it is your emotional, psychological, and social wellbeing. It affects how you think, feel, act, handle stress, and relate to others. Good mental health is essential at every stage of life.</span>
+  <span class="sw">Afya ya akili si tu kutokuwa na ugonjwa — ni ustawi wako wa kihisia, kisaikolojia, na kijamii. Inaathiri jinsi unavyofikiri, kuhisi, kutenda, kushughulikia msongo, na kuhusiana na wengine. Afya nzuri ya akili ni muhimu katika kila hatua ya maisha.</span>
+  <span class="sh">Mental health si tu kutokuwa na ugonjwa — ni wellbeing yako ya kihisia, kisaikolojia, na kijamii. Inaathiri jinsi unavyofikiri, kuhisi, ku-act, ku-handle stress, na kuhusiana na wengine.</span>
+</div>
+<p class="tp"><strong><span class="en">Common signs that someone may be struggling:</span><span class="sw">Dalili za kawaida kwamba mtu anaweza kuwa akipambana:</span><span class="sh">Common signs kwamba mtu anaweza kuwa ana-struggle:</span></strong></p>
+<ul class="bl">
+  <li><span class="en">Persistent sadness, hopelessness, or emptiness lasting more than two weeks</span><span class="sw">Huzuni inayoendelea, kukosa matumaini, au utupu unaodumu zaidi ya wiki mbili</span><span class="sh">Persistent sadness, hopelessness, au emptiness inayodumu zaidi ya wiki mbili</span></li>
+  <li><span class="en">Withdrawal from friends, family, and activities once enjoyed</span><span class="sw">Kujiepusha na marafiki, familia, na shughuli zilizofurahiwa awali</span><span class="sh">Ku-withdraw kutoka kwa marafiki, familia, na activities</span></li>
+  <li><span class="en">Significant changes in sleep, appetite, or ability to concentrate</span><span class="sw">Mabadiliko makubwa ya usingizi, hamu ya chakula, au uwezo wa kuzingatia</span><span class="sh">Significant changes za usingizi, hamu ya chakula, au concentration</span></li>
+  <li><span class="en">Thoughts of self-harm or suicide — these must always be taken seriously</span><span class="sw">Mawazo ya kujidhuru au kujiua — haya lazima yachukuliwe uzito kila wakati</span><span class="sh">Thoughts za self-harm au suicide — lazima zichukuliwe seriously kila wakati</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; 1 in 4 people in Kenya experience a mental health challenge in their lifetime. It is common — and it is never a sign of weakness or lack of faith.</span><span class="sw">&#9888; 1 kati ya watu 4 Kenya hupitia changamoto ya afya ya akili maishani mwao. Ni kawaida — na si ishara ya udhaifu au ukosefu wa imani.</span><span class="sh">&#9888; 1 kati ya watu 4 Kenya hupitia mental health challenge maishani. Ni common — na si sign ya weakness au ukosefu wa imani.</span></strong>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics That Silence Mental Health Needs</span><span class="sw">Mbinu za Shinikizo Zinazonyamazisha Mahitaji ya Afya ya Akili</span><span class="sh">Pressure Tactics Zinazosilence Mental Health Needs</span></div>
+<p class="tp"><span class="en">Recognising these tactics is the first step to refusing them:</span><span class="sw">Kutambua mbinu hizi ni hatua ya kwanza ya kuzikataa:</span><span class="sh">Ku-recognise tactics hizi ni hatua ya kwanza ya ku-refuse:</span></p>
+<div class="example-box"><strong>Shame &amp; Family Honour Pressure</strong><span class="en"> "Usilete aibu kwa familia — mental health ni jambo la faragha." Shame is used to keep you silent instead of getting help.</span><span class="sw"> "Usilete aibu kwa familia — afya ya akili ni jambo la faragha." Aibu inatumika kukufanya ukae kimya badala ya kupata msaada.</span><span class="sh"> "Usilete aibu kwa familia." Shame inatumika kukufanya ukae kimya badala ya ku-get help.</span></div>
+<div class="example-box"><strong>Minimising / "Toughen Up"</strong><span class="en"> "Everyone feels like that — you're just being weak." Dismissing your feelings as normal or exaggerated stops you from seeking help you need.</span><span class="sw"> "Kila mtu anahisi hivyo — unajifanya tu dhaifu." Kupuuza hisia zako kama za kawaida au za ziada kunakuzuia kutafuta msaada unaohitajika.</span><span class="sh"> "Kila mtu anahisi hivyo — unajifanya tu weak." Ku-dismiss feelings zako kunakuzuia ku-seek help.</span></div>
+<div class="example-box"><strong>Religious Minimisation</strong><span class="en"> "Just pray harder — God will heal you, you don't need a doctor." Faith can support wellbeing, but spiritual advice cannot replace professional mental health care.</span><span class="sw"> "Omba zaidi — Mungu atakuponya, huhitaji daktari." Imani inaweza kusaidia ustawi, lakini ushauri wa kiroho hauwezi kuchukua nafasi ya huduma ya kitaalamu ya afya ya akili.</span><span class="sh"> "Omba zaidi — God atakuponya." Faith inaweza ku-support wellbeing, lakini spiritual advice haiwezi ku-replace professional mental health care.</span></div>
+<div class="example-box"><strong>Stigma Reinforcement</strong><span class="en"> "Therapists are for mad people — you don't want people to think you're crazy." Fear of the 'mad' label prevents young people from getting life-changing support.</span><span class="sw"> "Wataalam wa afya ya akili ni kwa watu wazimu — hutaki watu wakifikirie una wazimu." Hofu ya lebo ya 'mwendawazimu' inazuia vijana kupata msaada unaobadilisha maisha.</span><span class="sh"> "Therapists ni kwa watu wazimu." Hofu ya 'crazy' label inazuia vijana ku-get support inayobadilisha maisha.</span></div>
+</div>
+
+<!-- SLIDE 4: DEAR Method -->
+<div class="slide">
+<div class="slide-head">&#127775; <span class="en">The DEAR Method — Refusing Pressure to Stay Silent</span><span class="sw">Njia ya DEAR — Kukataa Shinikizo la Kukaa Kimya</span><span class="sh">DEAR Method — Ku-refuse Pressure ya Kukaa Kimya</span></div>
+<p class="tp"><span class="en">Use DEAR whenever someone pressures you to ignore or hide your mental health needs:</span><span class="sw">Tumia DEAR wakati mtu anakushawishi kupuuza au kuficha mahitaji yako ya afya ya akili:</span><span class="sh">Tumia DEAR wakati mtu ana-pressure wewe ku-ignore au ku-hide mental health needs zako:</span></p>
+<div class="dear-step">
+  <div class="dear-letter">D</div>
+  <div class="dear-content">
+    <strong><span class="en">Describe the situation calmly</span><span class="sw">Elezea hali kwa utulivu</span><span class="sh">Describe hali kwa utulivu</span></strong>
+    <span class="en">"I have been feeling very low and unable to concentrate for several weeks now."</span>
+    <span class="sw">"Nimekuwa nikihisi huzuni sana na kushindwa kuzingatia kwa wiki kadhaa sasa."</span>
+    <span class="sh">"Nimekuwa nikihisi low sana na kushindwa ku-concentrate kwa wiki kadhaa sasa."</span>
+  </div>
+</div>
+<div class="dear-step">
+  <div class="dear-letter">E</div>
+  <div class="dear-content">
+    <strong><span class="en">Express your feelings honestly</span><span class="sw">Eleza hisia zako kwa uaminifu</span><span class="sh">Express feelings zako kwa uaminifu</span></strong>
+    <span class="en">"I feel overwhelmed and scared, and I need support — not silence."</span>
+    <span class="sw">"Ninajisikia mzigo mzito na hofu, na ninahitaji msaada — si ukimya."</span>
+    <span class="sh">"Ninajisikia overwhelmed na scared, na ninahitaji support — si ukimya."</span>
+  </div>
+</div>
+<div class="dear-step">
+  <div class="dear-letter">A</div>
+  <div class="dear-content">
+    <strong><span class="en">Assert your needs clearly</span><span class="sw">Sisitiza mahitaji yako wazi</span><span class="sh">Assert needs zako clearly</span></strong>
+    <span class="en">"I need to speak to a counsellor or health worker. I am going to do that."</span>
+    <span class="sw">"Ninahitaji kuzungumza na mshauri au mfanyakazi wa afya. Nitafanya hivyo."</span>
+    <span class="sh">"Ninahitaji kuzungumza na counsellor au health worker. Nitafanya hivyo."</span>
+  </div>
+</div>
+<div class="dear-step">
+  <div class="dear-letter">R</div>
+  <div class="dear-content">
+    <strong><span class="en">Reinforce that help-seeking is strength</span><span class="sw">Thibitisha kwamba kutafuta msaada ni nguvu</span><span class="sh">Reinforce kwamba ku-seek help ni strength</span></strong>
+    <span class="en">"Seeking help is not weakness — it is the bravest thing I can do for myself."</span>
+    <span class="sw">"Kutafuta msaada si udhaifu — ni jambo zuri zaidi ninaloliweza kufanya kwa ajili yangu mwenyewe."</span>
+    <span class="sh">"Ku-seek help si weakness — ni kitu cha nguvu zaidi ninachoweza kufanya kwa ajili yangu."</span>
+  </div>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Tip:</span><span class="sw">&#128161; Kidokezo:</span><span class="sh">&#128161; Tip:</span></strong>
+  <span class="en"> You do not need to convince everyone. Your goal is to protect your own wellbeing. If the person pressuring you will not listen, go directly to a trusted adult or helpline.</span>
+  <span class="sw"> Huhitaji kumshawishi kila mtu. Lengo lako ni kulinda ustawi wako mwenyewe. Kama mtu anayekushawishi hatataka kusikiliza, nenda moja kwa moja kwa mtu mzima unayemwamini au simu ya msaada.</span>
+  <span class="sh"> Huhitaji ku-convince kila mtu. Goal yako ni ku-protect wellbeing yako mwenyewe. Kama person inayokupressure hatasikiliza, nenda directly kwa trusted adult au helpline.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts — Words That Work</span><span class="sw">Maneno ya Kukataa — Maneno Yanayofanya Kazi</span><span class="sh">Refusal Scripts — Maneno Yanayofanya Kazi</span></div>
+<p class="tp"><span class="en">Practice these scripts until they feel natural:</span><span class="sw">Fanya mazoezi ya maneno haya hadi yaonekane ya kawaida:</span><span class="sh">Practice scripts hizi hadi zionekane natural:</span></p>
+
+<div class="script-block">
+  <div class="speaker"><span class="en">When told "just be strong / pray more":</span><span class="sw">Ukiambiwa "kuwa imara tu / omba zaidi":</span><span class="sh">Ukiambiwa "kuwa strong tu / omba zaidi":</span></div>
+  <div class="line"><span class="en">"I appreciate your concern, but prayer and strength work best alongside professional support. I am going to talk to a counsellor."</span><span class="sw">"Nashukuru wasiwasi wako, lakini sala na nguvu zinafanya kazi vizuri zaidi pamoja na msaada wa kitaalamu. Nitazungumza na mshauri."</span><span class="sh">"Nashukuru concern yako, lakini prayer na strength zinafanya kazi vizuri zaidi na professional support. Nitaongea na counsellor."</span></div>
+</div>
+
+<div class="script-block">
+  <div class="speaker"><span class="en">When told "don't bring shame to the family":</span><span class="sw">Ukiambiwa "usilete aibu kwa familia":</span><span class="sh">Ukiambiwa "usilete aibu kwa familia":</span></div>
+  <div class="line"><span class="en">"Getting help is not shameful — it is responsible. I love our family, and that is why I want to be well."</span><span class="sw">"Kupata msaada si aibu — ni kuwajibika. Napenda familia yetu, ndiyo maana nataka kuwa mzima."</span><span class="sh">"Ku-get help si aibu — ni responsible. Napenda familia yetu, ndiyo maana nataka kuwa sawa."</span></div>
+</div>
+
+<div class="script-block">
+  <div class="speaker"><span class="en">When a friend says "you're just being dramatic":</span><span class="sw">Rafiki akisema "unajifanya tu":</span><span class="sh">Rafiki akisema "unajifanya tu":</span></div>
+  <div class="line"><span class="en">"I understand you may not see it, but what I am going through is real. I need to speak to someone who can help me."</span><span class="sw">"Naelewa huenda usione, lakini ninachopitia ni kweli. Ninahitaji kuzungumza na mtu anayeweza kunisaidia."</span><span class="sh">"Naelewa huenda usione, lakini ninachopitia ni real. Ninahitaji kuongea na mtu anayeweza kunisaidia."</span></div>
+</div>
+
+<div class="script-block">
+  <div class="speaker"><span class="en">When pressured to stay silent about a peer's struggles:</span><span class="sw">Ukishinikizwa kukaa kimya kuhusu mapambano ya mwenzako:</span><span class="sh">Ukipressuriwa kukaa kimya kuhusu struggles za mwenzako:</span></div>
+  <div class="line"><span class="en">"I cannot stay quiet if my friend is in danger. Being a good friend means getting them help, not protecting a secret."</span><span class="sw">"Siwezi kukaa kimya kama rafiki yangu yuko hatarini. Kuwa rafiki mzuri kunamaanisha kupata msaada kwao, si kulinda siri."</span><span class="sh">"Siwezi kukaa kimya kama rafiki yangu yuko hatarini. Ku-be good friend kunamaanisha ku-get help kwao, si ku-protect siri."</span></div>
+</div>
+</div>
+
+<!-- SLIDE 6: Practice Scenario -->
+<div class="slide">
+<div class="slide-head">&#127926; <span class="en">Practice Scenario — What Would You Do?</span><span class="sw">Hali ya Mazoezi — Ungefanya Nini?</span><span class="sh">Practice Scenario — Ungefanya Nini?</span></div>
+<div class="sc-card">
+  <p><strong><span class="en">Kemunto, 16, Kisumu</span><span class="sw">Kemunto, 16, Kisumu</span><span class="sh">Kemunto, 16, Kisumu</span></strong></p>
+  <p><span class="en">Kemunto has noticed that her best friend Aisha has been withdrawn, barely eating, and crying alone for two weeks. When Kemunto wants to tell their class teacher, her friends warn her: <em>"Don't make drama — Aisha just needs to toughen up. If you report it, she'll hate you."</em> Aisha has also told Kemunto she sometimes wishes she could "disappear."</span><span class="sw">Kemunto ameona kwamba rafiki yake wa karibu Aisha amekuwa akijiepusha, akula kidogo, na kulia peke yake kwa wiki mbili. Kemunto anapotaka kumwambia mwalimu wao wa darasa, marafiki wake wanamonya: <em>"Usifanye drama — Aisha anahitaji tu kuwa imara. Ukimsaliti, atakuchukia."</em> Aisha pia amemwambia Kemunto kwamba wakati mwingine anatamani angeweza "kutoweka."</span><span class="sh">Kemunto ameona kwamba bestie wake Aisha amekuwa aki-withdraw, akila kidogo, na kulia peke yake kwa wiki mbili. Kemunto anapotaka kumwambia mwalimu wao, marafiki wake wanamwambia: <em>"Usifanye drama — Aisha anahitaji tu kuwa strong. Ukimsaliti, atakuchukia."</em> Aisha pia amemwambia Kemunto kwamba wakati mwingine anatamani angeweza "kutoweka."</span></p>
+  <p><strong><span class="en">What should Kemunto do?</span><span class="sw">Kemunto afanye nini?</span><span class="sh">Kemunto afanye nini?</span></strong></p>
+  <button class="choice" onclick="scPick(this,'sc1','ok','scr1')"><span class="en">Tell a teacher or school counsellor immediately — the phrase "disappear" is a warning sign that requires urgent action.</span><span class="sw">Mwambie mwalimu au mshauri wa shule mara moja — neno "kutoweka" ni ishara ya onyo inayohitaji hatua ya haraka.</span><span class="sh">Mwambie mwalimu au school counsellor mara moja — neno "kutoweka" ni warning sign inayohitaji urgent action.</span></button>
+  <button class="choice" onclick="scPick(this,'sc1','no','scr1')"><span class="en">Stay quiet to protect the friendship — Aisha will eventually feel better on her own.</span><span class="sw">Kaa kimya kulinda urafiki — Aisha hatimaye atajisikia vizuri peke yake.</span><span class="sh">Kaa kimya ku-protect urafiki — Aisha eventually atajisikia better peke yake.</span></button>
+  <button class="choice" onclick="scPick(this,'sc1','no','scr1')"><span class="en">Talk to Aisha again and ask her to seek help herself before involving any adults.</span><span class="sw">Zungumza tena na Aisha na mwombe atafute msaada mwenyewe kabla ya kuhusisha watu wazima wowote.</span><span class="sh">Ongea tena na Aisha na mwambie a-seek help mwenyewe kabla ya ku-involve adults.</span></button>
+  <div class="s-result" id="scr1"></div>
+</div>
+</div>
+
+<!-- SLIDE 7: Trusted Adults & Support -->
+<div class="slide">
+<div class="slide-head">&#128104;&#8205;&#9877;&#65039; <span class="en">Trusted Adults &amp; Support in Kenya</span><span class="sw">Watu Wazima Wanaokuamini &amp; Msaada Kenya</span><span class="sh">Trusted Adults &amp; Support Kenya</span></div>
+<p class="tp"><span class="en">If you or someone you know is struggling, these people and services can help:</span><span class="sw">Kama wewe au mtu unayemjua anapambana, watu na huduma hizi zinaweza kusaidia:</span><span class="sh">Kama wewe au mtu unayemjua ana-struggle, watu na services hizi zinaweza kusaidia:</span></p>
+<div class="key-term">
+  <strong><span class="en">At School</span><span class="sw">Shuleni</span><span class="sh">Shuleni</span></strong>
+  <span class="en">Your school counsellor, a trusted teacher, the deputy headteacher, or the school nurse. They are trained to listen without judgement and to connect you with further help.</span>
+  <span class="sw">Mshauri wako wa shule, mwalimu unayemwamini, naibu mkuu wa shule, au muuguzi wa shule. Wamefunzwa kusikiliza bila hukumu na kukuunganisha na msaada zaidi.</span>
+  <span class="sh">School counsellor yako, trusted mwalimu, deputy headteacher, au school nurse. Wamefunzwa ku-listen bila judgement na kukuconnect na further help.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">At Home</span><span class="sw">Nyumbani</span><span class="sh">Nyumbani</span></strong>
+  <span class="en">A parent, guardian, older sibling, aunt, uncle, or any trusted family member. You deserve support from people who love you.</span>
+  <span class="sw">Mzazi, mlezi, ndugu mkubwa, shangazi, mjomba, au mwanafamilia yeyote unayemwamini. Unastahili msaada kutoka kwa watu wanaokupenda.</span>
+  <span class="sh">Parent, guardian, elder sibling, shangazi, mjomba, au family member yeyote unayemwamini. Unastahili support kutoka kwa watu wanaokupenda.</span>
+</div>
+<div class="key-term">
+  <strong><span class="en">&#128222; Helplines (Free)</span><span class="sw">&#128222; Simu za Msaada (Bure)</span><span class="sh">&#128222; Helplines (Free)</span></strong>
+  <ul class="bl" style="margin-top:6px;">
+    <li><span class="en"><strong>Befrienders Kenya:</strong> 0800 723 253 — 24/7 free emotional support and crisis counselling</span><span class="sw"><strong>Befrienders Kenya:</strong> 0800 723 253 — msaada wa kihisia wa saa 24/7 bure na ushauri wa msongo</span><span class="sh"><strong>Befrienders Kenya:</strong> 0800 723 253 — 24/7 free emotional support na crisis counselling</span></li>
+    <li><span class="en"><strong>Childline Kenya:</strong> 116 — free, 24/7 support for children in distress</span><span class="sw"><strong>Childline Kenya:</strong> 116 — msaada wa bure, saa 24/7 kwa watoto wanaosumbuka</span><span class="sh"><strong>Childline Kenya:</strong> 116 — free, 24/7 support kwa watoto wanaosumbuka</span></li>
+    <li><span class="en"><strong>Kenya Red Cross:</strong> 1199 — psychosocial support services</span><span class="sw"><strong>Kenya Red Cross:</strong> 1199 — huduma za msaada wa kisaikolojia</span><span class="sh"><strong>Kenya Red Cross:</strong> 1199 — psychosocial support services</span></li>
+    <li><span class="en"><strong>Public Health Facilities:</strong> County hospitals and health centres offer free outpatient mental health services</span><span class="sw"><strong>Vituo vya Afya vya Umma:</strong> Hospitali za kaunti na vituo vya afya hutoa huduma za bure za afya ya akili za wagonjwa wa nje</span><span class="sh"><strong>Public Health Facilities:</strong> County hospitals na health centres zinatoa free outpatient mental health services</span></li>
+  </ul>
+</div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Remember:</span><span class="sw">&#128161; Kumbuka:</span><span class="sh">&#128161; Remember:</span></strong>
+  <span class="en"> If someone tells you they want to hurt themselves or "disappear," this is an emergency. Tell a trusted adult immediately or call 999/112.</span>
+  <span class="sw"> Kama mtu akikuambia anataka kujidhuru au "kutoweka," hii ni dharura. Mwambie mtu mzima unayemwamini mara moja au piga simu 999/112.</span>
+  <span class="sh"> Kama mtu akikuambia anataka kujidhuru au "kutoweka," hii ni emergency. Mwambie trusted adult mara moja au piga 999/112.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Rights Under Kenyan Law -->
+<div class="slide">
+<div class="slide-head">&#9878;&#65039; <span class="en">Your Rights Under Kenyan Law</span><span class="sw">Haki Zako Chini ya Sheria ya Kenya</span><span class="sh">Haki Zako Chini ya Sheria ya Kenya</span></div>
+<div class="key-term">
+  <strong><span class="en">Mental Health (Amendment) Act 2022</span><span class="sw">Sheria ya Marekebisho ya Afya ya Akili 2022</span><span class="sh">Mental Health (Amendment) Act 2022</span></strong>
+  <span class="en">Kenya's Mental Health (Amendment) Act 2022 modernised mental health law and enshrines key rights for all Kenyans:</span>
+  <span class="sw">Sheria ya Marekebisho ya Afya ya Akili ya Kenya 2022 ilihuisha sheria ya afya ya akili na inahakikisha haki kuu kwa Wakenya wote:</span>
+  <span class="sh">Kenya's Mental Health (Amendment) Act 2022 ilimodernise mental health law na ina-enshrine key rights kwa Wakenya wote:</span>
+</div>
+<ul class="bl">
+  <li><span class="en"><strong>Right to access mental health services</strong> — every Kenyan is entitled to mental health care in public health facilities</span><span class="sw"><strong>Haki ya kupata huduma za afya ya akili</strong> — kila Mkenya ana haki ya huduma ya afya ya akili katika vituo vya afya vya umma</span><span class="sh"><strong>Right ya kupata mental health services</strong> — kila Mkenya ana haki ya mental health care katika public health facilities</span></li>
+  <li><span class="en"><strong>Right to be free from discrimination</strong> — no person may be discriminated against in employment, education, or housing because of a mental health condition</span><span class="sw"><strong>Haki ya kuepuka ubaguzi</strong> — hakuna mtu anayeweza kubaguliwa katika ajira, elimu, au makazi kwa sababu ya hali ya afya ya akili</span><span class="sh"><strong>Right ya kuepuka discrimination</strong> — hakuna mtu anayeweza kubaguliwa kwa sababu ya mental health condition</span></li>
+  <li><span class="en"><strong>Right to privacy and dignity</strong> — mental health information is confidential and must be handled with respect</span><span class="sw"><strong>Haki ya faragha na utu</strong> — taarifa za afya ya akili ni za siri na lazima zishughulikiwe kwa heshima</span><span class="sh"><strong>Right ya privacy na dignity</strong> — mental health information ni confidential na lazima ishughulikiwe kwa heshima</span></li>
+  <li><span class="en"><strong>Right to informed consent</strong> — you have the right to understand and agree to any treatment</span><span class="sw"><strong>Haki ya idhini iliyoarifiwa</strong> — una haki ya kuelewa na kukubaliana na matibabu yoyote</span><span class="sh"><strong>Right ya informed consent</strong> — una haki ya kuelewa na ku-agree na treatment yoyote</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Forcing someone to hide a mental health condition, shaming them for seeking help, or refusing to allow access to services may violate their constitutional and statutory rights.</span><span class="sw">&#9888; Kumlazimisha mtu kuficha hali yake ya afya ya akili, kumwaibishia kwa kutafuta msaada, au kukataa kumruhusu kupata huduma kunaweza kukiuka haki zake za kikatiba na kisheria.</span><span class="sh">&#9888; Ku-force mtu ku-hide mental health condition yake, kumwaibisha kwa ku-seek help, au kukataa kumruhusu kupata services kunaweza ku-violate haki zake za kikatiba na kisheria.</span></strong>
+</div>
+</div>
+
+<!-- SLIDE 9: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Knowledge Check</span><span class="sw">Ukaguzi wa Maarifa</span><span class="sh">Knowledge Check</span></div>
+
+<!-- Q1 MSQ — correct: A,B,C -->
+<div class="mcq-block">
+<div class="q-text">1. Which of the following are common signs that someone may be experiencing a mental health challenge? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Persistent sadness or hopelessness lasting more than two weeks</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Sudden withdrawal from friends, family, and activities they once enjoyed</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Significant changes in sleep patterns, appetite, or concentration</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Refusing to study for exams once</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">2. "Usilete aibu kwa familia — mental health ni jambo la faragha." This statement is an example of:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Supportive advice from a caring relative</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Shame-based pressure that prevents help-seeking</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> A doctor's recommendation</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> A school counsellor's guidance</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">3. A Form 3 student in Nyeri asks her teacher: "What is mental health stigma?" Which of the following is the best answer?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span> The medical diagnosis of a mental disorder</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span> A government policy on mental health services</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span> Negative attitudes and discrimination that prevent people from seeking help</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span> A form of therapy for anxiety</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MSQ — correct: A,B,D -->
+<div class="mcq-block">
+<div class="q-text">4. Wanjiku, 17, Nakuru, suspects she may be experiencing depression. Which of the following are healthy steps she can take? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">A</span> Tell a trusted adult such as a teacher or parent</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">B</span> Contact a mental health helpline such as Befrienders Kenya on 0800 723 253</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">C</span> Keep it to herself so she does not worry anyone</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">D</span> Visit a school counsellor or county health facility</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MCQ — correct: D -->
+<div class="mcq-block">
+<div class="q-text">5. In the DEAR method for refusing pressure to stay silent about mental health, what does the letter "A" stand for?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span> Avoid the person pressuring you</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span> Ask for permission before seeking help</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span> Acknowledge the other person's opinion</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span> Assert your needs clearly</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">6. Otieno, 15, Kisumu, tells his friend he needs to see a therapist. His friend replies: "Therapists are for crazy people — you don't want people to think you're mad." What pressure tactic is his friend using?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Genuine medical advice based on evidence</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Stigma reinforcement using the fear of the 'mad' label</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> A legal requirement to assess mental fitness before seeing a therapist</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> Guidance from a certified mental health professional</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ — correct: A,B,C,D -->
+<div class="mcq-block">
+<div class="q-text">7. A peer educator in Eldoret explains where students can get mental health support. Which of the following are legitimate options? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> School counsellor</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Befrienders Kenya on 0800 723 253 (free, 24/7)</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> County public health facilities offering free outpatient services</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> A trusted teacher or parent</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Waiting until the situation becomes a crisis before telling anyone</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ — correct: A -->
+<div class="mcq-block">
+<div class="q-text">8. Aisha, 15, Mombasa, tells her school counsellor she has been having thoughts of self-harm. What should the counsellor's first priority be?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Take the disclosure seriously, ensure Aisha's immediate safety, and notify her guardian</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Keep the information completely confidential from all parties</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Advise Aisha to pray and rest</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Refer Aisha back to class and monitor her from a distance</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ — correct: A,B,D -->
+<div class="mcq-block">
+<div class="q-text">9. A health teacher in Nairobi is teaching about mental health. Which of the following statements are TRUE? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> Mental health is protected under Kenya's Mental Health (Amendment) Act 2022</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> Seeking help for mental health is a sign of strength, not weakness</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> Mental illness is caused by spiritual weakness or curses</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> 1 in 4 people in Kenya experience mental health challenges in their lifetime</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">10. Omar, 16, Garissa, is being pressured by his family to hide his anxiety disorder "to protect the family reputation." Under the Mental Health (Amendment) Act 2022, Omar has the right to:</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> Comply with family wishes, as mental health is a private family matter</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> Seek only traditional or religious treatment as required by his community</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> Access mental health services and refuse to be silenced about his condition</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> Wait until he is an adult before seeking mental health support</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_rmh" data-correct='{"0": 0, "1": 2, "2": 4, "3": 1, "4": 3}' data-rights='["Negative attitudes toward people living with mental illness", "Free mental health helpline \u2014 call 0800 723 253", "Choosing to talk to someone trusted about mental health struggles", "Hurting yourself to cope with emotional pain \u2014 please seek help", "First point of contact for mental health support at school"]'>
+    <div class="match-col" id="ml_rmh">
+      <button class="match-item" data-term="Stigma" onclick="_mL('rmh',0)">Stigma</button>
+      <button class="match-item" data-term="Help-seeking" onclick="_mL('rmh',1)">Help-seeking</button>
+      <button class="match-item" data-term="School counsellor" onclick="_mL('rmh',2)">School counsellor</button>
+      <button class="match-item" data-term="Befrienders Kenya" onclick="_mL('rmh',3)">Befrienders Kenya</button>
+      <button class="match-item" data-term="Self-harm" onclick="_mL('rmh',4)">Self-harm</button>
+    </div>
+    <div class="match-col" id="mr_rmh">
+      <button class="match-item" onclick="_mR('rmh',0)">Negative attitudes toward people living with mental illness</button>
+      <button class="match-item" onclick="_mR('rmh',1)">Free mental health helpline — call 0800 723 253</button>
+      <button class="match-item" onclick="_mR('rmh',2)">Choosing to talk to someone trusted about mental health struggles</button>
+      <button class="match-item" onclick="_mR('rmh',3)">Hurting yourself to cope with emotional pain — please seek help</button>
+      <button class="match-item" onclick="_mR('rmh',4)">First point of contact for mental health support at school</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_rmh" onclick="_mCheck('rmh')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_rmh" onclick="_mReset('rmh')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_rmh" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127981; <span class="en">Real-Life Scenario — What Would You Do?</span><span class="sw">Hali Halisi — Ungefanya Nini?</span><span class="sh">Real Situation — Ungefanya Nini?</span></div>
+  <p class="tp"><span class="en">Read the scenario, make your choice, and see the realistic consequence. You can always go back and try a different path.</span><span class="sw">Soma hali, fanya chaguo lako, na uone matokeo halisi.</span><span class="sh">Soma scenario, fanya choice yako, uone matokeo halisi.</span></p>
+  <div class="btree-wrap" id="bt_rmh">
+    <div class="bt-scenario"><strong>Scenario:</strong> Otieno, 17, has been feeling deeply sad for weeks — he can't sleep, has stopped eating properly, and no longer enjoys football. His best friend notices and asks what's wrong. Otieno says "I'm fine, men don't complain about feelings."</div>
+<div class="bt-node active" id="btn_rmh_root">
+<div class="bt-question">What should Otieno do?</div>
+<div class="bt-choices">
+<button class="bt-choice good" onclick="btGo('rmh','root_ok')">A) Open up to his friend: "Actually, I'm not okay. I've been struggling."</button>
+<button class="bt-choice bad" onclick="btGo('rmh','B')">B) Keep it in: "I'm fine — men handle things on their own"</button>
+<button class="bt-choice good" onclick="btGo('rmh','root_ok')">C) See the school counsellor this week</button>
+<button class="bt-choice bad" onclick="btGo('rmh','root_bad')">D) Start using alcohol to feel better at night</button>
+</div>
+</div>
+<div class="bt-node" id="btn_rmh_root_ok">
+<button class="bt-back" onclick="btGo('rmh','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Broke the Silence — Critical First Step</div><p>Telling a trusted friend is the hardest and most important step. <strong>"Men don't talk about feelings" is a myth that kills</strong> — men who suppress emotions have higher rates of suicide, substance abuse, and mental health crises. Otieno's friend can listen, support, and help him access professional help. <strong>Strength is asking for help, not suffering silently.</strong></p></div>
+<button class="bt-restart" onclick="btRestart('rmh')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rmh_B">
+<button class="bt-back" onclick="btGo('rmh','root')">&#8592; Back</button>
+<div class="bt-question">Two weeks later Otieno is worse. He's missing school and has thoughts of not wanting to be alive. What does he do?</div>
+<div class="bt-choices">
+<button class="bt-choice good" onclick="btGo('rmh','B_ok')">B1) Tell someone immediately — friend, parent, teacher, or counsellor</button>
+<button class="bt-choice bad" onclick="btGo('rmh','B_bad')">B2) Continue to hide it and try to manage alone</button>
+</div>
+</div>
+<div class="bt-node" id="btn_rmh_B_ok">
+<button class="bt-back" onclick="btGo('rmh','B')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Getting Help — Not Too Late</div><p>It is never too late to ask for help. Thoughts of not wanting to be alive are a medical emergency — they require professional support. <strong>Otieno should tell someone today.</strong> School counsellors, Befrienders Kenya (0800 723 253 — free), and AMREF all provide mental health support. This is a health issue, not a weakness.</p></div>
+<button class="bt-restart" onclick="btRestart('rmh')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rmh_B_bad">
+<button class="bt-back" onclick="btGo('rmh','B')">&#8592; Back</button>
+<div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Crisis Point — Isolation Is Dangerous</div><p>Untreated depression with suicidal thoughts is a medical emergency. <strong>Suffering alone when help is available is not strength — it is unnecessary pain.</strong> Befrienders Kenya: <strong>0800 723 253</strong> (free, 24-hour). Otieno deserves care. Mental illness is not weakness — it is a health condition that responds to treatment.</p></div>
+<button class="bt-restart" onclick="btRestart('rmh')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rmh_root_ok">
+<button class="bt-back" onclick="btGo('rmh','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Professional Help — Excellent Decision</div><p>School counsellors are trained specifically to support students through exactly what Otieno is experiencing. Symptoms lasting weeks (sleep disruption, appetite loss, loss of interest) suggest <strong>clinical depression</strong> — a treatable medical condition. Early professional support prevents the condition from worsening. <strong>Otieno took the bravest step possible.</strong></p></div>
+<button class="bt-restart" onclick="btRestart('rmh')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rmh_root_bad">
+<button class="bt-back" onclick="btGo('rmh','root')">&#8592; Back</button>
+<div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Alcohol Makes Depression Worse</div><p>Alcohol is a depressant — it temporarily numbs pain but deepens depression over time and disrupts sleep further. <strong>Self-medicating depression with alcohol is one of the most common pathways into alcohol dependency.</strong> Otieno now has two problems instead of one. The right path: Befrienders Kenya 0800 723 253 (free), school counsellor, or trusted adult. He is not alone.</p></div>
+<button class="bt-restart" onclick="btRestart('rmh')">&#8635; Try Again</button>
+</div>
+  </div>
+</div>
+<script>
+
+/* ── Branching decision tree ───────────────────────────── */
+function btGo(lid,nodeId){
+  var wrap=document.getElementById('bt_'+lid);
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_'+lid+'_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart(lid){btGo(lid,'root');}
+
+</script>
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) { document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; }); });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) { var el=document.getElementById(id); if(el) el.classList.toggle('active', id===l+'Btn'); });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+function setSize(s) { var m={sm:'13px',md:'15px',lg:'17px'}; document.body.style.fontSize=m[s]||'15px'; ['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);}); localStorage.setItem('arise_textsize',s); }
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){
+  slides=document.querySelectorAll('.slide');
+  var dw=document.getElementById('dotsWrap');
+  slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
+  upd();
+  var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);
+  if(rs>0&&rs<slides.length){setTimeout(function(){go(rs);},120);}
+}
+function navigate(dir){go(cur+dir);}
+function go(n){
+  if(n<0||n>=slides.length)return;
+  slides[cur].classList.remove('active');
+  var dots=document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active');dots[cur].classList.add('visited');
+  cur=n;slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited');dots[cur].classList.add('active');
+  upd();window.scrollTo(0,0);
+  var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
+  if(slug2)localStorage.setItem('arise_slide_'+slug2,n);
+  var lid=window.ARISE_LESSON_ID;
+  if(lid)fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res=document.getElementById(resId);
+  if(res){res.className='s-result '+type;res.style.display='block';
+    res.innerHTML=type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">When a friend mentions wanting to "disappear," this is a serious warning sign. Reporting immediately to a trusted adult is the right action — it is not betrayal, it is care.</span><span class="sw">Rafiki akitaja kutaka "kutoweka," hii ni ishara ya onyo ya uzito. Kuripoti mara moja kwa mtu mzima anayekuamini ndiyo hatua sahihi — si kusalitiwa, ni upendo.</span><span class="sh">Rafiki akisema anataka "kutoweka," hii ni serious warning sign. Ku-report mara moja kwa trusted adult ndiyo hatua sahihi — si betrayal, ni care.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Staying quiet or waiting gives the situation time to worsen. When a friend mentions self-harm or wanting to disappear, the only safe response is immediate disclosure to a trusted adult.</span><span class="sw">Kukaa kimya au kusubiri kunapa hali muda wa kuwa mbaya zaidi. Rafiki akitaja kujidhuru au kutaka kutoweka, jibu pekee salama ni kufichua mara moja kwa mtu mzima anayekuamini.</span><span class="sh">Kukaa kimya au kusubiri kunapa hali muda wa ku-worsen. Rafiki akisema self-harm au kutaka kutoweka, jibu pekee salama ni immediate disclosure kwa trusted adult.</span>';
+  }
+}
+var mcqAnswers={'mcq1':'A,B,C','mcq2':'B','mcq3':'C','mcq4':'A,B,D','mcq5':'D','mcq6':'B','mcq7':'A,B,C,D','mcq8':'A','mcq9':'A,B,D','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'mcq','mcq4':'msq','mcq5':'mcq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand mental health refusal skills very well.':pct>=60?'👍 Good effort! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

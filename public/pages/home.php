@@ -561,6 +561,7 @@ $pdfs          = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_ty
             <a href="/arise/?p=modules" class="btn btn-primary">📚 Browse Modules</a>
             <a href="/arise/?p=forum" class="btn btn-secondary">💬 Join the Forum</a>
             <a href="/arise/?p=ask" class="btn btn-secondary">🔒 Ask Anonymously</a>
+            <a href="/arise/?p=challenge" class="btn btn-secondary">💪 Weekly Challenge</a>
         </div>
     </div>
 

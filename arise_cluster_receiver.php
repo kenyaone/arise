@@ -21,10 +21,11 @@ if (!$payload) {
     echo json_encode(['ok' => false, 'error' => 'Invalid payload']); exit;
 }
 
-// Locate DB
-$dbPath = __DIR__ . '/data/arise.db';
+// Locate DB — prefer parent-level data/arise.db (used by root locations.php)
+$dbPath = dirname(__DIR__) . '/data/arise.db';
+if (!file_exists($dbPath)) $dbPath = __DIR__ . '/data/arise.db';
 if (!file_exists($dbPath)) {
-    foreach (['/home/*/public_html/arise/data/arise.db', '/home/*/public_html/data/arise.db'] as $g) {
+    foreach (['/home/*/public_html/data/arise.db', '/home/*/public_html/arise/data/arise.db'] as $g) {
         $m = glob($g); if (!empty($m)) { $dbPath = $m[0]; break; }
     }
 }

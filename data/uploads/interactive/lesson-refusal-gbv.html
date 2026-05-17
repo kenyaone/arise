@@ -95,6 +95,49 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .dot{width:8px;height:8px;border-radius:50%;background:#ccc;cursor:pointer;transition:.15s;flex-shrink:0;}
 .dot.active{background:var(--pri);transform:scale(1.25);}
 .dot.visited{background:var(--acc);}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Branching decision tree ───────────────────────────── */
+.btree-wrap{margin:10px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-question{font-weight:700;font-size:.9rem;color:var(--dark);margin:12px 0 8px;}
+.bt-choices{display:flex;flex-direction:column;gap:8px;}
+.bt-choice{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:.85rem;text-align:left;line-height:1.5;transition:.15s;font-family:inherit;width:100%;}
+.bt-choice:hover{border-color:var(--pri);background:#f0fdf4;}
+.bt-choice.good{border-color:var(--ok);background:#e8f5e9;}
+.bt-choice.bad{border-color:var(--no);background:#ffebee;}
+.bt-choice.warn{border-color:var(--acc);background:#fff8e1;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit;}
+.bt-restart:hover{background:var(--pri-l);}
+.bt-back{background:transparent;border:1px solid var(--border);color:var(--soft);padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+
 </style>
 </head>
 <body data-lesson-slug="refusal-gbv">
@@ -557,6 +600,96 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 </div><!-- /slides-wrap -->
 
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_rgb" data-correct='{"0": 3, "1": 0, "2": 2, "3": 1, "4": 4}' data-rights='["Name-calling, threats and isolation \u2014 still counts as violence", "Tension \u2192 Incident \u2192 Reconciliation \u2192 Repeat \u2014 a danger sign", "Steps prepared in advance to protect yourself from an abuser", "Hitting, pushing or kicking \u2014 never acceptable in any relationship", "Call 1195 or go to the nearest police station immediately"]'>
+    <div class="match-col" id="ml_rgb">
+      <button class="match-item" data-term="Physical violence" onclick="_mL('rgb',0)">Physical violence</button>
+      <button class="match-item" data-term="Emotional abuse" onclick="_mL('rgb',1)">Emotional abuse</button>
+      <button class="match-item" data-term="Safety plan" onclick="_mL('rgb',2)">Safety plan</button>
+      <button class="match-item" data-term="Cycle of violence" onclick="_mL('rgb',3)">Cycle of violence</button>
+      <button class="match-item" data-term="Report GBV" onclick="_mL('rgb',4)">Report GBV</button>
+    </div>
+    <div class="match-col" id="mr_rgb">
+      <button class="match-item" onclick="_mR('rgb',0)">Name-calling, threats and isolation — still counts as violence</button>
+      <button class="match-item" onclick="_mR('rgb',1)">Tension → Incident → Reconciliation → Repeat — a danger sign</button>
+      <button class="match-item" onclick="_mR('rgb',2)">Steps prepared in advance to protect yourself from an abuser</button>
+      <button class="match-item" onclick="_mR('rgb',3)">Hitting, pushing or kicking — never acceptable in any relationship</button>
+      <button class="match-item" onclick="_mR('rgb',4)">Call 1195 or go to the nearest police station immediately</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_rgb" onclick="_mCheck('rgb')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_rgb" onclick="_mReset('rgb')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_rgb" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127981; <span class="en">Real-Life Scenario — What Would You Do?</span><span class="sw">Hali Halisi — Ungefanya Nini?</span><span class="sh">Real Situation — Ungefanya Nini?</span></div>
+  <p class="tp"><span class="en">Read the scenario, make your choice, and see the realistic consequence. You can always go back and try a different path.</span><span class="sw">Soma hali, fanya chaguo lako, na uone matokeo halisi.</span><span class="sh">Soma scenario, fanya choice yako, uone matokeo halisi.</span></p>
+  <div class="btree-wrap" id="bt_rgb">
+    <div class="bt-scenario"><strong>Scenario:</strong> Fatuma, 15, lives with her uncle after her parents died. He has started coming into her room at night and touching her inappropriately. He tells her: <em>"If you tell anyone, no one will believe you and you'll be sent to an orphanage."</em></div>
+<div class="bt-node active" id="btn_rgb_root">
+<div class="bt-question">What should Fatuma do?</div>
+<div class="bt-choices">
+<button class="bt-choice good" onclick="btGo('rgb','root_ok')">A) Tell a trusted teacher or school counsellor immediately</button>
+<button class="bt-choice bad" onclick="btGo('rgb','root_bad')">B) Keep quiet to avoid trouble and hope it stops</button>
+<button class="bt-choice good" onclick="btGo('rgb','root_ok')">C) Call Childline Kenya 116 (free, 24-hour)</button>
+<button class="bt-choice bad" onclick="btGo('rgb','root_warn')">D) Confront her uncle directly</button>
+</div>
+</div>
+<div class="bt-node" id="btn_rgb_root_ok">
+<button class="bt-back" onclick="btGo('rgb','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Correct — Tell a Trusted Adult</div><p>Fatuma is being abused and threatened into silence — this is a classic pattern of child sexual abuse. <strong>Teachers and school counsellors are mandatory reporters</strong> in Kenya — they are required to act. What her uncle said is a lie: authorities will believe Fatuma, and she will not be punished. <strong>Telling is the only way to stop the abuse.</strong></p></div>
+<button class="bt-restart" onclick="btRestart('rgb')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rgb_root_bad">
+<button class="bt-back" onclick="btGo('rgb','root')">&#8592; Back</button>
+<div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Silence Enables the Abuse to Continue</div><p>Abuse rarely stops on its own — it usually escalates. Every day of silence is a day the abuser remains safe and Fatuma remains at risk. <strong>The threat ("no one will believe you") is a control tactic designed to prevent exactly what should happen: telling.</strong> Staying silent protects the abuser, not Fatuma.</p></div>
+<button class="bt-restart" onclick="btRestart('rgb')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rgb_root_ok">
+<button class="bt-back" onclick="btGo('rgb','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Excellent — Childline Is There for This</div><p>Childline 116 is free, confidential, and available 24 hours. Counsellors are trained to handle exactly this situation. Fatuma can call from any phone, including her uncle's, without him knowing why she called. <strong>She will be believed, supported, and protected — not punished.</strong></p></div>
+<button class="bt-restart" onclick="btRestart('rgb')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rgb_root_warn">
+<button class="bt-back" onclick="btGo('rgb','root')">&#8592; Back</button>
+<div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">This Could Be Dangerous</div><p>Confronting an abuser directly — especially one with power over you — can trigger more severe abuse or threats. Fatuma is a minor in a vulnerable position. <strong>The safer path is always to tell someone outside the household</strong> who has authority to act: a teacher, counsellor, or Childline 116. Do not confront the abuser alone.</p></div>
+<button class="bt-restart" onclick="btRestart('rgb')">&#8635; Try Again</button>
+</div>
+  </div>
+</div>
+<script>
+
+/* ── Branching decision tree ───────────────────────────── */
+function btGo(lid,nodeId){
+  var wrap=document.getElementById('bt_'+lid);
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_'+lid+'_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart(lid){btGo(lid,'root');}
+
+</script>
 <div class="nav-bar">
   <div class="nav-inner">
     <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
@@ -610,7 +743,7 @@ function init() {
   } else { if(ph) ph.style.display='flex'; if(vid) vid.style.display='none'; }
   var slug = window.ARISE_LESSON_SLUG || document.body.dataset.lessonSlug;
   var rs = window.ARISE_RESUME_SLIDE || (slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0);
-  if (rs > 0 && rs < slides.length - 1) { setTimeout(function() { go(rs); }, 120); }
+  if (rs > 0 && rs < slides.length) { setTimeout(function() { go(rs); }, 120); }
 }
 function navigate(dir) { go(cur + dir); }
 function go(n) {

@@ -98,6 +98,44 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 .en{display:block;}.sw{display:none;}.sh{display:none;}
 @media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
 .sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="biblical-sexuality" data-module-slug="biblical-sexuality">
 <div class="top-bar"><div class="top-bar-left"><div class="module-label">Module 21</div><div class="lesson-name">Biblical Foundation on Sexuality</div></div><span class="slide-badge" id="slideCounter">1 / 10</span></div>
@@ -409,6 +447,109 @@ Despite serious moral failure, David confessed honestly before God, was forgiven
 
 </div><!-- /slides-wrap -->
 
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_bib" data-correct='{"0": 0, "1": 1, "2": 3, "3": 4, "4": 2}' data-rights='["Choosing to honour your body and relationships before God", "Sacred promise \u2014 the biblical foundation of marriage", "God's ability to heal and renew after past mistakes", "Feeling drawn toward choices that conflict with your values", "Being answerable for your choices to trusted people"]'>
+    <div class="match-col" id="ml_bib">
+      <button class="match-item" data-term="Purity" onclick="_mL('bib',0)">Purity</button>
+      <button class="match-item" data-term="Covenant" onclick="_mL('bib',1)">Covenant</button>
+      <button class="match-item" data-term="Temptation" onclick="_mL('bib',2)">Temptation</button>
+      <button class="match-item" data-term="Accountability" onclick="_mL('bib',3)">Accountability</button>
+      <button class="match-item" data-term="Restoration" onclick="_mL('bib',4)">Restoration</button>
+    </div>
+    <div class="match-col" id="mr_bib">
+      <button class="match-item" onclick="_mR('bib',0)">Choosing to honour your body and relationships before God</button>
+      <button class="match-item" onclick="_mR('bib',1)">Sacred promise — the biblical foundation of marriage</button>
+      <button class="match-item" onclick="_mR('bib',2)">God&#x27;s ability to heal and renew after past mistakes</button>
+      <button class="match-item" onclick="_mR('bib',3)">Feeling drawn toward choices that conflict with your values</button>
+      <button class="match-item" onclick="_mR('bib',4)">Being answerable for your choices to trusted people</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_bib" onclick="_mCheck('bib')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_bib" onclick="_mReset('bib')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_bib" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+
+/* ── Branching: bs27 ────────────────────────────── */
+function btGo_bs27(nodeId){
+  var wrap=document.getElementById('bt_bs27');
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_bs27_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart_bs27(){btGo_bs27('root');}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127963; <span class="en">Refusal Skills &#8212; Make the Choice</span><span class="sw">Ujuzi wa Kukataa &#8212; Fanya Uamuzi</span><span class="sh">Refusal Skills &#8212; Make the Choice</span></div>
+  <p class="tp"><span class="en">Read the scenario and choose the best response at each step.</span><span class="sw">Soma hali hii na uchague jibu bora katika kila hatua.</span><span class="sh">Read scenario na uchague best response.</span></p>
+  <div class="btree-wrap" id="bt_bs27">
+    <div class="bt-scenario"><strong>Scenario:</strong> Samuel, 17, is challenged by his friends: <em>"Your religion says wait — but this is Kenya, everyone is doing it. You're hiding behind the Bible. Are you scared? Prove you're a man."</em></div>
+    <div class="bt-node active" id="btn_bs27_root">
+      <div class="bt-q">What should Samuel do?</div>
+      <button class="bt-choice good" onclick="btGo_bs27('A')">A) "My values are my choice. I don't need to prove anything to anyone."</button>
+      <button class="bt-choice warn" onclick="btGo_bs27('B')">B) Engage the argument — try to explain his beliefs to them</button>
+      <button class="bt-choice bad" onclick="btGo_bs27('C')">C) Maybe they have a point — everyone does seem to be doing it</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_A">
+      <button class="bt-back" onclick="btGo_bs27('root')">&#8592; Back</button>
+      <div class="bt-q">A friend says "Your church friends aren't here — stop pretending." How does Samuel respond?</div>
+      <button class="bt-choice good" onclick="btGo_bs27('A_ok')">A1) "I'm not pretending. I live the same way whether my church is watching or not."</button>
+      <button class="bt-choice warn" onclick="btGo_bs27('A_warn')">A2) Says nothing and physically removes himself from the group</button>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_A_ok">
+      <button class="bt-back" onclick="btGo_bs27('A')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Integrity — Best Outcome</div><p>Samuel's response defines character: living by values consistently, not performing them for an audience. This response also deflates the social pressure by removing the audience's power over him. <strong>Research consistently shows that adolescents with a clear, internalised reason for abstinence — whether faith-based, personal, or practical — have better health outcomes than those relying on willpower alone.</strong></p></div>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_A_warn">
+      <button class="bt-back" onclick="btGo_bs27('A')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Removed Himself — Safe Choice</div><p>Leaving without arguing was wise. Samuel didn't need to win the debate — he just needed to not lose the decision. Protecting your values does not require the other person's agreement.</p></div>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_B">
+      <button class="bt-back" onclick="btGo_bs27('root')">&#8592; Back</button>
+      <div class="bt-q">The argument goes in circles. A girl joins and says "I think guys who wait are actually more attractive." One of Samuel's friends pressures him: "Don't let her change you." What now?</div>
+      <button class="bt-choice good" onclick="btGo_bs27('B_ok')">B1) "I haven't changed. This is who I am." Ends the argument and moves on.</button>
+      <button class="bt-choice warn" onclick="btGo_bs27('B_warn')">B2) Engages with the girl separately and away from the group pressure</button>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_B_ok">
+      <button class="bt-back" onclick="btGo_bs27('B')">&#8592; Back</button>
+      <div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Stood Firm and Ended It</div><p>Samuel closed the loop: he named his consistency, ended the argument, and moved on without making a scene. This is mature conflict resolution. The social pressure lost because it found nothing to push against.</p></div>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_B_warn">
+      <button class="bt-back" onclick="btGo_bs27('B')">&#8592; Back</button>
+      <div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Separated Himself from the Group Dynamic</div><p>Talking privately, away from the group performance pressure, is a legitimate choice. The pressure to "prove manhood" disappears when the audience is gone. Samuel remains responsible for his own values in that private conversation too.</p></div>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+    <div class="bt-node" id="btn_bs27_C">
+      <button class="bt-back" onclick="btGo_bs27('root')">&#8592; Back</button>
+      <div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">A Statistical Lie and a Social Trap</div><p>"Everyone is doing it" is factually wrong. Studies of Kenyan adolescents consistently show that between 40-60% of secondary school students report being sexually inactive — but most believe they are in the minority because those who abstain don't talk about it. <strong>Samuel was being asked to make a permanent, high-stakes decision (risk of pregnancy, STIs, his own values) based on a false premise.</strong> His values are not a weakness. They are a protection.</p></div>
+      <button class="bt-restart" onclick="btRestart_bs27()">&#8635; Try Again</button>
+    </div>
+  </div>
+</div>
 <div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button></div></div>
 
 <script>
@@ -418,7 +559,7 @@ setLang(lang);
 function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('arise_textsize',s);}
 setSize(localStorage.getItem('arise_textsize')||'md');
 var cur=0,slides=[];
-function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length-1)setTimeout(function(){go(rs);},120);}
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.ARISE_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
 function navigate(dir){go(cur+dir);}
 function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var lid=document.body.dataset.lessonId;var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('arise_slide_'+slug2,n);if(lid&&lid!=='0')fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});}
 function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}

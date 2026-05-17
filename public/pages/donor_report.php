@@ -21,7 +21,7 @@ $periodStart = $earliestLearner ? date('F d, Y', strtotime($earliestLearner)) : 
 
 // Schools
 $schoolData = [];
-$result = db()->query("SELECT s.school_name, COUNT(DISTINCT s.id) as learners, COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers, ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.percentage ELSE NULL END), 1) as avg_score, COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified, ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate FROM students s LEFT JOIN quiz_attempts qa ON s.id = qa.student_id LEFT JOIN certificates c ON s.id = c.student_id WHERE s.is_active=1 AND s.deleted_at IS NULL GROUP BY s.school_name ORDER BY learners DESC");
+$result = db()->query("SELECT s.school_name, COUNT(DISTINCT s.id) as learners, COUNT(DISTINCT CASE WHEN qa.id IS NOT NULL THEN s.id END) as quiz_takers, ROUND(AVG(CASE WHEN qa.id IS NOT NULL THEN qa.percentage ELSE NULL END), 1) as avg_score, COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) as certified, ROUND(100.0 * COUNT(DISTINCT CASE WHEN c.id IS NOT NULL THEN s.id END) / COUNT(DISTINCT s.id), 1) as cert_rate FROM students s INNER JOIN schools sc ON sc.name = s.school_name AND sc.is_active=1 LEFT JOIN quiz_attempts qa ON s.id = qa.student_id LEFT JOIN certificates c ON s.id = c.student_id WHERE s.is_active=1 AND s.deleted_at IS NULL GROUP BY s.school_name ORDER BY learners DESC");
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) { $schoolData[] = $row; }
 
 // Modules

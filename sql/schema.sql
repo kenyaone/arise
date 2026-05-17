@@ -392,6 +392,20 @@ CREATE TABLE IF NOT EXISTS xp_log (
     FOREIGN KEY (student_id) REFERENCES students(id)
 );
 
+CREATE TABLE IF NOT EXISTS lesson_interactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_hash TEXT NOT NULL,
+    student_id INTEGER,
+    module_id INTEGER NOT NULL,
+    lesson_slug TEXT,
+    interaction_type TEXT NOT NULL,
+    score INTEGER DEFAULT 0,
+    total INTEGER DEFAULT 0,
+    done INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_li_session_module ON lesson_interactions(session_hash, module_id, interaction_type);
+
 -- Default badges
 INSERT OR IGNORE INTO badges (code,name,description,icon,xp_reward,condition_type,condition_value) VALUES
 ('first_login',   'Welcome!',         'Registered on ARISE',                    '🌟', 50,  'lessons_done', 0),

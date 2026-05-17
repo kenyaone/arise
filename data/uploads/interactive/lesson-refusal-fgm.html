@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Refusal Skills — Female Genital Mutilation (FGM) | ARISE</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);}
+.lo-box h3{font-size:.9rem;font-weight:700;color:var(--pri);margin-bottom:10px;}
+.lo-box ol{padding-left:18px;}
+.lo-box li{font-size:.87rem;margin-bottom:8px;}
+.inquiry{background:linear-gradient(135deg,#e8f5ec,#fff9e6);border-radius:8px;padding:12px 14px;margin-top:14px;border-left:4px solid var(--acc);font-size:.86rem;font-style:italic;}
+.key-term{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.key-term strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:4px;}
+.key-term span,.key-term p{font-size:.86rem;}
+.tp{font-size:.88rem;margin-bottom:12px;}
+.bl{font-size:.86rem;padding-left:18px;margin-bottom:12px;}
+.bl li{margin-bottom:6px;}
+.warn-box{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.warn-box strong{color:#856404;}
+.tip-box{background:#e8f5ec;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:12px;}
+.tip-box strong{color:var(--pri);}
+.example-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:.85rem;}
+.example-box strong{display:block;color:var(--acc);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.dear-step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;}
+.dear-letter{font-size:1.5rem;font-weight:900;color:var(--acc);min-width:32px;}
+.dear-content strong{display:block;font-size:.88rem;color:var(--pri);margin-bottom:2px;}
+.dear-content span{font-size:.84rem;}
+.script-block{background:#f0fdf4;border:1px solid #a5d6a7;border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.script-block .speaker{font-size:.75rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.script-block .line{font-size:.88rem;font-style:italic;}
+.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.sc-card p{font-size:.86rem;margin-bottom:10px;}
+.choice{display:block;width:100%;text-align:left;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;margin-bottom:6px;transition:.15s;font-family:inherit;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice.chosen-ok{background:#e8f5ec;border-color:var(--ok);color:var(--ok);font-weight:700;}
+.choice.chosen-no{background:#fdecea;border-color:var(--no);color:var(--no);}
+.s-result{display:none;margin-top:8px;font-size:.84rem;padding:8px 12px;border-radius:6px;background:#f0fdf4;border:1px solid #a5d6a7;}
+.s-result.ok{background:#e8f5ec;}
+.s-result.no{background:#fdecea;border-color:#ef9a9a;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.visited{background:var(--acc);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+.q-text{font-size:.88rem;font-weight:600;margin-bottom:8px;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;transition:.15s;}
+.opt:hover{border-color:var(--pri);background:#e8f5ec;}
+.opt.selected{border-color:var(--pri);background:#e8f5ec;font-weight:600;}
+.opt.correct{border-color:var(--ok);background:#e8f5ec;font-weight:600;}
+.opt.wrong{border-color:var(--no);background:#fdecea;}
+.opt-letter{font-weight:800;color:var(--pri);min-width:18px;}
+.mcq-fb{margin-top:8px;font-size:.83rem;padding:8px 10px;border-radius:6px;display:none;}
+.mcq-fb.ok{background:#e8f5ec;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#fdecea;border:1px solid #ef9a9a;}
+@media(max-width:480px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+.en-inline{display:inline;}.sw-inline{display:none;}.sh-inline{display:none;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Branching decision tree ───────────────────────────── */
+.btree-wrap{margin:10px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-question{font-weight:700;font-size:.9rem;color:var(--dark);margin:12px 0 8px;}
+.bt-choices{display:flex;flex-direction:column;gap:8px;}
+.bt-choice{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:.85rem;text-align:left;line-height:1.5;transition:.15s;font-family:inherit;width:100%;}
+.bt-choice:hover{border-color:var(--pri);background:#f0fdf4;}
+.bt-choice.good{border-color:var(--ok);background:#e8f5e9;}
+.bt-choice.bad{border-color:var(--no);background:#ffebee;}
+.bt-choice.warn{border-color:var(--acc);background:#fff8e1;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.84rem;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit;}
+.bt-restart:hover{background:var(--pri-l);}
+.bt-back{background:transparent;border:1px solid var(--border);color:var(--soft);padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="module-label"><span class="en">Female Genital Mutilation (FGM)</span><span class="sw">Ukeketaji</span><span class="sh">FGM</span></div>
+    <div class="lesson-name"><span class="en">&#128683; Refusal Skills — FGM</span><span class="sw">&#128683; Ujuzi wa Kukataa — Ukeketaji</span><span class="sh">&#128683; Refusal Skills — FGM</span></div>
+  </div>
+  <span class="slide-badge" id="slideCounter">1 / 9</span>
+</div>
+<div class="lang-bar">
+  <div class="lang-bar-inner">
+    <span class="lb-label">Language:</span>
+    <button class="lb-btn active" id="enBtn" onclick="setLang('en')">English</button>
+    <button class="lb-btn" id="swBtn" onclick="setLang('sw')">Kiswahili</button>
+    <button class="lb-btn" id="shBtn" onclick="setLang('sh')">Sheng</button>
+    <span class="lb-label" style="margin-left:8px;">Size:</span>
+    <button class="lb-size-btn" id="sz-sm" onclick="setSize('sm')">A-</button>
+    <button class="lb-size-btn active" id="sz-md" onclick="setSize('md')">A</button>
+    <button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button>
+  </div>
+</div>
+<div class="slides-wrap" id="slidesWrap">
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active">
+<div class="slide-head">&#127919; <span class="en">What You Will Learn</span><span class="sw">Utakachojifunza</span><span class="sh">Utajua Nini</span></div>
+<div class="lo-box">
+  <h3><span class="en">&#9989; Learning Outcomes</span><span class="sw">&#9989; Matokeo ya Kujifunza</span><span class="sh">&#9989; Utajua</span></h3>
+  <ol>
+    <li><span class="en">Explain what FGM is and why it is harmful</span><span class="sw">Eleza FGM ni nini na kwa nini ni hatari</span><span class="sh">Eleza FGM ni nini na kwa nini ni harmful</span></li>
+    <li><span class="en">Identify pressure tactics used to enforce FGM</span><span class="sw">Tambua mbinu za shinikizo zinazotumika kulazimisha FGM</span><span class="sh">Tambua pressure tactics zinazotumiwa ku-enforce FGM</span></li>
+    <li><span class="en">Apply the DEAR method to refuse FGM pressure</span><span class="sw">Tumia njia ya DEAR kukataa shinikizo la FGM</span><span class="sh">Tumia DEAR method ku-refuse FGM pressure</span></li>
+    <li><span class="en">Know your legal rights and how to seek help</span><span class="sw">Jua haki zako za kisheria na jinsi ya kutafuta msaada</span><span class="sh">Jua haki zako za kisheria na jinsi ya kutafuta help</span></li>
+  </ol>
+</div>
+<div class="inquiry">
+  <span class="en">&#128161; Think: Has anyone ever told you that a tradition must be followed "because it has always been done"? How do you decide which traditions to keep and which to refuse?</span>
+  <span class="sw">&#128161; Fikiria: Je, mtu amewahi kukuambia mila lazima ifuatwe "kwa sababu imekuwa ikifanyika daima"? Unaamuaje mila gani za kukubali na zipi za kukataa?</span>
+  <span class="sh">&#128161; Fikiria: Mtu amewahi kukuambia tradition lazima ifuatwe "kwa sababu imekuwa done daima"? Unaamuaje traditions gani za keep na zipi za refuse?</span>
+</div>
+</div>
+
+<!-- SLIDE 2: Understanding FGM -->
+<div class="slide">
+<div class="slide-head">&#128683; <span class="en">Understanding FGM and Why It Must Be Refused</span><span class="sw">Kuelewa FGM na Kwa Nini Lazima Ikataliwe</span><span class="sh">Kuelewa FGM na Kwa Nini Ni Lazima Ikataliwe</span></div>
+<div class="key-term">
+  <strong><span class="en">What is FGM?</span><span class="sw">FGM ni nini?</span><span class="sh">FGM ni nini?</span></strong>
+  <span class="en">Female Genital Mutilation (FGM) is the partial or total removal of the female external genitalia for non-medical reasons. It is practiced in some communities as a rite of passage but is recognised globally as a violation of human rights.</span>
+  <span class="sw">Ukeketaji wa Kike (FGM) ni kuondolewa kwa sehemu au yote ya sehemu za nje za uzazi wa mwanamke kwa sababu zisizo za matibabu. Inafanywa katika baadhi ya jamii kama sherehe ya mpito lakini inatambuliwa kimataifa kama ukiukaji wa haki za binadamu.</span>
+  <span class="sh">FGM ni kukata sehemu au yote ya sehemu za nje za mwanamke kwa reasons ambazo si za matibabu. Inafanywa kwa baadhi ya communities kama rite of passage lakini globally inatambuliwa kama ukiukaji wa human rights.</span>
+</div>
+<p class="tp"><strong><span class="en">Immediate and long-term harms include:</span><span class="sw">Madhara ya haraka na ya muda mrefu ni pamoja na:</span><span class="sh">Madhara ya haraka na ya muda mrefu ni pamoja na:</span></strong></p>
+<ul class="bl">
+  <li><span class="en">Severe pain, bleeding, and infection</span><span class="sw">Maumivu makali, kutoka damu, na maambukizi</span><span class="sh">Maumivu makali, kutoka damu, na infection</span></li>
+  <li><span class="en">Risk of HIV transmission from shared instruments</span><span class="sw">Hatari ya maambukizi ya VVU kutoka kwa vyombo vilivyoshirikiwa</span><span class="sh">Risk ya HIV kutoka kwa vyombo vilivyoshirikiwa</span></li>
+  <li><span class="en">Complications in childbirth and lifelong pain</span><span class="sw">Matatizo wakati wa kujifungua na maumivu ya maisha yote</span><span class="sh">Complications wakati wa kujifungua na maumivu ya maisha yote</span></li>
+  <li><span class="en">Psychological trauma — anxiety, PTSD, depression</span><span class="sw">Msongo wa mawazo — wasiwasi, PTSD, unyogovu</span><span class="sh">Psychological trauma — anxiety, PTSD, depression</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; No cultural tradition can justify permanent harm to a child's body.</span><span class="sw">&#9888; Hakuna mila ya kitamaduni inayoweza kuhalalisha kudhuru mwili wa mtoto kwa kudumu.</span><span class="sh">&#9888; Hakuna cultural tradition inayoweza ku-justify kudumu kwa damage kwa mwili wa mtoto.</span></strong>
+</div>
+</div>
+
+<!-- SLIDE 3: Pressure Tactics -->
+<div class="slide">
+<div class="slide-head">&#128260; <span class="en">Pressure Tactics Used to Enforce FGM</span><span class="sw">Mbinu za Shinikizo Zinazotumika Kulazimisha FGM</span><span class="sh">Pressure Tactics Zinazotumiwa ku-Enforce FGM</span></div>
+<p class="tp"><span class="en">Recognising these tactics is the first step to resisting them:</span><span class="sw">Kutambua mbinu hizi ni hatua ya kwanza ya kuzipinga:</span><span class="sh">Ku-recognise tactics hizi ni hatua ya kwanza ya ku-resist:</span></p>
+<div class="example-box"><strong>Tradition / Culture Pressure</strong><span class="en"> "It's our culture — a girl who refuses is not a real woman." This uses shame and identity to override your rights.</span><span class="sw"> "Ni utamaduni wetu — msichana anayekataa si mwanamke wa kweli." Hii inatumia aibu na utambulisho kupindua haki zako.</span><span class="sh"> "Ni culture yetu — msichana anakataa si mwanamke wa kweli." Inatumia shame na identity ku-override haki zako.</span></div>
+<div class="example-box"><strong>Marriage Threat</strong><span class="en"> "No man will marry you if you are not cut." This uses fear of social exclusion to force compliance.</span><span class="sw"> "Hakuna mwanaume atakayekuoa kama hujakeketwa." Hii inatumia hofu ya kutengwa na jamii kulazimisha utiifu.</span><span class="sh"> "Hakuna mwanaume atakaokuoa kama hujakeketwa." Inatumia fear ya social exclusion ku-force compliance.</span></div>
+<div class="example-box"><strong>Family Pressure</strong><span class="en"> "Your grandmother and mother went through it — you will too." Generational pressure normalises harm.</span><span class="sw"> "Bibi yako na mama yako walipitia — wewe pia utapita." Shinikizo la vizazi vinafanya madhara ionekane ya kawaida.</span><span class="sh"> "Bibi yako na mama yako walipitia — wewe pia utapita." Generational pressure inafanya harm ionekane normal.</span></div>
+<div class="example-box"><strong>Secrecy and Surprise</strong><span class="en"> Some girls are taken without being told. Understanding this tactic means asking trusted adults about any sudden travel plans.</span><span class="sw"> Wasichana wengine huchukuliwa bila kujulishwa. Kuelewa mbinu hii kunamaanisha kuuliza watu wazima wanaokuamini kuhusu mipango yoyote ya ghafla ya safari.</span><span class="sh"> Wasichana wengine hupelekwa bila kujulishwa. Ku-understand tactic hii kunamaanisha kuuliza trusted adults kuhusu sudden travel plans.</span></div>
+</div>
+
+<!-- SLIDE 4: DEAR Method -->
+<div class="slide">
+<div class="slide-head">&#128295; <span class="en">The DEAR Method for Refusing FGM Pressure</span><span class="sw">Njia ya DEAR ya Kukataa Shinikizo la FGM</span><span class="sh">DEAR Method kwa ku-Refuse FGM Pressure</span></div>
+<p class="tp"><span class="en">DEAR is a structured, assertive communication method:</span><span class="sw">DEAR ni njia ya mawasiliano yenye muundo na ujasiri:</span><span class="sh">DEAR ni structured, assertive communication method:</span></p>
+<div class="dear-step"><div class="dear-letter">D</div><div class="dear-content"><strong><span class="en">Describe</span><span class="sw">Eleza</span><span class="sh">Describe</span></strong><span class="en"> State clearly what is being asked of you. "I have been told I will be taken for FGM during school holidays."</span><span class="sw"> Sema wazi kinachokuombwa. "Nimaambiwa nitachukuliwa kwa ukeketaji wakati wa likizo."</span><span class="sh"> Sema wazi kinachokuombwa. "Nimaambiwa nitachukuliwa kwa FGM wakati wa holidays."</span></div></div>
+<div class="dear-step"><div class="dear-letter">E</div><div class="dear-content"><strong><span class="en">Express</span><span class="sw">Eleza hisia</span><span class="sh">Express</span></strong><span class="en"> Say how it makes you feel. "I feel scared and I do not want this to happen to my body."</span><span class="sw"> Sema jinsi unavyohisi. "Ninahisi hofu na sitaki hili litokee kwa mwili wangu."</span><span class="sh"> Sema jinsi unavyohisi. "Ninahisi scared na sitaki hili litokee kwa mwili wangu."</span></div></div>
+<div class="dear-step"><div class="dear-letter">A</div><div class="dear-content"><strong><span class="en">Assert</span><span class="sw">Thibitisha</span><span class="sh">Assert</span></strong><span class="en"> Say NO clearly and state your rights. "I say NO. FGM is illegal in Kenya. It is my right to be protected."</span><span class="sw"> Sema HAPANA wazi na eleza haki zako. "Nasema HAPANA. FGM ni haramu Kenya. Ni haki yangu kulindwa."</span><span class="sh"> Sema NO clearly na state haki zako. "Nasema NO. FGM ni illegal Kenya. Ni haki yangu kulindwa."</span></div></div>
+<div class="dear-step"><div class="dear-letter">R</div><div class="dear-content"><strong><span class="en">Reinforce</span><span class="sw">Imarisha</span><span class="sh">Reinforce</span></strong><span class="en"> Repeat your position and seek help immediately. "I will report this to my teacher or call Childline 116 if necessary."</span><span class="sw"> Rudia msimamo wako na tafuta msaada mara moja. "Nitaripoti kwa mwalimu wangu au kupiga simu Childline 116 ikiwa ni lazima."</span><span class="sh"> Repeat position yako na seek help mara moja. "Nitaripoti kwa mwalimu wangu au ku-call Childline 116 ikiwa necessary."</span></div></div>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Remember:</span><span class="sw">&#128161; Kumbuka:</span><span class="sh">&#128161; Kumbuka:</span></strong>
+  <span class="en"> You do not need to justify or explain your refusal at length. "No" is a complete sentence. Seek a trusted adult immediately.</span>
+  <span class="sw"> Huhitaji kuthibitisha au kueleza ukataji wako kwa muda mrefu. "Hapana" ni sentensi kamili. Tafuta mtu mzima unayemwamini mara moja.</span>
+  <span class="sh"> Huhitaji ku-justify au ku-explain refusal yako kwa muda mrefu. "No" ni sentensi kamili. Tafuta trusted adult mara moja.</span>
+</div>
+</div>
+
+<!-- SLIDE 5: Refusal Scripts -->
+<div class="slide">
+<div class="slide-head">&#128172; <span class="en">Refusal Scripts for FGM Situations</span><span class="sw">Maneno ya Kukataa kwa Hali za FGM</span><span class="sh">Refusal Scripts kwa FGM Situations</span></div>
+<div class="script-block">
+  <div class="speaker"><span class="en">Pressure:</span><span class="sw">Shinikizo:</span><span class="sh">Pressure:</span></div>
+  <div class="line"><span class="en">"All the girls your age in the village have been cut. It's your turn."</span><span class="sw">"Wasichana wote wa umri wako kijijini wamekeketwa. Ni zamu yako."</span><span class="sh">"Wasichana wote wa umri wako kijijini wamekeketwa. Ni turn yako."</span></div>
+</div>
+<div class="script-block" style="background:#f0fdf4;">
+  <div class="speaker" style="color:var(--pri);">&#10003; <span class="en">Strong Refusal:</span><span class="sw">Kukataa Kwa Ujasiri:</span><span class="sh">Strong Refusal:</span></div>
+  <div class="line"><span class="en">"I understand this is important to our family, but I will not agree to FGM. It is harmful and illegal under Kenyan law. I need to speak to my teacher."</span><span class="sw">"Naelewa hii ni muhimu kwa familia yetu, lakini sitakubali ukeketaji. Ni hatari na haramu chini ya sheria ya Kenya. Ninahitaji kuzungumza na mwalimu wangu."</span><span class="sh">"Naelewa hii ni important kwa familia yetu, lakini sitakubali FGM. Ni harmful na illegal chini ya Kenyan law. Ninahitaji kuzungumza na mwalimu wangu."</span></div>
+</div>
+<div class="script-block" style="margin-top:12px;">
+  <div class="speaker"><span class="en">Pressure:</span><span class="sw">Shinikizo:</span><span class="sh">Pressure:</span></div>
+  <div class="line"><span class="en">"You are disgracing our family by refusing. No one will want to marry you."</span><span class="sw">"Unaiudhi familia yetu kwa kukataa. Hakuna atakayetaka kukuoa."</span><span class="sh">"Una-disgrace familia yetu kwa ku-refuse. Hakuna atakaekuoa."</span></div>
+</div>
+<div class="script-block" style="background:#f0fdf4;">
+  <div class="speaker" style="color:var(--pri);">&#10003; <span class="en">Strong Refusal:</span><span class="sw">Kukataa Kwa Ujasiri:</span><span class="sh">Strong Refusal:</span></div>
+  <div class="line"><span class="en">"I love our family, but I will not allow harm to my body. A person who truly cares for me will not require me to be harmed. I am reporting this."</span><span class="sw">"Napenda familia yetu, lakini sitaruhusu kudhurua mwili wangu. Mtu anayenijali kweli hatanilazimisha kudhulumwa. Ninaenda kuripoti hili."</span><span class="sh">"Napenda familia yetu, lakini sitaruhusu harm kwa mwili wangu. Mtu anayenijali kweli hata-require nidhulumwe. Ninaenda ku-report hili."</span></div>
+</div>
+</div>
+
+<!-- SLIDE 6: Practice Scenario -->
+<div class="slide">
+<div class="slide-head">&#127979; <span class="en">Scenario &mdash; The Holiday Announcement</span><span class="sw">Hali &mdash; Tangazo la Likizo</span><span class="sh">Scenario &mdash; The Holiday Announcement</span></div>
+<div class="sc-card">
+  <p><span class="en">Akinyele, 14, is a Form 2 student in Kajiado. One week before the December holidays, her aunt visits and tells her: "We have arranged for your initiation during the holidays. This is our tradition — all women in our family have done it. Pack your things, you leave Friday."</span><span class="sw">Akinyele, miaka 14, ni mwanafunzi wa Kidato cha Pili huko Kajiado. Wiki moja kabla ya likizo ya Desemba, shangazi yake anatembelea na kumwambia: "Tumeandaa sherehe yako wakati wa likizo. Hii ni mila yetu — wanawake wote katika familia yetu wamepitia. Funga vitu vyako, unaondoka Ijumaa."</span><span class="sh">Akinyele, 14, ni Form 2 student Kajiado. Wiki moja kabla ya December holidays, shangazi yake anakuja na kumwambia: "Tumeandaa initiation yako wakati wa holidays. Hii ni tradition yetu — wanawake wote katika familia yetu wamefanya. Pack vitu vyako, unaondoka Friday."</span></p>
+  <p><strong><span class="en">What should Akinyele do first?</span><span class="sw">Akinyele afanye nini kwanza?</span><span class="sh">Akinyele afanye nini kwanza?</span></strong></p>
+  <div id="sc1" style="display:flex;flex-direction:column;gap:6px;">
+    <button class="choice" onclick="scPick(this,'sc1','no','sc1res')"><span class="en">A. Pack her bag and comply to avoid conflict with family</span><span class="sw">A. Funga mfuko wake na kutii ili kuepuka mgongano na familia</span><span class="sh">A. Pack bag yake na ku-comply ili ku-avoid conflict na familia</span></button>
+    <button class="choice" onclick="scPick(this,'sc1','no','sc1res')"><span class="en">B. Say nothing but secretly plan to run away on Friday</span><span class="sw">B. Sema kitu lakini kwa siri panga kukimbia Ijumaa</span><span class="sh">B. Sema kitu lakini kwa siri panga ku-run away Friday</span></button>
+    <button class="choice" onclick="scPick(this,'sc1','ok','sc1res')"><span class="en">C. Immediately tell her teacher or school counsellor and call Childline 116</span><span class="sw">C. Mara moja mwambie mwalimu wake au mshauri wa shule na piga simu Childline 116</span><span class="sh">C. Mara moja mwambie mwalimu wake au school counsellor na call Childline 116</span></button>
+    <button class="choice" onclick="scPick(this,'sc1','no','sc1res')"><span class="en">D. Ask her aunt to postpone it until after her exams</span><span class="sw">D. Mwombie shangazi yake aiahirishe hadi baada ya mitihani yake</span><span class="sh">D. Mwombie shangazi yake ai-postpone hadi baada ya exams zake</span></button>
+  </div>
+  <div class="s-result" id="sc1res"></div>
+  <button onclick="scRetry('sc1')" style="margin-top:8px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 12px;font-size:.78rem;cursor:pointer;">&#8635; <span class="en">Try again</span><span class="sw">Jaribu tena</span><span class="sh">Try again</span></button>
+</div>
+</div>
+
+<!-- SLIDE 7: Trusted Adults and Support -->
+<div class="slide">
+<div class="slide-head">&#128106; <span class="en">Involving Trusted Adults and Support Systems</span><span class="sw">Kushirikisha Watu Wazima Wanaokuamini na Mifumo ya Msaada</span><span class="sh">Kuhusisha Trusted Adults na Support Systems</span></div>
+<p class="tp"><span class="en">You do not have to face this alone. There are people and systems designed to protect you:</span><span class="sw">Huhitaji kukabiliana na hili peke yako. Kuna watu na mifumo iliyoundwa kulinda:</span><span class="sh">Huhitaji face hili peke yako. Kuna watu na systems zilizoundwa ku-protect wewe:</span></p>
+<ul class="bl">
+  <li><strong><span class="en">School teacher or counsellor</span><span class="sw">Mwalimu wa shule au mshauri</span><span class="sh">School teacher au counsellor</span></strong> — <span class="en">your first and most accessible contact; they are legally required to report FGM threats</span><span class="sw">mawasiliano yako ya kwanza na yanayopatikana zaidi; kisheria wanahitajika kuripoti vitisho vya FGM</span><span class="sh">contact yako ya kwanza na ya accessible zaidi; kisheria wanahitajika ku-report FGM threats</span></li>
+  <li><strong>Childline Kenya — 116</strong> <span class="en">(free, 24/7, confidential)</span><span class="sw">(bure, saa 24, siri)</span><span class="sh">(free, 24/7, confidential)</span></li>
+  <li><strong>NGEC (National Gender and Equality Commission) — 0800 720 630</strong> <span class="en">free helpline</span><span class="sw">simu ya bure ya msaada</span><span class="sh">free helpline</span></li>
+  <li><strong><span class="en">Police — 999 / 112</span><span class="sw">Polisi — 999 / 112</span><span class="sh">Police — 999 / 112</span></strong></li>
+  <li><strong><span class="en">A trusted relative</span><span class="sw">Ndugu unayemwamini</span><span class="sh">Relative unayemwamini</span></strong> — <span class="en">uncle, older sister, teacher — someone who will act, not stay silent</span><span class="sw">mjomba, dada mkubwa, mwalimu — mtu atakayechukua hatua, asiye kimya</span><span class="sh">uncle, older sister, mwalimu — mtu atakaechukua action, asiye silent</span></li>
+</ul>
+<div class="tip-box">
+  <strong><span class="en">&#128161; Safety planning tip:</span><span class="sw">&#128161; Kidokezo cha mpango wa usalama:</span><span class="sh">&#128161; Safety planning tip:</span></strong>
+  <span class="en"> If you suspect FGM is being planned, tell a trusted adult BEFORE the holiday — do not wait. The earlier you report, the more options are available.</span>
+  <span class="sw"> Ikiwa unashuku FGM imepangwa, mwambie mtu mzima unayemwamini KABLA ya likizo — usisubiri. Mapema unavyoripoti, chaguo zaidi zinapatikana.</span>
+  <span class="sh"> Kama unashuku FGM imepangwa, mwambie trusted adult KABLA ya holiday — usisubiri. Mapema unavyoripoti, options zaidi zinapatikana.</span>
+</div>
+</div>
+
+<!-- SLIDE 8: Your Rights Under Kenyan Law -->
+<div class="slide">
+<div class="slide-head">&#9878;&#65039; <span class="en">Your Rights Under Kenyan Law</span><span class="sw">Haki Zako Chini ya Sheria ya Kenya</span><span class="sh">Haki Zako Chini ya Kenyan Law</span></div>
+<div class="key-term">
+  <strong><span class="en">Prohibition of Female Genital Mutilation Act, 2011</span><span class="sw">Sheria ya Kupiga Marufuku Ukeketaji wa Kike, 2011</span><span class="sh">Prohibition of FGM Act, 2011</span></strong>
+  <span class="en">FGM is a criminal offence in Kenya. Anyone who performs, procures, or aids FGM faces up to 3 years in prison or a fine of KES 200,000 — or both. If the victim is a child, the penalty is up to 7 years.</span>
+  <span class="sw">FGM ni kosa la jinai nchini Kenya. Mtu yeyote anayefanya, kupanga, au kusaidia FGM anakabiliwa na kifungo cha hadi miaka 3 gerezani au faini ya KES 200,000 — au vyote viwili. Kama mwathirika ni mtoto, adhabu ni hadi miaka 7.</span>
+  <span class="sh">FGM ni criminal offence Kenya. Mtu yeyote anayefanya, kupanga, au ku-aid FGM anakabiliwa na hadi miaka 3 gerezani au fine ya KES 200,000 — au vyote viwili. Kama victim ni mtoto, penalty ni hadi miaka 7.</span>
+</div>
+<ul class="bl">
+  <li><span class="en">You have the right to bodily integrity — no one can alter your body without your informed consent</span><span class="sw">Una haki ya uadilifu wa mwili — hakuna anayeweza kubadilisha mwili wako bila idhini yako ya makusudi</span><span class="sh">Una haki ya bodily integrity — hakuna anayeweza ku-alter mwili wako bila informed consent yako</span></li>
+  <li><span class="en">You have the right to education, health, and a future free from FGM</span><span class="sw">Una haki ya elimu, afya, na mustakabali huru kutoka kwa FGM</span><span class="sh">Una haki ya elimu, afya, na future free kutoka kwa FGM</span></li>
+  <li><span class="en">Reporting FGM is not betrayal — it is protection. You are saving yourself and future girls in your community</span><span class="sw">Kuripoti FGM si usaliti — ni ulinzi. Unajilinda wewe mwenyewe na wasichana wa baadaye katika jamii yako</span><span class="sh">Ku-report FGM si betrayal — ni protection. Unajilinda na future girls katika community yako</span></li>
+</ul>
+<div class="warn-box">
+  <strong><span class="en">&#9888; Mandatory reporting:</span><span class="sw">&#9888; Ripoti ya lazima:</span><span class="sh">&#9888; Mandatory reporting:</span></strong>
+  <span class="en"> Teachers, health workers, and other professionals are legally required to report knowledge of FGM to authorities. They cannot stay silent.</span>
+  <span class="sw"> Walimu, wafanyakazi wa afya, na wataalamu wengine wanalazimishwa kisheria kuripoti maarifa ya FGM kwa mamlaka. Hawawezi kukaa kimya.</span>
+  <span class="sh"> Walimu, health workers, na professionals wengine wana legal requirement ya ku-report knowledge ya FGM kwa mamlaka. Hawawezi kukaa kimya.</span>
+</div>
+</div>
+
+<!-- SLIDE 9: Quiz -->
+<div class="slide">
+<div class="slide-head">&#128221; <span class="en">Practice Quiz &mdash; 10 Questions</span><span class="sw">Maswali ya Zoezi &mdash; 10</span><span class="sh">Practice Quiz &mdash; 10 Questions</span></div>
+
+<!-- Q1 MSQ — correct: A,B,C,D -->
+<div class="mcq-block">
+<div class="q-text">1. A health educator in Kajiado explains the harms of FGM to a community group. Which of the following are recognised harms of FGM? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq1">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">A</span> Severe pain and risk of infection immediately after the procedure</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">B</span> Complications during childbirth including prolonged labour</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">C</span> Psychological trauma including PTSD and depression</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">D</span> Risk of HIV transmission if shared instruments are used</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq1')"><span class="opt-letter">E</span> Improved chances of marriage in communities that practice FGM</div>
+</div>
+<div class="mcq-fb" id="fb_mcq1"></div>
+</div>
+
+<!-- Q2 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">2. Amina, 15, Marsabit, is told by her mother: "If you refuse FGM, no man will marry you and you will bring shame to our family." What type of pressure tactic is this?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq2">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq2','A')"><span class="opt-letter">A</span> Bribery</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq2','B')"><span class="opt-letter">B</span> Social exclusion threat and shame</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq2','C')"><span class="opt-letter">C</span> False medical claim</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq2','D')"><span class="opt-letter">D</span> Peer pressure</div>
+</div>
+<div class="mcq-fb" id="fb_mcq2"></div>
+</div>
+
+<!-- Q3 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">3. Nafula, 14, Busia, discovers her aunt has arranged for her to be "cut" during the December holidays without telling her. What should Nafula do FIRST?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq3">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq3','A')"><span class="opt-letter">A</span> Agree to go along to avoid family conflict</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq3','B')"><span class="opt-letter">B</span> Plan to run away on the day without telling anyone</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq3','C')"><span class="opt-letter">C</span> Immediately tell her teacher and call Childline 116</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq3','D')"><span class="opt-letter">D</span> Ask to postpone it until she is older</div>
+</div>
+<div class="mcq-fb" id="fb_mcq3"></div>
+</div>
+
+<!-- Q4 MSQ — correct: A,B,D -->
+<div class="mcq-block">
+<div class="q-text">4. A peer educator in Samburu teaches students about FGM refusal. Which of the following are effective elements of a DEAR refusal for FGM pressure? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq4">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">A</span> Clearly describing the situation ("I have been told I will be taken for FGM")</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">B</span> Expressing your feelings honestly ("I feel scared and I do not want this")</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">C</span> Apologising for refusing so as not to hurt the family's feelings</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">D</span> Asserting a firm NO and stating it is illegal under Kenyan law</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq4')"><span class="opt-letter">E</span> Agreeing in principle but asking for it to be done at a hospital</div>
+</div>
+<div class="mcq-fb" id="fb_mcq4"></div>
+</div>
+
+<!-- Q5 MCQ — correct: D -->
+<div class="mcq-block">
+<div class="q-text">5. Under the Prohibition of Female Genital Mutilation Act (2011), what is the penalty for performing FGM on a child in Kenya?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq5">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq5','A')"><span class="opt-letter">A</span> A warning from the local chief</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq5','B')"><span class="opt-letter">B</span> A fine of KES 10,000</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq5','C')"><span class="opt-letter">C</span> Up to 3 years in prison</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq5','D')"><span class="opt-letter">D</span> Up to 7 years in prison</div>
+</div>
+<div class="mcq-fb" id="fb_mcq5"></div>
+</div>
+
+<!-- Q6 MCQ — correct: B -->
+<div class="mcq-block">
+<div class="q-text">6. Chebet, 16, is pressured by her grandmother who says: "Your mother and I both went through it — it is what makes you a woman." What is the BEST description of this tactic?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq6">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq6','A')"><span class="opt-letter">A</span> Bribery with a family gift</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq6','B')"><span class="opt-letter">B</span> Generational pressure that uses identity and tradition to normalise harm</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq6','C')"><span class="opt-letter">C</span> A medical recommendation from an elder</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq6','D')"><span class="opt-letter">D</span> A dare from peers</div>
+</div>
+<div class="mcq-fb" id="fb_mcq6"></div>
+</div>
+
+<!-- Q7 MSQ — correct: A,B,C,D -->
+<div class="mcq-block">
+<div class="q-text">7. A teacher in Narok explains the support systems available to a girl facing FGM. Which of the following are legitimate support options? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq7">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">A</span> Calling Childline Kenya on 116 (free, 24/7)</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">B</span> Telling a trusted teacher or school counsellor immediately</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">C</span> Calling the police on 999 or 112</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">D</span> Calling NGEC on 0800 720 630</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq7')"><span class="opt-letter">E</span> Waiting until the holiday to see if the plan goes ahead before acting</div>
+</div>
+<div class="mcq-fb" id="fb_mcq7"></div>
+</div>
+
+<!-- Q8 MCQ — correct: A -->
+<div class="mcq-block">
+<div class="q-text">8. Zawadi, 13, Kwale, tells her teacher she has been told she will be "initiated" during the holidays. Her teacher is legally required to do which of the following?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq8">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq8','A')"><span class="opt-letter">A</span> Report the threat to authorities immediately — mandatory reporting applies</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq8','B')"><span class="opt-letter">B</span> Keep the information confidential and only advise the student</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq8','C')"><span class="opt-letter">C</span> Call the girl's parents to confirm the plan</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq8','D')"><span class="opt-letter">D</span> Refer the student to the community chief for mediation</div>
+</div>
+<div class="mcq-fb" id="fb_mcq8"></div>
+</div>
+
+<!-- Q9 MSQ — correct: A,B,D -->
+<div class="mcq-block">
+<div class="q-text">9. A community health worker in West Pokot teaches parents about FGM. Which of the following statements about FGM are TRUE? [SELECT ALL THAT APPLY]</div>
+<div style="font-size:.74rem;font-weight:700;color:#0a5e2a;margin-bottom:6px;">&#9745; Select ALL correct answers</div>
+<div class="options" id="mcq9">
+<div class="opt" data-opt="A" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">A</span> FGM has no health benefits and causes harm</div>
+<div class="opt" data-opt="B" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">B</span> FGM is illegal in Kenya under the 2011 Act</div>
+<div class="opt" data-opt="C" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">C</span> FGM performed by a doctor is safe and legal</div>
+<div class="opt" data-opt="D" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">D</span> A girl has the right to refuse FGM regardless of family or community tradition</div>
+<div class="opt" data-opt="E" onclick="toggleOpt(this,'mcq9')"><span class="opt-letter">E</span> FGM is required by Islam as a religious obligation</div>
+</div>
+<div class="mcq-fb" id="fb_mcq9"></div>
+</div>
+
+<!-- Q10 MCQ — correct: C -->
+<div class="mcq-block">
+<div class="q-text">10. Halima, 15, is taken to a village during school break and FGM is performed on her without her consent. What is the correct legal description of what occurred?</div>
+<div style="font-size:.74rem;font-weight:700;color:#6b7280;margin-bottom:6px;">&#11044; Select ONE answer</div>
+<div class="options" id="mcq10">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'mcq10','A')"><span class="opt-letter">A</span> A traditional practice that is culturally protected</div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'mcq10','B')"><span class="opt-letter">B</span> A family decision that courts cannot override</div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'mcq10','C')"><span class="opt-letter">C</span> A criminal offence; perpetrators can be prosecuted under the FGM Act 2011</div>
+<div class="opt" data-opt="D" onclick="selectOpt(this,'mcq10','D')"><span class="opt-letter">D</span> A medical procedure that only requires parental consent</div>
+</div>
+<div class="mcq-fb" id="fb_mcq10"></div>
+</div>
+
+<button onclick="submitMCQ()" style="display:block;width:100%;margin-top:16px;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">&#10003; <span class="en">Submit Quiz</span><span class="sw">Wasilisha</span><span class="sh">Submit</span></button>
+<div id="score-box" style="display:none;padding:14px 16px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;margin-top:14px;"><div id="score-title" style="font-size:1.05rem;font-weight:800;color:#064e3b;"></div><div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div></div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_rfg" data-correct='{"0": 1, "1": 4, "2": 0, "3": 2, "4": 3}' data-rights='["Prohibited Persons Act 2011 \u2014 carries up to 3 years in jail", "Cultural transition \u2014 FGM is NOT a requirement for this", "Tell a teacher, health worker or call Childline on 116", "Ceremonies that celebrate transition to adulthood without cutting", "False belief that a girl must undergo FGM to be married"]'>
+    <div class="match-col" id="ml_rfg">
+      <button class="match-item" data-term="Rite of passage" onclick="_mL('rfg',0)">Rite of passage</button>
+      <button class="match-item" data-term="Marriageability myth" onclick="_mL('rfg',1)">Marriageability myth</button>
+      <button class="match-item" data-term="FGM is illegal" onclick="_mL('rfg',2)">FGM is illegal</button>
+      <button class="match-item" data-term="Safe reporting" onclick="_mL('rfg',3)">Safe reporting</button>
+      <button class="match-item" data-term="Alternative rites" onclick="_mL('rfg',4)">Alternative rites</button>
+    </div>
+    <div class="match-col" id="mr_rfg">
+      <button class="match-item" onclick="_mR('rfg',0)">Prohibited Persons Act 2011 — carries up to 3 years in jail</button>
+      <button class="match-item" onclick="_mR('rfg',1)">Cultural transition — FGM is NOT a requirement for this</button>
+      <button class="match-item" onclick="_mR('rfg',2)">Tell a teacher, health worker or call Childline on 116</button>
+      <button class="match-item" onclick="_mR('rfg',3)">Ceremonies that celebrate transition to adulthood without cutting</button>
+      <button class="match-item" onclick="_mR('rfg',4)">False belief that a girl must undergo FGM to be married</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_rfg" onclick="_mCheck('rfg')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_rfg" onclick="_mReset('rfg')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_rfg" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#127981; <span class="en">Real-Life Scenario — What Would You Do?</span><span class="sw">Hali Halisi — Ungefanya Nini?</span><span class="sh">Real Situation — Ungefanya Nini?</span></div>
+  <p class="tp"><span class="en">Read the scenario, make your choice, and see the realistic consequence. You can always go back and try a different path.</span><span class="sw">Soma hali, fanya chaguo lako, na uone matokeo halisi.</span><span class="sh">Soma scenario, fanya choice yako, uone matokeo halisi.</span></p>
+  <div class="btree-wrap" id="bt_rfg">
+    <div class="bt-scenario"><strong>Scenario:</strong> Naomi, 14, has been told by her grandmother that during the school holiday she will undergo a "special ceremony." Her older sister whispers that it involves cutting. Naomi is afraid but her mother says "It is our tradition — every girl in this family has done it."</div>
+<div class="bt-node active" id="btn_rfg_root">
+<div class="bt-question">What should Naomi do?</div>
+<div class="bt-choices">
+<button class="bt-choice good" onclick="btGo('rfg','root_ok')">A) Tell a teacher or school counsellor before the holiday begins</button>
+<button class="bt-choice good" onclick="btGo('rfg','root_ok')">B) Call Childline Kenya 116 — free and confidential</button>
+<button class="bt-choice bad" onclick="btGo('rfg','root_bad')">C) Agree — "It is tradition and everyone in my family has done it"</button>
+<button class="bt-choice warn" onclick="btGo('rfg','root_warn')">D) Run away from home during the holiday</button>
+</div>
+</div>
+<div class="bt-node" id="btn_rfg_root_ok">
+<button class="bt-back" onclick="btGo('rfg','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Correct — This Is a Medical Emergency</div><p>FGM is illegal in Kenya (Prohibition of FGM Act 2011) and a form of child abuse. <strong>Teachers are mandatory reporters</strong> — they must act. Naomi telling her teacher can stop the procedure before it happens. There is protection available: safe houses, legal intervention, and counselling for the family. <strong>Naomi's body is her own. No tradition overrides the law.</strong></p></div>
+<button class="bt-restart" onclick="btRestart('rfg')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rfg_root_ok">
+<button class="bt-back" onclick="btGo('rfg','root')">&#8592; Back</button>
+<div class="bt-outcome ok"><div class="bt-outcome-icon">✅</div><div class="bt-outcome-title">Excellent — Childline Will Act Immediately</div><p>Childline 116 is available 24 hours, free, and confidential. They handle FGM risk cases and can arrange immediate intervention and safe placement if needed. <strong>Naomi should call as soon as possible — before the holiday, not after.</strong> She can call even from her family's phone. She does not have to give her full name immediately.</p></div>
+<button class="bt-restart" onclick="btRestart('rfg')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rfg_root_bad">
+<button class="bt-back" onclick="btGo('rfg','root')">&#8592; Back</button>
+<div class="bt-outcome no"><div class="bt-outcome-icon">❌</div><div class="bt-outcome-title">Permanent Harm — Tradition Does Not Make It Safe</div><p>FGM causes permanent physical harm: severe pain, bleeding, infection, complications in childbirth, and lifelong sexual and psychological consequences. <strong>It is illegal in Kenya regardless of tradition, religion, or who performs it.</strong> A practice being traditional does not make it right or safe. Naomi has the legal right to refuse — and to be protected.</p></div>
+<button class="bt-restart" onclick="btRestart('rfg')">&#8635; Try Again</button>
+</div>
+<div class="bt-node" id="btn_rfg_root_warn">
+<button class="bt-back" onclick="btGo('rfg','root')">&#8592; Back</button>
+<div class="bt-outcome warn"><div class="bt-outcome-icon">⚠️</div><div class="bt-outcome-title">Dangerous — Get Official Help Instead</div><p>Running away leaves Naomi without protection and potentially in greater danger. <strong>The safer path is to get official help before the holiday</strong>: tell a teacher, call Childline 116, or contact the nearest police station. These authorities can intervene legally without Naomi having to flee alone. She deserves protection — not isolation.</p></div>
+<button class="bt-restart" onclick="btRestart('rfg')">&#8635; Try Again</button>
+</div>
+  </div>
+</div>
+<script>
+
+/* ── Branching decision tree ───────────────────────────── */
+function btGo(lid,nodeId){
+  var wrap=document.getElementById('bt_'+lid);
+  wrap.querySelectorAll('.bt-node').forEach(function(n){n.classList.remove('active');});
+  var node=document.getElementById('btn_'+lid+'_'+nodeId);
+  if(node){node.classList.add('active');node.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(node.querySelector('.bt-outcome.ok')&&window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){
+    fetch('/arise/?p=api_lesson&action=save_branching',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,
+    module_slug:window.ARISE_MODULE_SLUG,done:1})}).catch(function(){});}}
+}
+function btRestart(lid){btGo(lid,'root');}
+
+</script>
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>&#8592; <span class="en">Prev</span><span class="sw">Nyuma</span><span class="sh">Back</span></button>
+    <div class="dots" id="dotsWrap"></div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)"><span class="en">Next</span><span class="sw">Mbele</span><span class="sh">Next</span> &#8594;</button>
+  </div>
+</div>
+
+<script>
+var lang = window.ARISE_LANG || localStorage.getItem('arise_lang') || 'en';
+function setLang(l) {
+  lang = l;
+  ['en','sw','sh'].forEach(function(c) { document.querySelectorAll('.'+c).forEach(function(el) { el.style.display = l===c ? '' : 'none'; }); });
+  ['enBtn','swBtn','shBtn'].forEach(function(id) { var el=document.getElementById(id); if(el) el.classList.toggle('active', id===l+'Btn'); });
+  localStorage.setItem('arise_lang', l);
+}
+setLang(lang);
+function setSize(s) { var m={sm:'13px',md:'15px',lg:'17px'}; document.body.style.fontSize=m[s]||'15px'; ['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);}); localStorage.setItem('arise_textsize',s); }
+setSize(localStorage.getItem('arise_textsize')||'md');
+var cur=0,slides=[];
+function init(){
+  slides=document.querySelectorAll('.slide');
+  var dw=document.getElementById('dotsWrap');
+  slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
+  upd();
+  var slug=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.ARISE_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('arise_slide_'+slug)||'0'):0);
+  if(rs>0&&rs<slides.length){setTimeout(function(){go(rs);},120);}
+}
+function navigate(dir){go(cur+dir);}
+function go(n){
+  if(n<0||n>=slides.length)return;
+  slides[cur].classList.remove('active');
+  var dots=document.querySelectorAll('.dot');
+  dots[cur].classList.remove('active');dots[cur].classList.add('visited');
+  cur=n;slides[cur].classList.add('active');
+  dots[cur].classList.remove('visited');dots[cur].classList.add('active');
+  upd();window.scrollTo(0,0);
+  var slug2=window.ARISE_LESSON_SLUG||document.body.dataset.lessonSlug;
+  if(slug2)localStorage.setItem('arise_slide_'+slug2,n);
+  var lid=window.ARISE_LESSON_ID;
+  if(lid)fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:parseInt(lid),slide:n})}).catch(function(){});
+}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){
+  document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});
+  btn.classList.add('chosen-'+type);
+  var res=document.getElementById(resId);
+  if(res){res.className='s-result '+type;res.style.display='block';
+    res.innerHTML=type==='ok'
+      ? '<strong>&#10003; Correct!</strong> <span class="en">Reporting immediately to a teacher or Childline 116 is the right action. This protects Akinyele and gives authorities time to intervene before the holiday.</span><span class="sw">Kuripoti mara moja kwa mwalimu au Childline 116 ndiyo hatua sahihi. Hii inalinda Akinyele na inawapa mamlaka wakati wa kuingilia kabla ya likizo.</span><span class="sh">Ku-report mara moja kwa mwalimu au Childline 116 ndiyo hatua sahihi. Hii inalinda Akinyele na inawapa mamlaka time ya ku-intervene kabla ya holiday.</span>'
+      : '<strong>&#10007; Not quite.</strong> <span class="en">Complying, staying silent, or delaying gives the plan time to proceed. The only effective action is to report immediately to a trusted adult or helpline so authorities can intervene.</span><span class="sw">Kutii, kukaa kimya, au kuchelewa kunipa mpango muda wa kuendelea. Hatua pekee nzuri ni kuripoti mara moja kwa mtu mzima unayemwamini au simu ya msaada ili mamlaka ziweze kuingilia.</span><span class="sh">Ku-comply, kukaa kimya, au ku-delay inapa plan muda wa ku-proceed. Hatua pekee effective ni ku-report mara moja kwa trusted adult au helpline ili mamlaka zi-intervene.</span>';
+  }
+}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={'mcq1':'A,B,C,D','mcq2':'B','mcq3':'C','mcq4':'A,B,D','mcq5':'D','mcq6':'B','mcq7':'A,B,C,D','mcq8':'A','mcq9':'A,B,D','mcq10':'C'};
+var mcqExplain={'mcq1':'','mcq2':'','mcq3':'','mcq4':'','mcq5':'','mcq6':'','mcq7':'','mcq8':'','mcq9':'','mcq10':''};
+var mcqTypes={'mcq1':'msq','mcq2':'mcq','mcq3':'mcq','mcq4':'msq','mcq5':'mcq','mcq6':'mcq','mcq7':'msq','mcq8':'mcq','mcq9':'msq','mcq10':'mcq'};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){var cArr=correct.split(',').map(function(x){return x.trim();}).sort();var chArr=chosen.slice().sort();ok=JSON.stringify(cArr)===JSON.stringify(chArr);opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    else{ok=chosen.length>0&&chosen[0]===correct;opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});}
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>&#10003; Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>&#10007; Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>&#10007; Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand FGM refusal skills very well.':pct>=60?'👍 Good effort! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+  if(window.ARISE_LESSON_ID){fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID,score:score,total:total,percent:pct})}).catch(function(){});}
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

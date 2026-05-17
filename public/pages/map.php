@@ -545,6 +545,7 @@ $schoolsJson  = json_encode($schools);
                 <?php elseif ($isAdmin): ?>
                 <span class="cluster-badge" style="background:#e0f2fe;color:#075985;border-color:#7dd3fc;">👑 Admin View</span>
                 <?php endif; ?>
+                <button class="print-btn" onclick="exportExcel()" style="background:#1d6f42;">📊 Export Excel</button>
                 <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
         </div>
@@ -668,6 +669,8 @@ $schoolsJson  = json_encode($schools);
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- SheetJS for Excel export -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
     const clustersData = <?= $clustersJson ?>;
     const schoolsData  = <?= $schoolsJson ?>;
@@ -791,6 +794,59 @@ $schoolsJson  = json_encode($schools);
             map.flyTo(m.getLatLng(), 9, {duration: 1.0});
             m.openPopup();
         }, 350);
+    }
+
+    // ── Excel export ──────────────────────────────────────────────────────
+    function exportExcel() {
+        const wb = XLSX.utils.book_new();
+        const date = new Date().toLocaleDateString('en-KE', {day:'2-digit',month:'short',year:'numeric'}).replace(/ /g,'-');
+
+        // ── Sheet 1: Projects ─────────────────────────────────────────────
+        const projHeaders = [
+            'Project Name','County','Cluster','Learners','Certificates',
+            'Cert Rate (%)','Quiz Avg (%)','Knowledge Gain (%)','Behavior Change (%)',
+            'Behavior Surveys','Pre-Test Avg (%)','Post-Test Avg (%)','Quiz Attempts'
+        ];
+        const projRows = schoolsData.map(s => [
+            s.name        || '',
+            s.county      || '',
+            s.cluster_name|| '',
+            s.learners    || 0,
+            s.certs       || 0,
+            s.cert_rate   > 0 ? parseFloat(s.cert_rate)   : '',
+            s.avg_score   > 0 ? parseFloat(s.avg_score)   : '',
+            s.knowledge_gain != null ? parseFloat(s.knowledge_gain) : '',
+            s.pct_changed > 0 ? parseFloat(s.pct_changed) : '',
+            s.behavior_surveys || 0,
+            s.avg_pre  != null ? parseFloat(s.avg_pre)  : '',
+            s.avg_post != null ? parseFloat(s.avg_post) : '',
+            s.quiz_attempts || 0
+        ]);
+        const projSheet = XLSX.utils.aoa_to_sheet([projHeaders, ...projRows]);
+        // Column widths
+        projSheet['!cols'] = [22,14,18,10,12,13,12,16,18,16,15,16,13].map(w => ({wch: w}));
+        XLSX.utils.book_append_sheet(wb, projSheet, 'Projects');
+
+        // ── Sheet 2: Clusters ─────────────────────────────────────────────
+        const clHeaders = [
+            'Cluster Name','Projects','Learners','Certificates',
+            'Cert Rate (%)','Quiz Avg (%)','Knowledge Gain (%)','Last Activity'
+        ];
+        const clRows = clustersData.map(c => [
+            c.name           || '',
+            c.projects       || 0,
+            c.learners       || 0,
+            c.certs          || 0,
+            c.cert_rate > 0  ? parseFloat(c.cert_rate)      : '',
+            c.avg_score > 0  ? parseFloat(c.avg_score)      : '',
+            c.knowledge_gain != null ? parseFloat(c.knowledge_gain) : '',
+            c.last_activity  || ''
+        ]);
+        const clSheet = XLSX.utils.aoa_to_sheet([clHeaders, ...clRows]);
+        clSheet['!cols'] = [22,10,10,14,13,12,16,20].map(w => ({wch: w}));
+        XLSX.utils.book_append_sheet(wb, clSheet, 'Clusters');
+
+        XLSX.writeFile(wb, `ARISE-Projects-Map-${date}.xlsx`);
     }
 </script>
 

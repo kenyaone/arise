@@ -133,6 +133,42 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
   .info-table{font-size:.76rem;}
   .nav-btn{padding:8px 14px;font-size:.78rem;}
 }
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+/* ── Hotspot interaction ───────────────────────────────── */
+.hs-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:10px 0;}
+.hs-diagram{position:relative;width:100%;max-width:200px;}
+.hs-diagram svg{overflow:visible;}
+.hs-pin circle{transition:.15s;}
+.hs-pin:hover circle{r:12;opacity:.85;}
+.hs-pin.active circle{fill:#f5a623;}
+@keyframes hspulse{0%,100%{r:13;opacity:.35}50%{r:17;opacity:.1}}
+.hs-pulse{animation:hspulse 2s ease-in-out infinite;}
+.hs-info{width:100%;max-width:420px;min-height:80px;}
+.hs-card{display:none;background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border:2px solid var(--pri);border-radius:10px;padding:13px 15px;animation:si .2s ease;}
+.hs-card.active{display:block;}
+.hs-card-title{font-size:.92rem;font-weight:800;color:var(--pri);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.hs-card-body{font-size:.84rem;color:#2a3a2a;line-height:1.65;}
+.hs-hint{font-size:.78rem;color:var(--soft);text-align:center;margin-top:4px;font-style:italic;}
+
 </style>
 </head>
 <body data-lesson-id="0" data-lesson-slug="effects-of-smoking" data-module-slug="drug-abuse">
@@ -594,6 +630,96 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 </div><!-- /slides-wrap -->
 
 <!-- BOTTOM NAV -->
+<div class="slide">
+  <div class="slide-head">&#128279; <span class="en">Match the Terms</span><span class="sw">Linganisha Maneno</span><span class="sh">Match the Terms</span></div>
+  <p class="tp"><span class="en">Tap a term on the left, then tap its match on the right. Tap a paired item again to unpair it.</span><span class="sw">Gonga neno upande wa kushoto, kisha gonga jibu lake upande wa kulia.</span><span class="sh">Tap neno upande wa kushoto, kisha tap jibu lake upande wa kulia.</span></p>
+  <div class="match-game" id="mg_smk" data-correct='{"0": 4, "1": 1, "2": 3, "3": 0, "4": 2}' data-rights='["Addictive compound that hijacks the brain's dopamine system", "Destroyed air sacs causing irreversible breathlessness", "Binds to blood 200\u00d7 stronger than oxygen", "Fatty plaque narrowing arteries \u2014 raises heart attack risk", "Permanently inflamed airways producing excess mucus"]'>
+    <div class="match-col" id="ml_smk">
+      <button class="match-item" data-term="Chronic Bronchitis" onclick="_mL('smk',0)">Chronic Bronchitis</button>
+      <button class="match-item" data-term="Emphysema" onclick="_mL('smk',1)">Emphysema</button>
+      <button class="match-item" data-term="Atherosclerosis" onclick="_mL('smk',2)">Atherosclerosis</button>
+      <button class="match-item" data-term="Nicotine" onclick="_mL('smk',3)">Nicotine</button>
+      <button class="match-item" data-term="Carbon monoxide" onclick="_mL('smk',4)">Carbon monoxide</button>
+    </div>
+    <div class="match-col" id="mr_smk">
+      <button class="match-item" onclick="_mR('smk',0)">Addictive compound that hijacks the brain&#x27;s dopamine system</button>
+      <button class="match-item" onclick="_mR('smk',1)">Destroyed air sacs causing irreversible breathlessness</button>
+      <button class="match-item" onclick="_mR('smk',2)">Binds to blood 200× stronger than oxygen</button>
+      <button class="match-item" onclick="_mR('smk',3)">Fatty plaque narrowing arteries — raises heart attack risk</button>
+      <button class="match-item" onclick="_mR('smk',4)">Permanently inflamed airways producing excess mucus</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <button class="check-mcq-btn" id="mchk_smk" onclick="_mCheck('smk')">&#10003; Check Matches</button>
+    <button class="retry-btn" id="mrst_smk" onclick="_mReset('smk')" style="display:none;">&#8635; Try Again</button>
+  </div>
+  <div id="mfb_smk" style="display:none;font-size:.85rem;margin-top:8px;"></div>
+</div>
+<script>
+
+/* ── Matching interaction ──────────────────────────────── */
+var _mSt={};
+function _mL(id,i){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done)return;if(s.pairs.hasOwnProperty(i)){delete s.pairs[i];}else{s.sel=(s.sel===i)?null:i;}_mDraw(id);}
+function _mR(id,j){if(!_mSt[id])_mSt[id]={sel:null,pairs:{},done:false};var s=_mSt[id];if(s.done||s.sel===null)return;for(var k in s.pairs){if(s.pairs[k]===j){delete s.pairs[k];break;}}s.pairs[s.sel]=j;s.sel=null;_mDraw(id);}
+function _mDraw(id){var s=_mSt[id];var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});rB.forEach(function(b){b.className='match-item';var bd=b.querySelector('.mbadge');if(bd)bd.remove();});if(s.sel!==null)lB[s.sel].classList.add('msel');Object.keys(s.pairs).forEach(function(li){var ri=s.pairs[li];var n=parseInt(li)+1;lB[li].classList.add('mp'+n);var b1=document.createElement('span');b1.className='mbadge mb'+n;b1.textContent=n;lB[li].appendChild(b1);rB[ri].classList.add('mp'+n);var b2=document.createElement('span');b2.className='mbadge mb'+n;b2.textContent=n;rB[ri].appendChild(b2);});}
+function _mCheck(id){var s=_mSt[id];if(!s){_mSt[id]={sel:null,pairs:{},done:false};s=_mSt[id];}s.done=true;var g=document.getElementById('mg_'+id);var correct=JSON.parse(g.dataset.correct);var rights=JSON.parse(g.dataset.rights);var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');document.querySelectorAll('#mg_'+id+' .mbadge').forEach(function(b){b.remove();});var score=0,total=lB.length,html='<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;">';lB.forEach(function(el,i){el.className='match-item';var chosen=s.pairs.hasOwnProperty(i)?s.pairs[i]:null;var ok=(chosen===correct[i]);if(ok){score++;el.classList.add('correct');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}else{el.classList.add('wrong');if(chosen!==null&&rB[chosen])rB[chosen].classList.add('wrong');if(rB[correct[i]])rB[correct[i]].classList.add('correct');}html+='<div class="match-result-row"><span style="color:'+(ok?'var(--ok)':'var(--no)')+';">'+(ok?'&#10003;':'&#10007;')+'</span> '+htmlEscape(el.dataset.term)+' &rarr; <strong>'+htmlEscape(rights[correct[i]])+'</strong></div>';});html+='</div><p style="text-align:center;font-weight:700;margin-top:8px;">'+score+'/'+total+' correct</p>';var fb=document.getElementById('mfb_'+id);fb.innerHTML=html;fb.style.display='block';document.getElementById('mchk_'+id).style.display='none';document.getElementById('mrst_'+id).style.display='inline-block';if(window.ARISE_LESSON_SLUG&&window.ARISE_MODULE_SLUG){fetch('/arise/?p=api_lesson&action=save_matching',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_slug:window.ARISE_LESSON_SLUG,module_slug:window.ARISE_MODULE_SLUG,score:score,total:total})}).catch(function(){});}}
+function _mReset(id){_mSt[id]={sel:null,pairs:{},done:false};var lB=document.querySelectorAll('#ml_'+id+' .match-item');var rB=document.querySelectorAll('#mr_'+id+' .match-item');lB.forEach(function(b){b.className='match-item';});rB.forEach(function(b){b.className='match-item';});document.getElementById('mfb_'+id).style.display='none';document.getElementById('mchk_'+id).style.display='inline-block';document.getElementById('mrst_'+id).style.display='none';}
+function htmlEscape(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+</script>
+<div class="slide">
+  <div class="slide-head">&#128269; <span class="en">Where Smoking Harms Your Body</span><span class="sw">Where Smoking Harms Your Body</span><span class="sh">Where Smoking Harms Your Body</span></div>
+  <p class="tp"><span class="en">Tap each numbered pin to learn how this area is affected.</span><span class="sw">Gonga kila nambari kujifunza jinsi eneo hilo linavyoathirika.</span><span class="sh">Tap kila number pin kujua jinsi eneo hilo linavyoathiriwa.</span></p>
+  <div class="hs-wrap">
+    <div class="hs-diagram" data-lid="smk">
+<svg viewBox="0 0 200 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:180px;display:block;margin:0 auto;">
+  <ellipse cx="100" cy="38" rx="30" ry="34" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="14" rx="30" ry="14" fill="#5c3a1e"/>
+  <ellipse cx="91" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <ellipse cx="109" cy="34" rx="3" ry="3.5" fill="#5c3a1e" opacity=".45"/>
+  <path d="M93,48 Q100,54 107,48" stroke="#5c3a1e" stroke-width="1.5" fill="none" opacity=".4"/>
+  <rect x="88" y="71" width="24" height="14" rx="5" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,85 Q38,100 38,148 Q38,185 100,190 Q162,185 162,148 Q162,100 145,85 Q126,80 100,80 Q74,80 55,85Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M55,88 Q30,100 26,158 Q26,172 38,175 Q50,176 52,162 L60,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M145,88 Q170,100 174,158 Q174,172 162,175 Q150,176 148,162 L140,100Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M38,182 Q36,215 58,222 L100,226 L142,222 Q164,215 162,182Z" fill="#dfc9b2" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M56,222 L50,360 Q50,372 66,373 Q82,373 82,360 L80,226Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+  <path d="M120,226 L118,360 Q118,372 134,373 Q150,373 150,360 L144,222Z" fill="#f0d5b8" stroke="#b8845a" stroke-width="1.5"/>
+<circle cx="100" cy="32" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,0)" style="cursor:pointer;"><circle cx="100" cy="32" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="32" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">1</text></g><circle cx="100" cy="78" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,1)" style="cursor:pointer;"><circle cx="100" cy="78" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="100" y="78" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">2</text></g><circle cx="72" cy="118" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,2)" style="cursor:pointer;"><circle cx="72" cy="118" r="10" fill="#d97706" stroke="white" stroke-width="2"/><text x="72" y="118" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">3</text></g><circle cx="84" cy="105" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,3)" style="cursor:pointer;"><circle cx="84" cy="105" r="10" fill="#dc2626" stroke="white" stroke-width="2"/><text x="84" y="105" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">4</text></g><circle cx="115" cy="148" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,4)" style="cursor:pointer;"><circle cx="115" cy="148" r="10" fill="#92400e" stroke="white" stroke-width="2"/><text x="115" y="148" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">5</text></g><circle cx="100" cy="205" r="13" fill="none" stroke="#0a5e2a" stroke-width="1.5" opacity=".35" class="hs-pulse"/>
+  <g class="hs-pin" onclick="showHs(this,5)" style="cursor:pointer;"><circle cx="100" cy="205" r="10" fill="#7c3aed" stroke="white" stroke-width="2"/><text x="100" y="205" text-anchor="middle" dy=".36em" fill="white" font-size="9" font-weight="800" pointer-events="none">6</text></g>
+</svg>
+    </div>
+    <div class="hs-info" id="hsi_smk">
+<div class="hs-card" id="hsc_smk_0"><div class="hs-card-title"># 🧠 Brain</div><div class="hs-card-body">Nicotine reaches the brain in <strong>7 seconds</strong>, flooding it with dopamine. Over time the brain rewires itself to <em>need</em> nicotine to feel normal — this is addiction. Strokes and cognitive decline risk increase significantly.</div></div>
+<div class="hs-card" id="hsc_smk_1"><div class="hs-card-title">🔴 🔴 Throat & Larynx</div><div class="hs-card-body">Carcinogens in tobacco smoke constantly irritate the throat lining. Chronic cough, hoarseness, and <strong>laryngeal cancer</strong> are direct results. Smoking also destroys cilia — the tiny hairs that sweep pathogens out of the airway.</div></div>
+<div class="hs-card" id="hsc_smk_2"><div class="hs-card-title">💛 🫁 Lungs</div><div class="hs-card-body">Tar coats lung tissue causing <strong>COPD, emphysema</strong> (destroyed air sacs) and <strong>chronic bronchitis</strong>. 85% of all lung cancers are caused by smoking. Cilia destruction lets bacteria like TB reach the lungs unchallenged.</div></div>
+<div class="hs-card" id="hsc_smk_3"><div class="hs-card-title">❤️ ❤️ Heart</div><div class="hs-card-body">Carbon monoxide binds to red blood cells <strong>200× stronger than oxygen</strong>, forcing the heart to pump harder. Atherosclerosis (plaque in arteries) causes heart attacks. Smokers have 2–4× higher heart disease risk.</div></div>
+<div class="hs-card" id="hsc_smk_4"><div class="hs-card-title">🟤 🟤 Liver & Digestive System</div><div class="hs-card-body">Carcinogens damage the mouth, throat, oesophagus, stomach and colon. Smokers have higher rates of peptic ulcers, stomach cancer, and pancreatic cancer. The liver struggles to process toxins from every cigarette.</div></div>
+<div class="hs-card" id="hsc_smk_5"><div class="hs-card-title">🟣 🟣 Reproductive System</div><div class="hs-card-body">Women who smoke face reduced egg quality, earlier menopause, and higher miscarriage rates. Men have lower sperm quality and count. Babies born to smokers face low birth weight and 3× higher SIDS risk.</div></div>
+      <p class="hs-hint">&#128070; Tap a pin to see details</p>
+    </div>
+  </div>
+</div>
+<script>
+
+/* ── Hotspot interaction ───────────────────────────────── */
+function showHs(pinEl,idx){
+  var wrap=pinEl.closest('.hs-diagram');
+  var lid=wrap.dataset.lid;
+  wrap.querySelectorAll('.hs-pin').forEach(function(p){p.classList.remove('active');});
+  pinEl.classList.add('active');
+  var info=document.getElementById('hsi_'+lid);
+  info.querySelectorAll('.hs-card').forEach(function(c){c.classList.remove('active');});
+  var card=document.getElementById('hsc_'+lid+'_'+idx);
+  if(card)card.classList.add('active');
+}
+
+</script>
 <div class="nav-bar">
   <div class="nav-inner">
     <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
@@ -793,7 +919,7 @@ window.addEventListener('DOMContentLoaded', function() {
   // Resume from last saved slide
   var slug = document.body.dataset.lessonSlug;
   var saved = slug ? parseInt(localStorage.getItem('arise_slide_'+slug)||'0') : 0;
-  if (saved > 0 && saved < 9) { // don't resume on quiz slide
+  if (saved > 0 && saved < slides.length) { // don't resume on quiz slide
     setTimeout(function(){ go(saved); }, 100);
   }
 });

@@ -81,13 +81,13 @@ try {
 // ── Project & cluster lists for the create form ───────────────────────────────
 $schools = [];
 try {
-    $sr = db()->query("SELECT DISTINCT school_name FROM students WHERE is_active=1 AND school_name != '' ORDER BY school_name");
+    $sr = db()->query("SELECT DISTINCT s.school_name FROM students s INNER JOIN schools sc ON sc.name = s.school_name AND sc.is_active=1 WHERE s.is_active=1 AND s.school_name != '' ORDER BY s.school_name");
     while ($r = $sr->fetchArray(SQLITE3_ASSOC)) $schools[] = $r['school_name'];
 } catch (Exception $e) {}
 
 $clusters = [];
 try {
-    $cr = db()->query("SELECT DISTINCT class_name FROM students WHERE is_active=1 AND class_name != '' ORDER BY class_name");
+    $cr = db()->query("SELECT DISTINCT s.class_name FROM students s INNER JOIN schools sc ON sc.name = s.school_name AND sc.is_active=1 WHERE s.is_active=1 AND s.class_name != '' ORDER BY s.class_name");
     while ($r = $cr->fetchArray(SQLITE3_ASSOC)) $clusters[] = $r['class_name'];
 } catch (Exception $e) {}
 

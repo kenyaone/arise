@@ -226,6 +226,80 @@ switch ($action) {
         echo json_encode(['status' => 'ok']);
         break;
 
+    // ── save_matching: record matching interaction score ────────────────
+    case 'save_matching':
+        $lessonSlug = trim($body['lesson_slug'] ?? '');
+        $moduleSlug = trim($body['module_slug'] ?? '');
+        $score      = intval($body['score']       ?? 0);
+        $total      = intval($body['total']       ?? 1);
+
+        if ($moduleSlug) {
+            $moduleId = db()->querySingle(
+                "SELECT id FROM modules WHERE slug='" . SQLite3::escapeString($moduleSlug) . "'"
+            );
+            if ($moduleId) {
+                $hash = getSessionHash();
+                $sid  = getStudentId();
+                $stmt = db()->prepare(
+                    'INSERT INTO lesson_interactions
+                     (session_hash, student_id, module_id, lesson_slug, interaction_type, score, total, done)
+                     VALUES (:hash, :sid, :mod, :lslug, :type, :score, :total, 1)'
+                );
+                $stmt->bindValue(':hash',  $hash);
+                $stmt->bindValue(':sid',   $sid);
+                $stmt->bindValue(':mod',   $moduleId);
+                $stmt->bindValue(':lslug', $lessonSlug);
+                $stmt->bindValue(':type',  'matching');
+                $stmt->bindValue(':score', $score);
+                $stmt->bindValue(':total', $total > 0 ? $total : 1);
+                $stmt->execute();
+            }
+        }
+        echo json_encode(['status' => 'ok']);
+        break;
+
+    // ── save_branching: record branching decision outcome ───────────────
+    case 'save_branching':
+        $lessonSlug = trim($body['lesson_slug'] ?? '');
+        $moduleSlug = trim($body['module_slug'] ?? '');
+        $done       = intval($body['done']        ?? 0);
+
+        if ($moduleSlug) {
+            $moduleId = db()->querySingle(
+                "SELECT id FROM modules WHERE slug='" . SQLite3::escapeString($moduleSlug) . "'"
+            );
+            if ($moduleId) {
+                $hash = getSessionHash();
+                $sid  = getStudentId();
+                $existRow = db()->querySingle(
+                    "SELECT id, done FROM lesson_interactions
+                     WHERE session_hash='" . SQLite3::escapeString($hash) . "'
+                     AND module_id=$moduleId AND interaction_type='branching'",
+                    true
+                );
+                if ($existRow) {
+                    if ($done > intval($existRow['done'])) {
+                        db()->exec("UPDATE lesson_interactions SET done=$done WHERE id=" . intval($existRow['id']));
+                    }
+                } else {
+                    $stmt = db()->prepare(
+                        'INSERT INTO lesson_interactions
+                         (session_hash, student_id, module_id, lesson_slug, interaction_type, score, total, done)
+                         VALUES (:hash, :sid, :mod, :lslug, :type, :done, 1, :done)'
+                    );
+                    $stmt->bindValue(':hash',  $hash);
+                    $stmt->bindValue(':sid',   $sid);
+                    $stmt->bindValue(':mod',   $moduleId);
+                    $stmt->bindValue(':lslug', $lessonSlug);
+                    $stmt->bindValue(':type',  'branching');
+                    $stmt->bindValue(':done',  $done);
+                    $stmt->execute();
+                }
+            }
+        }
+        echo json_encode(['status' => 'ok']);
+        break;
+
     // ── ack_cw: acknowledge content warning for a module ───────────────
     case 'ack_cw':
         $moduleId = intval($body['module_id'] ?? 0);

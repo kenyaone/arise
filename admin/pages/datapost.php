@@ -73,30 +73,165 @@ function snap(): array {
     ];
 }
 
-// Returns only schools that are active in the schools table (respects removals), including location
+// Batch-query all M&E metrics for active schools
 function activeSchoolRows(): array {
-    $rows = [];
-    $result = db()->query("
-        SELECT DISTINCT st.school_name, sc.lat, sc.lng, sc.county
-        FROM students st
-        INNER JOIN schools sc ON sc.name = st.school_name AND sc.is_active = 1
-        WHERE st.is_active=1 AND st.deleted_at IS NULL AND st.school_name != ''
-        ORDER BY st.school_name
+    // Base school list (only active schools with students)
+    $schools = [];
+    $r = db()->query("
+        SELECT DISTINCT sc.name AS school_name, sc.county, sc.lat, sc.lng
+        FROM schools sc
+        INNER JOIN students st ON st.school_name = sc.name AND st.is_active=1 AND st.deleted_at IS NULL
+        WHERE sc.is_active=1
+        ORDER BY sc.name
     ");
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $sn  = $row['school_name'];
-        $sne = SQLite3::escapeString($sn);
-        $entry = [
-            'school_name'    => $sn,
-            'county'         => $row['county'] ?? '',
-            'lat'            => $row['lat'] !== null ? (float)$row['lat'] : null,
-            'lng'            => $row['lng'] !== null ? (float)$row['lng'] : null,
-            'learner_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$sne' AND is_active=1 AND deleted_at IS NULL"),
-            'quiz_count'     => (int)db()->querySingle("SELECT COUNT(qa.id) FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id WHERE s.school_name='$sne'"),
-            'pretest_count'  => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='pre'"),
-            'posttest_count' => (int)db()->querySingle("SELECT COUNT(*) FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id WHERE s.school_name='$sne' AND pa.test_type='post'"),
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+        $schools[$row['school_name']] = [
+            'school_name' => $row['school_name'],
+            'county'      => $row['county'] ?? '',
+            'lat'         => $row['lat'] !== null ? (float)$row['lat'] : null,
+            'lng'         => $row['lng'] !== null ? (float)$row['lng'] : null,
         ];
-        $rows[] = $entry;
+    }
+    if (empty($schools)) return [];
+
+    // Helper: run a GROUP BY school_name query, return array keyed by school_name
+    $idx = function(string $sql): array {
+        $out = []; $r = db()->query($sql);
+        while ($row = $r->fetchArray(SQLITE3_ASSOC)) $out[$row['school_name']] = $row;
+        return $out;
+    };
+
+    // ── Batch queries (one pass each) ─────────────────────────────────────
+    $learners = $idx("SELECT school_name, COUNT(*) AS v FROM students WHERE is_active=1 AND deleted_at IS NULL GROUP BY school_name");
+
+    $quizStats = $idx("SELECT s.school_name,
+        COUNT(qa.id) AS quiz_count,
+        ROUND(AVG(qa.percentage),1) AS avg_score,
+        SUM(CASE WHEN qa.percentage>=60 THEN 1 ELSE 0 END) AS pass_count
+        FROM quiz_attempts qa JOIN students s ON s.id=qa.student_id GROUP BY s.school_name");
+
+    $certs = $idx("SELECT s.school_name, COUNT(*) AS v
+        FROM certificates c JOIN students s ON s.id=c.student_id GROUP BY s.school_name");
+
+    $tests = $idx("SELECT s.school_name,
+        ROUND(AVG(CASE WHEN pa.test_type='pre'  THEN pa.percentage END),1) AS avg_pre,
+        ROUND(AVG(CASE WHEN pa.test_type='post' THEN pa.percentage END),1) AS avg_post,
+        COUNT(CASE WHEN pa.test_type='pre'  THEN 1 END) AS pretest_count,
+        COUNT(CASE WHEN pa.test_type='post' THEN 1 END) AS posttest_count
+        FROM pretest_attempts pa JOIN students s ON s.id=pa.student_id GROUP BY s.school_name");
+
+    $behavior = $idx("SELECT s.school_name,
+        COUNT(bs.id) AS surveys,
+        SUM(COALESCE(bs.q1_changed,0)) AS changed,
+        SUM(COALESCE(bs.q2_shared,0))  AS shared,
+        SUM(COALESCE(bs.q3_confident,0)) AS confident
+        FROM behavioral_surveys bs JOIN students s ON s.id=bs.student_id GROUP BY s.school_name");
+
+    $retention = $idx("SELECT s.school_name,
+        COUNT(rt.id) AS ret_count,
+        ROUND(AVG(rt.percentage),1) AS avg_ret
+        FROM retention_tests rt JOIN students s ON s.id=rt.student_id GROUP BY s.school_name");
+
+    $lessons = $idx("SELECT s.school_name, COUNT(*) AS v
+        FROM lesson_progress lp JOIN students s ON s.id=lp.student_id
+        WHERE lp.completed=1 GROUP BY s.school_name");
+
+    $active30 = $idx("SELECT school_name, COUNT(*) AS v FROM students
+        WHERE is_active=1 AND deleted_at IS NULL AND last_seen >= datetime('now','-30 days')
+        GROUP BY school_name");
+
+    $dates = $idx("SELECT school_name,
+        MIN(registered_at) AS first_reg, MAX(last_seen) AS last_act
+        FROM students WHERE is_active=1 AND deleted_at IS NULL GROUP BY school_name");
+
+    $facSess = $idx("SELECT school_name, COUNT(*) AS v FROM facilitator_sessions GROUP BY school_name");
+
+    // ── Merge ─────────────────────────────────────────────────────────────
+    $rows = [];
+    foreach ($schools as $name => $base) {
+        $lc      = (int)($learners[$name]['v'] ?? 0);
+        $qc      = (int)($quizStats[$name]['quiz_count'] ?? 0);
+        $avg     = (float)($quizStats[$name]['avg_score'] ?? 0);
+        $passC   = (int)($quizStats[$name]['pass_count'] ?? 0);
+        $cc      = (int)($certs[$name]['v'] ?? 0);
+        $pre     = isset($tests[$name]['avg_pre'])  && $tests[$name]['avg_pre']  !== null ? (float)$tests[$name]['avg_pre']  : null;
+        $post    = isset($tests[$name]['avg_post']) && $tests[$name]['avg_post'] !== null ? (float)$tests[$name]['avg_post'] : null;
+        $surveys = (int)($behavior[$name]['surveys'] ?? 0);
+        $rows[] = array_merge($base, [
+            // Core counts
+            'learner_count'        => $lc,
+            'quiz_count'           => $qc,
+            'pretest_count'        => (int)($tests[$name]['pretest_count'] ?? 0),
+            'posttest_count'       => (int)($tests[$name]['posttest_count'] ?? 0),
+            // Performance
+            'avg_score'            => $avg,
+            'cert_count'           => $cc,
+            'cert_rate'            => $lc > 0 ? round($cc / $lc * 100, 1) : 0,
+            'quiz_pass_count'      => $passC,
+            'quiz_pass_rate'       => $qc > 0 ? round($passC / $qc * 100, 1) : 0,
+            // Knowledge gain
+            'avg_pre_score'        => $pre,
+            'avg_post_score'       => $post,
+            'knowledge_gain'       => ($pre !== null && $post !== null) ? round($post - $pre, 1) : null,
+            // Behavioral change
+            'behavior_surveys'     => $surveys,
+            'pct_changed'          => $surveys > 0 ? round((int)$behavior[$name]['changed']   / $surveys * 100, 1) : 0,
+            'pct_shared'           => $surveys > 0 ? round((int)$behavior[$name]['shared']    / $surveys * 100, 1) : 0,
+            'pct_confident'        => $surveys > 0 ? round((int)$behavior[$name]['confident'] / $surveys * 100, 1) : 0,
+            // Retention
+            'retention_count'      => (int)($retention[$name]['ret_count'] ?? 0),
+            'avg_retention_score'  => (float)($retention[$name]['avg_ret'] ?? 0),
+            // Engagement
+            'lesson_completions'   => (int)($lessons[$name]['v'] ?? 0),
+            'active_last_30_days'  => (int)($active30[$name]['v'] ?? 0),
+            'first_registration'   => $dates[$name]['first_reg'] ?? null,
+            'latest_activity'      => $dates[$name]['last_act'] ?? null,
+            'facilitator_sessions' => (int)($facSess[$name]['v'] ?? 0),
+        ]);
+    }
+    return $rows;
+}
+
+// Per-module M&E breakdown
+function moduleBreakdown(): array {
+    $rows = [];
+    $r = db()->query("
+        SELECT m.id, m.title,
+            COUNT(DISTINCT qa.id)  AS attempts,
+            ROUND(AVG(qa.percentage), 1) AS avg_score,
+            ROUND(100.0 * SUM(CASE WHEN qa.percentage>=60 THEN 1 ELSE 0 END) / NULLIF(COUNT(qa.id),0), 1) AS pass_rate,
+            ROUND(AVG(CASE WHEN pa.test_type='pre'  THEN pa.percentage END), 1) AS avg_pre,
+            ROUND(AVG(CASE WHEN pa.test_type='post' THEN pa.percentage END), 1) AS avg_post,
+            COUNT(DISTINCT bs.id) AS behavior_surveys,
+            SUM(COALESCE(bs.q1_changed,0))   AS raw_changed,
+            SUM(COALESCE(bs.q2_shared,0))    AS raw_shared,
+            SUM(COALESCE(bs.q3_confident,0)) AS raw_confident
+        FROM modules m
+        LEFT JOIN quiz_attempts qa     ON m.id = qa.module_id
+        LEFT JOIN pretest_attempts pa  ON m.id = pa.module_id
+        LEFT JOIN behavioral_surveys bs ON m.id = bs.module_id
+        WHERE m.is_active=1
+        GROUP BY m.id
+        ORDER BY attempts DESC
+    ");
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+        $surveys = (int)$row['behavior_surveys'];
+        $pre     = $row['avg_pre']  !== null ? (float)$row['avg_pre']  : null;
+        $post    = $row['avg_post'] !== null ? (float)$row['avg_post'] : null;
+        $rows[] = [
+            'module_id'        => (int)$row['id'],
+            'module_title'     => $row['title'],
+            'attempts'         => (int)$row['attempts'],
+            'avg_score'        => (float)($row['avg_score'] ?? 0),
+            'pass_rate'        => (float)($row['pass_rate'] ?? 0),
+            'avg_pre'          => $pre,
+            'avg_post'         => $post,
+            'knowledge_gain'   => ($pre !== null && $post !== null) ? round($post - $pre, 1) : null,
+            'behavior_surveys' => $surveys,
+            'pct_changed'      => $surveys > 0 ? round((int)$row['raw_changed']   / $surveys * 100, 1) : 0,
+            'pct_shared'       => $surveys > 0 ? round((int)$row['raw_shared']    / $surveys * 100, 1) : 0,
+            'pct_confident'    => $surveys > 0 ? round((int)$row['raw_confident'] / $surveys * 100, 1) : 0,
+        ];
     }
     return $rows;
 }
@@ -209,7 +344,7 @@ if ($action === 'cloud_sync') {
     $schoolRows = activeSchoolRows();
     if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active schools found']); exit; }
 
-    $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows]);
+    $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows,'modules'=>moduleBreakdown()]);
     $syncUrl  = $cfg['cloud_sync_url'] ?? 'https://ariseci.org/arise-sync.php';
 
     $ch = curl_init($syncUrl);

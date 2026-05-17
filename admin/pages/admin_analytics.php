@@ -145,6 +145,7 @@ $cr = $db->query("
         ROUND(AVG(CASE WHEN pa.test_type='post' THEN pa.percentage END)
             - AVG(CASE WHEN pa.test_type='pre'  THEN pa.percentage END), 1) AS knowledge_gain
     FROM students s
+    INNER JOIN schools sc ON sc.name = s.school_name AND sc.is_active=1
     LEFT JOIN quiz_attempts  qa ON qa.student_id = s.id
     LEFT JOIN certificates   c  ON c.student_id  = s.id
     LEFT JOIN pretest_attempts pa ON pa.student_id = s.id

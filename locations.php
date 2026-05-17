@@ -302,7 +302,7 @@ if (!$db) {
                                       GROUP BY sc.id ORDER BY learners DESC");
                 $r = $stmt->execute();
                 while ($row = $r->fetchArray(SQLITE3_ASSOC)) $projects[] = $row;
-            } catch (Exception $e) { $dbError = "Unable to load project data: " . $e->getMessage(); }
+            } catch (\Throwable $e) { $dbError = "Unable to load project data: " . $e->getMessage(); }
         }
 
         $total_projects   = count($projects) + count($projectsNoSync);
@@ -322,19 +322,19 @@ if (!$db) {
                 $direct_avg = (float)$db->querySingle("SELECT ROUND(AVG(CAST(percentage AS REAL)),1) FROM quiz_attempts WHERE percentage > 0");
                 if ($direct_avg > 0) $global_avg_score = $direct_avg;
             }
-        } catch (Exception $e) {}
+        } catch (\Throwable $e) {}
         if ($hasSyncedData) $lastSyncTime = $db->querySingle("SELECT MAX(last_synced_at) FROM device_sync_stats");
 
         // Load poll summary
         try {
             $pr = $db->query("SELECT * FROM module_feedback_sync ORDER BY module_id");
-            while ($row = $pr->fetchArray(SQLITE3_ASSOC)) $pollData[] = $row;
-        } catch (Exception $e) {}
+            if ($pr) while ($row = $pr->fetchArray(SQLITE3_ASSOC)) $pollData[] = $row;
+        } catch (\Throwable $e) {}
 
         $projectsJson = json_encode($projects);
         $noSyncJson   = json_encode($projectsNoSync);
 
-    } catch (Exception $e) { $dbError = "Database error: " . $e->getMessage(); }
+    } catch (\Throwable $e) { $dbError = "Database error: " . $e->getMessage(); }
 }
 
 // Rank synced projects (only those with learners get a real score)

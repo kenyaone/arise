@@ -54,7 +54,7 @@ tr:nth-child(even) td{background:#f9fafb}
 <div class="cover">
   <div style="font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;">ARISE Platform</div>
   <h1>User Manual</h1>
-  <div class="sub">For Learners &amp; Facilitators</div>
+  <div class="sub">For Learners</div>
   <div class="meta">Version <?= e($ver) ?> &nbsp;&middot;&nbsp; <?= date('F Y') ?> &nbsp;&middot;&nbsp; Adolescent Reproductive Health Information Support &amp; Empowerment</div>
 </div>
 
@@ -72,7 +72,6 @@ tr:nth-child(even) td{background:#f9fafb}
   <li>Challenges &amp; Activities</li>
   <li>Forum &amp; Ask Us</li>
   <li>Certificates</li>
-  <li>Facilitator Mode</li>
   <li>Tips for a Good Session</li>
 </ol>
 
@@ -87,7 +86,7 @@ tr:nth-child(even) td{background:#f9fafb}
   <li>Open any browser (Chrome, Firefox, Safari).</li>
   <li>Type this address in the address bar:</li>
 </ol>
-<div class="code">http://192.168.0.10/arise/</div>
+<div class="code">http://192.168.0.100/arise/</div>
 <div class="tip"><strong>Bookmark this!</strong> You can save this URL for quick access next time.</div>
 
 <h3>Register Your Account</h3>
@@ -176,22 +175,7 @@ tr:nth-child(even) td{background:#f9fafb}
 <p>Certificates show your name, module title, score, and date. They can be printed or saved as PDF from the <strong>Certs</strong> menu.</p>
 <div class="tip">After earning your certificate you will be directed to the Impact Survey (Step 5). Complete it to mark the module fully done.</div>
 
-<h2>11. Facilitator Mode</h2>
-<h3>Starting a session</h3>
-<ol>
-  <li>Log in at <code>http://arise.local/arise/admin/</code></li>
-  <li>Go to <strong>System &rarr; Facilitator</strong>.</li>
-  <li>Select the project and cluster, then click <strong>Generate Code</strong>.</li>
-  <li>A unique 6-character session code is created (e.g. <code>A3FX92</code>).</li>
-  <li>Display the code on screen so learners can confirm they are in the right session.</li>
-</ol>
-<h3>Live monitoring</h3>
-<p>Click <strong>View Live</strong> next to an active session to see each learner's progress in real time. The dashboard auto-refreshes every 20 seconds.</p>
-<div class="code">http://arise.local/arise/?p=facilitator</div>
-<h3>Ending a session</h3>
-<p>Click <strong>End</strong> in the Facilitator panel when training is complete. Ended sessions remain in the history for reporting.</p>
-
-<h2>12. Tips for a Good Session</h2>
+<h2>11. Tips for a Good Session</h2>
 <ul>
   <li>Ask all learners to connect to WiFi <em>before</em> the session starts.</li>
   <li>Display the URL on a projector using the <strong>Project on Screen</strong> button in the admin dashboard.</li>
