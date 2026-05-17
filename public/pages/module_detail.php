@@ -578,13 +578,10 @@ $interactiveCount = $counts['interactive'];
           &#127919; Lesson Quiz<?= $_lessonQuizDone ? ' &#10003;' : (!$_pretestDone ? ' &#128274;' : ' &rarr;') ?>
         </a>
         <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
-        <!-- Step 4: Post-Test -->
-        <a href="/arise/?p=pre_test&module=<?= e($module['slug']) ?>&type=post"
-           class="btn <?= $_postestDone ? 'btn-secondary' : 'btn-primary' ?>"
-           style="<?= (!$_pretestDone) ? 'opacity:.3;pointer-events:none;cursor:not-allowed;' : ($_postestDone ? 'opacity:.7;' : '') ?>font-size:.82rem"
-           title="<?= !$_pretestDone ? 'Complete the Pre-Test first' : 'Measure how much you learned' ?>">
-          &#128200; Post-Test<?= $_postestDone ? ' &#10003;' : (!$_pretestDone ? ' &#128274;' : ' &rarr;') ?>
-        </a>
+        <!-- Post-Test indicator (button lives at bottom of lesson list) -->
+        <span style="font-size:.82rem;color:<?= $_postestDone ? '#166534' : '#9ca3af' ?>;font-weight:600">
+          &#128200; Post-Test<?= $_postestDone ? ' &#10003;' : '' ?>
+        </span>
         <span style="color:#d1d5db;font-size:.9rem">&#8594;</span>
         <!-- Step 5: Survey -->
         <a href="/arise/?p=survey&module=<?= e($module['slug']) ?>"
@@ -687,6 +684,39 @@ $interactiveCount = $counts['interactive'];
         </div>
     </a>
     <?php endforeach; ?>
+
+    <?php if ($hasQuestions): ?>
+    <!-- Post-Test card at end of lessons -->
+    <?php
+        $postLocked = !$_pretestDone;
+        $postHref   = $postLocked ? "#" : "/arise/?p=pre_test&module=".e($module['slug'])."&type=post";
+    ?>
+    <div style="margin-top:4px;">
+      <a href="<?= $postHref ?>"
+         class="lc"
+         style="<?= $postLocked ? 'opacity:.4;pointer-events:none;cursor:not-allowed;' : '' ?>background:linear-gradient(135deg,#0a5e2a,#1e8055);">
+        <div class="lc-inner">
+          <div class="lc-stripe" style="background:linear-gradient(180deg,#fcd34d,#f59e0b);"></div>
+          <div class="lc-num" style="background:rgba(255,255,255,.15);">
+            <div class="lc-num-val" style="color:#fff;font-size:1.6rem;">&#128200;</div>
+          </div>
+          <div class="lc-body">
+            <div class="lc-content">
+              <div class="lc-title" style="color:#fff;font-size:1rem;font-weight:900;">
+                <?= $_postestDone ? '&#10003; Post-Test Complete' : 'Post-Test' ?>
+              </div>
+              <div class="lc-desc" style="color:rgba(255,255,255,.8);">
+                <?= $postLocked ? 'Complete the Pre-Test first to unlock' : ($_postestDone ? 'You have completed the post-test for this module' : '5 questions &middot; Test what you\'ve learned &middot; Earn your certificate') ?>
+              </div>
+            </div>
+            <div style="flex-shrink:0;background:rgba(255,255,255,.2);color:#fff;padding:10px 20px;border-radius:14px;font-size:.85rem;font-weight:900;white-space:nowrap;">
+              <?= $postLocked ? '&#128274; Locked' : ($_postestDone ? '&#10003; Done' : 'START &rarr;') ?>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <?php endif; ?>
     </div>
 
     <!-- Cert CTA -->
