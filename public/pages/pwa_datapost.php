@@ -313,6 +313,11 @@ if ($action === 'cloud_sync') {
     header('Content-Type: application/json');
     $schoolRows = buildSchoolRows();
     if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active schools found']); exit; }
+
+    // Push cluster/school definitions so locations.php can resolve new names.
+    // Non-fatal — metrics sync still runs even if this step fails.
+    $defs = pushClusterDefinitions();
+
     $payload = json_encode(['api_key'=>'ARISE_CLOUD_SYNC_2026_KEY','device_id'=>$cfg['school_id']??'arise-unknown','synced_at'=>date('Y-m-d H:i:s'),'schools'=>$schoolRows,'poll_summary'=>pollSummary()]);
     $syncUrl  = $cfg['cloud_sync_url'] ?? 'https://ariseci.org/arise-sync.php';
 
@@ -322,16 +327,22 @@ if ($action === 'cloud_sync') {
     $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if (!$response) { echo json_encode(['status'=>'error','message'=>'Could not reach ariseci.org']); exit; }
+    if (!$response) { echo json_encode(['status'=>'error','message'=>'Could not reach ariseci.org','definitions'=>$defs]); exit; }
     $decoded = json_decode($response, true);
-    if (!is_array($decoded)) { echo json_encode(['status'=>'error','message'=>"Unexpected response (HTTP $httpCode)"]); exit; }
+    if (!is_array($decoded)) { echo json_encode(['status'=>'error','message'=>"Unexpected response (HTTP $httpCode)",'definitions'=>$defs]); exit; }
     if ($httpCode < 300 && ($decoded['status']??'') === 'ok') {
         $count = $decoded['upserted'] ?? count($schoolRows);
         $ts = date('Y-m-d H:i:s');
         db()->exec("UPDATE datapost_config SET cloud_last_synced_at='".SQLite3::escapeString($ts)."',cloud_last_sync_count=$count WHERE id=".(int)$cfg['id']);
-        echo json_encode(['status'=>'success','message'=>"Synced $count school(s)",'timestamp'=>$ts]);
+        $msg = "Synced $count school(s)";
+        if (!empty($defs['ok'])) {
+            $msg .= " (definitions: {$defs['clusters']} cluster(s), {$defs['schools']} school(s))";
+        } elseif (!empty($defs['error'])) {
+            $msg .= " — cluster push: {$defs['error']}";
+        }
+        echo json_encode(['status'=>'success','message'=>$msg,'timestamp'=>$ts,'definitions'=>$defs]);
     } else {
-        echo json_encode(['status'=>'error','message'=>'Cloud sync failed']);
+        echo json_encode(['status'=>'error','message'=>'Cloud sync failed','definitions'=>$defs]);
     }
     exit;
 }

@@ -25,6 +25,138 @@ define('DEFAULT_SCHOOL_ID', 'ARISE-SETUP-000');
 define('CLOUD_SYNC_SECRET', 'arise_sync_k3nya_2026');
 define('CLOUD_SYNC_URL',    'https://ariseci.org/arise/arise_cluster_receiver.php');
 
+// Kenya county/cluster centroid coordinates used as a fast offline geocoder.
+// Mirrors the table in locations.php so cluster_receiver writes the same values.
+function countyCoords(): array {
+    return [
+        'Nairobi'=>[-1.2864,36.8172], 'Kiambu'=>[-1.0536,36.6710],
+        'Uasin Gishu'=>[0.5204,35.2698], 'UASIN GISHU'=>[0.5204,35.2698], 'Eldoret'=>[0.5204,35.2698],
+        'Nandi'=>[0.2028,35.1045], 'Kisumu'=>[-0.0917,34.7680],
+        'Siaya'=>[0.0625,34.2422], 'Siaya-Kisumu'=>[-0.0500,34.5000],
+        'Kakamega'=>[0.2827,34.7519], 'Vihiga'=>[0.0076,34.7234],
+        'Vihiga-Nandi-Kisumu'=>[0.1000,34.8500], 'Busia'=>[0.4610,34.1110],
+        'Homa Bay'=>[-0.5180,34.4570], 'Migori'=>[-1.0634,34.4731],
+        'Narok'=>[-1.0834,35.8730], 'Migori-Narok'=>[-1.0634,34.4731],
+        'Narok-Kajiado'=>[-1.0834,35.8730], 'Kajiado'=>[-1.8520,36.7760],
+        'Machakos'=>[-1.5177,37.2634], 'Kitui'=>[-1.3671,38.0106],
+        'Kitui-Machakos'=>[-1.3671,38.0106], 'Makueni'=>[-1.8018,37.6209],
+        'Meru'=>[0.0476,37.6493], 'Embu'=>[-0.5330,37.4580],
+        'Tharaka Nithi'=>[-0.2960,37.9570], 'Tharaka Nithi-Embu'=>[-0.5330,37.4580],
+        'Nakuru'=>[-0.3031,36.0800], 'Laikipia'=>[0.3600,36.7810],
+        'Nyeri'=>[-0.4167,36.9481], "Murang'a"=>[-0.7833,37.0370],
+        'Kirinyaga'=>[-0.6580,37.3310], 'Nyandarua'=>[-0.1110,36.3610],
+        'Kericho'=>[-0.3690,35.2840], 'Bomet'=>[-0.7820,35.3420],
+        'Kisii'=>[-0.6773,34.7796], 'Nyamira'=>[-0.5670,34.9370],
+        'Trans Nzoia'=>[1.0570,35.0000], 'Elgeyo Marakwet'=>[0.7980,35.5060],
+        'Baringo'=>[0.4640,35.7510], 'West Pokot'=>[1.6230,35.0940],
+        'Turkana'=>[3.1190,35.5960], 'Samburu'=>[1.2160,36.6950],
+        'Isiolo'=>[0.3540,37.5820], 'Mombasa'=>[-4.0435,39.6682],
+        'Kilifi'=>[-3.6300,39.8500], 'Kwale'=>[-4.1750,39.4520],
+        'Taita Taveta'=>[-3.3160,38.4800], 'Yala'=>[0.1028,34.3437],
+        'Uganda'=>[1.3733,32.2903], 'kenya'=>[-0.0236,37.9062], 'tanzania'=>[-6.3690,34.8888],
+    ];
+}
+
+// Geocode a single query via Nominatim (OpenStreetMap). Returns [lat,lng] or null.
+// Respects Nominatim's usage policy: identifying UA, max 1 req/sec.
+function nominatimGeocode(string $query): ?array {
+    if (!function_exists('curl_init')) return null;
+    $url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' . rawurlencode($query);
+    $ch  = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 8,
+        CURLOPT_USERAGENT      => 'ARISE-Education-Platform/1.0 (contact: admin@ariseci.org)',
+    ]);
+    $resp = curl_exec($ch);
+    curl_close($ch);
+    if (!$resp) return null;
+    $arr = json_decode($resp, true);
+    if (!is_array($arr) || empty($arr[0]['lat']) || empty($arr[0]['lon'])) return null;
+    return [(float)$arr[0]['lat'], (float)$arr[0]['lon']];
+}
+
+// Fill missing lat/lng on schools and clusters using countyCoords first, then
+// Nominatim for anything still unresolved. Limits Nominatim calls per run to
+// avoid request timeouts; whatever isn't filled this run gets retried next sync.
+function backfillSchoolCoords(int $maxOnlineLookups = 5): array {
+    $d = db();
+    $coords = countyCoords();
+    $stats  = ['county_filled' => 0, 'online_filled' => 0, 'still_missing' => 0];
+
+    // Pass 1: county-based lookup (fast, offline).
+    foreach ($coords as $county => $xy) {
+        $cE = SQLite3::escapeString($county);
+        $d->exec("UPDATE schools  SET lat={$xy[0]},lng={$xy[1]} WHERE county='$cE' AND (lat IS NULL OR lat=0)");
+        $stats['county_filled'] += $d->changes();
+        $d->exec("UPDATE clusters SET lat={$xy[0]},lng={$xy[1]} WHERE name  ='$cE' AND (lat IS NULL OR lat=0)");
+    }
+
+    // Pass 2: online lookup for the stragglers, capped to keep sync responsive.
+    $r = $d->query("SELECT id, name, COALESCE(county,'') AS county FROM schools WHERE (lat IS NULL OR lat=0) AND is_active=1 ORDER BY id LIMIT $maxOnlineLookups");
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+        $q  = trim($row['name'] . ', ' . $row['county'] . ', Kenya', ", ");
+        $xy = nominatimGeocode($q);
+        if ($xy === null && $row['county'] !== '') {
+            // Try county alone as a last resort.
+            $xy = nominatimGeocode($row['county'] . ', Kenya');
+        }
+        if ($xy !== null) {
+            $stmt = $d->prepare("UPDATE schools SET lat=:la, lng=:ln WHERE id=:id");
+            $stmt->bindValue(':la', $xy[0], SQLITE3_FLOAT);
+            $stmt->bindValue(':ln', $xy[1], SQLITE3_FLOAT);
+            $stmt->bindValue(':id', (int)$row['id'], SQLITE3_INTEGER);
+            $stmt->execute();
+            $stats['online_filled']++;
+        }
+        usleep(1100000); // ~1.1s — respect Nominatim's 1 req/sec policy
+    }
+
+    $stats['still_missing'] = (int)$d->querySingle("SELECT COUNT(*) FROM schools WHERE (lat IS NULL OR lat=0) AND is_active=1");
+    return $stats;
+}
+
+// Pushes the local clusters + schools definition tables to the cloud receiver
+// so locations.php's INNER JOIN on schools/clusters resolves new entries.
+// Returns ['ok'=>bool, 'clusters'=>int, 'schools'=>int, 'geocode'=>array, 'error'=>?string].
+function pushClusterDefinitions(): array {
+    if (!defined('CLOUD_SYNC_URL') || !defined('CLOUD_SYNC_SECRET')) {
+        return ['ok' => false, 'error' => 'CLOUD_SYNC_URL/SECRET not configured'];
+    }
+    if (!function_exists('curl_init')) {
+        return ['ok' => false, 'error' => 'php-curl not installed'];
+    }
+
+    $geocode = backfillSchoolCoords();
+
+    $d = db();
+    $clusters = [];
+    $r = $d->query("SELECT id, name, COALESCE(password_hash,'') AS hash, lat, lng FROM clusters ORDER BY id");
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) $clusters[] = $row;
+
+    $schools = [];
+    $r = $d->query("SELECT name, COALESCE(county,'') AS county, cluster_id, COALESCE(password_hash,'') AS hash, COALESCE(is_active,1) AS active, lat, lng FROM schools");
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) $schools[] = $row;
+
+    $ch = curl_init(CLOUD_SYNC_URL);
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => ['secret' => CLOUD_SYNC_SECRET, 'payload' => json_encode(['clusters' => $clusters, 'schools' => $schools])],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 30,
+    ]);
+    $resp = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($resp === false || $resp === '') return ['ok' => false, 'error' => 'Could not reach cluster receiver', 'geocode' => $geocode];
+    $j = json_decode($resp, true);
+    if (!is_array($j) || empty($j['ok'])) {
+        return ['ok' => false, 'error' => $j['error'] ?? "Unexpected response (HTTP $code)", 'geocode' => $geocode];
+    }
+    return ['ok' => true, 'clusters' => (int)($j['clusters'] ?? 0), 'schools' => (int)($j['schools'] ?? 0), 'geocode' => $geocode];
+}
+
 function getLogoUrl(): ?string {
     foreach (['png','jpg','gif','webp','svg'] as $ext) {
         $path = LOGO_PATH . 'school_logo.' . $ext;

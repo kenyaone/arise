@@ -46,39 +46,66 @@ $db->exec("CREATE TABLE IF NOT EXISTS clusters (
 foreach (['cluster_id INTEGER', 'county TEXT', 'password_hash TEXT', 'lat REAL', 'lng REAL'] as $col) {
     try { $db->exec("ALTER TABLE schools ADD COLUMN $col"); } catch(Exception $e){}
 }
+foreach (['lat REAL', 'lng REAL'] as $col) {
+    try { $db->exec("ALTER TABLE clusters ADD COLUMN $col"); } catch(Exception $e){}
+}
 
 $clusters = $payload['clusters'] ?? [];
 $schools  = $payload['schools']  ?? [];
+
+// Helper: extract a numeric lat or null from a payload value.
+$num = function($v) {
+    if ($v === null || $v === '' || $v === 0 || $v === '0') return null;
+    $f = (float)$v;
+    return ($f === 0.0) ? null : $f;
+};
 
 // Replace clusters atomically
 $db->exec('BEGIN');
 $db->exec('UPDATE schools SET cluster_id=NULL');
 $db->exec('DELETE FROM clusters');
 foreach ($clusters as $c) {
-    $stmt = $db->prepare('INSERT INTO clusters (id, name, password_hash) VALUES (:id, :name, :hash)');
+    $lat = $num($c['lat'] ?? null);
+    $lng = $num($c['lng'] ?? null);
+    $stmt = $db->prepare('INSERT INTO clusters (id, name, password_hash, lat, lng) VALUES (:id, :name, :hash, :lat, :lng)');
     $stmt->bindValue(':id',   (int)$c['id'],   SQLITE3_INTEGER);
-    $stmt->bindValue(':name', $c['name'],       SQLITE3_TEXT);
-    $stmt->bindValue(':hash', $c['hash'],       SQLITE3_TEXT);
+    $stmt->bindValue(':name', $c['name'],      SQLITE3_TEXT);
+    $stmt->bindValue(':hash', $c['hash'],      SQLITE3_TEXT);
+    $stmt->bindValue(':lat',  $lat, $lat === null ? SQLITE3_NULL : SQLITE3_FLOAT);
+    $stmt->bindValue(':lng',  $lng, $lng === null ? SQLITE3_NULL : SQLITE3_FLOAT);
     $stmt->execute();
 }
 
-// Upsert schools (update if exists by name, insert if new)
+// Upsert schools (update if exists by name, insert if new). lat/lng only
+// overwritten when the payload actually provides a non-zero value, so manually
+// placed pins on the cloud aren't wiped by a sync that has no coords.
 foreach ($schools as $s) {
     $cid = $s['cluster_id'] ? (int)$s['cluster_id'] : null;
-    $stmt = $db->prepare('UPDATE schools SET county=:county, cluster_id=:cid, password_hash=:hash, is_active=:active WHERE name=:name');
-    $stmt->bindValue(':county', $s['county'] ?? '',  SQLITE3_TEXT);
-    $stmt->bindValue(':cid',    $cid,                $cid ? SQLITE3_INTEGER : SQLITE3_NULL);
-    $stmt->bindValue(':hash',   $s['hash'] ?? '',    SQLITE3_TEXT);
+    $lat = $num($s['lat'] ?? null);
+    $lng = $num($s['lng'] ?? null);
+
+    $sets = ['county=:county', 'cluster_id=:cid', 'password_hash=:hash', 'is_active=:active'];
+    if ($lat !== null) $sets[] = 'lat=:lat';
+    if ($lng !== null) $sets[] = 'lng=:lng';
+    $stmt = $db->prepare('UPDATE schools SET ' . implode(',', $sets) . ' WHERE name=:name');
+    $stmt->bindValue(':county', $s['county'] ?? '',       SQLITE3_TEXT);
+    $stmt->bindValue(':cid',    $cid, $cid ? SQLITE3_INTEGER : SQLITE3_NULL);
+    $stmt->bindValue(':hash',   $s['hash'] ?? '',         SQLITE3_TEXT);
     $stmt->bindValue(':active', (int)($s['active'] ?? 1), SQLITE3_INTEGER);
-    $stmt->bindValue(':name',   $s['name'],          SQLITE3_TEXT);
+    $stmt->bindValue(':name',   $s['name'],               SQLITE3_TEXT);
+    if ($lat !== null) $stmt->bindValue(':lat', $lat, SQLITE3_FLOAT);
+    if ($lng !== null) $stmt->bindValue(':lng', $lng, SQLITE3_FLOAT);
     $stmt->execute();
+
     if ($db->changes() === 0) {
-        $stmt2 = $db->prepare('INSERT OR IGNORE INTO schools (name, county, cluster_id, password_hash, is_active) VALUES (:name, :county, :cid, :hash, :active)');
+        $stmt2 = $db->prepare('INSERT OR IGNORE INTO schools (name, county, cluster_id, password_hash, is_active, lat, lng) VALUES (:name, :county, :cid, :hash, :active, :lat, :lng)');
         $stmt2->bindValue(':name',   $s['name'],               SQLITE3_TEXT);
         $stmt2->bindValue(':county', $s['county'] ?? '',       SQLITE3_TEXT);
         $stmt2->bindValue(':cid',    $cid, $cid ? SQLITE3_INTEGER : SQLITE3_NULL);
         $stmt2->bindValue(':hash',   $s['hash'] ?? '',         SQLITE3_TEXT);
         $stmt2->bindValue(':active', (int)($s['active'] ?? 1), SQLITE3_INTEGER);
+        $stmt2->bindValue(':lat',    $lat, $lat === null ? SQLITE3_NULL : SQLITE3_FLOAT);
+        $stmt2->bindValue(':lng',    $lng, $lng === null ? SQLITE3_NULL : SQLITE3_FLOAT);
         $stmt2->execute();
     }
 }
