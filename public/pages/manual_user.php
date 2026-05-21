@@ -86,8 +86,16 @@ tr:nth-child(even) td{background:#f9fafb}
   <li>Open any browser (Chrome, Firefox, Safari).</li>
   <li>Type this address in the address bar:</li>
 </ol>
-<div class="code">http://192.168.0.100/arise/</div>
-<div class="tip"><strong>Bookmark this!</strong> You can save this URL for quick access next time.</div>
+<?php
+// Render the address the learner actually used to reach the platform.
+// HTTP_HOST is whatever they typed (IP or hostname); SERVER_ADDR is a
+// fallback for CLI/edge cases. The hard-coded value at the end is the
+// final fallback if both are unavailable.
+$ariseHost = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_ADDR'] ?? '192.168.0.100';
+$ariseProto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+?>
+<div class="code"><?= e($ariseProto) ?>://<?= e($ariseHost) ?>/arise/</div>
+<div class="tip"><strong>Bookmark this!</strong> You can save this URL for quick access next time. Your facilitator will announce the exact address at the start of each session if it changes.</div>
 
 <h3>Register Your Account</h3>
 <ol>
