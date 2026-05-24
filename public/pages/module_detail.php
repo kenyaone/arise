@@ -618,6 +618,25 @@ $interactiveCount = $counts['interactive'];
     </div>
 
     <div class="lesson-list">
+    <?php if ($counts['video'] === 0): ?>
+    <div class="lc" style="pointer-events:none;">
+        <div class="lc-inner">
+            <div class="lc-stripe" style="background:linear-gradient(135deg,#334155,#0f172a);"></div>
+            <div class="lc-num" style="background:#1e293b;">
+                <div style="font-size:1.8rem;">🎬</div>
+            </div>
+            <div class="lc-body">
+                <div class="lc-content">
+                    <div class="lc-title">Video Lesson</div>
+                    <div class="lc-desc">This video lesson is being prepared.</div>
+                    <div class="lc-tags">
+                        <span class="lc-tag" style="background:#fef9c3;color:#854d0e;border:1px solid #fde047;">🕐 Coming Up Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <?php foreach ($lessons as $i => $lesson):
         $type = $lesson['lesson_type'];
         $info = $typeInfo[$type] ?? $typeInfo['text'];
@@ -658,7 +677,11 @@ $interactiveCount = $counts['interactive'];
                         <span class="lc-tag" style="background:<?= $info['light'] ?>;color:<?= $info['text'] ?>;border:1px solid <?= $info['border'] ?>;">
                             <?= $info['icon'] ?> <?= $info['label'] ?>
                         </span>
+                        <?php if (in_array($type, ['video','pdf']) && empty($lesson['file_path'])): ?>
+                            <span class="lc-tag" style="background:#fef9c3;color:#854d0e;border:1px solid #fde047;">🕐 Coming Up Soon</span>
+                        <?php else: ?>
                         <span class="lc-time">⏱ <?= $info['time'] ?></span>
+                        <?php endif; ?>
                         <?php if($type === 'interactive'): ?>
                             <span class="lc-cert">🏆 Certificate</span>
                         <?php endif; ?>
@@ -738,36 +761,9 @@ $interactiveCount = $counts['interactive'];
     </div>
     <?php endif; ?>
 
-    <?php
-    // Next module navigation (ordered by sort_order)
-    $stmt = db()->prepare('SELECT slug, title, icon FROM modules WHERE is_active = 1 AND sort_order > :so ORDER BY sort_order ASC LIMIT 1');
-    $stmt->bindValue(':so', $module['sort_order'] ?? 0);
-    $nextModule = $stmt->execute()->fetchArray(SQLITE3_ASSOC) ?: null;
-    ?>
 
-    <?php if ($nextModule): ?>
-    <a href="/arise/?p=module&slug=<?= e($nextModule['slug']) ?>"
-       style="margin-top:24px;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#0a5e2a,#1a8a40);color:#fff;border-radius:18px;padding:18px 22px;text-decoration:none;box-shadow:0 8px 24px rgba(10,94,42,.3);transition:transform .2s,box-shadow .2s;"
-       onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(10,94,42,.4)'"
-       onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(10,94,42,.3)'">
-        <span style="font-size:2rem;flex-shrink:0;"><?= $nextModule['icon'] ?: '📘' ?></span>
-        <div style="flex:1;min-width:0;">
-            <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#fcd34d;margin-bottom:4px;">Next Module</div>
-            <div style="font-size:1.05rem;font-weight:800;color:#fff;line-height:1.3;"><?= e($nextModule['title']) ?></div>
-        </div>
-        <span style="flex-shrink:0;background:rgba(255,255,255,.18);padding:10px 18px;border-radius:12px;font-size:.85rem;font-weight:900;white-space:nowrap;">Proceed &rarr;</span>
-    </a>
-    <?php else: ?>
-    <div style="margin-top:24px;background:linear-gradient(135deg,#f5a623,#e8891a);border-radius:18px;padding:18px 22px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(245,166,35,.3);">
-        <span style="font-size:2rem;">🎉</span>
-        <div style="flex:1;">
-            <div style="font-size:1.05rem;font-weight:800;">You've reached the final module!</div>
-            <div style="font-size:.82rem;opacity:.9;margin-top:2px;">Complete this one to finish the full ARISE journey.</div>
-        </div>
-    </div>
-    <?php endif; ?>
 
-    <a href="/arise/?p=modules" class="back-btn" style="margin-top:16px;display:inline-flex;">&#8592; Back to All Modules</a>
+    <a href="/arise/?p=modules" class="back-btn" style="margin-top:20px;display:inline-flex;">&#8592; Back to All Modules</a>
 
 </div>
 
