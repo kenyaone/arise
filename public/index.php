@@ -53,6 +53,26 @@ if ($_early_page === 'lesson') {
                     ? '<div style="background:#dcfce7;border:2px solid #34d399;border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:1.4rem;">✅</span><div><div style="font-size:.92rem;font-weight:800;color:#166534;">Impact Survey Complete</div><div style="font-size:.78rem;color:#4ade80;margin-top:1px;">Your voice has been recorded — thank you!</div></div></div>'
                     : '<div style="margin-bottom:16px;"><style>@keyframes pulse-survey{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.45)}50%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}</style><a href="/arise/?p=survey&module=' . $modSlug . '" style="display:block;background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;padding:16px 18px;border-radius:12px;text-decoration:none;animation:pulse-survey 2s infinite;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.6rem;">🔴</span><div style="flex:1;"><div style="font-size:1rem;font-weight:900;letter-spacing:.01em;">Did This Change You? Tell Us Now</div><div style="font-size:.78rem;opacity:.9;margin-top:3px;font-weight:600;">3 questions · 60 seconds · Required before you continue</div></div><span style="font-size:1.2rem;">→</span></div></a></div>';
 
+                // Next module lookup (for end-of-lesson CTAs)
+                $_curSo = (int)db()->querySingle("SELECT sort_order FROM modules WHERE id=$modId");
+                $_nmStmt = db()->prepare('SELECT slug, title, icon FROM modules WHERE is_active = 1 AND sort_order > :so ORDER BY sort_order ASC LIMIT 1');
+                $_nmStmt->bindValue(':so', $_curSo);
+                $_nm = $_nmStmt->execute()->fetchArray(SQLITE3_ASSOC) ?: null;
+                if ($_nm) {
+                    $nmSlugE  = htmlspecialchars($_nm['slug'], ENT_QUOTES);
+                    $nmTitleE = htmlspecialchars($_nm['title'], ENT_QUOTES);
+                    $nmIconE  = $_nm['icon'] ?: '📘';
+                    $nextModuleCard = '<a href="/arise/?p=module&slug=' . $nmSlugE . '" style="margin-top:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#0a5e2a,#1a8a40);color:#fff;border-radius:14px;padding:14px 18px;text-decoration:none;box-shadow:0 6px 18px rgba(10,94,42,.3);">'
+                        . '<span style="font-size:1.7rem;flex-shrink:0;">' . $nmIconE . '</span>'
+                        . '<div style="flex:1;min-width:0;"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#fcd34d;margin-bottom:3px;">Next Module</div>'
+                        . '<div style="font-size:.95rem;font-weight:800;color:#fff;line-height:1.3;">' . $nmTitleE . '</div></div>'
+                        . '<span style="flex-shrink:0;background:rgba(255,255,255,.18);padding:8px 14px;border-radius:10px;font-size:.78rem;font-weight:900;white-space:nowrap;">Proceed &rarr;</span></a>';
+                    $nextFloatBtn = '<a id="arise-next-module-btn" href="/arise/?p=module&slug=' . $nmSlugE . '" title="Proceed to: ' . $nmTitleE . '" style="position:fixed;bottom:14px;right:14px;z-index:99998;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#0a5e2a,#1a8a40);color:#fff;border-radius:999px;padding:10px 18px;font-size:.85rem;font-weight:800;text-decoration:none;box-shadow:0 6px 20px rgba(10,94,42,.45);"><span>Next Module</span><span style="font-size:1.05rem;">&rarr;</span></a>';
+                } else {
+                    $nextModuleCard = '<div style="margin-top:14px;background:linear-gradient(135deg,#f5a623,#e8891a);border-radius:14px;padding:14px 18px;color:#fff;display:flex;align-items:center;gap:12px;box-shadow:0 6px 18px rgba(245,166,35,.3);"><span style="font-size:1.7rem;">🎉</span><div style="flex:1;"><div style="font-size:.95rem;font-weight:800;">You\'ve reached the final module!</div><div style="font-size:.78rem;opacity:.9;margin-top:2px;">Complete this one to finish the full ARISE journey.</div></div></div>';
+                    $nextFloatBtn = '<a id="arise-next-module-btn" href="/arise/?p=modules" style="position:fixed;bottom:14px;right:14px;z-index:99998;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f5a623,#e8891a);color:#fff;border-radius:999px;padding:10px 18px;font-size:.85rem;font-weight:800;text-decoration:none;box-shadow:0 6px 20px rgba(245,166,35,.45);">🎉 All Modules</a>';
+                }
+
                 // Community section injected INSIDE score-box — appears automatically when quiz is submitted, no JS trigger needed
                 $communityInside = '<div id="arise-community" style="margin-top:18px;padding-top:16px;border-top:2px solid #c4b5fd;">'
                     . '<h3 style="color:#7c3aed;margin:0 0 10px;font-size:.95rem;font-weight:700;">🎉 How was <em>' . $modTitle . '</em>?</h3>'
@@ -61,7 +81,9 @@ if ($_early_page === 'lesson') {
                     . '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">'
                     . '<a href="/arise/?p=forum&module=' . $modSlug . '" style="background:#0ea271;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">💬 Discuss this Module</a>'
                     . '<a href="/arise/?p=ask&module=' . $modSlug . '" style="background:#6b7280;color:white;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;">🔒 Ask Anonymously</a>'
-                    . '</div></div>';
+                    . '</div>'
+                    . $nextModuleCard
+                    . '</div>';
                 $inject = "<style>
 body{margin:0!important;}
 .slides-wrap,.lang-bar-inner,.nav-inner{max-width:100%!important;width:100%!important;box-sizing:border-box!important;}
@@ -111,6 +133,8 @@ window.ARISE_VIDEO_URL='" . addslashes($videoUrl) . "';
                     '<div id="score-detail" style="margin-top:6px;color:#374151;font-size:.88rem;"></div>' . $communityInside,
                     $html
                 );
+                // Persistent floating "Next Module" button
+                $html = str_replace('</body>', $nextFloatBtn . '</body>', $html);
                 ob_end_clean();
                 echo $html;
                 exit;
@@ -193,13 +217,14 @@ if ($student) {
     <title>ARISE — Health Education</title>
     <link rel="stylesheet" href="/arise/css/style.css">
     <link rel="manifest" href="/arise/manifest.json">
-    <meta name="theme-color" content="#0ea271">
+    <meta name="theme-color" content="#3D6318">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/arise/js/sw.js').catch(function(){});
-      }
-    </script>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ARISE">
+    <link rel="apple-touch-icon" sizes="180x180" href="/arise/css/apple-touch-icon-180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/arise/css/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/arise/css/favicon-16.png">
     <script src="/arise/js/arise-sync.js" defer></script>
     <script src="/arise/js/session-guard.js" defer></script>
 </head>
@@ -316,9 +341,18 @@ document.addEventListener('click', function(e) {
   if (!e.target.closest('.float-btns')) document.getElementById('sosPanel').classList.remove('open');
 });
 
-// PWA Service Worker
+// PWA Service Worker — single registration at /arise/ scope.
+// Also unregisters any legacy /arise/js/sw.js registration from older builds
+// so phones that installed v1 don't keep serving stale content.
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/arise/sw.js').catch(()=>{});
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => {
+      if (r.active && /\/arise\/js\/sw\.js$/.test(r.active.scriptURL)) {
+        r.unregister();
+      }
+    });
+  });
+  navigator.serviceWorker.register('/arise/sw.js', { scope: '/arise/' }).catch(()=>{});
 }
 // PWA install prompt
 let deferredPrompt;

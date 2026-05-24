@@ -1,15 +1,61 @@
 {
-    "name": "ARISE Health Education",
-    "short_name": "ARISE",
-    "start_url": "/arise/",
-    "display": "standalone",
-    "background_color": "#052e16",
-    "theme_color": "#0ea271",
-    "icons": [
-        {
-            "src": "/arise/css/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        }
-    ]
+  "name": "ARISE Health Education",
+  "short_name": "ARISE",
+  "description": "Offline-first health education for schools — MTTI ARISE programme.",
+  "start_url": "/arise/?source=pwa",
+  "scope": "/arise/",
+  "id": "/arise/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#3D6318",
+  "theme_color": "#3D6318",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "health"],
+  "icons": [
+    {
+      "src": "/arise/css/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/arise/css/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/arise/css/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/arise/css/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Modules",
+      "short_name": "Modules",
+      "url": "/arise/?p=modules&source=pwa",
+      "icons": [{ "src": "/arise/css/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Resources",
+      "short_name": "Resources",
+      "url": "/arise/?p=resources&source=pwa",
+      "icons": [{ "src": "/arise/css/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Forum",
+      "short_name": "Forum",
+      "url": "/arise/?p=forum&source=pwa",
+      "icons": [{ "src": "/arise/css/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }

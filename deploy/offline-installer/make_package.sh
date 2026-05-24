@@ -4,9 +4,12 @@
 
 set -e
 
-PACKAGE_DIR="/home/tele/arise_deploy"
+# Output path defaults to the invoking user's home. Override with
+# ARISE_PACKAGE_DIR=/some/path sudo bash make_package.sh
+PACKAGE_DIR="${ARISE_PACKAGE_DIR:-/home/${SUDO_USER:-$(id -un)}/arise_deploy}"
 DEBS_DIR="$PACKAGE_DIR/debs"
 OUTPUT="$PACKAGE_DIR/arise_package.tar.gz"
+mkdir -p "$PACKAGE_DIR"
 
 echo "=== ARISE Packager (offline-capable) ==="
 echo ""
@@ -52,14 +55,15 @@ cp /etc/apache2/sites-available/mtti-lms.conf "$PACKAGE_DIR/mtti-lms.conf"
 # ── 4. Bundle everything into one deployable archive ─────────────────────────
 echo "[4/4] Creating final package ..."
 
-# Pull in first-boot-fix.sh if it lives next to make_package.sh, so cloned
-# machines have it without needing a separate download.
+# Bring install.sh (and optional first-boot-fix.sh) in from the directory
+# this script lives in, so make_package.sh works regardless of where
+# PACKAGE_DIR points.
 SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
+cp "$SRC_DIR/install.sh" "$PACKAGE_DIR/install.sh"
+EXTRA_FILES=""
 if [ -f "$SRC_DIR/first-boot-fix.sh" ]; then
     cp "$SRC_DIR/first-boot-fix.sh" "$PACKAGE_DIR/first-boot-fix.sh"
     EXTRA_FILES="first-boot-fix.sh"
-else
-    EXTRA_FILES=""
 fi
 
 tar -czf "$OUTPUT" \
