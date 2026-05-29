@@ -14,7 +14,7 @@ echo "=== ARISE First-Boot Fix ==="
 echo ""
 
 # ── 1. Regenerate machine-id and SSH host keys ───────────────────────────────
-echo "[1/5] Regenerating machine identity (machine-id + SSH host keys) ..."
+echo "[1/6] Regenerating machine identity (machine-id + SSH host keys) ..."
 rm -f /etc/machine-id /var/lib/dbus/machine-id
 systemd-machine-id-setup > /dev/null 2>&1
 ln -sf /etc/machine-id /var/lib/dbus/machine-id 2>/dev/null || true
@@ -25,7 +25,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure openssh-server > /dev/null 2>&1 
 systemctl restart ssh 2>/dev/null || true
 
 # ── 2. Set a unique hostname (use last 4 hex of primary MAC) ─────────────────
-echo "[2/5] Setting a unique hostname ..."
+echo "[2/6] Setting a unique hostname ..."
 PRIMARY_IFACE=$(ip -o -4 route show to default 2>/dev/null | awk '{print $5}' | head -1)
 if [ -z "$PRIMARY_IFACE" ]; then
     PRIMARY_IFACE=$(ip -o link show | awk -F': ' '!/lo:/{print $2; exit}')
@@ -36,7 +36,7 @@ hostnamectl set-hostname "$NEW_HOST"
 echo "    Hostname → $NEW_HOST"
 
 # ── 3. Rebind the WiFi hotspot to whatever WiFi interface exists ─────────────
-echo "[3/5] Rebinding ARISE-Hotspot to current WiFi interface ..."
+echo "[3/6] Rebinding ARISE-Hotspot to current WiFi interface ..."
 if command -v nmcli > /dev/null 2>&1; then
     WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE dev 2>/dev/null | grep ":wifi" | grep -v "p2p" | cut -d: -f1 | head -1)
     if nmcli -t -f NAME connection show 2>/dev/null | grep -q "^ARISE-Hotspot$"; then
@@ -53,21 +53,31 @@ if command -v nmcli > /dev/null 2>&1; then
 fi
 
 # ── 4. Reset the device_id in datapost_config so cloud-sync stats don't collide
-echo "[4/5] Resetting cloud sync device_id ..."
+echo "[4/6] Resetting datapost device_id ..."
 DB=/var/www/arise/data/arise.db
 if [ -f "$DB" ] && command -v php > /dev/null 2>&1; then
     NEW_ID="ARISE-DEV-$(tr -dc 'A-Z0-9' </dev/urandom | head -c 8)"
     php -r "
         \$db = new SQLite3('$DB');
         \$ok = \$db->exec(\"UPDATE datapost_config SET school_id='$NEW_ID' WHERE id=(SELECT MIN(id) FROM datapost_config)\");
-        echo \$ok ? \"    device_id → $NEW_ID\n\" : \"    WARN: could not update datapost_config\n\";
+        echo \$ok ? \"    datapost device_id → $NEW_ID\n\" : \"    WARN: could not update datapost_config\n\";
     "
 else
     echo "    (skipped — DB or PHP not found)"
 fi
 
-# ── 5. Restart Apache so any per-host paths re-resolve ────────────────────────
-echo "[5/5] Restarting Apache ..."
+# ── 5. Write MAC-derived device_id for cloud sync (cloud_push.php) ───────────
+echo "[5/6] Writing cloud sync device_id ..."
+SYNC_IFACE=$(ip -o link show 2>/dev/null | awk '!/lo:/ && /link\/ether/ {print $2}' | head -1 | tr -d ':')
+if [ -z "$SYNC_IFACE" ]; then
+    SYNC_IFACE=$(tr -dc 'A-F0-9' </dev/urandom | head -c 12)
+fi
+CLOUD_DEVICE_ID="ARISE-$(echo "$SYNC_IFACE" | tr 'a-z' 'A-Z')"
+echo "$CLOUD_DEVICE_ID" > /etc/arise_device_id
+echo "    cloud device_id → $CLOUD_DEVICE_ID"
+
+# ── 6. Restart Apache so any per-host paths re-resolve ────────────────────────
+echo "[6/6] Restarting Apache ..."
 systemctl restart apache2
 
 # ── Summary ───────────────────────────────────────────────────────────────────
@@ -78,10 +88,11 @@ echo ""
 echo "════════════════════════════════════════════"
 echo "  ARISE First-Boot Fix Complete"
 echo "════════════════════════════════════════════"
-echo "  Hostname     : $NEW_HOST"
-echo "  Primary IP   : $IP"
-echo "  ARISE URL    : http://$IP/arise/"
-echo "  Admin panel  : http://$IP/arise/admin/"
+echo "  Hostname      : $NEW_HOST"
+echo "  Primary IP    : $IP"
+echo "  Cloud sync ID : $CLOUD_DEVICE_ID"
+echo "  ARISE URL     : http://$IP/arise/"
+echo "  Admin panel   : http://$IP/arise/admin/"
 echo ""
 echo "  If you want a WiFi hotspot, re-run:  sudo bash setup.sh"
 echo "  (or set it up manually via NetworkManager / nmcli)"
