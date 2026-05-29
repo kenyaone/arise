@@ -1,0 +1,13 @@
+[Unit]
+Description=ARISE First-Boot Setup
+After=network.target
+ConditionPathExists=!/etc/arise_firstboot_done
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /var/www/arise/deploy/offline-installer/first-boot-fix.sh
+ExecStartPost=/bin/touch /etc/arise_firstboot_done
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
