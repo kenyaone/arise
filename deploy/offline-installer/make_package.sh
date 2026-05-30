@@ -65,6 +65,10 @@ if [ -f "$SRC_DIR/first-boot-fix.sh" ]; then
     cp "$SRC_DIR/first-boot-fix.sh" "$PACKAGE_DIR/first-boot-fix.sh"
     EXTRA_FILES="first-boot-fix.sh"
 fi
+if [ -f "$SRC_DIR/clone-fresh-start.sh" ]; then
+    cp "$SRC_DIR/clone-fresh-start.sh" "$PACKAGE_DIR/clone-fresh-start.sh"
+    EXTRA_FILES="$EXTRA_FILES clone-fresh-start.sh"
+fi
 
 tar -czf "$OUTPUT" \
     -C "$PACKAGE_DIR" \
