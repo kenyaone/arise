@@ -907,6 +907,7 @@ elseif ($page === 'schools'):
                 $st2->bindValue(2, $eid, SQLITE3_INTEGER);
                 $st2->execute();
             }
+            if (function_exists('syncClustersToCloud')) syncClustersToCloud();
             $smsg = "✅ Project updated.";
         }
     }
@@ -949,6 +950,7 @@ elseif ($page === 'schools'):
                 } else {
                     $smsg .= " Use <strong>Set Location</strong> to pin it on the map.";
                 }
+                if (function_exists('syncClustersToCloud')) syncClustersToCloud();
             } catch(Exception $e) { $smsg = '❌ Project already exists.'; }
         }
     }
@@ -969,15 +971,8 @@ elseif ($page === 'schools'):
     // Delete school
     if (isset($_GET['del_school'])) {
         $delId = intval($_GET['del_school']);
-        $delName = db()->querySingle("SELECT name FROM schools WHERE id=$delId");
         db()->exec("UPDATE schools SET is_active=0 WHERE id=$delId");
-        // Sync removal to live server
-        if ($delName && function_exists('curl_init')) {
-            $ch = curl_init('https://ariseci.org/public/api_school_remove.php');
-            curl_setopt_array($ch, [CURLOPT_POST=>true, CURLOPT_RETURNTRANSFER=>true, CURLOPT_TIMEOUT=>6, CURLOPT_SSL_VERIFYPEER=>false, CURLOPT_POSTFIELDS=>['key'=>'arise_school_sync_2026_xK9mP','name'=>$delName]]);
-            curl_exec($ch);
-            curl_close($ch);
-        }
+        if (function_exists('syncClustersToCloud')) syncClustersToCloud();
         $smsg = '✅ School removed.';
     }
 
@@ -1036,7 +1031,8 @@ elseif ($page === 'schools'):
         echo "<button class='btn btn-sm' style='$pinStyle' data-school-id='$sid2' onclick='openPicker($sid2,\"".e($scName)."\",\"$scLat\",\"$scLng\",\"$scCounty\")'>$pinLabel</button>";
         $hasPw = !empty($school['password_hash']);
         $pwBadge = $hasPw ? '<span style="background:#dcfce7;color:#166534;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:8px;vertical-align:middle;margin-left:4px;">🔑 Password set</span>' : '<span style="background:#fef3c7;color:#92400e;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:8px;vertical-align:middle;margin-left:4px;">No password</span>';
-        echo "<button class='btn btn-sm' style='background:#ede9fe;color:#4c1d95;' onclick='openEditSchool(".json_encode(['id'=>(int)$school['id'],'name'=>$school['name'],'county'=>$school['county']??'']).">✏ Edit / 🔑 Password</button>";
+        $editJson = htmlspecialchars(json_encode(['id'=>(int)$school['id'],'name'=>$school['name'],'county'=>$school['county']??'']), ENT_QUOTES, 'UTF-8');
+        echo "<button class='btn btn-sm' style='background:#ede9fe;color:#4c1d95;' onclick='openEditSchool($editJson)'>✏ Edit / 🔑 Password</button>";
         echo "<a href='?p=schools&del_school={$school['id']}' class='btn btn-sm' style='background:#fee2e2;color:#991b1b;' onclick='return confirm(\"Remove project?\")'>Remove</a>";
         echo "</div>";
         echo "<div style='margin-top:4px;'>$pwBadge</div>";

@@ -681,26 +681,64 @@ function markNotificationsRead(int $studentId): void {
 function syncClustersToCloud(): void {
     if (!CLOUD_SYNC_URL) return;
     try {
-        $clusters = [];
-        $r = db()->query("SELECT id, name, password_hash FROM clusters ORDER BY id");
-        while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
-            $clusters[] = ['id' => (int)$row['id'], 'name' => $row['name'], 'hash' => $row['password_hash']];
+        // Resolve device_id (cached by cloud_push.php at /etc/arise_device_id, world-readable)
+        $deviceId = '';
+        if (is_readable('/etc/arise_device_id')) {
+            $deviceId = trim((string)@file_get_contents('/etc/arise_device_id'));
         }
+        if ($deviceId === '') {
+            $mac = '';
+            $out = (string)@shell_exec('ip -o link show 2>/dev/null');
+            foreach (explode("\n", $out) as $line) {
+                if (strpos($line, 'lo:') !== false) continue;
+                if (preg_match('/link\/ether\s+([0-9a-f:]{17})/i', $line, $m)) {
+                    $mac = strtoupper(str_replace(':', '', $m[1]));
+                    break;
+                }
+            }
+            if ($mac === '') $mac = strtoupper(md5(gethostname()));
+            $deviceId = 'ARISE-' . $mac;
+        }
+
+        // Master vs clone — clones must not push cluster topology
+        $isMaster = file_exists('/etc/arise_cluster_master');
+
+        $clusters = [];
+        if ($isMaster) {
+            $r = db()->query("SELECT id, name, password_hash, lat, lng FROM clusters ORDER BY id");
+            while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
+                $clusters[] = [
+                    'id'   => (int)$row['id'],
+                    'name' => $row['name'],
+                    'hash' => $row['password_hash'],
+                    'lat'  => $row['lat'],
+                    'lng'  => $row['lng'],
+                ];
+            }
+        }
+
         $schools = [];
-        $r = db()->query("SELECT name, county, cluster_id, is_active, password_hash FROM schools");
+        $r = db()->query("SELECT name, county, cluster_id, is_active, password_hash, lat, lng FROM schools");
         while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
             $schools[] = [
-                'name'   => $row['name'],
-                'county' => $row['county'] ?? '',
+                'name'       => $row['name'],
+                'county'     => $row['county'] ?? '',
                 'cluster_id' => $row['cluster_id'] ? (int)$row['cluster_id'] : null,
-                'active' => (int)$row['is_active'],
-                'hash'   => $row['password_hash'] ?? '',
+                'active'     => (int)$row['is_active'],
+                'hash'       => $row['password_hash'] ?? '',
+                'lat'        => $row['lat'],
+                'lng'        => $row['lng'],
+                'device_id'  => $deviceId,
             ];
         }
+
+        $data = compact('schools', 'deviceId');
+        if ($isMaster) $data['clusters'] = $clusters;
+
         $ctx = stream_context_create(['http' => [
             'method'        => 'POST',
             'header'        => 'Content-Type: application/x-www-form-urlencoded',
-            'content'       => http_build_query(['secret' => CLOUD_SYNC_SECRET, 'payload' => json_encode(compact('clusters', 'schools'))]),
+            'content'       => http_build_query(['secret' => CLOUD_SYNC_SECRET, 'payload' => json_encode($data)]),
             'timeout'       => 5,
             'ignore_errors' => true,
         ]]);
