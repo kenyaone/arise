@@ -10,11 +10,18 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# Snapshot master-flag state. install.sh creates /etc/arise_cluster_master on a
+# fresh master install; the pre-clone sanitizer (and step 7 below) clear it on
+# clones. We capture this BEFORE doing anything so the auto-wipe at the end
+# only fires on clones, never on masters.
+WAS_MASTER=0
+[ -e /etc/arise_cluster_master ] && WAS_MASTER=1
+
 echo "=== ARISE First-Boot Fix ==="
 echo ""
 
 # ── 1. Regenerate machine-id and SSH host keys ───────────────────────────────
-echo "[1/6] Regenerating machine identity (machine-id + SSH host keys) ..."
+echo "[1/7] Regenerating machine identity (machine-id + SSH host keys) ..."
 rm -f /etc/machine-id /var/lib/dbus/machine-id
 systemd-machine-id-setup > /dev/null 2>&1
 ln -sf /etc/machine-id /var/lib/dbus/machine-id 2>/dev/null || true
@@ -25,7 +32,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure openssh-server > /dev/null 2>&1 
 systemctl restart ssh 2>/dev/null || true
 
 # ── 2. Set a unique hostname (use last 4 hex of primary MAC) ─────────────────
-echo "[2/6] Setting a unique hostname ..."
+echo "[2/7] Setting a unique hostname ..."
 PRIMARY_IFACE=$(ip -o -4 route show to default 2>/dev/null | awk '{print $5}' | head -1)
 if [ -z "$PRIMARY_IFACE" ]; then
     PRIMARY_IFACE=$(ip -o link show | awk -F': ' '!/lo:/{print $2; exit}')
@@ -36,7 +43,7 @@ hostnamectl set-hostname "$NEW_HOST"
 echo "    Hostname → $NEW_HOST"
 
 # ── 3. Rebind the WiFi hotspot to whatever WiFi interface exists ─────────────
-echo "[3/6] Rebinding ARISE-Hotspot to current WiFi interface ..."
+echo "[3/7] Rebinding ARISE-Hotspot to current WiFi interface ..."
 if command -v nmcli > /dev/null 2>&1; then
     WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE dev 2>/dev/null | grep ":wifi" | grep -v "p2p" | cut -d: -f1 | head -1)
     if nmcli -t -f NAME connection show 2>/dev/null | grep -q "^ARISE-Hotspot$"; then
@@ -53,7 +60,7 @@ if command -v nmcli > /dev/null 2>&1; then
 fi
 
 # ── 4. Reset the device_id in datapost_config so cloud-sync stats don't collide
-echo "[4/6] Resetting datapost device_id ..."
+echo "[4/7] Resetting datapost device_id ..."
 DB=/var/www/arise/data/arise.db
 if [ -f "$DB" ] && command -v php > /dev/null 2>&1; then
     NEW_ID="ARISE-DEV-$(tr -dc 'A-Z0-9' </dev/urandom | head -c 8)"
@@ -67,7 +74,7 @@ else
 fi
 
 # ── 5. Write MAC-derived device_id for cloud sync (cloud_push.php) ───────────
-echo "[5/6] Writing cloud sync device_id ..."
+echo "[5/7] Writing cloud sync device_id ..."
 SYNC_IFACE=$(ip -o link show 2>/dev/null | awk '!/lo:/ && /link\/ether/ {print $2}' | head -1 | tr -d ':')
 if [ -z "$SYNC_IFACE" ]; then
     SYNC_IFACE=$(tr -dc 'A-F0-9' </dev/urandom | head -c 12)
@@ -77,8 +84,27 @@ echo "$CLOUD_DEVICE_ID" > /etc/arise_device_id
 echo "    cloud device_id → $CLOUD_DEVICE_ID"
 
 # ── 6. Restart Apache so any per-host paths re-resolve ────────────────────────
-echo "[6/6] Restarting Apache ..."
+echo "[6/7] Restarting Apache ..."
 systemctl restart apache2
+
+# ── 7. Auto-wipe learner data on clones only ─────────────────────────────────
+echo "[7/7] Checking whether to wipe inherited learner data ..."
+if [ "$WAS_MASTER" = "1" ]; then
+    echo "    Master flag was present at start — KEEPING learner data."
+    # Defensive: leave the flag in place so cloud_push still treats this as master.
+else
+    # Make sure the master flag really is gone on clones, so cloud_push.php
+    # never accidentally pushes cluster topology from a clone.
+    rm -f /etc/arise_cluster_master
+    FRESH=/var/www/arise/deploy/offline-installer/clone-fresh-start.sh
+    if [ -x "$FRESH" ]; then
+        echo "    Clone detected — running $(basename "$FRESH") --yes"
+        # Don't let a wipe failure block the firstboot service from marking itself done.
+        bash "$FRESH" --yes || echo "    WARN: wipe failed; run manually with sudo bash $FRESH"
+    else
+        echo "    clone-fresh-start.sh not found at $FRESH — skipping wipe (run it manually)."
+    fi
+fi
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 IP=$(ip -4 addr show "$PRIMARY_IFACE" 2>/dev/null | grep -oE 'inet [0-9.]+' | awk '{print $2}' | head -1)
