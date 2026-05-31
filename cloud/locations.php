@@ -113,8 +113,11 @@ header p{font-size:.9rem;opacity:.9;}
 .err{background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:8px;max-width:1100px;margin:16px auto;}
 footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
 .leaflet-popup-content{margin:10px 14px;font-family:'Segoe UI',Roboto,Arial,sans-serif;}
-.leaflet-popup-content h4{font-size:1rem;color:#0a5e2a;margin-bottom:4px;}
-.leaflet-popup-content .pop-sub{font-size:.78rem;color:#6b7280;margin-bottom:8px;}
+.leaflet-popup-content h4{font-size:1rem;color:#0a5e2a;margin-bottom:6px;}
+.leaflet-popup-content .pop-chip{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.leaflet-popup-content .pop-chip.cluster{background:#dcfce7;color:#166534;}
+.leaflet-popup-content .pop-chip.county{background:#fef3c7;color:#92400e;}
+.leaflet-popup-content .pop-county{font-size:.72rem;color:#9ca3af;margin-bottom:8px;}
 .leaflet-popup-content .pop-row{display:flex;justify-content:space-between;gap:14px;font-size:.85rem;padding:2px 0;}
 .leaflet-popup-content .pop-row .l{color:#555;}
 .leaflet-popup-content .pop-row .v{font-weight:700;color:#0a5e2a;}
@@ -219,11 +222,17 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
     ];
     if (m.know_gain !== null) rows.push(['📈 Knowledge gain', pct(m.know_gain)]);
 
-    var sub = (m.is_cluster ? 'Cluster' : 'County') + ': ' + esc(m.cluster) +
-              (m.county && m.county !== m.cluster ? ' · ' + esc(m.county) : '');
-
-    var html = '<h4>' + esc(m.name) + '</h4>'
-             + '<div class="pop-sub">' + sub + '</div>';
+    // Cluster is the headline grouping — show as prominent chip.
+    // County drops below as small secondary text (or replaces chip if no cluster).
+    var html = '<h4>' + esc(m.name) + '</h4>';
+    if (m.is_cluster) {
+      html += '<div><span class="pop-chip cluster">🏷 ' + esc(m.cluster) + '</span></div>';
+      if (m.county && m.county !== m.cluster) {
+        html += '<div class="pop-county">' + esc(m.county) + ' county</div>';
+      }
+    } else if (m.county) {
+      html += '<div><span class="pop-chip county">📍 ' + esc(m.county) + ' county</span></div>';
+    }
     rows.forEach(function (r) {
       html += '<div class="pop-row"><span class="l">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>';
     });
