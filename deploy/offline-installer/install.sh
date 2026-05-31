@@ -83,13 +83,40 @@ if [ ! -f /etc/ssl/certs/arise-selfsigned.crt ]; then
 fi
 
 # ── 7. Restart Apache ─────────────────────────────────────────────────────────
-echo "[6/7] Starting Apache ..."
+echo "[6/8] Starting Apache ..."
 systemctl enable apache2 > /dev/null 2>&1
 systemctl restart apache2
 
-# ── 8. Network setup — hotspot + static IP ───────────────────────────────────
+# ── 8. Cloud sync cron (the offline → ariseci.org channel) ───────────────────
+echo "[7/8] Configuring cloud sync cron ..."
+# Canonical source for cloud_push.php is /var/www/arise/cloud_push.php (laid
+# down by the rsync in step [2]). The cron however runs as the arise user
+# against /home/arise/cloud_push.php so it can write the log file without
+# escalating privileges. Mirror the canonical copy → /home/arise/ on every
+# install. Same mirror happens inside the admin Updates page so future
+# upgrades stay in sync automatically.
+if [ -f /var/www/arise/cloud_push.php ]; then
+    install -o arise -g arise -m 0755 /var/www/arise/cloud_push.php /home/arise/cloud_push.php
+    touch /home/arise/cloud_sync.log
+    chown arise:arise /home/arise/cloud_sync.log
+    chmod 0644       /home/arise/cloud_sync.log
+
+    # Register the cron line for the arise user if not already present.
+    CRON_LINE="* * * * * php /home/arise/cloud_push.php"
+    EXISTING=$(crontab -u arise -l 2>/dev/null || echo "")
+    if ! echo "$EXISTING" | grep -qF "$CRON_LINE"; then
+        printf '%s\n%s\n' "$EXISTING" "$CRON_LINE" | crontab -u arise -
+        echo "    cron registered: $CRON_LINE"
+    else
+        echo "    cron already present."
+    fi
+else
+    echo "    WARN: /var/www/arise/cloud_push.php missing — cloud sync disabled until present."
+fi
+
+# ── 9. Network setup — hotspot + static IP ───────────────────────────────────
 echo ""
-echo "[7/7] Network Setup"
+echo "[8/8] Network Setup"
 echo "────────────────────────────────────────────"
 
 # Check if nmcli (NetworkManager) is available

@@ -78,6 +78,19 @@ function applyBundle(string $bundlePath, string $arisaRoot): array {
     if ($ret !== 0) return ['ok'=>false, 'out'=>implode("\n", $output)];
     @exec(sprintf('chown -R www-data:www-data %s 2>&1', escapeshellarg($arisaRoot)));
     @exec(sprintf('find %s -type f -name "*.php" -exec touch {} +', escapeshellarg($arisaRoot)));
+
+    // Mirror cloud_push.php → /home/arise/ so the cron picks up changes
+    // that ride the update channel. Best-effort: if perms forbid the copy,
+    // the cron just keeps running the previous version (no breakage).
+    $src = rtrim($arisaRoot, '/') . '/cloud_push.php';
+    $dst = '/home/arise/cloud_push.php';
+    if (is_file($src) && (!file_exists($dst) || md5_file($src) !== md5_file($dst))) {
+        @copy($src, $dst);
+        @chmod($dst, 0755);
+        @chown($dst, 'arise');
+        @chgrp($dst, 'arise');
+    }
+
     return ['ok'=>true, 'out'=>implode("\n", $output)];
 }
 
