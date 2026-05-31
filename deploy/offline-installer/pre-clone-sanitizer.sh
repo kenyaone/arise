@@ -92,6 +92,7 @@ echo ""
 echo "Identity files that first-boot-fix.sh will regenerate on clones:"
 echo "  /etc/arise_device_id         → $([ -f /etc/arise_device_id ] && cat /etc/arise_device_id || echo '(not set)')"
 echo "  /etc/arise_cluster_master    → $([ -e /etc/arise_cluster_master ] && echo present || echo absent)"
+echo "  /etc/arise_firstboot_done    → $([ -e /etc/arise_firstboot_done ] && echo PRESENT \(will be removed so clones re-bootstrap\) || echo absent)"
 echo ""
 
 if [ "$DRY" = "1" ]; then
@@ -118,6 +119,9 @@ if [ -f "$SYNC_LOG" ]; then
     echo "==> Truncating $SYNC_LOG"
     : > "$SYNC_LOG"
 fi
+
+echo "==> Removing first-boot sentinel so clones re-run arise-firstboot.service"
+rm -f /etc/arise_firstboot_done
 
 # Refresh ownership so www-data can keep writing after the clone boots.
 chown www-data:www-data "$DB" 2>/dev/null || true
