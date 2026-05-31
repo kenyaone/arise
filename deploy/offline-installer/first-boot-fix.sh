@@ -87,15 +87,29 @@ echo "    cloud device_id → $CLOUD_DEVICE_ID"
 echo "[6/7] Restarting Apache ..."
 systemctl restart apache2
 
-# ── 7. Auto-wipe learner data on clones only ─────────────────────────────────
-echo "[7/7] Checking whether to wipe inherited learner data ..."
+# ── 7. Clone-specific cleanup: wipe learner data + revoke GitHub push key ────
+echo "[7/7] Clone cleanup (learner data + push credentials) ..."
 if [ "$WAS_MASTER" = "1" ]; then
-    echo "    Master flag was present at start — KEEPING learner data."
+    echo "    Master flag was present at start — KEEPING learner data and SSH keys."
     # Defensive: leave the flag in place so cloud_push still treats this as master.
 else
     # Make sure the master flag really is gone on clones, so cloud_push.php
     # never accidentally pushes cluster topology from a clone.
     rm -f /etc/arise_cluster_master
+
+    # Remove the GitHub push key. Clones must be pull-only so a misclick in
+    # the admin UI (or a compromised field box) can't rewrite the canonical
+    # codebase. To restore push from this clone later, generate a new key
+    # and add it manually to GitHub.
+    for u in arise root; do
+        h=$(getent passwd "$u" | cut -d: -f6)
+        [ -z "$h" ] && continue
+        rm -f "$h/.ssh/id_ed25519" "$h/.ssh/id_ed25519.pub" \
+              "$h/.ssh/id_rsa"     "$h/.ssh/id_rsa.pub" \
+              "$h/.ssh/id_ecdsa"   "$h/.ssh/id_ecdsa.pub" 2>/dev/null
+    done
+    echo "    Cleared SSH push keys — clone can pull updates but not push."
+
     FRESH=/var/www/arise/deploy/offline-installer/clone-fresh-start.sh
     if [ -x "$FRESH" ]; then
         echo "    Clone detected — running $(basename "$FRESH") --yes"
