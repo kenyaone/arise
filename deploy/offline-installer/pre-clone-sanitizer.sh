@@ -54,10 +54,10 @@ TABLES=(
 )
 
 table_exists() {
-    sqlite3 "$DB" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='$1'" 2>/dev/null | grep -q 1
+    php -r "\$d=new SQLite3('$DB', SQLITE3_OPEN_READONLY); echo \$d->querySingle(\"SELECT 1 FROM sqlite_master WHERE type='table' AND name='$1'\") ? '1' : '';" 2>/dev/null | grep -q 1
 }
 row_count() {
-    sqlite3 "$DB" "SELECT COUNT(*) FROM \"$1\"" 2>/dev/null || echo 0
+    php -r "\$d=new SQLite3('$DB', SQLITE3_OPEN_READONLY); echo (int)\$d->querySingle('SELECT COUNT(*) FROM \"$1\"');" 2>/dev/null || echo 0
 }
 
 echo "═══════════════════════════════════════════════════"
@@ -108,12 +108,12 @@ fi
 
 echo ""
 echo "==> Wiping learner / operational tables"
-SQL="BEGIN;"
+php_sql="\$d=new SQLite3('$DB'); \$d->exec('BEGIN');"
 for t in "${TABLES[@]}"; do
-    if table_exists "$t"; then SQL+="DELETE FROM \"$t\";"; fi
+    if table_exists "$t"; then php_sql+=" \$d->exec('DELETE FROM \"$t\"');"; fi
 done
-SQL+="COMMIT;"
-sqlite3 "$DB" "$SQL"
+php_sql+=" \$d->exec('COMMIT');"
+php -r "$php_sql"
 
 if [ -f "$SYNC_LOG" ]; then
     echo "==> Truncating $SYNC_LOG"
