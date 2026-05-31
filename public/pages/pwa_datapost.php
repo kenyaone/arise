@@ -312,7 +312,7 @@ if ($action === 'test_email') {
 if ($action === 'cloud_sync') {
     header('Content-Type: application/json');
     $schoolRows = buildSchoolRows();
-    if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active schools found']); exit; }
+    if (empty($schoolRows)) { echo json_encode(['status'=>'error','message'=>'No active projects found']); exit; }
 
     // Push cluster/school definitions so locations.php can resolve new names.
     // Non-fatal — metrics sync still runs even if this step fails.
@@ -600,7 +600,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
 
     <div class="header">
         <h1>📊 ARISE DataPost</h1>
-        <div class="subtext">Sync data, send reports, manage schools</div>
+        <div class="subtext">Sync data, send reports, manage projects</div>
         <div class="status-badge" id="statusBadge">🟢 Online</div>
     </div>
 
@@ -730,7 +730,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                     <span class="stat-value"><?= e($cfg['cloud_last_synced_at'] ?? 'Never') ?></span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-label">Schools Synced</span>
+                    <span class="stat-label">Projects Synced</span>
                     <span class="stat-value"><?= $cfg['cloud_last_sync_count'] ?? 0 ?></span>
                 </div>
                 <div class="button-group">

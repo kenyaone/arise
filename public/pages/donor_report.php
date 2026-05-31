@@ -117,7 +117,7 @@ tr:nth-child(even) td{background:#f9fafb}
 </div>
 
 <div class="section">
-  <div class="section-title">Participation by School</div>
+  <div class="section-title">Participation by Project</div>
   <div style="margin:30px 0">
     <?php $maxL = max(array_column($schoolData, 'learners')) ?: 1;
     foreach ($schoolData as $row): $h = round($row['learners']/$maxL*100); ?>
@@ -129,7 +129,7 @@ tr:nth-child(even) td{background:#f9fafb}
     <?php endforeach; ?>
   </div>
   <table>
-    <thead><tr><th>School</th><th>Learners</th><th>Quiz Takers</th><th>Avg Score</th><th>Certified</th><th>Completion %</th></tr></thead>
+    <thead><tr><th>Project</th><th>Learners</th><th>Quiz Takers</th><th>Avg Score</th><th>Certified</th><th>Completion %</th></tr></thead>
     <tbody>
     <?php foreach ($schoolData as $row): $sc = scoreColor($row['avg_score'] ?? 0); ?>
       <tr><td><strong><?= esc($row['school_name']) ?></strong></td><td><?= $row['learners'] ?></td><td><?= $row['quiz_takers'] ?></td><td><span style="color:<?= $sc ?>;font-weight:700"><?= $row['avg_score'] ? $row['avg_score'].'%' : '—' ?></span></td><td><?= $row['certified'] ?></td><td><?= $row['cert_rate'] ?>%</td></tr>
@@ -178,7 +178,7 @@ tr:nth-child(even) td{background:#f9fafb}
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
     <div class="stat-box"><div class="stat-num"><?= $forumPosts ?></div><div class="stat-lbl">Forum Posts</div></div>
     <div class="stat-box"><div class="stat-num"><?= $anonQuestions ?></div><div class="stat-lbl">Questions Asked</div></div>
-    <div class="stat-box"><div class="stat-num"><?= $activeSchools ?></div><div class="stat-lbl">Active Schools</div></div>
+    <div class="stat-box"><div class="stat-num"><?= $activeSchools ?></div><div class="stat-lbl">Active Projects</div></div>
   </div>
 </div>
 

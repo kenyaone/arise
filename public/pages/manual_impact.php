@@ -191,7 +191,7 @@ tr:nth-child(even) td{background:#fff7ed}
 </table>
 
 <h2>9. Cohort Comparison</h2>
-<p>The cohort comparison table groups learners by <strong>Project (school/organisation)</strong> and <strong>Cluster (class/group)</strong> and compares:</p>
+<p>The cohort comparison table groups learners by <strong>Project</strong> and <strong>Cluster</strong> and compares:</p>
 <ul>
   <li>Number of learners</li>
   <li>Average quiz score</li>

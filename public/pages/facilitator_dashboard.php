@@ -394,7 +394,7 @@ body { background: #f1f5f2; }
     <input type="hidden" name="p" value="facilitator">
     <div class="filter-bar">
       <div>
-        <label for="sel_project">Project / School</label>
+        <label for="sel_project">Project</label>
         <select name="project" id="sel_project" onchange="this.form.submit()">
           <option value="">-- Select project --</option>
           <?php foreach ($projects as $proj): ?>

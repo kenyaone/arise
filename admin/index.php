@@ -33,7 +33,7 @@ if ($_api_page === 'schools' && ($_POST['save_coords'] ?? '') === '1') {
     $lat = (float)($_POST['lat'] ?? 0);
     $lng = (float)($_POST['lng'] ?? 0);
     if (!$sid || $lat < -5 || $lat > 5 || $lng < 33 || $lng > 42) {
-        echo json_encode(['ok'=>false,'error'=>'Invalid coordinates or school ID']); exit;
+        echo json_encode(['ok'=>false,'error'=>'Invalid coordinates or project ID']); exit;
     }
     require_once dirname(__DIR__).'/includes/config.php';
     $cs = db()->prepare("UPDATE schools SET lat=?, lng=? WHERE id=?");
@@ -168,6 +168,7 @@ $navGroups = [
         ['p'=>'facilitator', 'icon'=>'📡','label'=>'Facilitator',    'perm'=>'dashboard'],
         ['p'=>'audit',       'icon'=>'🔍','label'=>'Audit Log',      'perm'=>'setup'],
         ['p'=>'recycle',     'icon'=>'♻️','label'=>'Recycle Bin',    'perm'=>'setup'],
+        ['p'=>'updates',     'icon'=>'⬆️','label'=>'Updates',        'perm'=>'setup'],
     ],
 ];
 $adminName = $_SESSION['arise_admin_name'] ?? 'Admin';
@@ -913,18 +914,34 @@ elseif ($page === 'schools'):
     }
 
     function geocodeSchool(string $name, string $county): ?array {
-        if (!function_exists('curl_init')) return null;
-        // Try specific name first, then county only as fallback
-        $queries = array_filter(["$name $county Kenya", "$county Kenya"]);
-        foreach ($queries as $q) {
-            $ch = curl_init('https://nominatim.openstreetmap.org/search?q='.urlencode($q).'&format=json&limit=1&countrycodes=ke');
-            curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>4,CURLOPT_SSL_VERIFYPEER=>false,CURLOPT_HTTPHEADER=>['User-Agent: ARISE-Platform/1.0']]);
-            $r = curl_exec($ch); curl_close($ch);
-            if (!$r) continue;
-            $d = json_decode($r, true);
-            if (empty($d[0]['lat'])) continue;
-            $lat = (float)$d[0]['lat']; $lng = (float)$d[0]['lon'];
-            if ($lat >= -5 && $lat <= 5 && $lng >= 33 && $lng <= 42) return [$lat, $lng];
+        // Online path: OSM Nominatim (2s timeout — fails fast when offline)
+        if (function_exists('curl_init')) {
+            $queries = array_filter(["$name $county Kenya", "$county Kenya"]);
+            foreach ($queries as $q) {
+                $ch = curl_init('https://nominatim.openstreetmap.org/search?q='.urlencode($q).'&format=json&limit=1&countrycodes=ke');
+                curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>2,CURLOPT_SSL_VERIFYPEER=>false,CURLOPT_HTTPHEADER=>['User-Agent: ARISE-Platform/1.0']]);
+                $r = curl_exec($ch); curl_close($ch);
+                if (!$r) continue;
+                $d = json_decode($r, true);
+                if (empty($d[0]['lat'])) continue;
+                $lat = (float)$d[0]['lat']; $lng = (float)$d[0]['lon'];
+                if ($lat >= -5 && $lat <= 5 && $lng >= 33 && $lng <= 42) return [$lat, $lng];
+            }
+        }
+        // Offline fallback: county centroid lookup from bundled map.
+        // Match exact → case-insensitive → prefix (so "Marsa" → "Marsabit").
+        $countyFile = dirname(__DIR__) . '/includes/county_centroids.php';
+        if (is_file($countyFile)) {
+            $map = include $countyFile;
+            if (is_array($map) && $county !== '') {
+                if (isset($map[$county])) return $map[$county];
+                foreach ($map as $k => $v) if (strcasecmp($k, $county) === 0) return $v;
+                $needle = mb_strtolower($county);
+                foreach ($map as $k => $v) {
+                    $hay = mb_strtolower($k);
+                    if (strlen($needle) >= 3 && (strpos($hay, $needle) === 0 || strpos($needle, $hay) === 0)) return $v;
+                }
+            }
         }
         return null;
     }
@@ -933,6 +950,8 @@ elseif ($page === 'schools'):
     if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['add_school'])) {
         $sname = trim($_POST['school_name']??'');
         $county = trim($_POST['county']??'');
+        $manualLat = trim($_POST['lat']??'');
+        $manualLng = trim($_POST['lng']??'');
         if ($sname) {
             try {
                 $stmt = db()->prepare('INSERT INTO schools (name,county) VALUES (:n,:c)');
@@ -940,15 +959,27 @@ elseif ($page === 'schools'):
                 $stmt->execute();
                 $newId = db()->lastInsertRowID();
                 $smsg = "✅ Project '".e($sname)."' added!";
-                // Auto-geocode: drop approximate pin by county
-                $geo = geocodeSchool($sname, $county);
-                if ($geo) {
-                    $gs = db()->prepare("UPDATE schools SET lat=?,lng=? WHERE id=?");
-                    $gs->bindValue(1,$geo[0],SQLITE3_FLOAT); $gs->bindValue(2,$geo[1],SQLITE3_FLOAT); $gs->bindValue(3,$newId,SQLITE3_INTEGER);
-                    $gs->execute();
-                    $smsg .= " 📍 Location auto-detected.";
+                // Pick coords: explicit input wins, then geocode (with county centroid fallback).
+                $lat = null; $lng = null; $coordSource = '';
+                if ($manualLat !== '' && $manualLng !== '' && is_numeric($manualLat) && is_numeric($manualLng)
+                    && (float)$manualLat >= -5 && (float)$manualLat <= 5
+                    && (float)$manualLng >= 33 && (float)$manualLng <= 42) {
+                    $lat = (float)$manualLat; $lng = (float)$manualLng;
+                    $coordSource = "📍 Coordinates set from input.";
                 } else {
-                    $smsg .= " Use <strong>Set Location</strong> to pin it on the map.";
+                    $geo = geocodeSchool($sname, $county);
+                    if ($geo) {
+                        $lat = $geo[0]; $lng = $geo[1];
+                        $coordSource = "📍 Location auto-detected.";
+                    }
+                }
+                if ($lat !== null) {
+                    $gs = db()->prepare("UPDATE schools SET lat=?,lng=? WHERE id=?");
+                    $gs->bindValue(1,$lat,SQLITE3_FLOAT); $gs->bindValue(2,$lng,SQLITE3_FLOAT); $gs->bindValue(3,$newId,SQLITE3_INTEGER);
+                    $gs->execute();
+                    $smsg .= ' ' . $coordSource;
+                } else {
+                    $smsg .= " Use <strong>Set Location</strong> or enter lat/lng to pin it on the map.";
                 }
                 if (function_exists('syncClustersToCloud')) syncClustersToCloud();
             } catch(Exception $e) { $smsg = '❌ Project already exists.'; }
@@ -968,12 +999,23 @@ elseif ($page === 'schools'):
         }
     }
 
-    // Delete school
+    // Delete school — hard-delete when nothing references it, otherwise soft-delete
+    // with a unique-suffixed name so the original name can be re-added.
     if (isset($_GET['del_school'])) {
         $delId = intval($_GET['del_school']);
-        db()->exec("UPDATE schools SET is_active=0 WHERE id=$delId");
+        $sname = db()->querySingle("SELECT name FROM schools WHERE id=$delId");
+        if ($sname !== null) {
+            $esc = SQLite3::escapeString($sname);
+            $hasLearners = (int)db()->querySingle("SELECT COUNT(*) FROM students WHERE school_name='$esc'");
+            $hasClasses  = (int)db()->querySingle("SELECT COUNT(*) FROM classes  WHERE school_id=$delId");
+            if ($hasLearners === 0 && $hasClasses === 0) {
+                db()->exec("DELETE FROM schools WHERE id=$delId");
+            } else {
+                db()->exec("UPDATE schools SET is_active=0, name=name||' [deleted-'||id||']' WHERE id=$delId");
+            }
+        }
         if (function_exists('syncClustersToCloud')) syncClustersToCloud();
-        $smsg = '✅ School removed.';
+        $smsg = '✅ Project removed.';
     }
 
     // Delete class
@@ -1005,8 +1047,18 @@ elseif ($page === 'schools'):
         <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">County / Region</label>
         <input type="text" name="county" placeholder="e.g. Nairobi">
     </div>
+    <div style="flex:1;min-width:110px;">
+        <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">Latitude (optional)</label>
+        <input type="number" name="lat" step="0.000001" min="-5" max="5" placeholder="-1.286400">
+    </div>
+    <div style="flex:1;min-width:110px;">
+        <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">Longitude (optional)</label>
+        <input type="number" name="lng" step="0.000001" min="33" max="42" placeholder="36.817200">
+    </div>
     <button type="submit" class="btn btn-primary">🏫 Add Project</button>
-    </form></div>';
+    </form>
+    <p class="text-small text-muted" style="margin-top:8px;">If offline: leave lat/lng blank and the project will be pinned at the county centroid. Read coords from a phone GPS app to be exact.</p>
+    </div>';
 
     // List schools with their classes
     $allSchools = db()->query("SELECT * FROM schools WHERE is_active=1 ORDER BY name");
@@ -1254,6 +1306,9 @@ elseif ($page === 'poll_results'):
 
 elseif ($page === 'recycle'):
     include __DIR__.'/pages/admin_recycle.php';
+
+elseif ($page === 'updates'):
+    include __DIR__.'/pages/admin_updates.php';
 
 elseif ($page === 'facilitator'):
     include __DIR__.'/pages/admin_facilitator.php';

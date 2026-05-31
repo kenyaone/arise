@@ -100,7 +100,7 @@ $ariseProto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'http
 <h3>Register Your Account</h3>
 <ol>
   <li>Click <strong>Register</strong> in the top navigation bar.</li>
-  <li>Enter your <strong>Full Name</strong>, <strong>Age</strong>, <strong>Gender</strong>, <strong>School / Project</strong>, and <strong>Class / Cluster</strong>.</li>
+  <li>Enter your <strong>Full Name</strong>, <strong>Age</strong>, <strong>Gender</strong>, <strong>Project</strong>, and <strong>Cluster</strong>.</li>
   <li>Create a <strong>PIN</strong> (4–6 digits) — you will use this to sign in again.</li>
   <li>Click <strong>Create Account</strong>.</li>
 </ol>
