@@ -21,7 +21,7 @@ echo "=== ARISE First-Boot Fix ==="
 echo ""
 
 # ── 1. Regenerate machine-id and SSH host keys ───────────────────────────────
-echo "[1/7] Regenerating machine identity (machine-id + SSH host keys) ..."
+echo "[1/8] Regenerating machine identity (machine-id + SSH host keys) ..."
 rm -f /etc/machine-id /var/lib/dbus/machine-id
 systemd-machine-id-setup > /dev/null 2>&1
 ln -sf /etc/machine-id /var/lib/dbus/machine-id 2>/dev/null || true
@@ -32,7 +32,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure openssh-server > /dev/null 2>&1 
 systemctl restart ssh 2>/dev/null || true
 
 # ── 2. Set a unique hostname (use last 4 hex of primary MAC) ─────────────────
-echo "[2/7] Setting a unique hostname ..."
+echo "[2/8] Setting a unique hostname ..."
 PRIMARY_IFACE=$(ip -o -4 route show to default 2>/dev/null | awk '{print $5}' | head -1)
 if [ -z "$PRIMARY_IFACE" ]; then
     PRIMARY_IFACE=$(ip -o link show | awk -F': ' '!/lo:/{print $2; exit}')
@@ -43,7 +43,7 @@ hostnamectl set-hostname "$NEW_HOST"
 echo "    Hostname → $NEW_HOST"
 
 # ── 3. Rebind the WiFi hotspot to whatever WiFi interface exists ─────────────
-echo "[3/7] Rebinding ARISE-Hotspot to current WiFi interface ..."
+echo "[3/8] Rebinding ARISE-Hotspot to current WiFi interface ..."
 if command -v nmcli > /dev/null 2>&1; then
     WIFI_IFACE=$(nmcli -t -f DEVICE,TYPE dev 2>/dev/null | grep ":wifi" | grep -v "p2p" | cut -d: -f1 | head -1)
     if nmcli -t -f NAME connection show 2>/dev/null | grep -q "^ARISE-Hotspot$"; then
@@ -60,7 +60,7 @@ if command -v nmcli > /dev/null 2>&1; then
 fi
 
 # ── 4. Reset the device_id in datapost_config so cloud-sync stats don't collide
-echo "[4/7] Resetting datapost device_id ..."
+echo "[4/8] Resetting datapost device_id ..."
 DB=/var/www/arise/data/arise.db
 if [ -f "$DB" ] && command -v php > /dev/null 2>&1; then
     NEW_ID="ARISE-DEV-$(tr -dc 'A-Z0-9' </dev/urandom | head -c 8)"
@@ -74,7 +74,7 @@ else
 fi
 
 # ── 5. Write MAC-derived device_id for cloud sync (cloud_push.php) ───────────
-echo "[5/7] Writing cloud sync device_id ..."
+echo "[5/8] Writing cloud sync device_id ..."
 SYNC_IFACE=$(ip -o link show 2>/dev/null | awk '!/lo:/ && /link\/ether/ {print $2}' | head -1 | tr -d ':')
 if [ -z "$SYNC_IFACE" ]; then
     SYNC_IFACE=$(tr -dc 'A-F0-9' </dev/urandom | head -c 12)
@@ -83,12 +83,48 @@ CLOUD_DEVICE_ID="ARISE-$(echo "$SYNC_IFACE" | tr 'a-z' 'A-Z')"
 echo "$CLOUD_DEVICE_ID" > /etc/arise_device_id
 echo "    cloud device_id → $CLOUD_DEVICE_ID"
 
-# ── 6. Restart Apache so any per-host paths re-resolve ────────────────────────
-echo "[6/7] Restarting Apache ..."
+# ── 6. Self-heal cloud-sync cron (locations.php depends on this) ─────────────
+echo "[6/8] Verifying cloud-sync cron ..."
+
+# (a) cloud_push.php exists at /home/arise/. Recover from /var/www/arise/ copy
+#     if missing (e.g. someone deleted the home file by mistake).
+if [ ! -f /home/arise/cloud_push.php ] && [ -f /var/www/arise/cloud_push.php ]; then
+    install -o arise -g arise -m 0755 /var/www/arise/cloud_push.php /home/arise/cloud_push.php
+    echo "    Restored /home/arise/cloud_push.php from /var/www/arise/"
+fi
+
+# (b) log file exists with arise ownership so PHP can append.
+if [ ! -f /home/arise/cloud_sync.log ]; then
+    touch /home/arise/cloud_sync.log
+    chown arise:arise /home/arise/cloud_sync.log
+    chmod 0644       /home/arise/cloud_sync.log
+fi
+
+# (c) cron entry for the arise user. Idempotent — appends only if missing.
+CRON_LINE="* * * * * php /home/arise/cloud_push.php"
+EXISTING=$(crontab -u arise -l 2>/dev/null || echo "")
+if ! echo "$EXISTING" | grep -qF "$CRON_LINE"; then
+    printf '%s\n%s\n' "$EXISTING" "$CRON_LINE" | crontab -u arise -
+    echo "    Cron entry restored: $CRON_LINE"
+else
+    echo "    Cron entry already present."
+fi
+
+# (d) cron daemon enabled. Ubuntu ships it that way but be explicit.
+systemctl enable cron > /dev/null 2>&1 || true
+systemctl start  cron > /dev/null 2>&1 || true
+
+# (e) Kick off a single sync now so the cloud sees this clone within seconds
+#     of the welcome screen appearing, not at the next-minute boundary.
+sudo -u arise php /home/arise/cloud_push.php > /dev/null 2>&1 || true
+echo "    First sync attempt fired."
+
+# ── 7. Restart Apache so any per-host paths re-resolve ────────────────────────
+echo "[7/8] Restarting Apache ..."
 systemctl restart apache2
 
-# ── 7. Clone-specific cleanup: wipe learner data + revoke GitHub push key ────
-echo "[7/7] Clone cleanup (learner data + push credentials) ..."
+# ── 8. Clone-specific cleanup: wipe learner data + revoke GitHub push key ────
+echo "[8/8] Clone cleanup (learner data + push credentials) ..."
 if [ "$WAS_MASTER" = "1" ]; then
     echo "    Master flag was present at start — KEEPING learner data and SSH keys."
     # Defensive: leave the flag in place so cloud_push still treats this as master.
