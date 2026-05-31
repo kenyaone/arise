@@ -952,10 +952,16 @@ elseif ($page === 'schools'):
         $county = trim($_POST['county']??'');
         $manualLat = trim($_POST['lat']??'');
         $manualLng = trim($_POST['lng']??'');
+        $clusterId = (int)($_POST['cluster_id']??0);
         if ($sname) {
             try {
-                $stmt = db()->prepare('INSERT INTO schools (name,county) VALUES (:n,:c)');
-                $stmt->bindValue(':n',$sname); $stmt->bindValue(':c',$county);
+                if ($clusterId > 0) {
+                    $stmt = db()->prepare('INSERT INTO schools (name,county,cluster_id) VALUES (:n,:c,:cl)');
+                    $stmt->bindValue(':n',$sname); $stmt->bindValue(':c',$county); $stmt->bindValue(':cl',$clusterId);
+                } else {
+                    $stmt = db()->prepare('INSERT INTO schools (name,county) VALUES (:n,:c)');
+                    $stmt->bindValue(':n',$sname); $stmt->bindValue(':c',$county);
+                }
                 $stmt->execute();
                 $newId = db()->lastInsertRowID();
                 $smsg = "✅ Project '".e($sname)."' added!";
@@ -1035,13 +1041,22 @@ elseif ($page === 'schools'):
         </div>";
     }
 
-    // Add project form
+    // Add project form — collect available clusters first
+    $clusterOpts = '<option value="">— No cluster —</option>';
+    $cr = db()->query("SELECT id, name FROM clusters ORDER BY name");
+    while ($crow = $cr->fetchArray(SQLITE3_ASSOC)) {
+        $clusterOpts .= '<option value="' . (int)$crow['id'] . '">' . e($crow['name']) . '</option>';
+    }
     echo '<div class="dp-card"><h2 class="section-title">➕ Add Project</h2>
     <form method="POST" style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
     <input type="hidden" name="add_school" value="1">
     <div style="flex:2;min-width:200px;">
         <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">Project Name *</label>
         <input type="text" name="school_name" required placeholder="e.g. Nairobi Youth Health Project">
+    </div>
+    <div style="flex:1;min-width:160px;">
+        <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">Cluster</label>
+        <select name="cluster_id" style="width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:.92rem;">' . $clusterOpts . '</select>
     </div>
     <div style="flex:1;min-width:140px;">
         <label style="display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px;text-transform:uppercase;">County / Region</label>
