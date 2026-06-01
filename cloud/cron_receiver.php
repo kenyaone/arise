@@ -58,6 +58,14 @@ try {
     }
 
     // ── schools: per-device full replace with aggregated metrics + cluster ──
+    // Save any manually-set lat/lng before wiping rows (devices don't send GPS coords)
+    $savedCoords = [];
+    $coordStmt = $mysqli->prepare('SELECT name, lat, lng FROM schools WHERE device_id = ? AND lat IS NOT NULL AND lng IS NOT NULL');
+    $coordStmt->bind_param('s', $deviceId); $coordStmt->execute();
+    $coordResult = $coordStmt->get_result();
+    while ($row = $coordResult->fetch_assoc()) $savedCoords[$row['name']] = [$row['lat'], $row['lng']];
+    $coordStmt->close();
+
     $stmt = $mysqli->prepare('DELETE FROM schools WHERE device_id = ?');
     $stmt->bind_param('s', $deviceId); $stmt->execute(); $stmt->close();
 
@@ -126,6 +134,16 @@ try {
             $schoolsInserted++;
         }
         $stmt->close();
+    }
+
+    // Restore any manually-set coordinates that the device payload didn't include
+    if ($savedCoords) {
+        $restoreStmt = $mysqli->prepare('UPDATE schools SET lat=?, lng=? WHERE device_id=? AND name=? AND lat IS NULL');
+        foreach ($savedCoords as $name => [$lat, $lng]) {
+            $restoreStmt->bind_param('ddss', $lat, $lng, $deviceId, $name);
+            $restoreStmt->execute();
+        }
+        $restoreStmt->close();
     }
 
     // ── students: per-device full replace, skip soft-deleted ──────────────
