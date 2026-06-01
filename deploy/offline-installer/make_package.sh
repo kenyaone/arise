@@ -42,8 +42,21 @@ DEB_COUNT=$(ls "$DEBS_DIR"/*.deb 2>/dev/null | wc -l)
 echo "    Downloaded $DEB_COUNT .deb packages."
 
 # ── 2. Archive the entire ARISE app (files + SQLite DB) ──────────────────────
+# Pause the arise user's cron so cloud_push.php doesn't touch the SQLite DB
+# while tar is reading it. Without this, tar exits with code 1 ("file changed
+# as we read it") and set -e kills the whole packager mid-run. EXIT trap
+# restores the crontab whether we succeed or fail.
+CRON_BACKUP=$(mktemp)
+if crontab -u arise -l > "$CRON_BACKUP" 2>/dev/null; then
+    crontab -u arise -r 2>/dev/null
+    CRON_PAUSED=1
+    trap '[ -s "$CRON_BACKUP" ] && crontab -u arise "$CRON_BACKUP"; rm -f "$CRON_BACKUP"' EXIT
+    sleep 3   # let any in-flight sync finish
+fi
+
 echo "[2/4] Archiving /var/www/arise/ ..."
 tar --exclude='/var/www/arise/data/uploads/videos/*.mp4' \
+    --warning=no-file-changed \
     -czf "$PACKAGE_DIR/arise_files.tar.gz" \
     -C /var/www arise/
 # To include videos, remove the --exclude line above.
