@@ -74,13 +74,19 @@ else
 fi
 
 # ── 5. Write MAC-derived device_id for cloud sync (cloud_push.php) ───────────
+# Extract the first non-loopback MAC from `link/ether <mac>` (NOT the interface
+# name — that's `eno1`/`enp3s0`/etc. and collides across clones).
 echo "[5/8] Writing cloud sync device_id ..."
-SYNC_IFACE=$(ip -o link show 2>/dev/null | awk '!/lo:/ && /link\/ether/ {print $2}' | head -1 | tr -d ':')
-if [ -z "$SYNC_IFACE" ]; then
-    SYNC_IFACE=$(tr -dc 'A-F0-9' </dev/urandom | head -c 12)
+SYNC_MAC=$(ip -o link show 2>/dev/null \
+    | awk '!/lo:/ && /link\/ether/ { for (i=1;i<=NF;i++) if ($i=="link/ether") { print $(i+1); exit } }' \
+    | tr -d ':')
+if [ -z "$SYNC_MAC" ]; then
+    SYNC_MAC=$(tr -dc 'A-F0-9' </dev/urandom | head -c 12)
 fi
-CLOUD_DEVICE_ID="ARISE-$(echo "$SYNC_IFACE" | tr 'a-z' 'A-Z')"
+CLOUD_DEVICE_ID="ARISE-$(echo "$SYNC_MAC" | tr 'a-z' 'A-Z')"
 echo "$CLOUD_DEVICE_ID" > /etc/arise_device_id
+chown arise:arise /etc/arise_device_id 2>/dev/null || true
+chmod 0644       /etc/arise_device_id 2>/dev/null || true
 echo "    cloud device_id → $CLOUD_DEVICE_ID"
 
 # ── 6. Self-heal cloud-sync cron (locations.php depends on this) ─────────────

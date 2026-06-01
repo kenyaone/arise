@@ -73,6 +73,27 @@ while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
     $clusterNameById[(int)$row['id']] = $row['name'];
 }
 
+// ── CLUSTER_COORDS_FALLBACK ─────────────────────────────────────────────────
+// Mirror of the hardcoded cluster map in includes/config.php. Used to backfill
+// school lat/lng when the row doesn't have its own. Edit both in lockstep.
+$CLUSTER_COORDS = [
+    'Siaya'=>[0.0625,34.2422], 'Siaya-Kisumu'=>[-0.0500,34.5000],
+    'Kakamega'=>[0.2827,34.7519], 'Vihiga'=>[0.0076,34.7234],
+    'Vihiga-Nandi-Kisumu'=>[0.1000,34.8500], 'Busia'=>[0.4610,34.1110],
+    'Homa Bay'=>[-0.5180,34.4570], 'Migori'=>[-1.0634,34.4731],
+    'Narok'=>[-1.0834,35.8730], 'Migori-Narok'=>[-1.0634,34.4731],
+    'Narok-Kajiado'=>[-1.0834,35.8730], 'Kajiado'=>[-1.8520,36.7760],
+    'Machakos'=>[-1.5177,37.2634], 'Kitui'=>[-1.3671,38.0106],
+    'Kitui-Machakos'=>[-1.3671,38.0106], 'Makueni'=>[-1.8018,37.6209],
+    'Meru'=>[0.0476,37.6493], 'Embu'=>[-0.5330,37.4580],
+    'Tharaka Nithi'=>[-0.2960,37.9570], 'Tharaka Nithi-Embu'=>[-0.5330,37.4580],
+    'Nakuru'=>[-0.3031,36.0800], 'Laikipia'=>[0.3600,36.7810],
+    'Nyeri'=>[-0.4167,36.9481], "Murang'a"=>[-0.7833,37.0370],
+    'Kirinyaga'=>[-0.6580,37.3310], 'Nyandarua'=>[-0.1110,36.3610],
+    'Kericho'=>[-0.3690,35.2840], 'Bomet'=>[-0.7820,35.3420],
+    'Kisii'=>[-0.6773,34.7796], 'Nyamira'=>[-0.5670,34.9370],
+];
+
 // ── Schools with aggregated per-project learning metrics ─────────────────────
 // Defaults — every active school gets a row, even with zero learners.
 $schools = [];
@@ -86,8 +107,10 @@ while ($row = $r->fetchArray(SQLITE3_ASSOC)) {
         'county'                => $row['county'] ?? '',
         'active'                => (int)$row['is_active'],
         'hash'                  => $row['password_hash'] ?? '',
-        'lat'                   => $row['lat'],
-        'lng'                   => $row['lng'],
+        'lat'                   => ($row['lat'] !== null && $row['lat'] !== '') ? $row['lat']
+                                  : ($cid !== null && isset($clusterNameById[$cid], $CLUSTER_COORDS[$clusterNameById[$cid]]) ? $CLUSTER_COORDS[$clusterNameById[$cid]][0] : null),
+        'lng'                   => ($row['lng'] !== null && $row['lng'] !== '') ? $row['lng']
+                                  : ($cid !== null && isset($clusterNameById[$cid], $CLUSTER_COORDS[$clusterNameById[$cid]]) ? $CLUSTER_COORDS[$clusterNameById[$cid]][1] : null),
         'device_id'             => $deviceId,
         'cluster_local_id'      => $cid,
         'cluster_name'          => $cid !== null ? ($clusterNameById[$cid] ?? '') : '',
