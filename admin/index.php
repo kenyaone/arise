@@ -1024,6 +1024,25 @@ elseif ($page === 'schools'):
         $smsg = '✅ Project removed.';
     }
 
+    // Activate one of the pre-loaded inactive projects. Single-active model:
+    // setting one active deactivates all others so each field box only ever
+    // pushes one project to the cloud.
+    if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['activate_project'])) {
+        $aid = (int)$_POST['activate_project'];
+        if ($aid > 0) {
+            $exists = (int)db()->querySingle("SELECT COUNT(*) FROM schools WHERE id=$aid");
+            if ($exists) {
+                db()->exec("UPDATE schools SET is_active=0 WHERE is_active=1");
+                db()->exec("UPDATE schools SET is_active=1 WHERE id=$aid");
+                $aname = db()->querySingle("SELECT name FROM schools WHERE id=$aid");
+                $smsg = "✅ Activated '".e($aname)."'. The cron will push it to the cloud within 60 seconds.";
+                if (function_exists('syncClustersToCloud')) syncClustersToCloud();
+            } else {
+                $smsg = '❌ Project not found.';
+            }
+        }
+    }
+
     // Delete class
     if (isset($_GET['del_class'])) {
         db()->exec("UPDATE classes SET is_active=0 WHERE id=".intval($_GET['del_class']));
@@ -1133,6 +1152,44 @@ elseif ($page === 'schools'):
         </form>";
         echo '</div>';
     endwhile;
+
+    // ── Available Projects (inactive — pick the one this box serves) ───────────
+    // The bulk-imported project list ships with is_active=0 so each field
+    // box only pushes its own one to cloud. Field admin scrolls to their
+    // project and clicks Activate; that also deactivates any other active
+    // project so cloud always gets exactly one row per device.
+    $availQ = db()->query(
+        "SELECT s.id, s.name, s.cluster_id, c.name AS cluster_name
+           FROM schools s LEFT JOIN clusters c ON c.id = s.cluster_id
+          WHERE s.is_active = 0
+            AND s.name NOT LIKE '%[deleted-%]'
+          ORDER BY (c.name IS NULL), c.name COLLATE NOCASE, s.name COLLATE NOCASE"
+    );
+    $available = [];
+    while ($a = $availQ->fetchArray(SQLITE3_ASSOC)) {
+        $available[$a['cluster_name'] ?: '— No cluster —'][] = $a;
+    }
+    if ($available) {
+        echo '<h2 class="page-title" style="margin-top:28px;font-size:1.15rem;">📋 Available Projects</h2>';
+        echo '<p class="text-muted" style="margin-top:-12px;margin-bottom:16px;font-size:.88rem;">Find the project this box serves and click <strong>Activate</strong>. Activating a project deactivates any other active project so each box pushes exactly one to the cloud.</p>';
+        foreach ($available as $clusterName => $projects) {
+            echo '<div class="dp-card" style="border-left:3px solid #fef3c7;margin-bottom:12px;">';
+            echo '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">';
+            echo '<strong style="color:#0a5e2a;">'.e($clusterName).'</strong>';
+            echo '<span class="chip" style="background:#fef3c7;color:#92400e;">'.count($projects).' project'.(count($projects)!==1?'s':'').'</span>';
+            echo '</div>';
+            foreach ($projects as $p) {
+                echo '<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f3f4f6;gap:8px;">';
+                echo '<span style="font-size:.92rem;">'.e($p['name']).'</span>';
+                echo '<form method="POST" style="margin:0;" onsubmit="return confirm(\'Activate this project? Any other active project on this box will be set to inactive.\');">';
+                echo '<input type="hidden" name="activate_project" value="'.(int)$p['id'].'">';
+                echo '<button type="submit" class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none;padding:6px 14px;border-radius:6px;font-weight:700;cursor:pointer;">Activate</button>';
+                echo '</form>';
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+    }
 
     // ── Edit Project Modal ─────────────────────────────────────────────────────
     echo '
