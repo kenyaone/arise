@@ -100,6 +100,7 @@ if (!$dbError) {
                     'last_seen'    => lastSeen($ageSec),
                     'device_id'    => $row['device_id'],
                     'offline_label'=> $offlineLabel,
+                    'cluster'      => trim((string)($row['cluster_name'] ?? '')),
                     'sync_interval'=> $row['avg_sync_interval_secs'] ? round($row['avg_sync_interval_secs']/60, 1) : null,
                     'learner_delta' => $row['learner_count_prev'] !== null ? ((int)$row['learner_count'] - (int)$row['learner_count_prev']) : null,
                 ];
@@ -207,7 +208,12 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
       <?php foreach ($g['projects'] as $p): ?>
       <div class="card<?= $p['_is_stale'] ? ' stale' : '' ?>">
         <h3><?= h($p['name']) ?></h3>
-        <div class="sub"><?= h($p['county'] ?: '—') ?></div>
+        <div class="sub">
+            <?php if (!empty($p['cluster_name'])): ?>
+            <span style="background:#dcfce7;color:#166534;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-right:6px;">📍 <?= h($p['cluster_name']) ?></span>
+            <?php endif; ?>
+            <?= h($p['county'] ?: '—') ?>
+        </div>
         <div class="metric"><span class="lbl">📟 Device</span><span class="val" style="font-size:.78rem;font-family:monospace;color:#6b7280;"><?= h($p['device_id']) ?></span></div>
         <div class="metric"><span class="lbl">👥 Learners</span><span class="val"><?= num($p['learner_count']) ?></span></div>
         <div class="metric"><span class="lbl">📝 Quiz Avg</span><span class="val"><?= $p['quiz_count']>0 ? pct($p['avg_score']) : '—' ?></span></div>

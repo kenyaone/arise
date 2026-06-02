@@ -86,7 +86,7 @@ try {
         $s = $schools[0];
         $name           = (string)($s['name']                ?? '');
         if ($name !== '') {
-            $county         = (string)($s['county']               ?? '');
+            $county         = is_numeric($s['county'] ?? '') ? '' : (string)($s['county'] ?? '');
             $active         = (int)   ($s['active']               ?? 1);
             $latNew         =          $s['lat']                  ?? null;
             $lngNew         =          $s['lng']                  ?? null;
