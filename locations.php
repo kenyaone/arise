@@ -36,7 +36,8 @@ function lastSeen(?int $ageSec): string {
 
 if (!$dbError) {
     $sql = "SELECT name, county, lat, lng, cluster_name, device_id,
-                   learner_count, quiz_count, avg_score, cert_count, cert_rate,
+                   learner_count, learner_count_prev, avg_sync_interval_secs,
+                   quiz_count, avg_score, cert_count, cert_rate,
                    quiz_pass_rate, avg_pre_score, avg_post_score, knowledge_gain,
                    active_last_30_days, lesson_completions,
                    last_sync_at
@@ -99,6 +100,8 @@ if (!$dbError) {
                     'last_seen'    => lastSeen($ageSec),
                     'device_id'    => $row['device_id'],
                     'offline_label'=> $offlineLabel,
+                    'sync_interval'=> $row['avg_sync_interval_secs'] ? round($row['avg_sync_interval_secs']/60, 1) : null,
+                    'learner_delta' => $row['learner_count_prev'] !== null ? ((int)$row['learner_count'] - (int)$row['learner_count_prev']) : null,
                 ];
             }
         }
@@ -219,6 +222,14 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
         <?php if ($p['_is_stale'] && isset($p['_offline_label'])): ?>
         <div class="metric"><span class="lbl">🔴 Status</span><span class="val" style="color:#dc2626;font-weight:700;"><?= h($p['_offline_label']) ?></span></div>
         <?php endif; ?>
+        <?php if (!empty($p['avg_sync_interval_secs'])): $mins = round($p['avg_sync_interval_secs']/60,1); $col = $mins<=2?'#166534':($mins<=10?'#92400e':'#991b1b'); ?>
+        <div class="metric"><span class="lbl">🔁 Sync rate</span><span class="val" style="color:<?= $col ?>;font-size:.82rem;">every ~<?= $mins ?> min</span></div>
+        <?php endif; ?>
+        <?php if (isset($p['learner_count_prev']) && $p['learner_count_prev'] !== null):
+            $delta = (int)$p['learner_count'] - (int)$p['learner_count_prev'];
+            if ($delta > 0): ?><div class="metric"><span class="lbl">📈 Trend</span><span class="val" style="color:#166534;">+<?= $delta ?> since last sync</span></div>
+            <?php elseif ($delta < 0): ?><div class="metric"><span class="lbl">📉 Trend</span><span class="val" style="color:#991b1b;"><?= $delta ?> since last sync</span></div>
+        <?php endif; endif; ?>
       </div>
       <?php endforeach; ?>
     </div>
@@ -276,7 +287,9 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
       ['🟢 Active 30d', fmt(m.active_30)],
       ['📚 Lessons done', fmt(m.lessons_done)],
       ['📡 Last sync',  m.last_seen],
-    ]);
+      m.sync_interval ? ['🔁 Sync rate', 'every ~'+m.sync_interval+' min'] : null,
+      m.learner_delta > 0 ? ['📈 Trend', '<span style="color:#166534">+'+m.learner_delta+' since last sync</span>'] : (m.learner_delta < 0 ? ['📉 Trend', '<span style="color:#991b1b">'+m.learner_delta+' since last sync</span>'] : null),
+    ].filter(Boolean));
     if (m.know_gain !== null) rows.push(['📈 Knowledge gain', pct(m.know_gain)]);
 
     // Cluster is the headline grouping — show as prominent chip.
