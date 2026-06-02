@@ -19,6 +19,7 @@ if (!is_array($payload)) fail('bad payload');
 $deviceId = trim((string)($payload['deviceId'] ?? ''));
 if ($deviceId === '') fail('missing device_id');
 
+
 $clusters = is_array($payload['clusters'] ?? null) ? $payload['clusters'] : null; // null = clone (don't touch clusters)
 $schools  = is_array($payload['schools']  ?? null) ? $payload['schools']  : [];
 $students = is_array($payload['students'] ?? null) ? $payload['students'] : [];
@@ -57,42 +58,38 @@ try {
         }
     }
 
-    // ── schools: per-device full replace with aggregated metrics + cluster ──
-    // Save any manually-set lat/lng before wiping rows (devices don't send GPS coords)
-    $savedCoords = [];
-    $coordStmt = $mysqli->prepare('SELECT name, lat, lng FROM schools WHERE device_id = ? AND lat IS NOT NULL AND lng IS NOT NULL');
-    $coordStmt->bind_param('s', $deviceId); $coordStmt->execute();
-    $coordResult = $coordStmt->get_result();
-    while ($row = $coordResult->fetch_assoc()) $savedCoords[$row['name']] = [$row['lat'], $row['lng']];
-    $coordStmt->close();
+    // ── schools: upsert — never delete a device's record, only update stats ──
+    // Pick the school with the most learners if device sends multiple
+    if (count($schools) > 1) {
+        usort($schools, fn($a,$b) => (int)($b['learner_count']??0) - (int)($a['learner_count']??0));
+        $schools = [array_shift($schools)];
+    }
 
-    $stmt = $mysqli->prepare('DELETE FROM schools WHERE device_id = ?');
-    $stmt->bind_param('s', $deviceId); $stmt->execute(); $stmt->close();
+    // Pre-fetch existing record to calculate sync interval and learner trend
+    $existing = null;
+    $chk = $mysqli->prepare('SELECT last_sync_at, avg_sync_interval_secs, learner_count FROM schools WHERE device_id=?');
+    $chk->bind_param('s', $deviceId); $chk->execute();
+    $existing = $chk->get_result()->fetch_assoc(); $chk->close();
+
+    // Rolling average sync interval (70% old, 30% new measurement)
+    $avgInterval = null;
+    if ($existing && $existing['last_sync_at']) {
+        $gap = max(0, time() - strtotime($existing['last_sync_at']));
+        $old = $existing['avg_sync_interval_secs'];
+        $avgInterval = (int)($old ? (0.7 * $old + 0.3 * $gap) : $gap);
+    }
+    // Previous learner count for trend display
+    $prevLearners = $existing ? (int)$existing['learner_count'] : null;
 
     $schoolsInserted = 0;
     if ($schools) {
-        $stmt = $mysqli->prepare(
-            'INSERT INTO schools (
-                name, county, is_active, device_id, lat, lng,
-                cluster_name, cluster_local_id,
-                learner_count, quiz_count, pretest_count, posttest_count,
-                avg_score, cert_count, cert_rate,
-                quiz_pass_count, quiz_pass_rate,
-                avg_pre_score, avg_post_score, knowledge_gain,
-                behavior_surveys, pct_changed, pct_shared, pct_confident,
-                retention_count, avg_retention_score,
-                lesson_completions, active_last_30_days,
-                first_registration, latest_activity, facilitator_sessions
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        );
-        foreach ($schools as $s) {
-            $name = (string)($s['name'] ?? '');
-            if ($name === '') continue;
-
+        $s = $schools[0];
+        $name           = (string)($s['name']                ?? '');
+        if ($name !== '') {
             $county         = (string)($s['county']               ?? '');
             $active         = (int)   ($s['active']               ?? 1);
-            $lat            =          $s['lat']                  ?? null;
-            $lng            =          $s['lng']                  ?? null;
+            $latNew         =          $s['lat']                  ?? null;
+            $lngNew         =          $s['lng']                  ?? null;
             $clusterName    = (string)($s['cluster_name']         ?? '');
             $clusterLocalId =          $s['cluster_local_id']     ?? null;
             $learnerCount   = (int)   ($s['learner_count']        ?? 0);
@@ -119,8 +116,44 @@ try {
             $latestAct      =          $s['latest_activity']      ?? null;
             $facSessions    = (int)   ($s['facilitator_sessions'] ?? 0);
 
-            $stmt->bind_param('ssisddsiiiiidididdddidddidiissi',
-                $name, $county, $active, $deviceId, $lat, $lng,
+            // INSERT new device or UPDATE stats only — name/county/cluster locked on first sync,
+            // never overwritten. lat/lng preserved if not sent by device.
+            $stmt = $mysqli->prepare(
+                'INSERT INTO schools (
+                    device_id, name, county, is_active, lat, lng,
+                    cluster_name, cluster_local_id,
+                    learner_count, quiz_count, pretest_count, posttest_count,
+                    avg_score, cert_count, cert_rate,
+                    quiz_pass_count, quiz_pass_rate,
+                    avg_pre_score, avg_post_score, knowledge_gain,
+                    behavior_surveys, pct_changed, pct_shared, pct_confident,
+                    retention_count, avg_retention_score,
+                    lesson_completions, active_last_30_days,
+                    first_registration, latest_activity, facilitator_sessions,
+                    avg_sync_interval_secs, learner_count_prev,
+                    last_sync_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                ON DUPLICATE KEY UPDATE
+                    learner_count_prev=learner_count,
+                    learner_count=VALUES(learner_count), quiz_count=VALUES(quiz_count),
+                    pretest_count=VALUES(pretest_count), posttest_count=VALUES(posttest_count),
+                    avg_score=VALUES(avg_score), cert_count=VALUES(cert_count),
+                    cert_rate=VALUES(cert_rate), quiz_pass_count=VALUES(quiz_pass_count),
+                    quiz_pass_rate=VALUES(quiz_pass_rate), avg_pre_score=VALUES(avg_pre_score),
+                    avg_post_score=VALUES(avg_post_score), knowledge_gain=VALUES(knowledge_gain),
+                    behavior_surveys=VALUES(behavior_surveys), pct_changed=VALUES(pct_changed),
+                    pct_shared=VALUES(pct_shared), pct_confident=VALUES(pct_confident),
+                    retention_count=VALUES(retention_count), avg_retention_score=VALUES(avg_retention_score),
+                    lesson_completions=VALUES(lesson_completions), active_last_30_days=VALUES(active_last_30_days),
+                    first_registration=VALUES(first_registration), latest_activity=VALUES(latest_activity),
+                    facilitator_sessions=VALUES(facilitator_sessions),
+                    avg_sync_interval_secs=VALUES(avg_sync_interval_secs),
+                    lat=IFNULL(VALUES(lat), lat), lng=IFNULL(VALUES(lng), lng),
+                    last_sync_at=NOW()
+                    /* name, county, cluster_name intentionally excluded — locked on first sync */'
+            );
+            $stmt->bind_param('ssisddsiiiiidididdddidddidiissiii',
+                $deviceId, $name, $county, $active, $latNew, $lngNew,
                 $clusterName, $clusterLocalId,
                 $learnerCount, $quizCount, $pretestCount, $posttestCount,
                 $avgScore, $certCount, $certRate,
@@ -129,21 +162,12 @@ try {
                 $behaviorN, $pctChanged, $pctShared, $pctConfident,
                 $retentionCount, $avgRetention,
                 $lessonsDone, $active30,
-                $firstReg, $latestAct, $facSessions);
+                $firstReg, $latestAct, $facSessions,
+                $avgInterval, $prevLearners);
             $stmt->execute();
-            $schoolsInserted++;
+            $stmt->close();
+            $schoolsInserted = 1;
         }
-        $stmt->close();
-    }
-
-    // Restore any manually-set coordinates that the device payload didn't include
-    if ($savedCoords) {
-        $restoreStmt = $mysqli->prepare('UPDATE schools SET lat=?, lng=? WHERE device_id=? AND name=? AND lat IS NULL');
-        foreach ($savedCoords as $name => [$lat, $lng]) {
-            $restoreStmt->bind_param('ddss', $lat, $lng, $deviceId, $name);
-            $restoreStmt->execute();
-        }
-        $restoreStmt->close();
     }
 
     // ── students: per-device full replace, skip soft-deleted ──────────────
