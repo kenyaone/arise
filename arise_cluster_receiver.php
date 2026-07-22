@@ -50,8 +50,11 @@ foreach (['lat REAL', 'lng REAL'] as $col) {
     try { $db->exec("ALTER TABLE clusters ADD COLUMN $col"); } catch(Exception $e){}
 }
 
-$clusters = $payload['clusters'] ?? [];
-$schools  = $payload['schools']  ?? [];
+// Clones omit the 'clusters' key entirely (see syncClustersToCloud in includes/config.php);
+// only masters send it. When absent, leave the cluster table alone so a clone sync doesn't
+// wipe the master-owned topology (which was the root cause of empty cluster dropdowns on register).
+$clusters = array_key_exists('clusters', $payload) && is_array($payload['clusters']) ? $payload['clusters'] : null;
+$schools  = $payload['schools'] ?? [];
 
 // Helper: extract a numeric lat or null from a payload value.
 $num = function($v) {
@@ -60,20 +63,23 @@ $num = function($v) {
     return ($f === 0.0) ? null : $f;
 };
 
-// Replace clusters atomically
 $db->exec('BEGIN');
-$db->exec('UPDATE schools SET cluster_id=NULL');
-$db->exec('DELETE FROM clusters');
-foreach ($clusters as $c) {
-    $lat = $num($c['lat'] ?? null);
-    $lng = $num($c['lng'] ?? null);
-    $stmt = $db->prepare('INSERT INTO clusters (id, name, password_hash, lat, lng) VALUES (:id, :name, :hash, :lat, :lng)');
-    $stmt->bindValue(':id',   (int)$c['id'],   SQLITE3_INTEGER);
-    $stmt->bindValue(':name', $c['name'],      SQLITE3_TEXT);
-    $stmt->bindValue(':hash', $c['hash'],      SQLITE3_TEXT);
-    $stmt->bindValue(':lat',  $lat, $lat === null ? SQLITE3_NULL : SQLITE3_FLOAT);
-    $stmt->bindValue(':lng',  $lng, $lng === null ? SQLITE3_NULL : SQLITE3_FLOAT);
-    $stmt->execute();
+
+// Replace clusters atomically — only when the sender is a master (clusters key present).
+if ($clusters !== null) {
+    $db->exec('UPDATE schools SET cluster_id=NULL');
+    $db->exec('DELETE FROM clusters');
+    foreach ($clusters as $c) {
+        $lat = $num($c['lat'] ?? null);
+        $lng = $num($c['lng'] ?? null);
+        $stmt = $db->prepare('INSERT INTO clusters (id, name, password_hash, lat, lng) VALUES (:id, :name, :hash, :lat, :lng)');
+        $stmt->bindValue(':id',   (int)$c['id'],   SQLITE3_INTEGER);
+        $stmt->bindValue(':name', $c['name'],      SQLITE3_TEXT);
+        $stmt->bindValue(':hash', $c['hash'],      SQLITE3_TEXT);
+        $stmt->bindValue(':lat',  $lat, $lat === null ? SQLITE3_NULL : SQLITE3_FLOAT);
+        $stmt->bindValue(':lng',  $lng, $lng === null ? SQLITE3_NULL : SQLITE3_FLOAT);
+        $stmt->execute();
+    }
 }
 
 // Upsert schools (update if exists by name, insert if new). lat/lng only
@@ -111,4 +117,4 @@ foreach ($schools as $s) {
 }
 $db->exec('COMMIT');
 
-echo json_encode(['ok' => true, 'clusters' => count($clusters), 'schools' => count($schools)]);
+echo json_encode(['ok' => true, 'clusters' => $clusters === null ? null : count($clusters), 'schools' => count($schools)]);
