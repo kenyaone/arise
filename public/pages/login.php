@@ -76,11 +76,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
         $student = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
 
         if ($student) {
-            if (!empty($student['password_hash'])) {
-                if (!password_verify($passwordInput, $student['password_hash'])) {
-                    $error = 'Incorrect password. Please try again.';
-                    $student = null;
-                }
+            if (empty($student['password_hash'])) {
+                // Password was reset by admin (or never set) — force set-password
+                // before we complete the login. See public/pages/set_password.php.
+                if (session_status() === PHP_SESSION_NONE) session_start();
+                $_SESSION['arise_pending_pw_student_id']   = $student['id'];
+                $_SESSION['arise_pending_pw_student_name'] = $student['full_name'];
+                header('Location: /arise/?p=set_password');
+                exit;
+            }
+            if (!password_verify($passwordInput, $student['password_hash'])) {
+                $error = 'Incorrect password. Please try again.';
+                $student = null;
             }
         } else {
             $error = 'Name or cluster not found. Check spelling or register below.';
@@ -190,8 +197,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
                     <label style="display:block; font-size:.75rem; font-weight:700; color:#374151; margin-bottom:6px; text-transform:uppercase;">
                         Password
                     </label>
-                    <input type="password" name="admin_pass" required placeholder="Enter password"
-                           style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <div style="position:relative;">
+                        <input type="password" name="admin_pass" id="ariseAdminPw" required placeholder="Enter password"
+                               style="width:100%; padding:10px 40px 10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                        <button type="button" onclick="arisePwToggle('ariseAdminPw', this)" aria-label="Show password"
+                                style="position:absolute; right:6px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer; padding:6px; font-size:1rem; color:#6b7280;">👁</button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; border-radius:8px; font-weight:700;">
@@ -239,8 +250,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
                     <label style="display:block; font-size:.75rem; font-weight:700; color:#374151; margin-bottom:6px; text-transform:uppercase;">
                         Password
                     </label>
-                    <input type="password" name="teacher_pass" required placeholder="Enter password"
-                           style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <div style="position:relative;">
+                        <input type="password" name="teacher_pass" id="ariseTeacherPw" required placeholder="Enter password"
+                               style="width:100%; padding:10px 40px 10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                        <button type="button" onclick="arisePwToggle('ariseTeacherPw', this)" aria-label="Show password"
+                                style="position:absolute; right:6px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer; padding:6px; font-size:1rem; color:#6b7280;">👁</button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-success" style="width:100%; padding:12px; border-radius:8px; font-weight:700;">
@@ -290,22 +305,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
                         Cluster *
                     </label>
                     <?php
+                    // Load clusters that have at least one active project on THIS box.
+                    // Falls back to the legacy `classes` table for older schemas,
+                    // then to a text input as a last resort. Learners registered
+                    // via register.php store cluster name in students.class_name,
+                    // so the same source-of-truth (`clusters` table) is used here
+                    // to guarantee the dropdown value matches what login queries.
                     $loginClusters = [];
-                    $clRes = db()->query("SELECT DISTINCT name FROM classes WHERE is_active=1 ORDER BY name");
-                    while ($clRow = $clRes->fetchArray(SQLITE3_NUM)) $loginClusters[] = $clRow[0];
+                    try {
+                        $q = db()->query("SELECT DISTINCT c.name FROM clusters c JOIN schools s ON s.cluster_id=c.id WHERE s.is_active=1 ORDER BY c.name");
+                        while ($r = $q->fetchArray(SQLITE3_NUM)) $loginClusters[] = $r[0];
+                    } catch (Throwable $e) {}
+                    if (empty($loginClusters)) {
+                        try {
+                            $q = db()->query("SELECT DISTINCT name FROM classes WHERE is_active=1 ORDER BY name");
+                            while ($r = $q->fetchArray(SQLITE3_NUM)) $loginClusters[] = $r[0];
+                        } catch (Throwable $e) {}
+                    }
                     ?>
                     <?php if ($loginClusters): ?>
                     <select name="class_name" required
                             style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box; background:#fff;">
                         <option value="">— Select your cluster —</option>
                         <?php foreach ($loginClusters as $cl): ?>
-                        <option value="<?= e($cl) ?>" <?= (($_POST['class_name'] ?? '') === $cl) ? 'selected' : '' ?>><?= e($cl) ?></option>
+                        <option value="<?= e($cl) ?>" <?= (($_POST['class_name'] ?? '') === $cl || (count($loginClusters) === 1)) ? 'selected' : '' ?>><?= e($cl) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <?php else: ?>
                     <input type="text" name="class_name" required placeholder="e.g. Form 2A, Grade 9"
                            value="<?= e($_POST['class_name'] ?? '') ?>"
                            style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <p style="font-size:.75rem;color:#92400e;margin-top:6px;">
+                        ⚠ No cluster is activated on this box. Ask your admin to activate a project in the Schools page.
+                    </p>
                     <?php endif; ?>
                 </div>
 
@@ -313,8 +345,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
                     <label style="display:block; font-size:.75rem; font-weight:700; color:#374151; margin-bottom:6px; text-transform:uppercase;">
                         Password <span style="font-weight:400; font-style:italic; text-transform:none; font-size:0.72rem;">(only if you set one)</span>
                     </label>
-                    <input type="password" name="password" placeholder="Leave blank if you have no password"
-                           style="width:100%; padding:10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <div style="position:relative;">
+                        <input type="password" name="password" id="ariseStudentPw" placeholder="Leave blank if you have no password"
+                               style="width:100%; padding:10px 40px 10px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                        <button type="button" onclick="arisePwToggle('ariseStudentPw', this)" aria-label="Show password"
+                                style="position:absolute; right:6px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer; padding:6px; font-size:1rem; color:#6b7280;">👁</button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; border-radius:8px; font-weight:700;">
@@ -334,3 +370,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
     </div>
 </div>
 <?php endif; ?>
+
+<script>
+// Password show/hide toggle. Idempotent — safe to define once per page.
+window.arisePwToggle = window.arisePwToggle || function(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var showing = el.type === 'password';
+    el.type = showing ? 'text' : 'password';
+    btn.textContent = showing ? '🙈' : '👁';
+    btn.setAttribute('aria-label', showing ? 'Hide password' : 'Show password');
+};
+</script>

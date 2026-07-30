@@ -137,10 +137,14 @@ $hasClusters = count($clusters) > 0;
                     <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
                         Password * <span style="font-weight:400; font-style:italic; text-transform:none; font-size:0.72rem;">(min 6 characters)</span>
                     </label>
-                    <input type="password" name="password" class="form-control"
-                           required minlength="6"
-                           placeholder="Choose a password"
-                           style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <div style="position:relative;">
+                        <input type="password" name="password" class="form-control" id="ariseRegPw1"
+                               required minlength="6"
+                               placeholder="Choose a password"
+                               style="width:100%; padding:10px 40px 10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                        <button type="button" onclick="arisePwToggle('ariseRegPw1', this)" aria-label="Show password"
+                                style="position:absolute; right:6px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer; padding:6px; font-size:1rem; color:#6b7280;">👁</button>
+                    </div>
                 </div>
 
                 <!-- Confirm Password -->
@@ -148,10 +152,14 @@ $hasClusters = count($clusters) > 0;
                     <label class="form-label" style="display:block; font-size:.78rem; font-weight:700; color:var(--mid); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px;">
                         Confirm Password *
                     </label>
-                    <input type="password" name="password_confirm" class="form-control"
-                           required minlength="6"
-                           placeholder="Repeat your password"
-                           style="width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                    <div style="position:relative;">
+                        <input type="password" name="password_confirm" class="form-control" id="ariseRegPw2"
+                               required minlength="6"
+                               placeholder="Repeat your password"
+                               style="width:100%; padding:10px 40px 10px 14px; border:2px solid var(--border); border-radius:8px; font-size:1rem; box-sizing:border-box;">
+                        <button type="button" onclick="arisePwToggle('ariseRegPw2', this)" aria-label="Show password"
+                                style="position:absolute; right:6px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer; padding:6px; font-size:1rem; color:#6b7280;">👁</button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary"
@@ -173,3 +181,14 @@ $hasClusters = count($clusters) > 0;
         </div>
     </div>
 </div>
+
+<script>
+window.arisePwToggle = window.arisePwToggle || function(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var showing = el.type === 'password';
+    el.type = showing ? 'text' : 'password';
+    btn.textContent = showing ? '🙈' : '👁';
+    btn.setAttribute('aria-label', showing ? 'Hide password' : 'Show password');
+};
+</script>

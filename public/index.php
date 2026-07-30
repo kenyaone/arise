@@ -189,7 +189,7 @@ if ($student || !empty($_SESSION['arise_admin_id'])) {
 $isAdminSession = !empty($_SESSION['arise_admin_id']);
 
 // Redirect to login if not logged in and page requires login
-if (!$student && !$isAdminSession && !in_array($page, ['login', 'register', 'register_submit', '', 'datapost', 'donor_report', 'forum', 'ask', 'ask_submit', 'survey'])) {
+if (!$student && !$isAdminSession && !in_array($page, ['login', 'register', 'register_submit', '', 'datapost', 'donor_report', 'set_password', 'forum', 'ask', 'ask_submit', 'survey'])) {
     header('Location: /arise/login');
     exit;
 }
@@ -279,6 +279,7 @@ switch ($page) {
     case 'resources':       include __DIR__.'/pages/resources.php'; break;
     case 'login':           include __DIR__.'/pages/login.php'; break;
     case 'register':        include __DIR__.'/pages/register.php'; break;
+    case 'set_password':   include __DIR__.'/pages/set_password.php'; break;
     case 'register_submit': include __DIR__.'/pages/register_submit.php'; break;
     case 'certificate':     include __DIR__.'/pages/certificate.php'; break;
     case 'certificates':    include __DIR__.'/pages/certificates.php'; break;
