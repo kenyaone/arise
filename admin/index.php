@@ -151,6 +151,7 @@ $navGroups = [
         ['p'=>'students',    'icon'=>'👥','label'=>'Learners',        'perm'=>'students_view'],
         ['p'=>'certificates','icon'=>'🎓','label'=>'Certificates',    'perm'=>'students_view'],
         ['p'=>'questions',   'icon'=>'❓','label'=>'Anon Questions',  'perm'=>'questions_view'],
+        ['p'=>'forum_mod',   'icon'=>'💬','label'=>'Forum',           'perm'=>'questions_view'],
     ],
     'Insights' => [
         ['p'=>'analytics',     'icon'=>'📈','label'=>'Analytics',        'perm'=>'dashboard'],

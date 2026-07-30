@@ -21,7 +21,7 @@ $totalProjects = 0; $totalLearners = 0; $totalQuizzes = 0; $totalCerts = 0;
 $weightedScoreNum = 0.0; $weightedScoreDen = 0;
 
 if (!$dbError) {
-    $sql = "SELECT name, county, lat, lng, cluster_name,
+    $sql = "SELECT name, county, lat, lng, cluster_name, device_id,
                    learner_count, quiz_count, avg_score, cert_count, cert_rate,
                    quiz_pass_rate, avg_pre_score, avg_post_score, knowledge_gain,
                    active_last_30_days, lesson_completions
@@ -51,6 +51,7 @@ if (!$dbError) {
                     'cluster'      => $group,
                     'is_cluster'   => $isCluster,
                     'county'       => $row['county'],
+                    'device_id'    => $row['device_id'],
                     'lat'          => (float)$row['lat'],
                     'lng'          => (float)$row['lng'],
                     'learners'     => (int)$row['learner_count'],
@@ -109,6 +110,7 @@ header p{font-size:.9rem;opacity:.9;}
 .metric{display:flex;justify-content:space-between;padding:3px 0;font-size:.85rem;}
 .metric .lbl{color:#555;}
 .metric .val{font-weight:700;color:#0a5e2a;}
+.metric .val.mac{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;color:#374151;letter-spacing:.02em;}
 .empty{text-align:center;padding:40px 20px;color:#6b7280;}
 .err{background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:8px;max-width:1100px;margin:16px auto;}
 footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
@@ -157,9 +159,17 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
     </div>
     <div class="cards">
       <?php foreach ($g['projects'] as $p): ?>
+      <?php
+        $devId  = (string)($p['device_id'] ?? '');
+        $macHex = preg_match('/ARISE-([0-9A-F]{12})/i', $devId, $mm) ? strtoupper($mm[1]) : '';
+        $macFmt = $macHex !== '' ? implode(':', str_split($macHex, 2)) : '';
+      ?>
       <div class="card">
         <h3><?= h($p['name']) ?></h3>
         <div class="sub"><?= h($p['county'] ?: '—') ?></div>
+        <?php if ($devId !== ''): ?>
+        <div class="metric"><span class="lbl">📡 Box</span><span class="val mac"><?= h($macFmt ?: $devId) ?></span></div>
+        <?php endif; ?>
         <div class="metric"><span class="lbl">👥 Learners</span><span class="val"><?= num($p['learner_count']) ?></span></div>
         <div class="metric"><span class="lbl">📝 Quiz Avg</span><span class="val"><?= $p['quiz_count']>0 ? pct($p['avg_score']) : '—' ?></span></div>
         <div class="metric"><span class="lbl">🎓 Certificates</span><span class="val"><?= num($p['cert_count']) ?></span></div>
@@ -221,6 +231,11 @@ footer{text-align:center;font-size:.78rem;color:#6b7280;padding:18px;}
       ['📚 Lessons done', fmt(m.lessons_done)],
     ];
     if (m.know_gain !== null) rows.push(['📈 Knowledge gain', pct(m.know_gain)]);
+    if (m.device_id) {
+      var macMatch = /^ARISE-([0-9A-F]{12})$/i.exec(m.device_id);
+      var macFmt = macMatch ? macMatch[1].toUpperCase().match(/.{2}/g).join(':') : m.device_id;
+      rows.push(['📡 Box', macFmt]);
+    }
 
     // Cluster is the headline grouping — show as prominent chip.
     // County drops below as small secondary text (or replaces chip if no cluster).

@@ -30,6 +30,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 ?>
 
+<style>
+.qperf-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
+.qperf-main{min-width:0}
+.qperf-help{position:sticky;top:16px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;box-shadow:0 4px 14px rgba(0,0,0,.05);max-height:calc(100vh - 32px);overflow:auto}
+.qperf-help h5{margin:0 0 4px 0;font-size:1rem;color:#111;font-weight:800}
+.qperf-help .sub{font-size:.78rem;color:#6b7280;margin-bottom:14px}
+.qperf-help details{border-top:1px solid #f1f5f9;padding:10px 0}
+.qperf-help details:first-of-type{border-top:0;padding-top:0}
+.qperf-help summary{cursor:pointer;font-weight:700;color:#111;font-size:.9rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.qperf-help summary::-webkit-details-marker{display:none}
+.qperf-help summary::after{content:"＋";color:#9ca3af;font-weight:400;transition:transform .15s}
+.qperf-help details[open] summary::after{content:"−"}
+.qperf-help .body{padding-top:8px;font-size:.85rem;color:#374151;line-height:1.55}
+.qperf-help .badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700;margin-right:4px;vertical-align:1px}
+.qperf-help ul{margin:6px 0 0 18px;padding:0}
+.qperf-help li{margin:3px 0}
+@media (max-width: 900px){
+  .qperf-layout{grid-template-columns:1fr}
+  .qperf-help{position:static;max-height:none}
+}
+</style>
+
+<div class="qperf-layout">
+<div class="qperf-main">
+
 <h4>📊 Question Difficulty & Performance</h4>
 
 <!-- Module selector -->
@@ -186,6 +211,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <?php else: ?>
     <div class="alert alert-info">No modules found.</div>
 <?php endif; ?>
+
+</div><!-- /qperf-main -->
+
+<aside class="qperf-help" aria-label="How Question Performance works">
+  <h5>ℹ️ How this page works</h5>
+  <div class="sub">Read this once — no need to ask again.</div>
+
+  <details open>
+    <summary>What am I looking at?</summary>
+    <div class="body">
+      Every card is one quiz question in this module. The tabs at the top switch modules — you're viewing one module at a time.
+    </div>
+  </details>
+
+  <details>
+    <summary>The two numbers per question</summary>
+    <div class="body">
+      <ul>
+        <li><b>Attempts</b> — how many learners have ever answered this question, across all sittings and all schools.</li>
+        <li><b>% correct</b> — of those attempts, the share who picked the right option.</li>
+      </ul>
+      <div style="margin-top:6px;color:#6b7280;font-size:.8rem">Example: "24 attempts · 75% correct" → 18 learners got it right, 6 got it wrong.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>The status badge (colour on the right)</summary>
+    <div class="body">
+      This is <b>reality</b> — a plain-English read of the % correct so you don't have to squint at numbers.
+      <ul style="margin-top:8px">
+        <li><span class="badge" style="background:#f3f4f6;color:#6b7280">⚠️ Not used</span> nobody has answered it yet</li>
+        <li><span class="badge" style="background:#f0fdf4;color:#10b981">🟢 Too easy</span> ≥ 90% get it right — doesn't test anything</li>
+        <li><span class="badge" style="background:#ecfdf5;color:#059669">✅ Good</span> 50–70% — the sweet spot</li>
+        <li><span class="badge" style="background:#fffbeb;color:#f59e0b">⚡ Review</span> in-between — worth a second look</li>
+        <li><span class="badge" style="background:#fef2f2;color:#ef4444">🔴 Too hard</span> ≤ 20% — question or teaching is broken</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>The EASY / MEDIUM / HARD dropdown</summary>
+    <div class="body">
+      That's <b>your label</b> — the difficulty you intended when you wrote the question. It saves instantly when you change it.
+      <div style="margin-top:8px;padding:8px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:4px;font-size:.8rem;color:#78350f">
+        <b>Watch for mismatches.</b> If you marked a question <b>HARD</b> but the badge shows <b>Too easy</b>, either the label is wrong or the answer is obvious. Fix one or the other.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>What should I actually do?</summary>
+    <div class="body">
+      <ol style="margin:0 0 0 18px;padding:0">
+        <li style="margin:4px 0">Fix the 🔴 <b>Too hard</b> ones — usually the wording is confusing or the answer key is wrong.</li>
+        <li style="margin:4px 0">Replace or retire 🟢 <b>Too easy</b> ones — they don't tell you who learned.</li>
+        <li style="margin:4px 0">Aim for most questions to end up ✅ <b>Good</b> (50–70%).</li>
+        <li style="margin:4px 0">Target mix: <b>40% EASY + 40% MEDIUM + 20% HARD</b> for a pre-test that produces ~50% average — low enough to show growth, high enough that learners don't give up.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>How to read "Avg Success Rate"</summary>
+    <div class="body">
+      The blue tile at the top averages % correct across every question in this module.
+      <ul style="margin-top:6px">
+        <li><b>Above 80%</b> — the quiz is too easy to tell strong learners from weak ones.</li>
+        <li><b>Below 30%</b> — either teaching or the questions themselves need work.</li>
+        <li><b>40–60%</b> — healthy, discriminating quiz.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Where does this data come from?</summary>
+    <div class="body">
+      Every time a learner submits an answer, we log it (question + right/wrong). This page just tallies those logs live for the module you're viewing — no manual refresh needed, but changes only appear after learners actually take the quiz.
+    </div>
+  </details>
+</aside>
+
+</div><!-- /qperf-layout -->
 
 <script>
 document.querySelectorAll('.difficulty-select').forEach(sel => {

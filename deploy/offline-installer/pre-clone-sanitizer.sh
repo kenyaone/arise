@@ -8,12 +8,14 @@
 #                       lesson_progress, lesson_scores, sessions, student_xp,
 #                       student_badges, xp_log, essay_responses, forum_posts,
 #                       anonymous_questions, datapost_pickups, datapost_deliveries)
+#   - project topology (schools, clusters, classes) — each clone boots empty
+#                       and the field admin creates the cluster + project locally
 #   - cron sync logs
 #   - daily_stats counters
 #   - facilitator_sessions (if present)
 #
 # Leaves alone:
-#   - schools, clusters, modules, lessons, quiz_questions (your content + topology)
+#   - modules, lessons, quiz_questions (curriculum content, identical on every box)
 #   - admin_users (admin login persists into the clone)
 #   - your code under /var/www/arise/  (apply updates via the admin UI instead)
 #
@@ -51,6 +53,7 @@ TABLES=(
     essay_responses forum_posts anonymous_questions
     datapost_pickups datapost_deliveries facilitator_sessions
     daily_stats
+    classes schools clusters
 )
 
 table_exists() {

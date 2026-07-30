@@ -1,7 +1,7 @@
 <?php
 // ARISE Updates — non-technical UX.
 // Workflows:
-//   1. Online box: click "Get latest update" → pulls main from GitHub.
+//   1. Online box: click "Get latest update" → pulls field-boxes from GitHub.
 //   2. Offline box: someone uploaded a bundle via DataPost; click "Install".
 //   3. Something went wrong: click "Undo last update" on the most recent backup.
 
@@ -11,6 +11,12 @@ $updatesRoot = '/var/www/arise/data/content/updates';
 $backupsRoot = '/var/www/arise/data/backups';
 $logFile     = '/var/www/arise/data/updates.log';
 $arisaRoot   = '/var/www/arise';
+
+// The branch on kenyaone/arise that carries the school-box app. Do NOT change
+// this to 'master' or to an API-resolved default_branch — the repo's master
+// hosts a different application (cloud device panel), and pulling it bricks
+// the box. See incident 2026-07-30.
+const ARISE_FIELD_BRANCH = 'field-boxes';
 
 @mkdir($updatesRoot, 0755, true);
 @mkdir($backupsRoot, 0755, true);
@@ -67,6 +73,23 @@ function backupCurrent(string $arisaRoot, string $backupsRoot): array {
 }
 
 function applyBundle(string $bundlePath, string $arisaRoot): array {
+    // Marker guard: refuse to apply anything that isn't the school-box app.
+    // The 2026-07-30 brick was caused by a bundle from the cloud device panel
+    // being applied on top of the school-box codebase. Cheap positive check:
+    // the golden admin/index.php starts with a distinctive header comment.
+    // And a negative check: the cloud panel's cPanel-only path must not appear.
+    $indexPath = rtrim($bundlePath, '/') . '/admin/index.php';
+    if (!is_file($indexPath)) {
+        return ['ok'=>false, 'out'=>"REJECTED: bundle has no admin/index.php — not a school-box update."];
+    }
+    $head = (string) @file_get_contents($indexPath, false, null, 0, 400);
+    if (strpos($head, 'ARISE Teacher & Admin Panel') === false) {
+        return ['ok'=>false, 'out'=>"REJECTED: bundle's admin/index.php is missing the school-box marker header. This protects the box from an accidentally-published cloud/receiver bundle."];
+    }
+    if (strpos($head, '/home/cpmsfdav/') !== false) {
+        return ['ok'=>false, 'out'=>"REJECTED: bundle contains a cloud-only path (/home/cpmsfdav/). Not applying."];
+    }
+
     $cmd = sprintf(
         'rsync -a --omit-dir-times --exclude=%s %s/ %s/',
         escapeshellarg('data/'),
@@ -92,6 +115,35 @@ function applyBundle(string $bundlePath, string $arisaRoot): array {
     }
 
     return ['ok'=>true, 'out'=>implode("\n", $output)];
+}
+
+function healthCheckAfterApply(): array {
+    // Called after a successful apply. Hits a handful of always-public
+    // endpoints via localhost. Any 5xx or connection failure means the new
+    // code is broken and we should auto-rollback. Headless field boxes have
+    // no other recovery path — this is the failsafe.
+    $endpoints = [
+        'http://localhost/arise/',
+        'http://localhost/arise/login',
+        'http://localhost/arise/admin/',
+    ];
+    $failures = [];
+    foreach ($endpoints as $url) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_TIMEOUT        => 5,
+            CURLOPT_NOBODY         => true,
+        ]);
+        curl_exec($ch);
+        $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($code === 0 || $code >= 500) {
+            $failures[] = "$url → HTTP $code";
+        }
+    }
+    return $failures;
 }
 
 function rollbackBackup(string $backupPath, string $arisaRoot, string $backupsRoot): array {
@@ -185,21 +237,14 @@ $flash = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     if ($action === 'pull') {
-        // Resolve the repo's actual default branch so we don't hard-code main/master.
-        $defaultBranch = 'master';
-        $apiResp = @file_get_contents('https://api.github.com/repos/kenyaone/arise', false, stream_context_create([
-            'http' => ['method'=>'GET', 'header'=>"User-Agent: arise-updater\r\n", 'timeout'=>5, 'ignore_errors'=>true]
-        ]));
-        if ($apiResp) {
-            $j = json_decode($apiResp, true);
-            if (is_array($j) && !empty($j['default_branch'])) $defaultBranch = (string)$j['default_branch'];
-        }
-        $pull = pullFromGitHub($defaultBranch, $updatesRoot);
+        // Pinned to the school-box branch. Do NOT resolve default_branch from
+        // the GitHub API — see the ARISE_FIELD_BRANCH comment at top.
+        $pull = pullFromGitHub(ARISE_FIELD_BRANCH, $updatesRoot);
         if ($pull['ok']) {
-            log_update("PULL github main — OK as " . $pull['id']);
+            log_update("PULL github " . ARISE_FIELD_BRANCH . " — OK as " . $pull['id']);
             $flash = ['ok', "✅ Update downloaded ({$pull['files']} files). Click <strong>Install update</strong> below."];
         } else {
-            log_update("PULL github main — FAILED: " . $pull['out']);
+            log_update("PULL github " . ARISE_FIELD_BRANCH . " — FAILED: " . $pull['out']);
             $flash = ['err', "Could not download. Check internet, then try again."];
         }
     } elseif ($action === 'apply') {
@@ -215,11 +260,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $apply = applyBundle($path, $arisaRoot);
                 if ($apply['ok']) {
-                    log_update("APPLY $id — OK (backup: " . basename($backup['path']) . ")");
-                    $flash = ['ok', "✅ Update installed successfully. Your data is unchanged. Use <strong>Undo last update</strong> below if anything looks wrong."];
+                    // Post-apply healthcheck — headless boxes can't recover
+                    // manually, so we self-verify and auto-rollback on 5xx.
+                    $failures = healthCheckAfterApply();
+                    if (!empty($failures)) {
+                        $rb = rollbackBackup($backup['path'], $arisaRoot, $backupsRoot);
+                        if ($rb['ok']) {
+                            log_update("APPLY $id — AUTO-REVERTED after healthcheck failed:\n  " . implode("\n  ", $failures));
+                            $flash = ['err', "🛡 Update installed but health check failed — automatically reverted. Your box is safe.<br><em>Failures: " . htmlspecialchars(implode(' · ', $failures)) . "</em>"];
+                        } else {
+                            log_update("APPLY $id — HEALTHCHECK FAILED and ROLLBACK FAILED: " . $rb['out']);
+                            $flash = ['err', "⚠️ Update installed but broken, and auto-revert also failed. Contact support."];
+                        }
+                    } else {
+                        log_update("APPLY $id — OK (backup: " . basename($backup['path']) . ")");
+                        $flash = ['ok', "✅ Update installed successfully. Your data is unchanged. Use <strong>Undo last update</strong> below if anything looks wrong."];
+                    }
                 } else {
                     log_update("APPLY $id — FAILED: " . $apply['out']);
-                    $flash = ['err', "Install failed — your system is unchanged. Backup saved as a safety net."];
+                    // If the marker guard rejected it, surface that specifically so
+                    // admins understand this is a safety feature, not a bug.
+                    if (strpos($apply['out'], 'REJECTED:') === 0) {
+                        $flash = ['err', "🛡 This update was rejected by the safety guard: <br><em>" . htmlspecialchars($apply['out']) . "</em><br>Your system is unchanged."];
+                    } else {
+                        $flash = ['err', "Install failed — your system is unchanged. Backup saved as a safety net."];
+                    }
                 }
             }
         }
