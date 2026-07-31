@@ -3,3 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/cpmsfdav/public_html/arise/
     - /bin/rsync -av --exclude='.git' --exclude='data/arise.db' . $DEPLOYPATH
+    - /bin/cp -f $DEPLOYPATH/cloud/cron_receiver.php /home/cpmsfdav/public_html/arise_cron_receiver.php
+    - /bin/cp -f $DEPLOYPATH/cloud/locations.php     /home/cpmsfdav/public_html/locations.php
