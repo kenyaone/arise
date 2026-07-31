@@ -132,6 +132,45 @@ footer{text-align:center;color:#fff;font-size:.78rem;margin-top:20px;opacity:.9;
     </p>
   </div>
 
+  <div class="card" style="margin-top:14px;border:2px solid #A855F7;">
+    <h2>📱 Sync this box to <code>ariseci.org</code> — from your phone</h2>
+    <p style="font-size:.92rem;color:#374151;margin-bottom:10px;">
+      Install the <strong>ARISE Courier</strong> app on any Android or iPhone.
+      Tap Pickup while you're on this box's WiFi, walk out, and when the phone
+      finds internet the data ships to
+      <a href="https://ariseci.org/locations.php" target="_blank">ariseci.org/locations</a>
+      automatically. No cables, no upload forms.
+    </p>
+
+    <div class="btn-row" style="margin-bottom:14px;">
+      <a href="/arise/arise-courier.html" class="btn">📲 Open Courier App</a>
+      <a href="/arise/?p=pwa_datapost#tab-courier" class="btn secondary">⚙️ Admin: Courier tab</a>
+    </div>
+
+    <div style="background:#faf5ff;border:1px solid #E9D5FF;border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+      <div style="font-weight:700;color:#6B21A8;font-size:.9rem;margin-bottom:8px;">How to install (once)</div>
+      <ol style="margin:0 0 0 20px;color:#374151;font-size:.88rem;line-height:1.55;">
+        <li>Connect your phone to the WiFi named <strong><?= h($hotspot['ssid'] ?: '(this box\'s WiFi)') ?></strong>.</li>
+        <li>In the phone browser open <code>http://<?= h($ip) ?>/arise/arise-courier.html</code>.</li>
+        <li><strong>Android (Chrome):</strong> tap the menu <code>⋮</code> → <em>Add to Home screen</em> → <em>Install</em>.</li>
+        <li><strong>iPhone (Safari):</strong> tap the share icon <code>⎋</code> → <em>Add to Home Screen</em>.</li>
+        <li>Launch <em>ARISE Courier</em> from your home screen. The Box URL and Pickup Secret should already be filled in.</li>
+      </ol>
+    </div>
+
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;">
+      <div style="font-size:.75rem;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">If you need to type it manually</div>
+      <div style="font-size:.85rem;color:#111;line-height:1.7;">
+        Box URL: <code>http://<?= h($ip) ?>/arise</code><br>
+        Pickup Secret: <code id="wc-secret" data-full="<?= h(defined('CLOUD_SYNC_SECRET') ? CLOUD_SYNC_SECRET : '') ?>"><?php
+          $s = defined('CLOUD_SYNC_SECRET') ? CLOUD_SYNC_SECRET : '';
+          echo h(strlen($s) > 4 ? str_repeat('•', max(4, strlen($s) - 4)) . substr($s, -4) : '••••');
+        ?></code>
+        <button onclick="var c=document.getElementById('wc-secret');if(c.textContent===c.dataset.full){c.textContent=c.dataset.full.replace(/./g,'•').slice(0,-4)+c.dataset.full.slice(-4);this.textContent='Reveal';}else{c.textContent=c.dataset.full;this.textContent='Hide';}" style="margin-left:8px;padding:2px 10px;font-size:.7rem;border:1px solid #A855F7;color:#7E22CE;background:#fff;border-radius:12px;cursor:pointer;">Reveal</button>
+      </div>
+    </div>
+  </div>
+
   <footer>ARISE Platform · Built for offline-first deployments</footer>
 </div>
 </body>
