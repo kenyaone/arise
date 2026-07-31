@@ -1,0 +1,25 @@
+{
+  "name": "ARISE Courier",
+  "short_name": "Courier",
+  "description": "Pickup ARISE data from offline school servers and deliver to ariseci.org when the phone gets internet.",
+  "start_url": "/arise/arise-courier.html",
+  "scope": "/arise/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F3FF",
+  "theme_color": "#9333EA",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%239333EA' width='192' height='192' rx='36'/><text x='50%' y='58%' font-size='120' fill='%23FDE68A' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='900'>C</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%239333EA' width='512' height='512' rx='96'/><text x='50%' y='58%' font-size='320' fill='%23FDE68A' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='900'>C</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

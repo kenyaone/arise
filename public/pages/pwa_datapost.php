@@ -354,12 +354,121 @@ if ($action === 'cloud_sync_prepare') {
     exit;
 }
 
+// ── PHONE COURIER: pickup ────────────────────────────────────────────────────
+// Returns the same JSON shape that cloud_push.php POSTs to ariseci.org, so a
+// phone-side PWA can carry it out of the field and post it later.
+if ($action === 'courier_bundle') {
+    header('Content-Type: application/json');
+    $secret = $_GET['secret'] ?? $_POST['secret'] ?? '';
+    if ($secret !== CLOUD_SYNC_SECRET) {
+        http_response_code(403);
+        echo json_encode(['ok'=>false,'error'=>'bad secret']);
+        exit;
+    }
+
+    require_once __DIR__ . '/../../includes/courier_bundle.php';
+
+    // Prefer the same DB the rest of the app uses (via db()) — copy to /tmp so
+    // we don't hold locks on the live file while the phone reads.
+    $liveDbPath = defined('DB_PATH') ? DB_PATH : (__DIR__ . '/../../data/arise.db');
+    if (!is_file($liveDbPath)) {
+        http_response_code(500);
+        echo json_encode(['ok'=>false,'error'=>'db not found']);
+        exit;
+    }
+
+    try {
+        $opened  = courier_open_readonly_copy($liveDbPath);
+        $payload = build_courier_bundle($opened['db']);
+        $opened['db']->close();
+        @unlink($opened['tmp']);
+    } catch (Throwable $e) {
+        http_response_code(500);
+        echo json_encode(['ok'=>false,'error'=>'build failed: ' . $e->getMessage()]);
+        exit;
+    }
+
+    $payloadJson = json_encode($payload);
+    $bundleId    = bin2hex(random_bytes(8)) . '-' . dechex(time());
+    $sha256      = hash('sha256', $payloadJson);
+    $sizeBytes   = strlen($payloadJson);
+
+    // Log to datapost_pickups (best effort — don't fail the response if logging fails)
+    try {
+        $courierName = trim($_SERVER['HTTP_X_COURIER_NAME'] ?? 'pwa-courier');
+        $dataFrom = null; $dataTo = date('Y-m-d');
+        foreach ($payload['students'] ?? [] as $st) {
+            $reg = $st['registered_at'] ?? null;
+            if ($reg && (!$dataFrom || $reg < $dataFrom)) $dataFrom = $reg;
+        }
+        $stmt = db()->prepare('INSERT INTO datapost_pickups (courier_email, courier_name, data_from, data_to, bundle_size_kb, bundle_hash) VALUES (:email, :name, :from, :to, :size, :hash)');
+        $stmt->bindValue(':email', 'pwa-courier@arise.local');
+        $stmt->bindValue(':name',  $courierName);
+        $stmt->bindValue(':from',  substr((string)($dataFrom ?? $dataTo), 0, 10));
+        $stmt->bindValue(':to',    $dataTo);
+        $stmt->bindValue(':size',  (int)round($sizeBytes / 1024));
+        $stmt->bindValue(':hash',  $sha256);
+        $stmt->execute();
+    } catch (Throwable $e) { /* logging is best-effort */ }
+
+    echo json_encode([
+        'ok'           => true,
+        'bundle_id'    => $bundleId,
+        'device_id'    => $payload['deviceId'] ?? null,
+        'generated_at' => date('c'),
+        'size_bytes'   => $sizeBytes,
+        'sha256'       => $sha256,
+        'payload'      => $payload,
+    ]);
+    exit;
+}
+
+// ── PHONE COURIER: delivery acknowledgement ─────────────────────────────────
+// Called by the PWA after a successful POST to ariseci.org, so the box knows
+// its metrics reached the cloud. Best-effort — box doesn't require ack.
+if ($action === 'courier_ack') {
+    header('Content-Type: application/json');
+    $secret = $_GET['secret'] ?? $_POST['secret'] ?? '';
+    if ($secret !== CLOUD_SYNC_SECRET) {
+        http_response_code(403);
+        echo json_encode(['ok'=>false,'error'=>'bad secret']);
+        exit;
+    }
+    $body = json_decode(file_get_contents('php://input'), true) ?: [];
+    $bundleId   = trim((string)($body['bundle_id']   ?? ''));
+    $deliveredAt = trim((string)($body['delivered_at'] ?? date('Y-m-d H:i:s')));
+    $count       = (int)($body['response_summary']['schools'] ?? 0)
+                 + (int)($body['response_summary']['students'] ?? 0);
+
+    try {
+        db()->exec("UPDATE datapost_config SET cloud_last_synced_at='" . SQLite3::escapeString($deliveredAt) . "', cloud_last_sync_count=" . $count . " WHERE id=" . (int)$cfg['id']);
+    } catch (Throwable $e) { /* ignore */ }
+
+    echo json_encode(['ok' => true, 'bundle_id' => $bundleId, 'recorded_at' => date('c')]);
+    exit;
+}
+
 // HTML Response ───────────────────────────────────────────────────────────────
 header('Content-Type: text/html; charset=utf-8');
 $lastSync = db()->querySingle("SELECT sync_timestamp, data_snapshot FROM datapost_sync_log ORDER BY id DESC LIMIT 1", true);
 $syncData = $lastSync ? json_decode($lastSync['data_snapshot'], true) : null;
 $emailCfg = $cfg['email_endpoint'] ?? '';
 $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
+
+// Courier tab data ────────────────────────────────────────────────────────────
+$courierBoxUrl = ($_SERVER['REQUEST_SCHEME'] ?? 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . '/arise';
+$courierPickupUrl = $courierBoxUrl . '/?p=datapost&action=courier_bundle&secret=' . rawurlencode(CLOUD_SYNC_SECRET);
+$courierAppUrl    = $courierBoxUrl . '/arise-courier.html';
+$courierSecretMasked = strlen(CLOUD_SYNC_SECRET) > 4
+    ? str_repeat('•', max(4, strlen(CLOUD_SYNC_SECRET) - 4)) . substr(CLOUD_SYNC_SECRET, -4)
+    : '••••';
+$courierPickups = [];
+try {
+    $r = db()->query("SELECT courier_name, pickup_time, bundle_size_kb, bundle_hash FROM datapost_pickups WHERE courier_email='pwa-courier@arise.local' ORDER BY id DESC LIMIT 10");
+    while ($row = $r->fetchArray(SQLITE3_ASSOC)) $courierPickups[] = $row;
+} catch (Throwable $e) { /* table missing on old install */ }
+$courierLastCloud = $cfg['cloud_last_synced_at'] ?? null;
+$courierLastCount = (int)($cfg['cloud_last_sync_count'] ?? 0);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -610,6 +719,7 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
             <button class="tab-btn active" onclick="switchTab('overview')">📊 Overview</button>
             <button class="tab-btn" onclick="switchTab('settings')">⚙️ Settings</button>
             <button class="tab-btn" onclick="switchTab('sync')">🔄 Sync</button>
+            <button class="tab-btn" onclick="switchTab('courier')">📱 Courier</button>
         </div>
 
         <!-- TAB 1: OVERVIEW -->
@@ -801,9 +911,97 @@ $smtpOk   = !empty($cfg['smtp_user']) && !empty($cfg['smtp_pass']);
                 </div>
             </div>
         </div>
+
+        <!-- TAB 4: COURIER -->
+        <div id="tab-courier" class="tab-content">
+            <div class="card">
+                <h3>📱 Phone Courier — install on any Android/iPhone</h3>
+                <p style="color:#6b7280;font-size:.9rem;margin-bottom:12px;">
+                    A field staffer opens the URL below on a phone connected to <strong>this box's WiFi</strong>,
+                    taps <em>Add to Home Screen</em>, and gets an installable app. It picks data up here, holds
+                    it offline, and delivers it to <code>ariseci.org</code> when the phone finds internet.
+                </p>
+                <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="font-size:.72rem;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">Open on the phone</div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <code id="courierAppUrl" style="flex:1;font-size:.85rem;word-break:break-all;color:#111;"><?= e($courierAppUrl) ?></code>
+                        <button class="btn btn-secondary" onclick="copyText('<?= e($courierAppUrl) ?>')" style="padding:6px 12px;font-size:.75rem;">Copy</button>
+                    </div>
+                </div>
+                <div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:14px;">
+                    <div style="font-size:.72rem;color:#6b7280;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">Pickup secret (auto-fills in the PWA)</div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <code style="flex:1;font-size:.85rem;color:#111;letter-spacing:1px;"><?= e($courierSecretMasked) ?></code>
+                        <button class="btn btn-secondary" onclick="revealSecret(this)" data-secret="<?= e(CLOUD_SYNC_SECRET) ?>" style="padding:6px 12px;font-size:.75rem;">Reveal</button>
+                    </div>
+                    <div style="font-size:.72rem;color:#6b7280;margin-top:6px;">
+                        This is <code>CLOUD_SYNC_SECRET</code> from <code>includes/config.php</code>. Same secret every box on this deploy uses.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🚚 Recent pickups by phone</h3>
+                <?php if (empty($courierPickups)): ?>
+                    <p style="color:#6b7280;font-size:.9rem;">No pickups yet. Ask a courier to load the URL above on their phone.</p>
+                <?php else: ?>
+                    <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+                        <thead>
+                            <tr style="border-bottom:2px solid #e5e7eb;">
+                                <th style="text-align:left;padding:8px 6px;color:#6b7280;font-weight:600;">Courier</th>
+                                <th style="text-align:left;padding:8px 6px;color:#6b7280;font-weight:600;">Time</th>
+                                <th style="text-align:right;padding:8px 6px;color:#6b7280;font-weight:600;">Size</th>
+                                <th style="text-align:left;padding:8px 6px;color:#6b7280;font-weight:600;">Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($courierPickups as $p): ?>
+                                <tr style="border-bottom:1px solid #e5e7eb;">
+                                    <td style="padding:8px 6px;"><?= e($p['courier_name'] ?? '—') ?></td>
+                                    <td style="padding:8px 6px;color:#6b7280;"><?= e($p['pickup_time']) ?></td>
+                                    <td style="padding:8px 6px;text-align:right;"><?= (int)$p['bundle_size_kb'] ?> KB</td>
+                                    <td style="padding:8px 6px;color:#6b7280;font-family:monospace;font-size:.75rem;"><?= e(substr($p['bundle_hash'] ?? '', 0, 12)) ?>…</td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </div>
+
+            <div class="card">
+                <h3>☁️ Last confirmed cloud delivery</h3>
+                <div class="stat-row">
+                    <span class="stat-label">Last acknowledged</span>
+                    <span class="stat-value"><?= $courierLastCloud ? e($courierLastCloud) : 'Never' ?></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Rows on last ack</span>
+                    <span class="stat-value"><?= (int)$courierLastCount ?></span>
+                </div>
+                <p style="color:#6b7280;font-size:.8rem;margin-top:8px;">
+                    The phone pings back to the box after a successful POST to <code>ariseci.org/arise_cron_receiver.php</code>. If this
+                    stays "Never" but pickups are landing on the cloud, the phone probably isn't reconnecting to the school WiFi
+                    to fire the ack — cloud delivery still worked.
+                </p>
+            </div>
+        </div>
     </div>
 
     <script>
+        function copyText(t) {
+            navigator.clipboard.writeText(t).then(() => alert('Copied'));
+        }
+        function revealSecret(btn) {
+            const code = btn.previousElementSibling;
+            const secret = btn.dataset.secret;
+            if (code.textContent === secret) {
+                code.textContent = code.textContent.replace(/./g, '•').slice(0, -4) + secret.slice(-4);
+                btn.textContent = 'Reveal';
+            } else {
+                code.textContent = secret;
+                btn.textContent = 'Hide';
+            }
+        }
         // Tab switching
         function switchTab(tabName) {
             // Hide all content

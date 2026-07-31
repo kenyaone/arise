@@ -1,5 +1,15 @@
 <?php
 declare(strict_types=1);
+
+// CORS — the phone-based courier PWA is served from an offline-box origin
+// (e.g. http://192.168.x.x/arise) but must POST here from the phone's
+// mobile-data network. Without these headers the browser blocks the response,
+// so the PWA can't confirm delivery.
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') { http_response_code(204); exit; }
+
 header('Content-Type: application/json');
 
 const SYNC_SECRET = 'arise_sync_k3nya_2026';
