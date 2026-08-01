@@ -180,16 +180,15 @@ function db(): SQLite3 {
         }
         $db = new SQLite3(DB_PATH);
         $db->enableExceptions(true);
+        // busyTimeout must be set BEFORE the first PRAGMA — journal_mode=WAL
+        // briefly needs an exclusive lock, and without a retry budget a
+        // concurrent request causes "database is locked" 500s on cold hits.
+        $db->busyTimeout(5000);
         $db->exec('PRAGMA journal_mode=WAL');
         $db->exec('PRAGMA foreign_keys=ON');
-        // Concurrency + write-throughput tuning for LAN LMS use. SQLite
-        // serializes writes regardless of WAL, so 100 concurrent quiz
-        // submissions will collide. busyTimeout makes each write wait up
-        // to 5s for the lock instead of erroring instantly with BUSY.
         // synchronous=NORMAL is safe with WAL (crash-only durability
         // loses <= last transaction, not the DB) and gives ~2-3x write
         // throughput vs FULL.
-        $db->busyTimeout(5000);
         $db->exec('PRAGMA synchronous=NORMAL');
     }
     return $db;
