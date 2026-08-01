@@ -167,6 +167,7 @@ $navGroups = [
     'System' => [
         ['p'=>'users',       'icon'=>'👤','label'=>'Admin Users',    'perm'=>'users_manage'],
         ['p'=>'facilitator', 'icon'=>'📡','label'=>'Facilitator',    'perm'=>'dashboard'],
+        ['p'=>'courier',     'icon'=>'📱','label'=>'Courier App',    'perm'=>'dashboard'],
         ['p'=>'audit',       'icon'=>'🔍','label'=>'Audit Log',      'perm'=>'setup'],
         ['p'=>'recycle',     'icon'=>'♻️','label'=>'Recycle Bin',    'perm'=>'setup'],
         ['p'=>'updates',     'icon'=>'⬆️','label'=>'Updates',        'perm'=>'setup'],
@@ -305,7 +306,7 @@ function canSee($perm) {
 <div class="topbar">
     <div class="topbar-title">
         <?php
-        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','teacher_content_publish'=>'Publish Content','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','datapost'=>'DataPost & Sync','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report'];
+        $pageLabels = ['dashboard'=>'Dashboard','content'=>'Modules','schools'=>'Projects & Clusters','students'=>'Learners','questions'=>'Anonymous Questions','certificates'=>'Certificates','users'=>'Admin Users','analytics'=>'Analytics & Impact','quiz'=>'Quiz Builder','admin_question_difficulty'=>'Question Performance','teacher_content_publish'=>'Publish Content','challenges'=>'Challenges','audit'=>'Audit Log','bulk_upload'=>'Bulk Upload','reports'=>'Reports','datapost'=>'DataPost & Sync','recycle'=>'Recycle Bin','facilitator'=>'Facilitator Sessions','facilitator_report'=>'Session Report','courier'=>'Courier App'];
         echo htmlspecialchars($pageLabels[$page] ?? ucfirst($page));
         ?>
     </div>
@@ -1382,6 +1383,9 @@ elseif ($page === 'recycle'):
 
 elseif ($page === 'updates'):
     include __DIR__.'/pages/admin_updates.php';
+
+elseif ($page === 'courier'):
+    include __DIR__.'/pages/admin_courier.php';
 
 elseif ($page === 'facilitator'):
     include __DIR__.'/pages/admin_facilitator.php';
