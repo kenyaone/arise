@@ -4,7 +4,7 @@ declare(strict_types=1);
 // CORS — the phone-based courier PWA is served from an offline-box origin
 // (e.g. http://192.168.x.x/arise) but must POST here from the phone's
 // mobile-data network. Without these headers the browser blocks the response,
-// so the PWA can't confirm delivery.
+// so the PWA can't confirm delivery. Must be sent BEFORE any other output.
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -68,7 +68,7 @@ try {
         }
     }
 
-    // ── schools: upsert — never delete a device's record, only update stats ──
+    // ── schools: upsert per device_id — local admin owns name/county/cluster ──
     // Pick the school with the most learners if device sends multiple
     if (count($schools) > 1) {
         usort($schools, fn($a,$b) => (int)($b['learner_count']??0) - (int)($a['learner_count']??0));
@@ -126,8 +126,9 @@ try {
             $latestAct      =          $s['latest_activity']      ?? null;
             $facSessions    = (int)   ($s['facilitator_sessions'] ?? 0);
 
-            // INSERT new device or UPDATE stats only — name/county/cluster locked on first sync,
-            // never overwritten. lat/lng preserved if not sent by device.
+            // INSERT new device or UPDATE existing — the local admin owns name,
+            // county, cluster_name, is_active; the cloud row follows the local rename.
+            // lat/lng preserved if not sent by device.
             $stmt = $mysqli->prepare(
                 'INSERT INTO schools (
                     device_id, name, county, is_active, lat, lng,
@@ -144,6 +145,9 @@ try {
                     last_sync_at
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
                 ON DUPLICATE KEY UPDATE
+                    name=VALUES(name), county=VALUES(county),
+                    cluster_name=VALUES(cluster_name), cluster_local_id=VALUES(cluster_local_id),
+                    is_active=VALUES(is_active),
                     learner_count_prev=learner_count,
                     learner_count=VALUES(learner_count), quiz_count=VALUES(quiz_count),
                     pretest_count=VALUES(pretest_count), posttest_count=VALUES(posttest_count),
@@ -159,10 +163,9 @@ try {
                     facilitator_sessions=VALUES(facilitator_sessions),
                     avg_sync_interval_secs=VALUES(avg_sync_interval_secs),
                     lat=IFNULL(VALUES(lat), lat), lng=IFNULL(VALUES(lng), lng),
-                    last_sync_at=NOW()
-                    /* name, county, cluster_name intentionally excluded — locked on first sync */'
+                    last_sync_at=NOW()'
             );
-            $stmt->bind_param('ssisddsiiiiidididdddidddidiissiii',
+            $stmt->bind_param('sssiddsiiiiidididdddidddidiissiii',
                 $deviceId, $name, $county, $active, $latNew, $lngNew,
                 $clusterName, $clusterLocalId,
                 $learnerCount, $quizCount, $pretestCount, $posttestCount,
@@ -178,6 +181,11 @@ try {
             $stmt->close();
             $schoolsInserted = 1;
         }
+    } else {
+        // Device sent no active schools — mark existing row inactive so the
+        // public map hides it. Preserves the row and its historical stats.
+        $stmt = $mysqli->prepare('UPDATE schools SET is_active=0, last_sync_at=NOW() WHERE device_id=?');
+        $stmt->bind_param('s', $deviceId); $stmt->execute(); $stmt->close();
     }
 
     // ── students: per-device full replace, skip soft-deleted ──────────────
