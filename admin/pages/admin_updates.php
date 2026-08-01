@@ -346,6 +346,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $bundles = listBundles($updatesRoot);
 $backups = listBackups($backupsRoot);
 $latestBackup = $backups[0] ?? null;
+
+// Determine which bundle is currently installed by scanning updates.log for
+// the most recent successful APPLY. Lets the UI mark that card as CURRENT and
+// disable its Install button — otherwise identical-looking cards (both built
+// the same day) let a user re-install the older one by mistake.
+$installedBundleId = null;
+if (is_file($logFile)) {
+    $lines = @file($logFile) ?: [];
+    for ($i = count($lines) - 1; $i >= 0; $i--) {
+        if (preg_match('/APPLY (\S+) — OK/', $lines[$i], $mm)) {
+            $installedBundleId = $mm[1];
+            break;
+        }
+    }
+}
 ?>
 <h1 class="page-title">⬆️ Updates</h1>
 <p class="text-muted" style="margin-top:-16px;margin-bottom:20px;">
@@ -375,22 +390,40 @@ $latestBackup = $backups[0] ?? null;
   </h2>
   <?php if (!$bundles): ?>
     <p class="text-muted">Nothing waiting. Use the green button above, or have someone deliver an update via DataPost.</p>
-  <?php else: foreach ($bundles as $b): $m = $b['manifest']; $when = $m['built_at'] ?? null; $when_ts = $when ? strtotime($when) : $b['mtime']; ?>
-    <div style="border:1.5px solid #e5e7eb;border-radius:10px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+  <?php else: foreach ($bundles as $i => $b):
+    $m           = $b['manifest'];
+    $when        = $m['built_at'] ?? null;
+    $when_ts     = $when ? strtotime($when) : $b['mtime'];
+    $isInstalled = ($b['id'] === $installedBundleId);
+    $isNewest    = ($i === 0); // listBundles sorts newest-first
+    $sha         = (!empty($m['git_sha']) && $m['git_sha'] !== 'unknown') ? substr($m['git_sha'], 0, 7) : null;
+  ?>
+    <div style="border:1.5px solid <?= $isInstalled ? '#d1fae5' : ($isNewest ? '#a7f3d0' : '#e5e7eb') ?>;background:<?= $isInstalled ? '#f0fdf4' : '#fff' ?>;border-radius:10px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
       <div>
-        <strong style="font-size:1rem;">ARISE Update — <?= date('M j, Y', $when_ts) ?></strong>
+        <strong style="font-size:1rem;">ARISE Update — <?= date('M j, Y \a\t H:i', $when_ts) ?></strong>
+        <?php if ($isInstalled): ?>
+          <span style="background:#059669;color:#fff;padding:2px 8px;border-radius:4px;font-size:.7rem;margin-left:6px;font-weight:600;">✓ CURRENTLY INSTALLED</span>
+        <?php elseif ($isNewest): ?>
+          <span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:4px;font-size:.7rem;margin-left:6px;font-weight:600;">NEW — install this</span>
+        <?php endif; ?>
         <div style="font-size:.8rem;color:#6b7280;margin-top:4px;">
-          <?= $b['files'] ?> files · <?= fmtBytes((int)$b['bytes']) ?> · received <?= friendlyDate($b['mtime']) ?>
+          <?= $b['files'] ?> files · <?= fmtBytes((int)$b['bytes']) ?>
+          <?php if ($sha): ?> · version <code style="background:#f3f4f6;padding:1px 4px;border-radius:3px;"><?= $sha ?></code><?php endif; ?>
+          · received <?= friendlyDate($b['mtime']) ?>
         </div>
         <?php if (!$m): ?>
           <div style="font-size:.78rem;color:#92400e;margin-top:4px;">⚠ This update has no version info. Check with whoever provided it before installing.</div>
         <?php endif; ?>
       </div>
-      <form method="POST" style="margin:0;" onsubmit="return confirm('Install this update? Your projects, learners and data will not be touched.');">
-        <input type="hidden" name="action" value="apply">
-        <input type="hidden" name="update_id" value="<?= htmlspecialchars($b['id']) ?>">
-        <button type="submit" class="btn btn-primary">Install update</button>
-      </form>
+      <?php if ($isInstalled): ?>
+        <span style="color:#059669;font-size:.85rem;font-weight:500;padding:8px 12px;">Already installed</span>
+      <?php else: ?>
+        <form method="POST" style="margin:0;" onsubmit="return confirm('Install this update? Your projects, learners and data will not be touched.');">
+          <input type="hidden" name="action" value="apply">
+          <input type="hidden" name="update_id" value="<?= htmlspecialchars($b['id']) ?>">
+          <button type="submit" class="btn btn-primary">Install update</button>
+        </form>
+      <?php endif; ?>
     </div>
   <?php endforeach; endif; ?>
 </div>
