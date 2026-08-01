@@ -48,6 +48,31 @@ function listBundles(string $root): array {
     return $out;
 }
 
+function findExistingBundleForSha(string $updatesRoot, string $sha): ?array {
+    foreach (listBundles($updatesRoot) as $b) {
+        if (!empty($b['manifest']['git_sha']) && $b['manifest']['git_sha'] === $sha) {
+            return $b;
+        }
+    }
+    return null;
+}
+
+function githubHeadSha(string $repo, string $ref): ?string {
+    $resp = @file_get_contents(
+        "https://api.github.com/repos/$repo/commits/" . urlencode($ref),
+        false,
+        stream_context_create(['http' => [
+            'method'=>'GET',
+            'header'=>"User-Agent: arise-updater\r\n",
+            'timeout'=>5,
+            'ignore_errors'=>true,
+        ]])
+    );
+    if (!$resp) return null;
+    $j = json_decode($resp, true);
+    return (is_array($j) && !empty($j['sha'])) ? (string)$j['sha'] : null;
+}
+
 function listBackups(string $root): array {
     $out = [];
     foreach (glob("$root/code-*.tar.gz") ?: [] as $p) {
@@ -239,13 +264,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'pull') {
         // Pinned to the school-box branch. Do NOT resolve default_branch from
         // the GitHub API — see the ARISE_FIELD_BRANCH comment at top.
-        $pull = pullFromGitHub(ARISE_FIELD_BRANCH, $updatesRoot);
-        if ($pull['ok']) {
-            log_update("PULL github " . ARISE_FIELD_BRANCH . " — OK as " . $pull['id']);
-            $flash = ['ok', "✅ Update downloaded ({$pull['files']} files). Click <strong>Install update</strong> below."];
+        //
+        // Short-circuit: ask GitHub for the branch HEAD SHA first (fast API
+        // call). If a bundle at that SHA is already on disk, skip the ~5-min
+        // download that trips the Apache 300s timeout and leaves the browser
+        // stuck on "Downloading…".
+        $latestSha = githubHeadSha('kenyaone/arise', ARISE_FIELD_BRANCH);
+        $existing  = $latestSha ? findExistingBundleForSha($updatesRoot, $latestSha) : null;
+        if ($existing) {
+            log_update("PULL github " . ARISE_FIELD_BRANCH . " — SKIP (already have {$existing['id']})");
+            $flash = ['ok', "✅ Latest update is already downloaded — click <strong>Install update</strong> below (no re-download needed)."];
         } else {
-            log_update("PULL github " . ARISE_FIELD_BRANCH . " — FAILED: " . $pull['out']);
-            $flash = ['err', "Could not download. Check internet, then try again."];
+            $pull = pullFromGitHub(ARISE_FIELD_BRANCH, $updatesRoot);
+            if ($pull['ok']) {
+                log_update("PULL github " . ARISE_FIELD_BRANCH . " — OK as " . $pull['id']);
+                $flash = ['ok', "✅ Update downloaded ({$pull['files']} files). Click <strong>Install update</strong> below."];
+            } else {
+                log_update("PULL github " . ARISE_FIELD_BRANCH . " — FAILED: " . $pull['out']);
+                $flash = ['err', "Could not download. Check internet, then try again."];
+            }
         }
     } elseif ($action === 'apply') {
         $id = (string)($_POST['update_id'] ?? '');
