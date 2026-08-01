@@ -121,6 +121,7 @@ body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--dark);min
     <div class="header-brand">&#128225; ARISE Courier</div>
     <div class="header-sub">Offline pickup &rarr; ariseci.org</div>
   </div>
+  <button class="btn-settings" id="installBtn" onclick="triggerInstall()" style="display:none;background:#059669;color:#fff;margin-right:6px;">&#128225; Install app</button>
   <button class="btn-settings" onclick="openSettings()">&#9881; Settings</button>
 </div>
 
@@ -606,6 +607,57 @@ function saveSettings() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
+// INSTALL AS PWA — capture the browser's install prompt and surface a
+// button in the header. Chrome/Edge/Samsung emit `beforeinstallprompt` when
+// the page meets PWA criteria (manifest + SW + HTTPS-or-localhost). iOS
+// Safari never emits this — we fall back to the welcome-page walkthrough.
+// ─────────────────────────────────────────────────────────────────────────
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const btn = document.getElementById('installBtn');
+  if (btn) btn.style.display = 'inline-block';
+});
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  const btn = document.getElementById('installBtn');
+  if (btn) btn.style.display = 'none';
+  addLog('&#9989;', 'Installed to home screen', 'ok');
+});
+async function triggerInstall() {
+  if (!deferredInstallPrompt) {
+    toast('Use your browser menu → "Add to Home Screen"', '');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  if (outcome === 'accepted') {
+    deferredInstallPrompt = null;
+    document.getElementById('installBtn').style.display = 'none';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// RETRY-FAILED — reset any bundles stuck at status=failed back to pending,
+// so a subsequent flushPending (auto or manual) can attempt them again.
+// Runs on app load so bundles that hit the retry cap during past outages
+// (e.g. CORS blocked, box offline, cloud down) resume automatically once
+// the underlying issue is fixed — no user action needed.
+// ─────────────────────────────────────────────────────────────────────────
+async function resetFailedBundles() {
+  const failed = await listBundles('failed');
+  if (!failed.length) return 0;
+  for (const row of failed) {
+    row.status = 'pending';
+    row.attempts = 0;
+    await putBundle(row);
+  }
+  addLog('&#128260;', 'Re-queued ' + failed.length + ' previously-failed bundle(s) for another attempt', 'info');
+  return failed.length;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
 // BACKGROUND SYNC + AUTO-FLUSH
 // ─────────────────────────────────────────────────────────────────────────
 async function tryRegisterBackgroundSync() {
@@ -631,6 +683,7 @@ if ('serviceWorker' in navigator) {
 // ─────────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
   renderLog();
+  await resetFailedBundles();  // give stuck bundles another shot before rendering the queue
   await refreshQueue();
   checkAll();
 
