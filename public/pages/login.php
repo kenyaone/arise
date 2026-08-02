@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_login'])) {
 <div class="container">
     <div style="max-width:900px; margin:0 auto; padding:20px;">
         <div class="dp-card" style="text-align:center; padding:40px 32px; border-top:4px solid var(--pri); margin-bottom:24px;">
-            <div style="font-size:3rem; margin-bottom:14px;">🌟</div>
+                <div style="margin-bottom:14px;"><img src="<?= getLogoUrl() ?>" alt="ARISE Logo" style="height:80px;width:auto;"></div>
             <h1 class="page-title" style="font-size:2rem; margin-bottom:8px;">Welcome to ARISE</h1>
             <p style="color:#6b7280; font-size:1rem; margin:0;">Choose how you'd like to sign in</p>
         </div>
