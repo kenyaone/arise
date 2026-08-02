@@ -8,19 +8,19 @@
 
 :root {
   /* ── GREEN — Primary/Trust/Growth ── */
-  --green:       #3D6318;
-  --green-dark:  #2D4A12;
-  --green-deeper:#1E3209;
-  --green-mid:   #4F7E20;
-  --green-light: #D4EDAA;
-  --green-pale:  #F0F8E8;
+  --green:       #7B2CBF;
+  --green-dark:  #5A189A;
+  --green-deeper:#3C096C;
+  --green-mid:   #9D4EDD;
+  --green-light: #C77DFF;
+  --green-pale:  #F3E8FF;
 
   /* ── ORANGE — Action/Energy/CTA ── */
-  --orange:       #FF9700;
-  --orange-dark:  #E07800;
-  --orange-deeper:#B86200;
-  --orange-light: #FFE4A3;
-  --orange-pale:  #FFF7E6;
+  --orange:      #FFB800;
+  --orange-dark: #D69500;
+  --orange-deeper:#A66F00;
+  --orange-light:#FFE9A8;
+  --orange-pale:  #FFF8E6;
 
   /* ── SUPPORTING ── */
   --blue:        #1D4ED8;
@@ -59,7 +59,7 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#0D5E3D 0%,#1E8055 35%,#FF9700 100%);background-attachment:fixed;color:var(--dark);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-y:scroll;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(135deg,#3C096C 0%,#7B2CBF 35%,#FFB800 100%);background-attachment:fixed;color:var(--dark);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-y:scroll;}
 h1,h2,h3,h4,h5{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-weight:700;letter-spacing:-.3px;line-height:1.25;}
 a{color:var(--green);text-decoration:none;transition:var(--t);}
 a:hover{color:var(--green-dark);}
