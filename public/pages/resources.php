@@ -17,9 +17,16 @@
     
     <div class="dp-card">
         <h3>Childline Kenya</h3>
-        <p>Free, confidential helpline for children and adolescents.</p>
+        <p>Free, confidential helpline for children and adolescents — 24/7.</p>
         <p style="font-size:1.5rem; font-weight:700; color:var(--primary);">📞 116</p>
         <p class="text-small text-muted">Available 24/7 • Free from all networks</p>
+    </div>
+
+    <div class="dp-card">
+        <h3>Child Abuse Reporting Line</h3>
+        <p>Report cases of child abuse, neglect, or exploitation. Anonymous reports accepted.</p>
+        <p style="font-size:1.5rem; font-weight:700; color:var(--danger);">📞 1190</p>
+        <p class="text-small text-muted">Toll-free • Kenya nationwide</p>
     </div>
 
     <div class="dp-card">
@@ -27,6 +34,12 @@
         <p>Report gender-based violence or get support.</p>
         <p style="font-size:1.5rem; font-weight:700; color:var(--danger);">📞 1195</p>
         <p class="text-small text-muted">Free and confidential</p>
+    </div>
+
+    <div class="dp-card">
+        <h3>Compassion International — Child Protection</h3>
+        <p>For learners at a Compassion CDC: report any safety concern to your centre's <strong>Child Protection Focal Point</strong>, or ask the project director to escalate to the Compassion Kenya national office.</p>
+        <p class="text-small text-muted">Every Compassion child has the right to a safe environment. Reports are treated confidentially.</p>
     </div>
 
     <div class="dp-card">
