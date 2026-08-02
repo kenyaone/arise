@@ -14,6 +14,7 @@ header('Content-Type: application/json');
 
 const SYNC_SECRET = 'arise_sync_k3nya_2026';
 const CONFIG_PATH = '/home/cpmsfdav/cloud_db_config.php';
+require_once '/home/cpmsfdav/public_html/arise/cloud/geo_centroids.php';
 
 function fail(string $msg, int $code = 400): void {
     http_response_code($code);
@@ -100,6 +101,13 @@ try {
             $active         = (int)   ($s['active']               ?? 1);
             $latNew         =          $s['lat']                  ?? null;
             $lngNew         =          $s['lng']                  ?? null;
+		if (($latNew === null || $lngNew === null) && !$existing) {
+			// New school/project with no GPS reported yet: fall back to an
+			// approximate county centroid so it still shows up on the map.
+			$centroid = arise_approx_centroid($county);
+			if ($latNew === null) $latNew = $centroid[0];
+			if ($lngNew === null) $lngNew = $centroid[1];
+		}
             $clusterName    = (string)($s['cluster_name']         ?? '');
             $clusterLocalId =          $s['cluster_local_id']     ?? null;
             $learnerCount   = (int)   ($s['learner_count']        ?? 0);
