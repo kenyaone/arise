@@ -27,6 +27,7 @@ ARISE_ROOT=""
 BRANCH="field-boxes"
 REMOTE_URL="https://github.com/kenyaone/arise.git"
 DRY_RUN=0
+OFFLINE=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -34,8 +35,9 @@ while [[ $# -gt 0 ]]; do
         --branch)     BRANCH="$2";     shift 2 ;;
         --remote)     REMOTE_URL="$2"; shift 2 ;;
         --dry-run)    DRY_RUN=1;       shift   ;;
+        --offline)    OFFLINE=1;       shift   ;;
         -h|--help)
-            sed -n '2,25p' "$0"; exit 0 ;;
+            sed -n '2,26p' "$0"; exit 0 ;;
         *) echo "Unknown arg: $1" >&2; exit 2 ;;
     esac
 done
@@ -68,14 +70,25 @@ if ! git remote get-url origin >/dev/null 2>&1; then
     log "adding origin remote → $REMOTE_URL"
     run "git remote add origin '$REMOTE_URL'"
 fi
-run "git fetch --prune origin"
+if (( OFFLINE )); then
+    log "offline mode — skipping 'git fetch origin' (assumes working tree already updated)"
+else
+    if ! run "git fetch --prune origin"; then
+        log "WARNING: git fetch failed — continuing with local tree only"
+    fi
+fi
 
-if ! git show-ref --verify --quiet "refs/heads/$BRANCH"; then
-    log "creating local branch $BRANCH tracking origin/$BRANCH"
-    run "git checkout -B '$BRANCH' 'origin/$BRANCH'"
-elif [[ "$(git symbolic-ref --short HEAD 2>/dev/null || echo)" != "$BRANCH" ]]; then
-    log "switching to $BRANCH"
-    run "git checkout '$BRANCH'"
+# Only switch branches if we can — offline boxes may not have origin/$BRANCH
+if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
+    if ! git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+        log "creating local branch $BRANCH tracking origin/$BRANCH"
+        run "git checkout -B '$BRANCH' 'origin/$BRANCH'"
+    elif [[ "$(git symbolic-ref --short HEAD 2>/dev/null || echo)" != "$BRANCH" ]]; then
+        log "switching to $BRANCH"
+        run "git checkout '$BRANCH'"
+    fi
+else
+    log "no origin/$BRANCH ref locally (offline?) — leaving current branch alone"
 fi
 
 # ── 3. State + log dirs ─────────────────────────────────────────────────────
