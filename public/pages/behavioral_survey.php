@@ -23,12 +23,16 @@ $hash = getSessionHash();
 $mid  = intval($module['id']);
 
 // ── Check for existing submission ───────────────────────────────────────────
-$alreadyDone = db()->querySingle(
-    "SELECT id FROM behavioral_surveys
-     WHERE session_hash='" . SQLite3::escapeString($hash) . "'
-       AND module_id=$mid
-     LIMIT 1"
-);
+// Key on student_id so a returning-session learner isn't asked to redo the
+// survey. Anonymous learners fall back to session_hash (best-effort).
+$alreadyDone = $sid
+    ? db()->querySingle("SELECT id FROM behavioral_surveys WHERE student_id=$sid AND module_id=$mid LIMIT 1")
+    : db()->querySingle(
+        "SELECT id FROM behavioral_surveys
+         WHERE session_hash='" . SQLite3::escapeString($hash) . "'
+           AND module_id=$mid
+         LIMIT 1"
+      );
 
 // ── POST handler ─────────────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
@@ -50,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyDone) {
                  q4_pregnancy)
              VALUES (:sid,:hash,:mid,:q1c,:q1d,:q2s,:q2d,:q3c,:q3d,:q4p)"
         );
-        $st->bindValue(':sid',  $sid ?? 0,  SQLITE3_INTEGER);
+        if ($sid) { $st->bindValue(':sid', $sid, SQLITE3_INTEGER); }
+        else      { $st->bindValue(':sid', null, SQLITE3_NULL); }
         $st->bindValue(':hash', $hash,       SQLITE3_TEXT);
         $st->bindValue(':mid',  $mid,        SQLITE3_INTEGER);
         $st->bindValue(':q1c',  $q1c,        SQLITE3_INTEGER);
