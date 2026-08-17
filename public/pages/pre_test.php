@@ -58,8 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pct = $total > 0 ? round($score / $total * 100) : 0;
     $sid = getStudentId();
 
-    // Save to pretest_attempts
-    $st = db()->prepare("INSERT INTO pretest_attempts (student_id,session_hash,module_id,test_type,score,total,percentage) VALUES (:s,:h,:m,:t,:sc,:tot,:p)");
+    // Save to pretest_attempts. INSERT OR REPLACE dedupes on the partial
+    // UNIQUE (student_id, module_id, test_type) added in migrate_20260816.
+    // Anonymous learners (student_id NULL) bypass the constraint and keep
+    // getting fresh rows, which matches historical behaviour.
+    $st = db()->prepare("INSERT OR REPLACE INTO pretest_attempts (student_id,session_hash,module_id,test_type,score,total,percentage) VALUES (:s,:h,:m,:t,:sc,:tot,:p)");
     $st->bindValue(':s', $sid); $st->bindValue(':h', $hash);
     $st->bindValue(':m', $module['id']); $st->bindValue(':t', $testType);
     $st->bindValue(':sc', $score); $st->bindValue(':tot', $total); $st->bindValue(':p', $pct);
@@ -87,9 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mid = intval($module['id']);
         $escapedHash = SQLite3::escapeString($hash);
 
-        // Knowledge gain: normalized improvement from pre-test
+        // Knowledge gain: normalized improvement from pre-test.
+        // Key on student_id so a returning-session post-test still sees the
+        // learner's earlier pre-test attempt.
         $prePctRaw = db()->querySingle(
-            "SELECT percentage FROM pretest_attempts WHERE session_hash='$escapedHash' AND module_id=$mid AND test_type='pre' ORDER BY id DESC LIMIT 1"
+            "SELECT percentage FROM pretest_attempts WHERE student_id=$sid AND module_id=$mid AND test_type='pre' ORDER BY id DESC LIMIT 1"
         );
         $prePct = ($prePctRaw !== null) ? (float)$prePctRaw : null;
         if ($prePct !== null) {
@@ -152,11 +157,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // After post-test: redirect to behavioral survey if not yet done
+    // After post-test: redirect to behavioral survey if not yet done.
+    // Keyed on student_id (falls back to session_hash for anonymous learners).
     if ($testType === 'post') {
-        $surveyDone = (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id']));
+        $surveyDone = $sid
+            ? (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE student_id=$sid AND module_id=".intval($module['id']))
+            : (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id']));
         if (!$surveyDone) {
-            $prePctRaw = db()->querySingle("SELECT percentage FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1");
+            $prePctRaw = $sid
+                ? db()->querySingle("SELECT percentage FROM pretest_attempts WHERE student_id=$sid AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1")
+                : db()->querySingle("SELECT percentage FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1");
             $gainParam = $prePctRaw !== null ? '&gain=' . ($pct - (int)$prePctRaw) : '';
             $surveyUrl = '/arise/?p=survey&module=' . urlencode($moduleSlug) . '&pct=' . $pct . $gainParam;
             // Clear any buffered HTML (navbar etc.) so the redirect goes cleanly
@@ -170,7 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Show result
     $prePct = null;
     if ($testType === 'post') {
-        $pre = db()->querySingle("SELECT percentage FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1", true);
+        $pre = $sid
+            ? db()->querySingle("SELECT percentage FROM pretest_attempts WHERE student_id=$sid AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1", true)
+            : db()->querySingle("SELECT percentage FROM pretest_attempts WHERE session_hash='".SQLite3::escapeString($hash)."' AND module_id=".intval($module['id'])." AND test_type='pre' ORDER BY id DESC LIMIT 1", true);
         if ($pre) $prePct = round($pre['percentage']);
     }
 
@@ -251,6 +263,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
     <?php return;
+}
+
+// ── GET: already-done gate ──────────────────────────────────────────────────
+// If a logged-in learner has already taken this test in an earlier session,
+// don't hand them the form again. `?retake=1` bypasses (in case a teacher
+// wants to reassign).
+$sidGate = getStudentId();
+if ($sidGate && empty($_GET['retake'])) {
+    $mid = intval($module['id']);
+    $prior = db()->querySingle(
+        "SELECT id, percentage FROM pretest_attempts
+          WHERE student_id=$sidGate AND module_id=$mid
+            AND test_type='" . SQLite3::escapeString($testType) . "'
+          LIMIT 1",
+        true
+    );
+    if ($prior) {
+        $backUrl = '/arise/?p=module&slug=' . urlencode($moduleSlug) . '&already_done=' . urlencode($testType);
+        while (ob_get_level()) ob_end_clean();
+        header('Location: ' . $backUrl);
+        echo '<meta http-equiv="refresh" content="0;url=' . htmlspecialchars($backUrl) . '">';
+        exit;
+    }
 }
 
 // ── GET: select questions by section ─────────────────────────────────────────

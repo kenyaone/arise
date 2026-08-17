@@ -531,14 +531,13 @@ $interactiveCount = $counts['interactive'];
     <?php
     // Knowledge Assessment — pre/post test state
     $_pretestDone = false; $_lessonQuizDone = false; $_postestDone = false; $_lessonPassed = false;
-    if (getStudentId()) {
-        $_h = getSessionHash();
+    if ($_sid = getStudentId()) {
         $_mid = intval($module['id']);
-        $_hEsc = SQLite3::escapeString($_h);
-        $_pretestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='pre'");
-        $_lessonQuizDone = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='lesson'");
-        $_postestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE session_hash='$_hEsc' AND module_id=$_mid AND test_type='post'");
-        $_surveyDone     = (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE session_hash='$_hEsc' AND module_id=$_mid");
+        // Key on student_id so progress persists across logins/sessions.
+        $_pretestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE student_id=$_sid AND module_id=$_mid AND test_type='pre'");
+        $_lessonQuizDone = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE student_id=$_sid AND module_id=$_mid AND test_type='lesson'");
+        $_postestDone    = (bool)db()->querySingle("SELECT id FROM pretest_attempts WHERE student_id=$_sid AND module_id=$_mid AND test_type='post'");
+        $_surveyDone     = (bool)db()->querySingle("SELECT id FROM behavioral_surveys WHERE student_id=$_sid AND module_id=$_mid");
         $_lessonPassed   = $_lessonQuizDone; // lesson quiz replaces the old ≥60% gate
     }
     $hasQuestions = (bool)db()->querySingle("SELECT id FROM quiz_questions WHERE module_id=".intval($module['id'])." AND is_published=1 LIMIT 1");
