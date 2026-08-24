@@ -180,6 +180,39 @@ function canSee($perm) {
     global $adminRole, $adminPerms;
     return $adminRole === 'superadmin' || in_array($perm, $adminPerms);
 }
+
+// Page → required permission. Falls back to the base 'dashboard' permission
+// for anything not listed (every logged-in admin/teacher account has it),
+// rather than leaving new/unlisted pages accidentally wide open.
+$pagePerms = [
+    'dashboard'                 => 'dashboard',
+    'content'                   => 'content_view',
+    'teacher_content_publish'   => 'content_manage',
+    'quiz'                      => 'content_manage',
+    'admin_question_difficulty' => 'dashboard',
+    'challenges'                => 'content_manage',
+    'bulk_upload'                => 'content_manage',
+    'clusters'                  => 'content_manage',
+    'schools'                   => 'content_manage',
+    'students'                  => 'students_view',
+    'certificates'               => 'students_view',
+    'questions'                  => 'questions_view',
+    'forum'                     => 'questions_view',
+    'forum_mod'                  => 'questions_view',
+    'analytics'                  => 'dashboard',
+    'reports'                    => 'students_view',
+    'poll_results'               => 'dashboard',
+    'cp_dashboard'               => 'dashboard',
+    'users'                      => 'users_manage',
+    'audit'                      => 'setup',
+    'recycle'                    => 'setup',
+    'updates'                    => 'setup',
+    'setup'                      => 'setup',
+    'backup'                     => 'backup',
+    'datapost'                   => 'datapost',
+    'courier'                    => 'dashboard',
+];
+$requiredPerm = $pagePerms[$page] ?? 'dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -318,9 +351,25 @@ function canSee($perm) {
 <?php
 
 // ═══════════════════════════════════════════════════════
+// PERMISSION GATE — checked once, ahead of every routed page
+// ═══════════════════════════════════════════════════════
+if (!canSee($requiredPerm)):
+    if (!headers_sent()) { http_response_code(403); }
+?>
+<div class="dp-card" style="max-width:440px;margin:60px auto;text-align:center;padding:40px 32px;">
+    <div style="font-size:2.6rem;margin-bottom:14px;">🔒</div>
+    <h2 style="margin-bottom:10px;">You don't have access to this page</h2>
+    <p style="color:var(--mid);font-size:.9rem;margin-bottom:20px;">
+        Your account doesn't have the <?= $adminRole === 'teacher' ? 'teacher' : 'admin' ?> permissions needed to view this.
+        If you think this is a mistake, ask an admin to grant it from Admin Users.
+    </p>
+    <a href="?p=dashboard" class="btn btn-primary" style="display:inline-block;padding:10px 24px;border-radius:8px;">← Back to Dashboard</a>
+</div>
+<?php
+// ═══════════════════════════════════════════════════════
 // DASHBOARD
 // ═══════════════════════════════════════════════════════
-if ($page === 'dashboard'):
+elseif ($page === 'dashboard'):
     $today = date('Y-m-d');
     $week  = date('Y-m-d', strtotime('-7 days'));
     $studs      = db()->querySingle("SELECT COUNT(*) FROM students WHERE is_active=1") ?? 0;
