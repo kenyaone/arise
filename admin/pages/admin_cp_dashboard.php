@@ -46,6 +46,28 @@ foreach ($byModule as $m) {
 $totalCerts = array_sum($certsByModule);
 $totalViews = $totalFacViews + $totalSoloViews;
 $soloSharePct = $totalViews > 0 ? round($totalSoloViews * 100 / $totalViews) : 0;
+
+// ── 14-day activity trend (quiz attempts per day, both tracks combined) ──
+$trendRaw = [];
+$tstmt = db()->query("
+    SELECT DATE(completed_at) AS d, COUNT(*) AS n
+    FROM quiz_attempts
+    WHERE module_id IN ($idList) AND completed_at >= DATE('now','-13 days')
+    GROUP BY d
+");
+while ($r = $tstmt->fetchArray(SQLITE3_ASSOC)) $trendRaw[$r['d']] = (int)$r['n'];
+$trend = [];
+for ($i = 13; $i >= 0; $i--) {
+    $d = date('Y-m-d', strtotime("-$i days"));
+    $trend[] = ['date' => $d, 'label' => date('j M', strtotime($d)), 'n' => $trendRaw[$d] ?? 0];
+}
+$trendMax = max(1, max(array_column($trend, 'n')));
+
+// ── Per-module max (views), for a shared bar scale across all modules ──
+$moduleMaxViews = 1;
+foreach ($byModule as $m) {
+    $moduleMaxViews = max($moduleMaxViews, ($m['tracks']['facilitator']['views'] ?? 0), ($m['tracks']['solo']['views'] ?? 0));
+}
 ?>
 
 <div class="page-header" style="margin-bottom:20px;">
@@ -88,6 +110,27 @@ $soloSharePct = $totalViews > 0 ? round($totalSoloViews * 100 / $totalViews) : 0
 </div>
 <?php endif; ?>
 
+<!-- ── 14-DAY ACTIVITY TREND ── -->
+<div class="dp-card" style="border:1px solid #e5e7eb;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:20px;margin-bottom:24px;">
+    <div class="section-header" style="margin-bottom:14px;">
+        <h2>📈 Quiz Activity — Last 14 Days</h2>
+        <span class="chip" style="background:#f3e8ff;color:#7c3aed;font-weight:700;"><?= array_sum(array_column($trend, 'n')) ?> attempts</span>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:5px;height:120px;padding:0 2px;">
+        <?php foreach ($trend as $t): $h = $t['n'] > 0 ? max(6, round($t['n'] / $trendMax * 100)) : 3; ?>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;" title="<?= e($t['label']) ?>: <?= $t['n'] ?> attempts">
+            <div style="font-size:.68rem;font-weight:700;color:#7c3aed;margin-bottom:3px;<?= $t['n']===0?'visibility:hidden;':'' ?>"><?= $t['n'] ?></div>
+            <div style="width:100%;max-width:22px;height:<?= $h ?>%;border-radius:5px 5px 2px 2px;background:<?= $t['n']>0 ? 'linear-gradient(180deg,#a78bfa,#7c3aed)' : '#e5e7eb' ?>;"></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <div style="display:flex;gap:5px;padding:0 2px;margin-top:6px;">
+        <?php foreach ($trend as $i => $t): ?>
+        <div style="flex:1;text-align:center;font-size:.62rem;color:var(--mid);white-space:nowrap;overflow:hidden;"><?= $i % 2 === 0 ? e($t['label']) : '' ?></div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
 <!-- ── PER-MODULE BREAKDOWN ── -->
 <div class="dp-card" style="border:1px solid #e5e7eb;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:20px;">
     <div class="section-header">
@@ -109,6 +152,9 @@ $soloSharePct = $totalViews > 0 ? round($totalSoloViews * 100 / $totalViews) : 0
             <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;">
                 <div style="font-size:.72rem;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px;">🎓 Facilitator-Led</div>
                 <?php if ($fac): ?>
+                <div style="height:8px;border-radius:4px;background:#dbeafe;overflow:hidden;margin-bottom:8px;">
+                    <div style="height:100%;width:<?= max(3, round((int)$fac['views'] / $moduleMaxViews * 100)) ?>%;background:#3b82f6;border-radius:4px;"></div>
+                </div>
                 <div style="font-size:.82rem;color:#1e3a5f;line-height:1.9;">
                     <?= (int)$fac['views'] ?> views &middot; <?= (int)$fac['attempts'] ?> quiz attempts
                     <?php if ($fac['avg_score'] !== null): ?><br>Avg score: <strong><?= $fac['avg_score'] ?>%</strong><?php endif; ?>
@@ -121,6 +167,9 @@ $soloSharePct = $totalViews > 0 ? round($totalSoloViews * 100 / $totalViews) : 0
             <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px 14px;">
                 <div style="font-size:.72rem;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px;">📱 On My Own</div>
                 <?php if ($solo): ?>
+                <div style="height:8px;border-radius:4px;background:#d1fae5;overflow:hidden;margin-bottom:8px;">
+                    <div style="height:100%;width:<?= max(3, round((int)$solo['views'] / $moduleMaxViews * 100)) ?>%;background:#0ea271;border-radius:4px;"></div>
+                </div>
                 <div style="font-size:.82rem;color:#064e3b;line-height:1.9;">
                     <?= (int)$solo['views'] ?> views &middot; <?= (int)$solo['attempts'] ?> quiz attempts
                     <?php if ($solo['avg_score'] !== null): ?><br>Avg score: <strong><?= $solo['avg_score'] ?>%</strong><?php endif; ?>
@@ -139,4 +188,6 @@ $soloSharePct = $totalViews > 0 ? round($totalSoloViews * 100 / $totalViews) : 0
     ℹ️ Quiz attempts and views are the completion signal shown here. Learners' private in-lesson reflections
     (e.g. "who are my trusted adults") are intentionally saved only on the learner's own device and are never
     sent to ARISE — by design, for privacy — so they don't appear in this dashboard.
+    <br>📊 Some of the activity shown includes sample data seeded to preview these charts ahead of full rollout —
+    tagged internally so it can be identified and cleared once real usage is established.
 </div>
