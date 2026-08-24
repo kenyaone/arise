@@ -148,11 +148,17 @@ $postTestReady = db()->querySingle(
 if ($postTestReady) {
     $nextAction = ['type'=>'post_test','module'=>$postTestReady];
 } else {
+    // Most recently touched, not-yet-completed lesson — precise lesson-level
+    // resume instead of a coarse "some lesson in this module is done" guess,
+    // so Continue deep-links straight to where the learner actually left off.
     $inProgress = db()->querySingle(
-        "SELECT m.id, m.title, m.icon, m.slug FROM modules m WHERE m.is_active=1
-         AND (SELECT COUNT(*) FROM lesson_progress lp JOIN lessons l ON l.id=lp.lesson_id WHERE lp.student_id=$sid AND l.module_id=m.id AND lp.completed=1) > 0
-         AND (SELECT COUNT(*) FROM lesson_progress lp JOIN lessons l ON l.id=lp.lesson_id WHERE lp.student_id=$sid AND l.module_id=m.id AND lp.completed=1) < (SELECT COUNT(*) FROM lessons l2 WHERE l2.module_id=m.id AND l2.is_active=1)
-         ORDER BY m.sort_order LIMIT 1", true
+        "SELECT l.id AS lesson_id, l.slug AS lesson_slug, l.title AS lesson_title,
+                m.id, m.title, m.icon, m.slug
+         FROM lesson_progress lp
+         JOIN lessons l ON l.id = lp.lesson_id
+         JOIN modules m ON m.id = l.module_id
+         WHERE lp.student_id=$sid AND lp.completed=0 AND m.is_active=1 AND l.is_active=1
+         ORDER BY lp.updated_at DESC LIMIT 1", true
     );
     if ($inProgress) {
         $nextAction = ['type'=>'continue','module'=>$inProgress];
@@ -433,10 +439,10 @@ trackPageView('dashboard');
             $nsBtn   = '🧠 Take Post-Test';
         } elseif ($na['type'] === 'continue') {
             $nsLabel = 'Continue Learning';
-            $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['title']);
-            $nsSub   = 'You are in the middle of this module — pick up where you left off.';
-            $nsHref  = '/arise/?p=module&slug=' . urlencode($nm['slug']);
-            $nsBtn   = '▶ Continue Module';
+            $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['lesson_title']);
+            $nsSub   = 'Pick up right where you left off in ' . e($nm['title']) . '.';
+            $nsHref  = '/arise/?p=lesson&slug=' . urlencode($nm['lesson_slug']);
+            $nsBtn   = '▶ Continue Lesson';
         } else {
             $nsLabel = 'Start Your Journey';
             $nsTitle = htmlspecialchars($nm['icon']??'📘') . ' ' . e($nm['title']);

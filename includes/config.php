@@ -21,6 +21,60 @@ define('LOGO_PATH', __DIR__ . '/../data/uploads/logos/');
 // School config — set during first setup
 define('DEFAULT_SCHOOL_ID', 'ARISE-SETUP-000');
 
+// ============================================
+// GRACEFUL DEGRADATION — never leave a visitor with a blank/broken page
+// ============================================
+// db() has enableExceptions(true) and nothing previously caught what it
+// throws (corruption, lock timeout, etc.) — an uncaught DB error mid-request
+// used to produce a blank or half-rendered page with no explanation. This
+// does not fix WHY an error happens; it only guarantees that IF one happens
+// mid-request, the visitor sees a clean "try again" message instead of a
+// broken response, while the real error still goes to error_log.
+if (PHP_SAPI !== 'cli') {
+    $GLOBALS['__arise_graceful_shown'] = false;
+
+    function ariseGracefulFailure(string $detail): void {
+        if ($GLOBALS['__arise_graceful_shown']) return;
+        $GLOBALS['__arise_graceful_shown'] = true;
+
+        if (ob_get_level()) {
+            while (ob_get_level()) { ob_end_clean(); }
+        }
+        if (!headers_sent()) {
+            http_response_code(503);
+            header('Retry-After: 90');
+            header('Content-Type: text/html; charset=UTF-8');
+            header('Cache-Control: no-store');
+        }
+        error_log('ARISE FATAL (shown graceful page to visitor): ' . $detail);
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+           . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+           . '<title>ARISE — One Moment</title>'
+           . '<style>body{font-family:system-ui,-apple-system,sans-serif;background:#f4f7f5;color:#1a2e1a;'
+           . 'display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:24px;box-sizing:border-box;text-align:center;}'
+           . '.card{background:#fff;border-radius:14px;padding:36px 28px;max-width:420px;box-shadow:0 8px 30px rgba(10,94,42,.12);}'
+           . '.card h1{font-size:1.3rem;margin:0 0 10px;color:#0a5e2a;}'
+           . '.card p{font-size:.95rem;line-height:1.6;color:#4a6058;margin:0 0 18px;}'
+           . '.card button{background:#0a5e2a;color:#fff;border:none;padding:11px 26px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;}'
+           . '</style></head><body><div class="card">'
+           . '<h1>&#128149; One moment&hellip;</h1>'
+           . '<p>ARISE is doing some quick housekeeping. This usually takes a minute or two &mdash; please try again shortly.</p>'
+           . '<button onclick="location.reload()">Try Again</button>'
+           . '</div></body></html>';
+    }
+
+    set_exception_handler(function (\Throwable $e) {
+        ariseGracefulFailure($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() . "\n" . $e->getTraceAsString());
+    });
+
+    register_shutdown_function(function () {
+        $err = error_get_last();
+        if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+            ariseGracefulFailure($err['message'] . ' in ' . $err['file'] . ':' . $err['line']);
+        }
+    });
+}
+
 // Cloud sync — pushes cluster/school data to live site after admin changes
 define('CLOUD_SYNC_SECRET', 'arise_sync_k3nya_2026');
 define('CLOUD_SYNC_URL',    'https://ariseci.org/arise/arise_cluster_receiver.php');

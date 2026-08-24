@@ -36,8 +36,16 @@ if ($_early_page === 'lesson') {
                     $html = str_replace('>1 / 10<', '>1 / 9<', $html);
                 }
                 $hash = getSessionHash();
+                trackPageView('lesson', $lesson['slug'], intval($lesson['module_id']));
                 $resumeSlide = 0;
-                if ($hash) {
+                // Prefer student_id — that's how save_progress now writes (it's the
+                // UNIQUE key on lesson_progress), so this is what makes resume work
+                // across sessions/devices for a logged-in learner, not just same-browser.
+                $_resumeSid = getStudentId();
+                if ($_resumeSid) {
+                    $prog = db()->querySingle("SELECT last_slide FROM lesson_progress WHERE student_id=" . intval($_resumeSid) . " AND lesson_id=" . intval($lesson['id']));
+                    if ($prog) $resumeSlide = intval($prog);
+                } elseif ($hash) {
                     $prog = db()->querySingle("SELECT last_slide FROM lesson_progress WHERE session_hash='" . SQLite3::escapeString($hash) . "' AND lesson_id=" . intval($lesson['id']));
                     if ($prog) $resumeSlide = intval($prog);
                 }

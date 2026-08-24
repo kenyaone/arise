@@ -25,34 +25,36 @@ switch ($action) {
         $slide     = intval($body['slide'] ?? 0);
 
         if ($lessonId > 0) {
-            $hash = getSessionHash();
-            $sid  = getStudentId();
+            // lesson_progress.student_id is NOT NULL with a UNIQUE(student_id, lesson_id)
+            // constraint, so only logged-in students get resume tracking here — anonymous
+            // visitors fall through and just don't get a saved slide position.
+            $sid = getStudentId();
+            if ($sid) {
+                $hash = getSessionHash();
 
-            // Upsert: one progress row per session+lesson
-            $exists = db()->querySingle(
-                "SELECT id FROM lesson_progress
-                 WHERE session_hash = '" . SQLite3::escapeString($hash) . "'
-                 AND lesson_id = $lessonId"
-            );
+                $exists = db()->querySingle(
+                    "SELECT id FROM lesson_progress WHERE student_id = $sid AND lesson_id = $lessonId"
+                );
 
-            if ($exists) {
-                $stmt = db()->prepare(
-                    'UPDATE lesson_progress
-                     SET last_slide = :slide
-                     WHERE session_hash = :hash AND lesson_id = :lid'
-                );
-            } else {
-                $stmt = db()->prepare(
-                    'INSERT INTO lesson_progress
-                     (session_hash, student_id, lesson_id, last_slide)
-                     VALUES (:hash, :sid, :lid, :slide)'
-                );
-                $stmt->bindValue(':sid', $sid);
+                if ($exists) {
+                    $stmt = db()->prepare(
+                        'UPDATE lesson_progress
+                         SET last_slide = :slide, session_hash = :hash, updated_at = CURRENT_TIMESTAMP
+                         WHERE student_id = :sid AND lesson_id = :lid'
+                    );
+                } else {
+                    $stmt = db()->prepare(
+                        'INSERT INTO lesson_progress
+                         (session_hash, student_id, lesson_id, last_slide, updated_at)
+                         VALUES (:hash, :sid, :lid, :slide, CURRENT_TIMESTAMP)'
+                    );
+                }
+                $stmt->bindValue(':sid',   $sid);
+                $stmt->bindValue(':hash',  $hash);
+                $stmt->bindValue(':lid',   $lessonId);
+                $stmt->bindValue(':slide', $slide);
+                $stmt->execute();
             }
-            $stmt->bindValue(':hash',  $hash);
-            $stmt->bindValue(':lid',   $lessonId);
-            $stmt->bindValue(':slide', $slide);
-            $stmt->execute();
         }
         echo json_encode(['status' => 'ok']);
         break;
@@ -97,6 +99,18 @@ switch ($action) {
                     // Update quiz pass counter
                     if ($percent >= 60) {
                         db()->exec("UPDATE student_xp SET total_quizzes_passed=total_quizzes_passed+1 WHERE student_id=$sid");
+                    }
+
+                    // Finishing the lesson's quiz is the clearest "done" signal for an
+                    // interactive lesson — mark it complete so Continue/dashboard progress
+                    // reflects reality instead of never advancing past "in progress".
+                    if ($lessonSlug) {
+                        $lid = db()->querySingle(
+                            "SELECT id FROM lessons WHERE module_id=$moduleId AND slug='" . SQLite3::escapeString($lessonSlug) . "'"
+                        );
+                        if ($lid) {
+                            db()->exec("UPDATE lesson_progress SET completed=1, completed_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP WHERE student_id=$sid AND lesson_id=$lid");
+                        }
                     }
                 }
 
@@ -184,6 +198,11 @@ switch ($action) {
                     if ($percent >= 60) {
                         db()->exec("UPDATE student_xp SET total_quizzes_passed=total_quizzes_passed+1 WHERE student_id=$sid");
                     }
+
+                    // Finishing the lesson's quiz is the clearest "done" signal for an
+                    // interactive lesson — mark it complete so Continue/dashboard progress
+                    // reflects reality instead of never advancing past "in progress".
+                    db()->exec("UPDATE lesson_progress SET completed=1, completed_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP WHERE student_id=$sid AND lesson_id=$lessonId");
 
                     // Auto-issue certificate if score >= 60%
                     if ($percent >= 60) {

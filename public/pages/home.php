@@ -10,6 +10,16 @@ $pdfs          = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_ty
 
 <?php if ($student):
     $firstName = explode(' ', $student['full_name'])[0];
+    // Most recently touched, not-yet-completed lesson — same precise
+    // resume logic as the dashboard's Next Step card.
+    $homeContinue = db()->querySingle(
+        "SELECT l.slug AS lesson_slug, l.title AS lesson_title, m.icon, m.title AS module_title
+         FROM lesson_progress lp
+         JOIN lessons l ON l.id = lp.lesson_id
+         JOIN modules m ON m.id = l.module_id
+         WHERE lp.student_id=" . intval($student['id']) . " AND lp.completed=0 AND m.is_active=1 AND l.is_active=1
+         ORDER BY lp.updated_at DESC LIMIT 1", true
+    );
 ?>
 <style>
 .welcome-banner {
@@ -396,6 +406,16 @@ $pdfs          = db()->querySingle("SELECT COUNT(*) FROM lessons WHERE lesson_ty
     </div>
 </div>
 <!-- ══════════════ END WELCOME BANNER ══════════════ -->
+
+<?php if ($homeContinue): ?>
+<a href="/arise/?p=lesson&slug=<?= urlencode($homeContinue['lesson_slug']) ?>" class="continue-cta">
+    <div style="font-size:1.8rem;flex-shrink:0;"><?= htmlspecialchars($homeContinue['icon'] ?? '📘') ?></div>
+    <div class="continue-cta-text">
+        <div class="t1">▶ Continue: <?= e($homeContinue['lesson_title']) ?></div>
+        <div class="t2"><?= e($homeContinue['module_title']) ?></div>
+    </div>
+</a>
+<?php endif; ?>
 <?php endif; ?>
 
 <!-- HERO (shown to all, adapted for logged-in users) -->
