@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Strategies That Can Help Prevent Abuse — On My Own | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left{min-width:0;flex:1;}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.duration-pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:2px 9px;border-radius:20px;font-size:.66rem;font-weight:700;margin-left:7px;white-space:nowrap;display:inline-block;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.print-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;color:#166534;font-weight:600;}
+.journal-privacy{font-size:.74rem;color:var(--soft);margin-top:8px;font-style:italic;}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.scripture-box{background:linear-gradient(135deg,#fffdf5,#fff8e6);border:1px solid #e8d9a8;border-left:4px solid #b8912f;border-radius:0 10px 10px 0;padding:14px 16px;margin:14px 0;}
+.scripture-box .scripture-head{color:#8a6d1f;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.scripture-box .scripture-verse{font-style:italic;color:#4a3c14;font-size:.92rem;line-height:1.7;margin-bottom:9px;}
+.scripture-box .scripture-line{color:#3a3a2a;font-size:.85rem;line-height:1.6;border-top:1px solid #eadfbe;padding-top:9px;}
+.prayer-box{background:linear-gradient(135deg,#f4f0ff,#eee7ff);border:1px solid #ddd0f7;border-radius:10px;padding:13px 16px;margin:14px 0;font-size:.87rem;line-height:1.7;font-style:italic;color:#3d2f5c;}
+.prayer-box .prayer-head{color:#5b21b6;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;font-style:normal;}
+.safe-box{background:linear-gradient(135deg,#fff5f5,#fff);border:2px solid var(--no);border-radius:12px;padding:16px 18px;margin:14px 0;}
+.safe-box .safe-head{color:#8b0000;font-weight:800;font-size:.92rem;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.safe-box p{font-size:.86rem;color:#3a3a2a;line-height:1.65;margin-bottom:10px;}
+.helpline-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.helpline{background:#fff;border:1.5px solid #f5c6c6;border-radius:8px;padding:9px 12px;}
+.helpline .hl-name{font-size:.76rem;color:var(--soft);font-weight:600;}
+.helpline .hl-num{font-size:1.05rem;color:#8b0000;font-weight:800;}
+@media(max-width:480px){.helpline-grid{grid-template-columns:1fr;}}
+.pace-note{font-size:.78rem;color:var(--soft);text-align:center;margin-top:14px;font-style:italic;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="cp4-preventing-abuse-solo" data-module-slug="preventing-abuse">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 12 min</span></div><div class="lesson-name">🛡️ Strategies That Can Help Prevent Abuse</div></div><span class="slide-badge" id="slideCounter">1 / 6</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<div class="slide active">
+<div class="lo-box"><h3><span class="en">📋 By the end of this lesson, you'll know:</span><span class="sw">📋 Mwishoni mwa somo hili, utajua:</span><span class="sh">📋 Mwisho wa lesson hii, utajua:</span></h3><ol>
+<li><span class="en">The difference between good touch and bad touch</span><span class="sw">Tofauti kati ya kuguswa vizuri na kuguswa vibaya</span><span class="sh">Tofauti kati ya good touch na bad touch</span></li>
+<li><span class="en">Which parts of your body are private, and who — if anyone — may see or touch them</span><span class="sw">Ni sehemu zipi za mwili wako ni za siri, na ni nani — kama yupo — anayeweza kuziona au kuzigusa</span><span class="sh">Ni sehemu zipi za mwili wako ni za siri, na ni nani — kama yupo — anayeweza kuziona ama kuzigusa</span></li>
+<li><span class="en">How to tell safe places and safe adult behaviour from unsafe ones</span><span class="sw">Jinsi ya kutofautisha sehemu salama na tabia salama za watu wazima kutoka zisizo salama</span><span class="sh">Jinsi ya kutofautisha sehemu salama na tabia salama za adults kutoka zisizo salama</span></li>
+</ol></div>
+<div class="inquiry"><span class="en"><strong>🔍 Big Question:</strong> You can't always stop someone else from trying to harm you — so what can you still control? This lesson is the answer.</span><span class="sw"><strong>🔍 Swali Kubwa:</strong> Huwezi kila mara kumzuia mtu mwingine anayejaribu kukudhuru — basi ni nini bado unaweza kudhibiti? Somo hili ndilo jibu.</span><span class="sh"><strong>🔍 Big Question:</strong> Huwezi kila mara kumzuia msee mwingine anayejaribu kukudhuru — basi ni nini bado unaweza kudhibiti? Hii lesson ndio jibu.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🆘 <span class="en">If You Need Help Right Now</span><span class="sw">Ukihitaji Msaada Sasa Hivi</span><span class="sh">Ukihitaji Msaada Sasa Hivi</span></div>
+<div class="safe-box">
+<div class="safe-head">🆘 <span class="en">You don't have to wait until you finish this lesson</span><span class="sw">Hupaswi kusubiri hadi umalize somo hili</span><span class="sh">Hupaswi kusubiri hadi umalize hii lesson</span></div>
+<p><span class="en">If anything in this lesson sounds close to something that has already happened to you, or is happening now, you can stop and get help immediately. Talk to a trusted adult near you — a teacher, a relative, a neighbour, a religious leader — or call one of these numbers. They're free, and they're there for exactly this.</span><span class="sw">Kama chochote kwenye somo hili kinafanana na kitu ambacho tayari kimekutokea, au kinaendelea sasa, unaweza kusimama na kupata msaada mara moja. Zungumza na mtu mzima wa kuaminika karibu nawe — mwalimu, ndugu, jirani, kiongozi wa dini — au piga mojawapo ya nambari hizi. Ni bure, na ziko pale kwa jambo hili hasa.</span><span class="sh">Kama chochote kwenye hii lesson kinafanana na kitu ambacho tayari kimekutokea, ama kinaendelea sasa, unaweza kusimama na kupata msaada mara moja. Ongea na trusted adult karibu nawe — teacher, ndugu, jirani, kiongozi wa dini — ama piga moja ya hizi nambari. Ni free, na ziko pale kwa hili jambo hasa.</span></p>
+<div class="helpline-grid">
+<div class="helpline"><div class="hl-name">📞 Childline Kenya</div><div class="hl-num">116</div></div>
+<div class="helpline"><div class="hl-name">📞 GBV Hotline</div><div class="hl-num">1195</div></div>
+<div class="helpline"><div class="hl-name">📞 Kenya Red Cross</div><div class="hl-num">1199</div></div>
+<div class="helpline"><div class="hl-name">📞 HIV/AIDS Helpline</div><div class="hl-num">0800 723 253</div></div>
+</div>
+</div>
+<p class="tp"><span class="en">You can also use the red 🆘 SOS button on any ARISE page to see this list again — it's always there while you're using the app.</span><span class="sw">Unaweza pia kutumia kitufe chekundu cha 🆘 SOS kwenye ukurasa wowote wa ARISE kuona orodha hii tena — ipo kila wakati unapotumia programu.</span><span class="sh">Unaweza pia kutumia red 🆘 SOS button kwenye page yoyote ya ARISE kuona hii list tena — ipo kila wakati unatumia app.</span></p>
+</div>
+
+<div class="slide">
+<div class="slide-head">✋ <span class="en">Good Touch, Bad Touch</span><span class="sw">Kuguswa Vizuri, Kuguswa Vibaya</span><span class="sh">Good Touch, Bad Touch</span></div>
+<table class="info-table"><tr><th><span class="en">Good touch</span><span class="sw">Kuguswa vizuri</span><span class="sh">Good touch</span></th><th><span class="en">Bad touch</span><span class="sw">Kuguswa vibaya</span><span class="sh">Bad touch</span></th></tr>
+<tr><td><span class="en">A quick hug from a friend</span><span class="sw">Kukumbatiwa haraka na rafiki</span><span class="sh">Quick hug kutoka kwa rafiki</span></td><td><span class="en">A hug that doesn't end quickly, or squeezes too tight</span><span class="sw">Kukumbatiwa kusikoisha haraka, au kunakobana sana</span><span class="sh">Hug isiyoisha haraka, ama inayobana sana</span></td></tr>
+<tr><td><span class="en">Holding hands with someone you like</span><span class="sw">Kushikana mikono na mtu unayempenda</span><span class="sh">Kushikana mikono na msee unayempenda</span></td><td><span class="en">A hand that forces you to touch someone's private places</span><span class="sw">Mkono unaokulazimisha kugusa sehemu za siri za mtu mwingine</span><span class="sh">Mkono unaokulazimisha kugusa sehemu za siri za msee mwingine</span></td></tr>
+<tr><td><span class="en">A pat on the back to show someone is proud of you</span><span class="sw">Kupigwa mgongo kuonyesha mtu anajivunia wewe</span><span class="sh">Kupigwa mgongo kuonyesha msee anajivunia wewe</span></td><td><span class="en">A hand that touches you in your private places</span><span class="sw">Mkono unaokugusa sehemu zako za siri</span><span class="sh">Mkono unaokugusa sehemu zako za siri</span></td></tr>
+</table>
+<div class="key-term"><strong><span class="en">🔑 Your private places</span><span class="sw">🔑 Sehemu Zako za Siri</span><span class="sh">🔑 Sehemu Zako za Siri</span></strong><span class="en">These are the parts of your body that your underclothes cover. No one should ask to see or touch these — except a doctor or nurse giving needed medical care, and even then, with a trusted adult present or aware. If someone breaks this rule, it is never your fault, and you can always tell someone.</span><span class="sw">Hizi ni sehemu za mwili wako zinazofunikwa na nguo za ndani. Hakuna anayepaswa kuomba kuziona au kuzigusa — isipokuwa daktari au muuguzi anayetoa huduma ya afya inayohitajika, na hata wakati huo, akiwa na mtu mzima wa kuaminika aliyepo au anayejua. Mtu akivunja kanuni hii, kamwe si kosa lako, na unaweza kumwambia mtu wakati wowote.</span><span class="sh">Hizi ni sehemu za mwili wako zinazofunikwa na nguo za ndani. Hakuna anayepaswa kuomba kuziona ama kuzigusa — isipokuwa daktari ama nurse anayetoa huduma ya afya inayohitajika, na hata wakati huo, akiwa na trusted adult aliyepo ama anayejua. Msee akivunja hii kanuni, kamwe si kosa lako, na unaweza kumwambia msee wakati wowote.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🏠 <span class="en">Safe Places, Safe Adults</span><span class="sw">Sehemu Salama, Watu Wazima Salama</span><span class="sh">Sehemu Salama, Adults Salama</span></div>
+<p class="tp"><span class="en">You don't need to memorise a long list — you can learn to notice the pattern instead.</span><span class="sw">Hupaswi kukariri orodha ndefu — unaweza kujifunza kutambua mfumo badala yake.</span><span class="sh">Hupaswi kukariri list ndefu — unaweza kujifunza kutambua mfumo badala yake.</span></p>
+<div class="key-term"><strong><span class="en">🏠 Safe places</span><span class="sw">🏠 Sehemu Salama</span><span class="sh">🏠 Sehemu Salama</span></strong><span class="en">Places where other people can see you, and where you're free to leave if you want to — home, school, church, out in the open with others around.</span><span class="sw">Sehemu ambako watu wengine wanaweza kukuona, na ambako uko huru kuondoka ukitaka — nyumbani, shuleni, kanisani, nje wazi na watu wengine karibu.</span><span class="sh">Sehemu ambako wasee wengine wanaweza kukuona, na ambako uko huru kuondoka ukitaka — nyumbani, shuleni, kanisani, nje wazi na wasee wengine karibu.</span></div>
+<div class="warn-box"><strong><span class="en">⚠️ Unsafe places</span><span class="sw">⚠️ Sehemu Zisizo Salama</span><span class="sh">⚠️ Sehemu Zisizo Salama</span></strong><span class="en">Being alone with someone you don't fully trust, or somewhere hidden from view. If you ever find yourself somewhere like this without wanting to be, it's okay to leave, make noise, or ask to go — you never need a "good enough" reason.</span><span class="sw">Kuwa peke yako na mtu husiyemwamini kikamilifu, au mahali palipofichika. Ukijikuta mahali kama hapa bila kutaka kuwa hapo, ni sawa kuondoka, kupiga kelele, au kuomba kuondoka — hupaswi kuwa na sababu "ya kutosha".</span><span class="sh">Kuwa peke yako na msee husiyemwamini kikamilifu, ama mahali palipofichika. Ukijikuta mahali kama hapa bila kutaka kuwa hapo, ni sawa kuondoka, kupiga kelele, ama kuomba kuondoka — hupaswi kuwa na sababu "ya kutosha".</span></div>
+<div class="key-term"><strong><span class="en">🔑 Safe adult behaviour vs. unsafe</span><span class="sw">🔑 Tabia Salama za Watu Wazima dhidi ya Zisizo Salama</span><span class="sh">🔑 Tabia Salama za Adults dhidi ya Zisizo Salama</span></strong><span class="en">A safe adult helps you feel valued and safe, and respects "no." An unsafe adult tries to force, threaten, bribe, or take something from you to get their way — none of that is ever your fault, no matter what they say.</span><span class="sw">Mtu mzima salama anakusaidia kujisikia una thamani na salama, na anaheshimu "hapana." Mtu mzima asiye salama anajaribu kulazimisha, kutishia, kuhonga, au kuchukua kitu kutoka kwako ili apate atakavyo — hilo si kosa lako kamwe, haijalishi wanasema nini.</span><span class="sh">Adult salama anakusaidia kujisikia una value na salama, na anaheshimu "hapana." Adult asiye salama anajaribu kulazimisha, kutishia, kuhonga, ama kuchukua kitu kutoka kwako ili apate atakavyo — hilo si kosa lako kamwe, haijalishi wanasema nini.</span></div>
+<p class="tp"><span class="en">A firm "no" to an unsafe touch or request is never rude. It's you taking care of yourself.</span><span class="sw">"Hapana" thabiti kwa kuguswa au ombi lisilo salama si ukorofi kamwe. Ni wewe ukijitunza.</span><span class="sh">"Hapana" thabiti kwa kuguswa ama ombi lisilo salama si ukorofi kamwe. Ni wewe ukijitunza.</span></p>
+</div>
+
+<div class="slide">
+<div class="slide-head">✅ <span class="en">Check What You Remember</span><span class="sw">Angalia Unachokumbuka</span><span class="sh">Angalia Unachokumbuka</span></div>
+<div class="mcq-block" id="q1">
+<div class="q-text"><span class="en">1. Who is allowed to see or touch your private places?</span><span class="sw">1. Ni nani anaruhusiwa kuona au kugusa sehemu zako za siri?</span><span class="sh">1. Ni nani anaruhusiwa kuona ama kugusa sehemu zako za siri?</span></div>
+<div class="options" id="q1opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q1','A')"><span class="opt-letter">A.</span><span><span class="en">Any adult who asks nicely</span><span class="sw">Mtu mzima yeyote anayeuliza kwa upole</span><span class="sh">Adult yeyote anayeuliza kwa upole</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q1','B')"><span class="opt-letter">B.</span><span><span class="en">No one, except a doctor or nurse giving care you need, with a trusted adult aware</span><span class="sw">Hakuna, isipokuwa daktari au muuguzi anayetoa huduma unayohitaji, mtu mzima wa kuaminika akijua</span><span class="sh">Hakuna, isipokuwa daktari ama nurse anayetoa huduma unayohitaji, trusted adult akijua</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q1','C')"><span class="opt-letter">C.</span><span><span class="en">Anyone older than you</span><span class="sw">Yeyote mkubwa kuliko wewe</span><span class="sh">Yeyote mkubwa kuliko wewe</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q1"></div>
+</div>
+<div class="mcq-block" id="q2">
+<div class="q-text"><span class="en">2. Which of these is a sign of an unsafe adult?</span><span class="sw">2. Ni ipi kati ya hizi ni ishara ya mtu mzima asiye salama?</span><span class="sh">2. Ni ipi kati ya hizi ni ishara ya adult asiye salama?</span></div>
+<div class="options" id="q2opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q2','A')"><span class="opt-letter">A.</span><span><span class="en">They respect it when you say "no"</span><span class="sw">Wanaheshimu unaposema "hapana"</span><span class="sh">Wanaheshimu unaposema "hapana"</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q2','B')"><span class="opt-letter">B.</span><span><span class="en">They try to bribe, threaten, or pressure you into something</span><span class="sw">Wanajaribu kukuhonga, kukutishia, au kukushinikiza kufanya kitu</span><span class="sh">Wanajaribu kukuhonga, kukutishia, ama kukushinikiza kufanya kitu</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q2','C')"><span class="opt-letter">C.</span><span><span class="en">They help you feel valued</span><span class="sw">Wanakusaidia kujisikia una thamani</span><span class="sh">Wanakusaidia kujisikia una value</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q2"></div>
+</div>
+<div class="mcq-block" id="q3">
+<div class="q-text"><span class="en">3. True or False: saying a firm "no" to an unsafe touch is rude.</span><span class="sw">3. Kweli au Uongo: kusema "hapana" thabiti kwa kuguswa kusiko salama ni ukorofi.</span><span class="sh">3. Kweli ama Uongo: kusema "hapana" thabiti kwa kuguswa kusiko salama ni ukorofi.</span></div>
+<div class="options" id="q3opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q3','A')"><span class="opt-letter">A.</span><span><span class="en">True</span><span class="sw">Kweli</span><span class="sh">Kweli</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q3','B')"><span class="opt-letter">B.</span><span><span class="en">False — it's you taking care of yourself, never rude</span><span class="sw">Uongo — ni wewe ukijitunza, si ukorofi kamwe</span><span class="sh">Uongo — ni wewe ukijitunza, si ukorofi kamwe</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q3"></div>
+</div>
+<button class="check-btn" onclick="submitMCQ()"><span class="en">Check My Answers</span><span class="sw">Angalia Majibu Yangu</span><span class="sh">Angalia Majibu Yangu</span></button>
+<div class="score-box" id="score-box">
+<div class="score-num" id="score-title"></div>
+<div class="grade-label" id="score-detail"></div>
+</div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🙏 <span class="en">Before You Go</span><span class="sw">Kabla Hujaondoka</span><span class="sh">Kabla Hujaondoka</span></div>
+<div class="scripture-box"><div class="scripture-head">✝️ 1 Corinthians 6:19–20 (NIV)</div><div class="scripture-verse"><span class="en">"Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? … Therefore honour God with your bodies."</span><span class="sw">"Wala hamjui ya kuwa mwili wenu ni hekalu la Roho Mtakatifu aliye ndani yenu, mliyepewa na Mungu? … Basi, mtukuzeni Mungu katika miili yenu."</span><span class="sh">"Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? … Therefore honour God with your bodies."</span></div><div class="scripture-line"><span class="en">Your body belongs to God, and it's not free for anyone else to take. That's exactly why a firm "no" to an unsafe touch is honouring what He's entrusted to you — not disrespecting anyone.</span><span class="sw">Mwili wako ni wa Mungu, na si huru kwa mtu mwingine kuchukua. Ndio maana "hapana" thabiti kwa kuguswa kusiko salama ni kutukuza kile alichokukabidhi — si kutoheshimu mtu yeyote.</span><span class="sh">Mwili wako ni wa Mungu, na si huru kwa msee mwingine kuchukua. Ndio maana "hapana" thabiti kwa kuguswa kusiko salama ni kutukuza kile alichokukabidhi — si kutoheshimu msee yeyote.</span></div></div>
+<div class="prayer-box"><div class="prayer-head"><span class="en">🙏 A Short Prayer</span><span class="sw">🙏 Sala Fupi</span><span class="sh">🙏 Sala Fupi</span></div><span class="en">Help me know the difference between the touches that are kind and the touches that are not, and give me courage to say no, and to tell someone, when I need to. Amen.</span><span class="sw">Nisaidie kujua tofauti kati ya kuguswa kwa upole na kusiko na upole, na unipe ujasiri wa kusema hapana, na kumwambia mtu, nikihitaji. Amina.</span><span class="sh">Nisaidie kujua tofauti kati ya kuguswa kwa upole na kusiko na upole, na unipe ujasiri wa kusema hapana, na kumwambia msee, nikihitaji. Amina.</span></div>
+<div class="safe-box">
+<div class="safe-head">🆘 <span class="en">Keep these numbers close</span><span class="sw">Weka nambari hizi karibu</span><span class="sh">Weka hizi nambari karibu</span></div>
+<div class="helpline-grid">
+<div class="helpline"><div class="hl-name">📞 Childline Kenya</div><div class="hl-num">116</div></div>
+<div class="helpline"><div class="hl-name">📞 GBV Hotline</div><div class="hl-num">1195</div></div>
+</div>
+</div>
+<p class="pace-note"><span class="en">You can come back to this lesson any time you need to.</span><span class="sw">Unaweza kurudi kwenye somo hili wakati wowote unapohitaji.</span><span class="sh">Unaweza kurudi kwenye hii lesson wakati wowote unapohitaji.</span></p>
+</div>
+
+</div>
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div>
+<script>
+var lang = window.CP_LANG || localStorage.getItem('cp_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('cp_lang',l);}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('cp_textsize',s);}
+setSize(localStorage.getItem('cp_textsize')||'md');
+var cur=0,slides=[];
+function init(){
+  slides=document.querySelectorAll('.slide');
+  var dw=document.getElementById('dotsWrap');
+  slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
+  upd();
+  var slug=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
+  if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);
+}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2){try{fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,slide:n})});}catch(e){}localStorage.setItem('cp_slide_'+slug2,n);}}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+var mcqAnswers={q1:'B',q2:'B',q3:'B'};
+var mcqExplain={q1:'No one else should ask to see or touch your private places — only a doctor or nurse giving needed care, with a trusted adult aware.',q2:'A safe adult respects your "no." Trying to bribe, threaten, or pressure you is a sign of an unsafe adult — and it\'s never your fault.',q3:'A firm "no" to an unsafe touch is you taking care of yourself, not rudeness.'};
+function selectOpt(el,grp){document.querySelectorAll('#'+grp+'opts .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp];
+    var opts=document.querySelectorAll('#'+grp+'opts .opt');
+    var chosen=null;opts.forEach(function(o){if(o.classList.contains('selected'))chosen=o.getAttribute('data-opt');});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=chosen===correct;
+    opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(l===chosen)o.classList.add('wrong');});
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';fb.className='mcq-fb '+(ok?'ok':'no');fb.innerHTML=(ok?'<strong>✓ Correct.</strong> ':'<strong>Worth remembering:</strong> ')+mcqExplain[grp];}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){
+    sb.style.display='block';sb.className='score-box'+(pct>=60?' pass':'');
+    document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';
+    document.getElementById('score-detail').textContent=pct>=80?'⭐ You know exactly what to do.':pct>=60?'👍 Good — scroll up to review any highlighted answers.':'📖 Worth a second look — scroll up and re-read the highlighted parts.';
+    sb.scrollIntoView({behavior:'smooth'});
+  }
+  try{
+    fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,score:score,total:total,percent:pct})});
+  }catch(e){}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

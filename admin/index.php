@@ -157,6 +157,7 @@ $navGroups = [
         ['p'=>'analytics',     'icon'=>'📈','label'=>'Analytics',        'perm'=>'dashboard'],
         ['p'=>'reports',       'icon'=>'📋','label'=>'Reports',           'perm'=>'students_view'],
         ['p'=>'poll_results',  'icon'=>'📊','label'=>'Module Feedback',   'perm'=>'dashboard'],
+        ['p'=>'cp_dashboard',  'icon'=>'🛡️','label'=>'Child Protection',  'perm'=>'dashboard'],
     ],
     'Resources' => [
         ['url'=>'/arise/?p=datapost','icon'=>'💾','label'=>'DataPost API','perm'=>'dashboard','target'=>'_blank'],
@@ -1377,6 +1378,9 @@ elseif ($page === 'reports'):
 
 elseif ($page === 'poll_results'):
     include __DIR__.'/pages/admin_poll_results.php';
+
+elseif ($page === 'cp_dashboard'):
+    include __DIR__.'/pages/admin_cp_dashboard.php';
 
 elseif ($page === 'recycle'):
     include __DIR__.'/pages/admin_recycle.php';

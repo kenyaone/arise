@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Appropriate and Inappropriate Behaviors | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+.tip-box{background:#e8f0ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;line-height:1.6;}
+.tip-box strong{color:#1a3db5;}
+.sheng-box{background:#1a2e1a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#a8d5b5;line-height:1.7;}
+.sheng-box .sheng-head{color:#f5a623;font-weight:700;font-size:.8rem;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;}
+.info-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.82rem;border-radius:8px;overflow:hidden;}
+.info-table th{background:var(--pri);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:.8rem;}
+.info-table td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+.info-table tr:nth-child(even) td{background:#edf5ef;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;background:rgba(245,166,35,.12);color:var(--acc-l);border:1px solid rgba(245,166,35,.3);padding:5px 12px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
+.scenario-wrap{background:#fff;border:2px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.scenario-ctx{font-size:.84rem;color:var(--soft);padding:9px 12px;background:#f4f7f5;border-radius:8px;margin-bottom:12px;border-left:3px solid var(--acc);line-height:1.6;}
+.scenario-q{font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:12px;line-height:1.5;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{display:block;width:100%;text-align:left;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;background:#fff;transition:.15s;font-family:inherit;line-height:1.5;}
+.choice:hover:not(:disabled){border-color:var(--pri);background:#e8f5ec;}
+.choice:disabled{cursor:default;opacity:.8;}
+.choice.chosen-good{border-color:var(--ok);background:#e8f5ec;color:#1b5e20;font-weight:600;}
+.choice.chosen-bad{border-color:var(--no);background:#ffebee;color:#b71c1c;font-weight:600;}
+.choice.chosen-ok{border-color:var(--acc);background:#fff9e8;color:#6b4a00;font-weight:600;}
+.s-result{border-radius:8px;padding:12px 14px;margin-top:10px;font-size:.86rem;display:none;line-height:1.7;}
+.s-result.good{background:#e8f5ec;border:1px solid #a5d6a7;color:#1b5e20;}
+.s-result.bad{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c;}
+.s-result.ok{background:#fff9e8;border:1px solid #ffd54f;color:#6b4a00;}
+.retry-btn{background:var(--pri);color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:.79rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;}
+.quiz-part-head{color:var(--pri);font-size:.92rem;font-weight:700;margin:16px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--acc);display:flex;align-items:center;justify-content:space-between;}
+.quiz-part-head span{font-weight:400;font-size:.78rem;color:var(--soft);}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.mcq-block .q-scenario{font-size:.82rem;color:var(--soft);font-style:italic;margin-bottom:8px;padding:7px 10px;background:#f8faf8;border-radius:6px;border-left:3px solid var(--acc);}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.q-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:13px;margin-bottom:10px;}
+.q-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:9px;line-height:1.55;}
+.fill-blank{border:none;border-bottom:2px dashed var(--pri);background:transparent;min-width:120px;font-size:.88rem;padding:2px 6px;outline:none;text-align:center;color:var(--dark);font-family:inherit;}
+.fill-blank.correct{border-bottom:2px solid var(--ok);background:#e8f5e9;color:#1b5e20;border-radius:4px;padding:2px 8px;}
+.fill-blank.wrong{border-bottom:2px solid var(--no);background:#ffebee;color:#b71c1c;border-radius:4px;padding:2px 8px;}
+.fb-box{background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.8rem;display:none;line-height:1.65;}
+.kf{color:var(--ok);font-weight:700;}
+.km{color:var(--no);font-weight:700;}
+.sa-area{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.85rem;min-height:70px;resize:vertical;font-family:inherit;color:var(--dark);}
+.sa-area:focus{outline:none;border-color:var(--pri);}
+.grade-btn{background:var(--pri);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:7px;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border:none;border-radius:var(--radius);font-size:.97rem;font-weight:700;cursor:pointer;margin-top:12px;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.cert-btn{display:inline-block;background:#fff;color:var(--pri);padding:10px 28px;border-radius:8px;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:4px;}
+.retry-box{background:#fff3e0;border:2px solid var(--acc);border-radius:var(--radius);padding:16px;text-align:center;margin-top:12px;display:none;}
+.retry-box p{font-size:.88rem;color:#6b4a00;margin-bottom:10px;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.sata-badge{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:10px;margin-bottom:6px;letter-spacing:.02em;}
+/* ── Branching Decision Tree ──────────────────── */
+.btree-wrap{padding:4px 0;}
+.bt-scenario{background:linear-gradient(135deg,#e8f5ec,#f0fdf4);border-left:4px solid var(--pri);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;line-height:1.7;}
+.bt-scenario strong{color:var(--pri-d);display:block;margin-bottom:6px;font-size:.92rem;}
+.bt-q{font-size:.88rem;font-weight:700;color:#1a1a2e;margin:10px 0 8px;}
+.bt-choice{display:block;width:100%;text-align:left;padding:10px 14px;margin-bottom:8px;border-radius:8px;border:2px solid var(--border);background:var(--card);font-size:.84rem;cursor:pointer;font-family:inherit;transition:.15s;line-height:1.5;}
+.bt-choice.good{border-color:#a7f3d0;background:#f0fdf4;color:#065f46;}
+.bt-choice.warn{border-color:#fde68a;background:#fffbeb;color:#78350f;}
+.bt-choice.bad{border-color:#fca5a5;background:#fff5f5;color:#991b1b;}
+.bt-back{background:none;border:1px solid var(--border);color:var(--soft);border-radius:6px;padding:5px 12px;font-size:.78rem;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+.bt-node{display:none;margin-top:12px;padding-top:12px;border-top:2px dashed var(--border);}
+.bt-node.active{display:block;animation:si .25s ease;}
+.bt-outcome{border-radius:10px;padding:13px 16px;margin:10px 0;font-size:.86rem;line-height:1.68;}
+.bt-outcome.ok{background:#e8f5e9;border:2px solid var(--ok);}
+.bt-outcome.no{background:#ffebee;border:2px solid var(--no);}
+.bt-outcome.warn{background:#fff8e1;border:2px solid var(--acc);}
+.bt-outcome-icon{font-size:1.4rem;margin-bottom:6px;}
+.bt-outcome-title{font-weight:800;font-size:.9rem;margin-bottom:5px;}
+.bt-restart{display:block;margin:10px auto 0;background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* ── Matching interaction ──────────────────────────────── */
+.match-game{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:var(--card);border:2px solid var(--border);border-radius:8px;padding:9px 28px 9px 10px;font-size:.81rem;cursor:pointer;transition:.15s;position:relative;text-align:left;line-height:1.4;width:100%;font-family:inherit;}
+.match-item:hover{border-color:var(--pri);background:#f0fdf4;}
+.match-item.msel{border-color:#2563eb;background:#dbeafe;font-weight:600;}
+.match-item.correct{border-color:var(--ok)!important;background:#e8f5e9!important;}
+.match-item.wrong{border-color:var(--no)!important;background:#ffebee!important;}
+.match-item.mp1{border-color:#2563eb;background:#dbeafe;}
+.match-item.mp2{border-color:#d97706;background:#fef3c7;}
+.match-item.mp3{border-color:#7c3aed;background:#ede9fe;}
+.match-item.mp4{border-color:#0f766e;background:#ccfbf1;}
+.match-item.mp5{border-color:#dc2626;background:#fee2e2;}
+.mbadge{position:absolute;top:4px;right:6px;width:17px;height:17px;border-radius:50%;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;}
+.mbadge.mb1{background:#2563eb;}.mbadge.mb2{background:#d97706;}.mbadge.mb3{background:#7c3aed;}.mbadge.mb4{background:#0f766e;}.mbadge.mb5{background:#dc2626;}
+.match-result-row{padding:3px 0;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.5;}
+.match-result-row:last-child{border-bottom:none;}
+
+
+.fac-box{background:#f3f0ff;border-left:4px solid #7c3aed;border-radius:0 8px 8px 0;padding:11px 14px;margin:12px 0;font-size:.85rem;line-height:1.6;}
+.fac-box .fac-head{color:#5b21b6;font-weight:700;font-size:.78rem;letter-spacing:.4px;margin-bottom:5px;text-transform:uppercase;}
+.scripture-box{background:linear-gradient(135deg,#fffdf5,#fff8e6);border:1px solid #e8d9a8;border-left:4px solid #b8912f;border-radius:0 10px 10px 0;padding:14px 16px;margin:14px 0;}
+.scripture-box .scripture-head{color:#8a6d1f;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.scripture-box .scripture-verse{font-style:italic;color:#4a3c14;font-size:.92rem;line-height:1.7;margin-bottom:9px;}
+.scripture-box .scripture-line{color:#3a3a2a;font-size:.85rem;line-height:1.6;border-top:1px solid #eadfbe;padding-top:9px;}
+.duration-pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:2px 9px;border-radius:20px;font-size:.66rem;font-weight:700;margin-left:7px;white-space:nowrap;display:inline-block;}
+/* keep the label + pill on one line; the pill must never orphan its unit */
+.top-bar-left{min-width:0;flex:1;}
+.top-bar-left .module-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-bar-left .lesson-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.req-box{background:#f4f8ff;border:1px solid #d8e4fb;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:.85rem;line-height:1.6;}
+.req-box .req-head{color:#1a3db5;font-weight:700;font-size:.78rem;letter-spacing:.4px;margin-bottom:7px;text-transform:uppercase;}
+.req-box .req-row{margin-bottom:3px;}
+.req-box ul.bl{margin-top:4px;}
+.prayer-box{background:linear-gradient(135deg,#f4f0ff,#eee7ff);border:1px solid #ddd0f7;border-radius:10px;padding:13px 16px;margin:14px 0;font-size:.87rem;line-height:1.7;font-style:italic;color:#3d2f5c;}
+.prayer-box .prayer-head{color:#5b21b6;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;font-style:normal;}
+.takehome-box{background:#fff6ea;border-left:4px solid #d98c2b;border-radius:0 8px 8px 0;padding:11px 14px;margin:14px 0;font-size:.85rem;line-height:1.6;}
+.takehome-box .takehome-head{color:#8a4d0f;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+.age-bar{background:#22331f;padding:6px 16px;position:sticky;top:104px;z-index:189;display:flex;align-items:center;gap:8px;}
+.age-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.age-bar .ab-label{color:rgba(255,255,255,.75);font-size:.78rem;}
+.age-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 12px;border-radius:20px;font-size:.76rem;font-weight:600;cursor:pointer;}
+.age-btn.active{background:#e8a33d;border-color:#e8a33d;color:#23260f;}
+.age35{display:none;}.age611{display:block;}.age12p{display:none;}
+.age-block{border:1px solid #e7e2d8;border-radius:10px;padding:13px 15px;margin:10px 0;background:#fffefb;}
+.age-block .age-head{font-weight:700;color:#5a4a1f;font-size:.86rem;margin-bottom:8px;}
+.age-block .age-note{font-size:.8rem;color:#6b7280;font-style:italic;margin-bottom:8px;}
+.age-block .age-steps{margin:0;padding-left:20px;font-size:.85rem;line-height:1.65;}
+.age-block .age-steps li{margin-bottom:6px;}
+.diagram-box{background:#fff;border:1px solid var(--border,#cde0d4);border-radius:10px;padding:14px;margin:13px 0;text-align:center;}
+.diagram-box svg{max-width:100%;height:auto;}
+.diagram-caption{font-size:.78rem;color:var(--soft,#4a6058);margin-top:8px;line-height:1.5;}
+.print-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;}
+@media print{
+  .lang-bar,.age-bar,.nav-bar{display:none!important;}
+  .top-bar{background:none!important;color:#000!important;box-shadow:none!important;position:static!important;border-bottom:2px solid #000;}
+  .top-bar-left .module-label{color:#333!important;}
+  .slide-badge{display:none!important;}
+  body{padding-bottom:0!important;}
+  .slides-wrap{max-width:100%!important;}
+  .slide{display:block!important;padding:10px 4px!important;animation:none!important;}
+  .slide:not(:first-child){page-break-before:always;}
+  .choice,.opt,.check-btn,.retry-btn,.age-btn{display:none!important;}
+  a[href]::after{content:"";}
+}
+</style></head>
+
+</head>
+<body data-lesson-id="0" data-lesson-slug="cp3-appropriate-behaviors" data-module-slug="appropriate-behaviors">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · Lesson 3 of 7<span class="duration-pill">⏱ 60 min</span></div><div class="lesson-name">🤝 Appropriate and Inappropriate Behaviors</div></div><span class="slide-badge" id="slideCounter">1 / 5</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><button class="print-btn" onclick="window.print()" title="Print the whole lesson">🖨️ Print</button><a href="/arise/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
+<div class="age-bar"><div class="age-bar-inner"><span class="ab-label">👥</span><button class="age-btn" id="ageBtn35" onclick="setAge('35')">3–5 yrs</button><button class="age-btn active" id="ageBtn611" onclick="setAge('611')">6–11 yrs</button><button class="age-btn" id="ageBtn12p" onclick="setAge('12p')">12+ yrs</button></div></div>
+<div class="slides-wrap" id="slidesWrap"><div class="slide active"><div class="lo-box"><h3><span class="en">📋 By the end of this module:</span><span class="sw">📋 Mwishoni mwa moduli hii:</span><span class="sh">📋 Module hii ikiisha:</span></h3><ol><li><span class="en">Explain why self-respect and self-esteem matter for staying safe</span><span class="sw">Eleza kwa nini kujiheshimu na kujiamini ni muhimu kwa usalama</span><span class="sh">Explain kwa nini kujiheshimu na kujiamini ni muhimu kwa usalama</span></li><li><span class="en">Describe how to treat others, and expect to be treated, with dignity</span><span class="sw">Eleza jinsi ya kuwatendea wengine, na kutarajia kutendewa, kwa heshima</span><span class="sh">Describe jinsi ya kuwatendea wengine, na ku-expect kutendewa, kwa heshima</span></li><li><span class="en">Recognise bullying, peer pressure and self-harm, and name a first response to each</span><span class="sw">Tambua uonevu, shinikizo la rika na kujidhuru, na taja hatua ya kwanza ya kila moja</span><span class="sh">Tambua bullying, peer pressure na self-harm, na taja hatua ya kwanza ya kila moja</span></li></ol></div><div class="inquiry"><span class="en"><strong>🔍 Big Question:</strong> Can the way a person thinks about themselves actually change what happens to them?</span><span class="sw"><strong>🔍 Swali Kubwa:</strong> Je, jinsi mtu anavyojifikiria inaweza kubadilisha kile kinachomtokea?</span><span class="sh"><strong>🔍 Big Question:</strong> Je, jinsi msee anavyojifikiria inaweza kubadilisha kile kinachomtokea?</span></div></div><div class="slide"><div class="slide-head">📋 <span class="en">Before You Begin</span><span class="sw">Kabla Hujaanza</span><span class="sh">Kabla Hujaanza</span></div><div class="req-box"><div class="req-head"><span class="en">📋 Before You Begin</span><span class="sw">📋 Kabla Hujaanza</span><span class="sh">📋 Kabla Hujaanza</span></div><div class="req-row"><strong><span class="en">Group size: </span><span class="sw">Kundi: </span><span class="sh">Group size: </span></strong><span class="en">Whole class</span><span class="sw">Darasa lote</span><span class="sh">Darasa lote</span></div><div class="req-row"><strong><span class="en">Time: </span><span class="sw">Muda: </span><span class="sh">Time: </span></strong><span class="en">45–60 minutes</span><span class="sw">Dakika 45–60</span><span class="sh">45–60 minutes</span></div><div class="req-row"><strong><span class="en">You will need: </span><span class="sw">Utahitaji: </span><span class="sh">Utahitaji: </span></strong></div><ul class="bl"><li><span class="en">A doll, for the younger group</span><span class="sw">Mwanasesere, kwa kikundi cha wadogo</span><span class="sh">Doll, kwa kikundi ya wadogo</span></li><li><span class="en">Bibles, for the older group</span><span class="sw">Biblia, kwa kikundi cha wakubwa</span><span class="sh">Bibles, kwa kikundi ya wakubwa</span></li><li><span class="en">A clear glass, water, and a little dirt, for the opening demonstration</span><span class="sw">Bilauri safi, maji, na udongo kidogo, kwa maonyesho ya ufunguzi</span><span class="sh">Glass safi, maji, na udongo kidogo, kwa opening demonstration</span></li></ul></div><div class="fac-box"><div class="fac-head">🎓 Facilitator note · 5 min</div><span class="en">Pour water into the glass — this represents the kind words a young person thinks about themselves: I am loved by God, I have value, I can contribute. Then drop in a little dirt — unkind thoughts: I deserve to be hurt, I'm no good. Let the group see that words and thoughts, about ourselves or from others, can hurt. Then pour the dirty water out and add clean water back in: God's love and forgiveness can always clean away the hurt.</span><span class="sw">Mimina maji kwenye bilauri — hii inawakilisha maneno mazuri kijana anayojifikiria: napendwa na Mungu, nina thamani, ninaweza kuchangia. Kisha dondosha udongo kidogo — mawazo mabaya: nastahili kuumizwa, mimi si mzuri. Acha kikundi kione maneno na mawazo, kuhusu sisi wenyewe au kutoka kwa wengine, yanaweza kuumiza. Kisha mimina maji machafu nje na uongeze maji safi: upendo na msamaha wa Mungu daima unaweza kusafisha maumivu.</span><span class="sh">Mimina maji kwa glass — hii inawakilisha maneno mazuri kijana anajifikiria: nina-lovewa na Mungu, nina value, ninaweza kuchangia. Kisha dondosha udongo kidogo — mawazo mabaya: nastahili kuumizwa, mimi si mzuri. Acha group ione maneno na mawazo, kuhusu sisi wenyewe ama kutoka kwa wengine, yanaweza kuumiza. Kisha mimina maji machafu nje na uongeze maji safi: love na forgiveness ya Mungu daima inaweza kusafisha maumivu.</span></div></div><div class="slide"><div class="slide-head">🗂️ <span class="en">Words and Actions Both Matter</span><span class="sw">Maneno na Matendo Yote Ni Muhimu</span><span class="sh">Maneno na Matendo Yote Ni Muhimu</span></div><table class="info-table"><tr><th><span class="en">Appropriate</span><span class="sw">Yanayofaa</span><span class="sh">Yanayofaa</span></th><th><span class="en">Inappropriate</span><span class="sw">Yasiyofaa</span><span class="sh">Yasiyofaa</span></th></tr><tr><td><span class="en">Treating others with respect and dignity</span><span class="sw">Kuwatendea wengine kwa heshima na hadhi</span><span class="sh">Kuwatendea wengine kwa heshima na hadhi</span></td><td><span class="en">Name-calling, mocking or humiliating someone</span><span class="sw">Kuita majina, kudhihaki au kudharau mtu</span><span class="sh">Kuita majina, kudhihaki ama kudharau msee</span></td></tr><tr><td><span class="en">Including others and welcoming new people</span><span class="sw">Kujumuisha wengine na kukaribisha watu wapya</span><span class="sh">Kujumuisha wengine na kukaribisha wasee wapya</span></td><td><span class="en">Excluding, bullying or spreading rumours about someone</span><span class="sw">Kutenga, kuonea au kusambaza uvumi kumhusu mtu</span><span class="sh">Ku-exclude, bullying ama kusambaza uvumi kumhusu msee</span></td></tr><tr><td><span class="en">Speaking kindly, even in disagreement</span><span class="sw">Kuzungumza kwa upole, hata kwenye mabishano</span><span class="sh">Kuongea kwa upole, hata kwa mabishano</span></td><td><span class="en">Threatening, intimidating or using force to get your way</span><span class="sw">Kutishia, kutisha au kutumia nguvu kupata unavyotaka</span><span class="sh">Ku-threaten, kutisha ama kutumia nguvu kupata unavyotaka</span></td></tr></table></div><div class="slide"><div class="slide-head">👥 <span class="en">Choose Your Age Group</span><span class="sw">Chagua Kikundi cha Umri</span><span class="sh">Chagua Age Group</span></div><div class="age-block age35"><div class="age-head">👶 <span class="en">Ages 3–5</span><span class="sw">Miaka 3–5</span><span class="sh">Miaka 3–5</span></div><ol class="age-steps"><li><span class="en">Look at each child by name and say, “God loves ___.” Have them repeat, “God loves me.”</span><span class="sw">Mwangalie kila mtoto kwa jina na useme, “Mungu anampenda ___.” Waache waseme, “Mungu ananipenda.”</span><span class="sh">Mwangalie kila mtoto kwa jina na useme, “Mungu anampenda ___.” Waache waseme, “Mungu ananipenda.”</span></li><li><span class="en">Explain plainly that hurtful words, and touches in private places, are never okay for anyone to do to them.</span><span class="sw">Eleza kwa uwazi kwamba maneno ya kuumiza, na kuguswa sehemu za siri, si sawa kamwe kwa mtu yeyote kumfanyia.</span><span class="sh">Eleza wazi ati maneno ya kuumiza, na kuguswa sehemu za siri, si sawa kamwe kwa msee yeyote kumfanyia.</span></li><li><span class="en">Practice saying kind words to the doll — “I like your smile,” “I like you” — then pass it round and let each child try.</span><span class="sw">Fanya mazoezi ya kusema maneno mazuri kwa mwanasesere — “Napenda tabasamu lako,” “Nakupenda” — kisha zunguushe na acha kila mtoto ajaribu.</span><span class="sh">Fanya mazoezi ya kusema maneno mazuri kwa doll — “Napenda tabasamu lako,” “Nakupenda” — kisha zunguushe na acha kila mtoto ajaribu.</span></li><li><span class="en">Have each child say something kind to a family member's name — mother, sibling, grandparent.</span><span class="sw">Acha kila mtoto aseme kitu chema kuhusu jina la mwanafamilia — mama, ndugu, babu au nyanya.</span><span class="sh">Acha kila mtoto aseme kitu chema kuhusu jina la mwanafamilia — mama, ndugu, babu ama nyanya.</span></li></ol></div><div class="age-block age611"><div class="age-head">🧒 <span class="en">Ages 6–11</span><span class="sw">Miaka 6–11</span><span class="sh">Miaka 6–11</span></div><ol class="age-steps"><li><span class="en">Read a short story of a bully and a bullied child. Ask why the bully might act that way, and what the bullied child could do — tell a teacher, seek help, stay calm.</span><span class="sw">Someni hadithi fupi ya mnyanyasaji na mtoto anayeonewa. Uliza kwa nini mnyanyasaji anaweza kutenda hivyo, na mtoto anayeonewa angefanya nini — kumwambia mwalimu, kutafuta msaada, kutulia.</span><span class="sh">Someni story fupi ya bully na mtoto anayeonewa. Uliza kwa nini bully anaweza kutenda hivyo, na mtoto anayeonewa angefanya nini — kumwambia teacher, kutafuta msaada, kutulia.</span></li><li><span class="en">Play a “jump if yes” game: read out statements like “I like my family,” “I want to treat others well,” and have children jump if they agree.</span><span class="sw">Cheza mchezo wa “ruka kama ndiyo”: soma sentensi kama “Napenda familia yangu,” “Nataka kuwatendea wengine vizuri,” na watoto waruke kama wanakubali.</span><span class="sh">Cheza mchezo wa “ruka kama ndiyo”: soma sentensi kama “Napenda familia yangu,” “Nataka kuwatendea wengine vizuri,” na watoto waruke kama wana-agree.</span></li><li><span class="en">Read a short scenario mixing appropriate and inappropriate behaviour. Let the group sort out which was which, and how the inappropriate part could be corrected.</span><span class="sw">Someni hali fupi inayochanganya matendo yanayofaa na yasiyofaa. Acha kikundi kipange ni yapi yalikuwa yapi, na jinsi sehemu isiyofaa ingeweza kusahihishwa.</span><span class="sh">Someni scenario fupi inayochanganya matendo yanayofaa na yasiyofaa. Acha group ipange ni yapi yalikuwa yapi, na jinsi sehemu isiyofaa ingeweza kusahihishwa.</span></li></ol></div><div class="age-block age12p"><div class="age-head">🧑 <span class="en">Ages 12+</span><span class="sw">Miaka 12+</span><span class="sh">Miaka 12+</span></div><ol class="age-steps"><li><span class="en">Discuss peer abuse in its common forms: bullying, gang pressure, sexual pressure. Ask what actually helps — choosing to act confidently, avoiding risky places, building self-esteem through things they're good at.</span><span class="sw">Jadili unyanyasaji wa rika kwa aina zake za kawaida: uonevu, shinikizo la magenge, shinikizo la kingono. Uliza kinachosaidia kweli — kuchagua kutenda kwa ujasiri, kuepuka sehemu hatari, kujenga kujiamini kupitia mambo wanayofanya vizuri.</span><span class="sh">Jadili peer abuse kwa aina zake za kawaida: bullying, shinikizo la magenge, shinikizo la kingono. Uliza kinachosaidia kweli — kuchagua kutenda kwa ujasiri, kuepuka sehemu hatari, kujenga self-esteem kupitia mambo wanayofanya vizuri.</span></li><li><span class="en">Talk plainly about self-harm — cutting, substance misuse, thoughts of suicide — as a response to feeling worthless or unheard, and as a sign to get help, not a shame to hide.</span><span class="sw">Ongea wazi kuhusu kujidhuru — kujikata, matumizi mabaya ya dawa, mawazo ya kujiua — kama mwitikio wa kuhisi hustahili au kutosikilizwa, na kama ishara ya kutafuta msaada, si aibu ya kuficha.</span><span class="sh">Ongea wazi kuhusu self-harm — kujikata, matumizi mabaya ya dawa, mawazo ya kujiua — kama mwitikio wa kufeel hustahili ama kutosikilizwa, na kama ishara ya kutafuta msaada, si aibu ya kuficha.</span></li><li><span class="en">Read 1 Peter 3:8–9 and 2 Timothy 1:7 together. Discuss what it means to respond to unkindness without repaying it in kind.</span><span class="sw">Someni 1 Petro 3:8–9 na 2 Timotheo 1:7 pamoja. Jadilini maana ya kujibu ukatili bila kulipiza kwa ukatili.</span><span class="sh">Someni 1 Peter 3:8–9 na 2 Timothy 1:7 pamoja. Jadilini maana ya kujibu ukatili bila kulipiza kwa ukatili.</span></li></ol></div></div><div class="slide"><div class="slide-head">🙏 <span class="en">Closing</span><span class="sw">Kufunga</span><span class="sh">Kufunga</span></div><div class="scripture-box"><div class="scripture-head">✝️ 1 Peter 3:8–9 (NIV)</div><div class="scripture-verse"><span class="en">“Finally, all of you, be like-minded, be sympathetic, love one another, be compassionate and humble. Do not repay evil with evil or insult with insult. On the contrary, repay evil with blessing, because to this you were called so that you may inherit a blessing.”</span><span class="sw">“Hatimaye, ninyi nyote muwe na nia moja, wenye huruma, wenye kupendana kama ndugu, wenye moyo wa rehema, wenye adabu; msilipe baya kwa baya, wala laumu kwa laumu; bali kinyume chake, barikini; maana mliitiwa hivyo mpate kurithi baraka.”</span><span class="sh">“Finally, all of you, be like-minded, be sympathetic, love one another, be compassionate and humble. Do not repay evil with evil or insult with insult. On the contrary, repay evil with blessing, because to this you were called so that you may inherit a blessing.”</span></div><div class="scripture-line"><span class="en">Responding well to unkindness is not the same as accepting it. It means refusing to let someone else's cruelty decide who you become.</span><span class="sw">Kujibu vizuri ukatili si sawa na kuukubali. Inamaanisha kukataa kuruhusu ukatili wa mtu mwingine uamue utakuwa nani.</span><span class="sh">Kujibu vizuri ukatili si sawa na kuukubali. Inamaanisha kukataa kuruhusu ukatili wa msee mwingine uamue utakuwa nani.</span></div></div><div class="prayer-box"><div class="prayer-head"><span class="en">🙏 Closing Prayer</span><span class="sw">🙏 Sala ya Kufunga</span><span class="sh">🙏 Closing Prayer</span></div><span class="en">Help each of us see the good You put inside us, and treat others the way You have treated us — with kindness, patience and respect. Amen.</span><span class="sw">Tusaidie kuona wema uliouweka ndani yetu, na kuwatendea wengine jinsi ulivyotutendea sisi — kwa upole, uvumilivu na heshima. Amina.</span><span class="sh">Tusaidie kuona wema uliouweka ndani yetu, na kuwatendea wengine jinsi ulivyotutendea sisi — kwa upole, uvumilivu na heshima. Amina.</span></div><div class="takehome-box"><div class="takehome-head"><span class="en">🏠 Take Home — For Caregivers</span><span class="sw">🏠 Kwenda Nyumbani — Kwa Walezi</span><span class="sh">🏠 Take Home — Kwa Walezi</span></div><span class="en">On the back of this page: write a letter — you do not have to give it to anyone — to someone who has been treated badly by others. Speak words of peace, love from God, and hope to them.</span><span class="sw">Nyuma ya karatasi hii: andika barua — huhitaji kuipa mtu yeyote — kwa mtu aliyetendewa vibaya na wengine. Sema maneno ya amani, upendo kutoka kwa Mungu, na tumaini kwake.</span><span class="sh">Nyuma ya karatasi hii: andika barua — huhitaji kuipa msee yeyote — kwa msee aliyetendewa vibaya na wengine. Sema maneno ya amani, love kutoka kwa Mungu, na tumaini kwake.</span></div></div></div>
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div><script>
+var lang = window.CP_LANG || localStorage.getItem('cp_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('cp_lang',l);}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('cp_textsize',s);}
+setSize(localStorage.getItem('cp_textsize')||'md');
+function setAge(b){['35','611','12p'].forEach(function(c){document.querySelectorAll('.age'+c).forEach(function(el){el.style.display=(b===c?'block':'none');});var btn=document.getElementById('ageBtn'+c);if(btn)btn.classList.toggle('active',c===b);});localStorage.setItem('cp_ageband',b);}
+var cur=0,slides=[];
+function init(){slides=document.querySelectorAll('.slide');var dw=document.getElementById('dotsWrap');slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});upd();var vid=document.getElementById('lessonVideo');var ph=document.getElementById('videoPlaceholder');var vurl=window.CP_VIDEO_URL||'';if(vurl&&vid){var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});vid.style.display='none';}else{if(ph)ph.style.display='flex';if(vid)vid.style.display='none';}var slug=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;var rs=window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2)localStorage.setItem('cp_slide_'+slug2,n);}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function scPick(btn,scId,type,resId){document.querySelectorAll('#'+scId+' .choice').forEach(function(b){b.disabled=true;});btn.classList.add('chosen-'+type);var res=document.getElementById(resId);if(res){res.className='s-result '+type;res.style.display='block';}}
+function scRetry(id){var w=document.querySelector('#'+id+' .s-result:not([style*="none"])');if(w)w.style.display='none';document.querySelectorAll('#'+id+' .choice').forEach(function(b){b.disabled=false;b.className='choice';});}
+var mcqAnswers={};
+var mcqExplain={};
+var mcqTypes={};
+function selectOpt(el,grp,letter){document.querySelectorAll('#'+grp+' .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function toggleOpt(el,grp){el.classList.toggle('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp],qtype=mcqTypes[grp]||'mcq';
+    var opts=document.querySelectorAll('#'+grp+' .opt');
+    var chosen=[];opts.forEach(function(o){if(o.classList.contains('selected'))chosen.push(o.getAttribute('data-opt'));});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=false;
+    if(qtype==='msq'){
+      var cArr=correct.split(',').map(function(x){return x.trim();}).sort();
+      var chArr=chosen.slice().sort();
+      ok=JSON.stringify(cArr)===JSON.stringify(chArr);
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(cArr.indexOf(l)>=0)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }else{
+      ok=chosen.length>0&&chosen[0]===correct;
+      opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(chosen.indexOf(l)>=0)o.classList.add('wrong');});
+    }
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';if(ok){fb.className='mcq-fb ok';fb.innerHTML='<strong>✓ Correct!</strong> '+mcqExplain[grp];}else{fb.className='mcq-fb no';fb.innerHTML=(qtype==='msq'?'<strong>✗ Incorrect.</strong> You selected: <strong>'+(chosen.length?chosen.join(', '):'—')+'</strong> — Correct: <strong>'+correct+'</strong>. ':'<strong>✗ Incorrect.</strong> Correct answer: <strong>'+correct+'</strong>. ')+mcqExplain[grp];}}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){sb.style.display='block';document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';document.getElementById('score-detail').textContent=pct>=80?'⭐ Excellent! You understand this topic very well.':pct>=60?'👍 Good effort! Review the highlighted incorrect answers.':'📖 Keep studying! Revisit the lesson slides and try again.';sb.scrollIntoView({behavior:'smooth'});}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
+</body></html>
+
+</body>
+</html>

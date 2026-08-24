@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>What Should I Do If I Am Abused? — On My Own | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left{min-width:0;flex:1;}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.duration-pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:2px 9px;border-radius:20px;font-size:.66rem;font-weight:700;margin-left:7px;white-space:nowrap;display:inline-block;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.print-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.journal-box{background:#fffde7;border:2px dashed var(--acc);border-radius:10px;padding:14px;margin:14px 0;}
+.journal-label{font-weight:700;color:#6b4a00;font-size:.88rem;display:block;margin-bottom:8px;}
+.journal-area{width:100%;border:1px solid var(--acc);border-radius:8px;padding:10px;font-size:.85rem;min-height:72px;resize:vertical;font-family:inherit;background:#fff;}
+.journal-save{background:var(--acc);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.82rem;margin-top:8px;}
+.journal-fb{font-size:.78rem;margin-top:5px;min-height:16px;color:#166534;font-weight:600;}
+.journal-privacy{font-size:.74rem;color:var(--soft);margin-top:8px;font-style:italic;}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.chip{background:#fff;border:2px solid var(--acc);border-radius:20px;padding:9px 16px;font-size:.83rem;cursor:pointer;font-family:inherit;transition:.15s;color:var(--dark);line-height:1.3;}
+.chip:hover{background:#fff9e8;}
+.chip.selected{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700;}
+.chip-hint{font-size:.78rem;color:var(--soft);margin-bottom:8px;font-style:italic;}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.scripture-box{background:linear-gradient(135deg,#fffdf5,#fff8e6);border:1px solid #e8d9a8;border-left:4px solid #b8912f;border-radius:0 10px 10px 0;padding:14px 16px;margin:14px 0;}
+.scripture-box .scripture-head{color:#8a6d1f;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.scripture-box .scripture-verse{font-style:italic;color:#4a3c14;font-size:.92rem;line-height:1.7;margin-bottom:9px;}
+.scripture-box .scripture-line{color:#3a3a2a;font-size:.85rem;line-height:1.6;border-top:1px solid #eadfbe;padding-top:9px;}
+.prayer-box{background:linear-gradient(135deg,#f4f0ff,#eee7ff);border:1px solid #ddd0f7;border-radius:10px;padding:13px 16px;margin:14px 0;font-size:.87rem;line-height:1.7;font-style:italic;color:#3d2f5c;}
+.prayer-box .prayer-head{color:#5b21b6;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;font-style:normal;}
+/* ── Safety signpost — the most important box in the lesson ───────── */
+.safe-box{background:linear-gradient(135deg,#fff5f5,#fff);border:2px solid var(--no);border-radius:12px;padding:16px 18px;margin:14px 0;}
+.safe-box .safe-head{color:#8b0000;font-weight:800;font-size:.92rem;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.safe-box p{font-size:.86rem;color:#3a3a2a;line-height:1.65;margin-bottom:10px;}
+.helpline-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.helpline{background:#fff;border:1.5px solid #f5c6c6;border-radius:8px;padding:9px 12px;}
+.helpline .hl-name{font-size:.76rem;color:var(--soft);font-weight:600;}
+.helpline .hl-num{font-size:1.05rem;color:#8b0000;font-weight:800;}
+@media(max-width:480px){.helpline-grid{grid-template-columns:1fr;}}
+.pace-note{font-size:.78rem;color:var(--soft);text-align:center;margin-top:14px;font-style:italic;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="cp7-what-to-do-if-abused-solo" data-module-slug="what-to-do-if-abused">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 12 min</span></div><div class="lesson-name">🆘 What Should I Do If I Am Abused?</div></div><span class="slide-badge" id="slideCounter">1 / 6</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<div class="slide active">
+<div class="lo-box"><h3><span class="en">📋 By the end of this lesson, you'll know:</span><span class="sw">📋 Mwishoni mwa somo hili, utajua:</span><span class="sh">📋 Mwisho wa lesson hii, utajua:</span></h3><ol>
+<li><span class="en">What to do right away if something feels wrong</span><span class="sw">La kufanya papo hapo kitu kisipokuwa sawa</span><span class="sh">La kufanya papo hapo kitu kisipokuwa sawa</span></li>
+<li><span class="en">Who you can tell, and what happens after you tell them</span><span class="sw">Nani unaweza kumwambia, na nini kinafuata baada ya kumwambia</span><span class="sh">Nani unaweza kumwambia, na nini kinafuata baada ya kumwambia</span></li>
+<li><span class="en">That healing takes time — and you don't have to go through it alone</span><span class="sw">Kwamba uponyaji unachukua muda — na hupaswi kupitia peke yako</span><span class="sh">Ati healing inachukua muda — na hupaswi kupitia peke yako</span></li>
+</ol></div>
+<div class="inquiry"><span class="en">This lesson talks about abuse. That's a heavy topic, and it's completely normal if it brings up strong feelings. Go at your own pace — pause, skip ahead, or come back to this later. There's no rush, and no one is watching you go through it.</span><span class="sw">Somo hili linazungumzia unyanyasaji. Ni mada nzito, na ni kawaida kabisa ikikuletea hisia kali. Enenda kwa mwendo wako mwenyewe — simama, ruka mbele, au urudi baadaye. Hakuna haraka, na hakuna anayekutazama ukilipitia.</span><span class="sh">Hii lesson inazungumzia abuse. Ni mada nzito, na ni kawaida kabisa ikikuletea hisia kali. Enenda kwa mwendo wako — simama, ruka mbele, ama urudi baadaye. Hakuna haraka, na hakuna anayekutazama ukilipitia.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🆘 <span class="en">If You Need Help Right Now</span><span class="sw">Ukihitaji Msaada Sasa Hivi</span><span class="sh">Ukihitaji Msaada Sasa Hivi</span></div>
+<div class="safe-box">
+<div class="safe-head">🆘 <span class="en">You don't have to wait until you finish this lesson</span><span class="sw">Hupaswi kusubiri hadi umalize somo hili</span><span class="sh">Hupaswi kusubiri hadi umalize hii lesson</span></div>
+<p><span class="en">If something is happening to you right now, or already happened, it's okay to stop reading and get help immediately. You can talk to a trusted adult near you — a teacher, a relative, a neighbour, a religious leader — or call one of these numbers. They're free, and they're there for exactly this.</span><span class="sw">Kama kitu kinaendelea sasa hivi, au tayari kimetokea, ni sawa kuacha kusoma na kupata msaada mara moja. Unaweza kuzungumza na mtu mzima wa kuaminika karibu nawe — mwalimu, ndugu, jirani, kiongozi wa dini — au piga mojawapo ya nambari hizi. Ni bure, na ziko pale kwa jambo hili hasa.</span><span class="sh">Kama kitu kinaendelea sasa hivi, ama tayari kimetokea, ni sawa kuacha kusoma na kupata msaada mara moja. Unaweza kuongea na trusted adult karibu nawe — teacher, ndugu, jirani, kiongozi wa dini — ama piga moja ya hizi nambari. Ni free, na ziko pale kwa hili jambo hasa.</span></p>
+<div class="helpline-grid">
+<div class="helpline"><div class="hl-name">📞 Childline Kenya</div><div class="hl-num">116</div></div>
+<div class="helpline"><div class="hl-name">📞 GBV Hotline</div><div class="hl-num">1195</div></div>
+<div class="helpline"><div class="hl-name">📞 Kenya Red Cross</div><div class="hl-num">1199</div></div>
+<div class="helpline"><div class="hl-name">📞 HIV/AIDS Helpline</div><div class="hl-num">0800 723 253</div></div>
+</div>
+</div>
+<p class="tp"><span class="en">You can also use the red 🆘 SOS button on any ARISE page to see this list again — it's always there while you're using the app.</span><span class="sw">Unaweza pia kutumia kitufe chekundu cha 🆘 SOS kwenye ukurasa wowote wa ARISE kuona orodha hii tena — ipo kila wakati unapotumia programu.</span><span class="sh">Unaweza pia kutumia red 🆘 SOS button kwenye page yoyote ya ARISE kuona hii list tena — ipo kila wakati unatumia app.</span></p>
+</div>
+
+<div class="slide">
+<div class="slide-head">🛑 <span class="en">If It Happens, Here's What To Do</span><span class="sw">Ikitokea, Hivi Ndivyo Ufanye</span><span class="sh">Ikitokea, Hivi Ndivyo Ufanye</span></div>
+<ol class="bl">
+<li><span class="en">Say <strong>"No"</strong> and <strong>"Stop"</strong> clearly</span><span class="sw">Sema <strong>"Hapana"</strong> na <strong>"Acha"</strong> kwa uwazi</span><span class="sh">Sema <strong>"Hapana"</strong> na <strong>"Acha"</strong> kwa uwazi</span></li>
+<li><span class="en">Get away, or call out loudly for help</span><span class="sw">Ondoka, au piga kelele kutafuta msaada</span><span class="sh">Ondoka, ama piga kelele kutafuta msaada</span></li>
+<li><span class="en">Go to a trusted adult and tell them — even though it's hard</span><span class="sw">Nenda kwa mtu mzima wa kuaminika na umwambie — hata ikiwa ni vigumu</span><span class="sh">Nenda kwa trusted adult na umwambie — hata ikiwa ni vigumu</span></li>
+<li><span class="en">Answer their questions honestly, including the hard details</span><span class="sw">Jibu maswali yao kwa uaminifu, ikiwa ni pamoja na maelezo magumu</span><span class="sh">Jibu maswali yao kwa uaminifu, ikiwemo maelezo magumu</span></li>
+<li><span class="en">Stay somewhere safe until the situation is resolved</span><span class="sw">Baki mahali salama hadi hali itakaposhughulikiwa</span><span class="sh">Baki mahali salama hadi hali itakaposhughulikiwa</span></li>
+<li><span class="en">Let a trained counsellor help you process it, in time</span><span class="sw">Acha mshauri aliyefunzwa akusaidie kuipitia, kwa wakati wake</span><span class="sh">Acha trained counsellor akusaidie kui-process, kwa wakati wake</span></li>
+</ol>
+<div class="warn-box"><strong><span class="en">⚠️ Telling is never wrong</span><span class="sw">⚠️ Kusema si kosa kamwe</span><span class="sh">⚠️ Kusema si kosa kamwe</span></strong>
+<span class="en">A trusted adult who hears this will not be angry with you. Their job is to find you a safe place, help make a report, and connect you to someone who can help you heal — not to judge you.</span><span class="sw">Mtu mzima wa kuaminika anayesikia hili hatakukasirikia. Kazi yao ni kukupatia mahali salama, kusaidia kutoa taarifa, na kukuunganisha na mtu anayeweza kukusaidia kupona — si kukuhukumu.</span><span class="sh">Trusted adult anayesikia hii hatakukasirikia. Kazi yao ni kukupatia mahali salama, kusaidia kutoa report, na kukuunganisha na msee anayeweza kukusaidia kupona — si kukuhukumu.</span></div>
+<div class="key-term"><strong><span class="en">🔑 You will not be blamed</span><span class="sw">🔑 Hutalaumiwa</span><span class="sh">🔑 Hutalaumiwa</span></strong><span class="en">Whatever happened, it was not your fault. Forgiveness — for yourself or anyone else — is something that can come later, in your own time. It is never a reason to stay quiet or stay in danger now.</span><span class="sw">Chochote kilichotokea, haikuwa kosa lako. Msamaha — kwako au kwa mtu mwingine — ni kitu kinachoweza kuja baadaye, kwa wakati wako mwenyewe. Kamwe si sababu ya kubaki kimya au kubaki hatarini sasa.</span><span class="sh">Chochote kilichotokea, haikuwa kosa lako. Forgiveness — kwako ama kwa msee mwingine — ni kitu kinachoweza kuja baadaye, kwa wakati wako. Kamwe si sababu ya kubaki kimya ama kubaki hatarini sasa.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">💭 <span class="en">Who Are Your Trusted Adults?</span><span class="sw">Ni Nani Watu Wako wa Kuaminika?</span><span class="sh">Ni Nani Wasee Wako wa Kuaminika?</span></div>
+<p class="tp"><span class="en">It helps to know, ahead of time, exactly who you'd go to if you ever needed to. Take a moment to think of 2–3 people — a teacher, a relative, a neighbour, a religious leader, a counsellor.</span><span class="sw">Inasaidia kujua, mapema, hasa mtu utakayemwendea ukihitaji. Chukua muda kufikiria watu 2–3 — mwalimu, ndugu, jirani, kiongozi wa dini, mshauri.</span><span class="sh">Inasaidia kujua, mapema, hasa msee utakayemwendea ukihitaji. Chukua muda kufikiria wasee 2–3 — teacher, ndugu, jirani, kiongozi wa dini, counsellor.</span></p>
+<div class="journal-box">
+<span class="journal-label"><span class="en">✏️ My trusted adults (just for you — see note below)</span><span class="sw">✏️ Watu wangu wa kuaminika (kwako pekee — angalia ujumbe hapo chini)</span><span class="sh">✏️ Wasee wangu wa kuaminika (kwako pekee — angalia note hapo chini)</span></span>
+<p class="chip-hint"><span class="en">Tap anyone who fits — you don't need to type.</span><span class="sw">Gusa yeyote anayefaa — huhitaji kuandika.</span><span class="sh">Gusa yeyote anayefaa — huhitaji kuandika.</span></p>
+<div class="chip-grid" id="trustedChips">
+<button type="button" class="chip" data-val="teacher" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">👩‍🏫 <span class="en">Teacher</span><span class="sw">Mwalimu</span><span class="sh">Teacher</span></button>
+<button type="button" class="chip" data-val="relative" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">👪 <span class="en">Relative</span><span class="sw">Ndugu</span><span class="sh">Ndugu</span></button>
+<button type="button" class="chip" data-val="neighbour" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">🏠 <span class="en">Neighbour</span><span class="sw">Jirani</span><span class="sh">Jirani</span></button>
+<button type="button" class="chip" data-val="religious" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">⛪ <span class="en">Religious leader</span><span class="sw">Kiongozi wa dini</span><span class="sh">Kiongozi wa dini</span></button>
+<button type="button" class="chip" data-val="counsellor" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">🧑‍⚕️ <span class="en">Nurse / counsellor</span><span class="sw">Nesi / mshauri</span><span class="sh">Nurse / counsellor</span></button>
+<button type="button" class="chip" data-val="police" onclick="toggleChip(this,'trustedChips','cp_trusted_adults')">👮 <span class="en">Police / chief</span><span class="sw">Polisi / chifu</span><span class="sh">Polisi / chief</span></button>
+</div>
+<div class="journal-fb" id="journalFb"></div>
+<div class="journal-privacy"><span class="en">🔒 This stays on your own device only. It is never saved to ARISE or seen by anyone else.</span><span class="sw">🔒 Hii inabaki kwenye kifaa chako pekee. Haiwahi kuhifadhiwa kwa ARISE wala kuonwa na mtu mwingine.</span><span class="sh">🔒 Hii inabaki kwenye kifaa chako pekee. Haiwahi kuhifadhiwa kwa ARISE wala kuonwa na msee mwingine.</span></div>
+</div>
+</div>
+
+<div class="slide">
+<div class="slide-head">✅ <span class="en">Check What You Remember</span><span class="sw">Angalia Unachokumbuka</span><span class="sh">Angalia Unachokumbuka</span></div>
+<div class="mcq-block" id="q1">
+<div class="q-text"><span class="en">1. If something happens that makes you feel unsafe, what should you do first?</span><span class="sw">1. Kitu kikitokea kinachokufanya ujisikie si salama, unapaswa kufanya nini kwanza?</span><span class="sh">1. Kitu kikitokea kinachokufanya ujisikie si salama, unapaswa kufanya nini kwanza?</span></div>
+<div class="options" id="q1opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q1','A')"><span class="opt-letter">A.</span><span><span class="en">Say "No" and try to get away</span><span class="sw">Sema "Hapana" na ujaribu kuondoka</span><span class="sh">Sema "Hapana" na ujaribu kuondoka</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q1','B')"><span class="opt-letter">B.</span><span><span class="en">Wait and see if it happens again</span><span class="sw">Subiri uone kama itatokea tena</span><span class="sh">Subiri uone kama itatokea tena</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q1','C')"><span class="opt-letter">C.</span><span><span class="en">Keep it to yourself</span><span class="sw">Weka siri mwenyewe</span><span class="sh">Weka siri mwenyewe</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q1"></div>
+</div>
+<div class="mcq-block" id="q2">
+<div class="q-text"><span class="en">2. If you tell a trusted adult what happened, how will they respond?</span><span class="sw">2. Ukimwambia mtu mzima wa kuaminika kilichotokea, atakuitikiaje?</span><span class="sh">2. Ukimwambia trusted adult kilichotokea, atakuitikiaje?</span></div>
+<div class="options" id="q2opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q2','A')"><span class="opt-letter">A.</span><span><span class="en">They'll be angry with you</span><span class="sw">Atakukasirikia</span><span class="sh">Atakukasirikia</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q2','B')"><span class="opt-letter">B.</span><span><span class="en">They'll help you and won't blame you</span><span class="sw">Atakusaidia na hatakulaumu</span><span class="sh">Atakusaidia na hatakulaumu</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q2','C')"><span class="opt-letter">C.</span><span><span class="en">They'll tell you to stay quiet about it</span><span class="sw">Atakuambia ubaki kimya kuhusu hilo</span><span class="sh">Atakuambia ubaki kimya kuhusu hilo</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q2"></div>
+</div>
+<div class="mcq-block" id="q3">
+<div class="q-text"><span class="en">3. True or False: you need to be completely sure before you're allowed to tell someone.</span><span class="sw">3. Kweli au Uongo: unahitaji kuwa na uhakika kamili kabla ya kuruhusiwa kumwambia mtu.</span><span class="sh">3. Kweli ama Uongo: unahitaji kuwa na uhakika kamili kabla ya kuruhusiwa kumwambia msee.</span></div>
+<div class="options" id="q3opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q3','A')"><span class="opt-letter">A.</span><span><span class="en">True</span><span class="sw">Kweli</span><span class="sh">Kweli</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q3','B')"><span class="opt-letter">B.</span><span><span class="en">False — you can always tell someone, even if you're not sure</span><span class="sw">Uongo — unaweza kumwambia mtu wakati wowote, hata kama huna uhakika</span><span class="sh">Uongo — unaweza kumwambia msee wakati wowote, hata kama huna uhakika</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q3"></div>
+</div>
+<button class="check-btn" onclick="submitMCQ()"><span class="en">Check My Answers</span><span class="sw">Angalia Majibu Yangu</span><span class="sh">Angalia Majibu Yangu</span></button>
+<div class="score-box" id="score-box">
+<div class="score-num" id="score-title"></div>
+<div class="grade-label" id="score-detail"></div>
+</div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🙏 <span class="en">Before You Go</span><span class="sw">Kabla Hujaondoka</span><span class="sh">Kabla Hujaondoka</span></div>
+<div class="scripture-box"><div class="scripture-head">✝️ Psalm 34:18 (NIV)</div><div class="scripture-verse"><span class="en">"The Lord is close to the brokenhearted and saves those who are crushed in spirit."</span><span class="sw">"Bwana yu karibu nao waliovunjika moyo, na waliopondeka roho huwaokoa."</span><span class="sh">"The Lord is close to the brokenhearted and saves those who are crushed in spirit."</span></div><div class="scripture-line"><span class="en">Whatever has happened, this much is settled: God has not moved away from you. Healing takes time — but you don't have to reach it alone.</span><span class="sw">Chochote kilichotokea, hili moja limekaa: Mungu hajahama kutoka kwako. Uponyaji unachukua muda — lakini hupaswi kuufikia peke yako.</span><span class="sh">Chochote kilichotokea, hili moja limekaa: Mungu hajahama kutoka kwako. Healing inachukua muda — lakini hupaswi kuifikia peke yako.</span></div></div>
+<div class="prayer-box"><div class="prayer-head"><span class="en">🙏 A Short Prayer</span><span class="sw">🙏 Sala Fupi</span><span class="sh">🙏 Sala Fupi</span></div><span class="en">Thank You for being close to me, even now. Give me courage to speak if I ever need to, and, in time, healing that reaches all the way through. Amen.</span><span class="sw">Asante kwa kuwa karibu nami, hata sasa. Nipe ujasiri wa kusema nikihitaji, na, kwa wakati wake, uponyaji unaofika ndani kabisa. Amina.</span><span class="sh">Asante kwa kuwa karibu nami, hata sasa. Nipe ujasiri wa kusema nikihitaji, na, kwa wakati wake, healing inayofika ndani kabisa. Amina.</span></div>
+<div class="safe-box">
+<div class="safe-head">🆘 <span class="en">Keep these numbers close</span><span class="sw">Weka nambari hizi karibu</span><span class="sh">Weka hizi nambari karibu</span></div>
+<div class="helpline-grid">
+<div class="helpline"><div class="hl-name">📞 Childline Kenya</div><div class="hl-num">116</div></div>
+<div class="helpline"><div class="hl-name">📞 GBV Hotline</div><div class="hl-num">1195</div></div>
+</div>
+</div>
+<p class="pace-note"><span class="en">You can come back to this lesson any time you need to.</span><span class="sw">Unaweza kurudi kwenye somo hili wakati wowote unapohitaji.</span><span class="sh">Unaweza kurudi kwenye hii lesson wakati wowote unapohitaji.</span></p>
+</div>
+
+</div>
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div>
+<script>
+var lang = window.CP_LANG || localStorage.getItem('cp_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('cp_lang',l);}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('cp_textsize',s);}
+setSize(localStorage.getItem('cp_textsize')||'md');
+var cur=0,slides=[];
+function init(){
+  slides=document.querySelectorAll('.slide');
+  var dw=document.getElementById('dotsWrap');
+  slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
+  upd();
+  var slug=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
+  if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);
+  restoreChips('trustedChips','cp_trusted_adults');
+}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2){try{fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,slide:n})});}catch(e){}localStorage.setItem('cp_slide_'+slug2,n);}}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+function toggleChip(el,gridId,storageKey){el.classList.toggle('selected');var sel=[];document.querySelectorAll('#'+gridId+' .chip.selected').forEach(function(c){sel.push(c.getAttribute('data-val'));});localStorage.setItem(storageKey,JSON.stringify(sel));var fb=document.getElementById('journalFb');if(fb){fb.textContent=sel.length?'✓ Saved on this device.':'';}}
+function restoreChips(gridId,storageKey){var saved=JSON.parse(localStorage.getItem(storageKey)||'[]');saved.forEach(function(v){var c=document.querySelector('#'+gridId+' .chip[data-val="'+v+'"]');if(c)c.classList.add('selected');});}
+var mcqAnswers={q1:'A',q2:'B',q3:'B'};
+var mcqExplain={q1:'Saying "No" and getting away — or calling for help — is always the right first step.',q2:'A trusted adult\'s job is to help you and find you a safe place. You will not be blamed.',q3:'You never need to be 100% sure. If something feels wrong, it\'s always okay to tell someone.'};
+function selectOpt(el,grp){document.querySelectorAll('#'+grp+'opts .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp];
+    var opts=document.querySelectorAll('#'+grp+'opts .opt');
+    var chosen=null;opts.forEach(function(o){if(o.classList.contains('selected'))chosen=o.getAttribute('data-opt');});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=chosen===correct;
+    opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(l===chosen)o.classList.add('wrong');});
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';fb.className='mcq-fb '+(ok?'ok':'no');fb.innerHTML=(ok?'<strong>✓ Correct.</strong> ':'<strong>Worth remembering:</strong> ')+mcqExplain[grp];}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){
+    sb.style.display='block';sb.className='score-box'+(pct>=60?' pass':'');
+    document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';
+    document.getElementById('score-detail').textContent=pct>=80?'⭐ You know exactly what to do.':pct>=60?'👍 Good — scroll up to review any highlighted answers.':'📖 Worth a second look — scroll up and re-read the highlighted parts.';
+    sb.scrollIntoView({behavior:'smooth'});
+  }
+  try{
+    fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,score:score,total:total,percent:pct})});
+  }catch(e){}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Do I Have Any Rights? — On My Own | ARISE</title><style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--pri-d:#074020;--acc:#f5a623;--acc-l:#ffc85a;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--dark:#1a2e1a;--soft:#4a6058;--border:#cde0d4;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--dark);padding-bottom:80px;font-size:15px;line-height:1.65;}
+.top-bar{background:linear-gradient(135deg,var(--pri-d),var(--pri),var(--pri-l));color:#fff;padding:10px 16px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(10,94,42,.4);}
+.top-bar-left{min-width:0;flex:1;}
+.top-bar-left .module-label{font-size:.68rem;opacity:.75;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-bar-left .lesson-name{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.slide-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+.duration-pill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:2px 9px;border-radius:20px;font-size:.66rem;font-weight:700;margin-left:7px;white-space:nowrap;display:inline-block;}
+.lang-bar{background:#1a2e1a;padding:6px 16px;position:sticky;top:58px;z-index:190;display:flex;align-items:center;gap:8px;}
+.lang-bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;align-items:center;gap:8px;}
+.lb-label{font-size:.72rem;color:rgba(255,255,255,.55);}
+.lb-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer;transition:.15s;}
+.lb-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-sep{color:rgba(255,255,255,.2);}
+.lb-size-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;}
+.lb-size-btn.active{background:var(--pri);border-color:var(--pri);color:#fff;}
+.lb-help{background:#c62828;color:#fff;padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;text-decoration:none;margin-left:auto;}
+.print-btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:3px 12px;border-radius:6px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.slides-wrap{max-width:760px;margin:0 auto;}
+.slide{display:none;padding:16px 16px 10px;animation:si .25s ease;}
+.slide.active{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide-head{font-size:1.05rem;font-weight:700;color:var(--pri);padding:6px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,#e8f5ec,transparent);border-radius:0 8px 8px 0;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lo-box{background:linear-gradient(135deg,#e8f5ec,#d4edd9);border-left:4px solid var(--pri);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;}
+.lo-box h3{color:var(--pri);font-size:.92rem;font-weight:700;margin-bottom:10px;}
+.lo-box ol{padding-left:20px;}
+.lo-box ol li{margin-bottom:6px;font-size:.88rem;color:#2a4a2a;line-height:1.55;}
+.inquiry{background:#fff;border:2px dashed var(--acc);border-radius:8px;padding:11px 14px;margin-top:12px;font-size:.85rem;color:#6b4a00;line-height:1.6;}
+p.tp{font-size:.9rem;color:#2a3a2a;line-height:1.72;margin-bottom:11px;}
+.key-term{background:#fff9e8;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.key-term strong{color:#7a5000;display:block;margin-bottom:3px;font-size:.87rem;}
+.warn-box{background:#fff3f3;border-left:4px solid var(--no);border-radius:0 8px 8px 0;padding:11px 14px;margin:11px 0;font-size:.85rem;}
+.warn-box strong{color:#8b0000;}
+.example-box{background:#e8f5ec;border:1px solid #b0d9bc;border-radius:8px;padding:13px 15px;margin:13px 0;font-size:.85rem;line-height:1.68;}
+.example-box strong{color:var(--pri-d);display:block;margin-bottom:5px;font-size:.87rem;}
+ul.bl,ol.bl{padding-left:20px;margin:8px 0 12px;}
+ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1.6;}
+.mcq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.mcq-block .q-text{font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:10px;line-height:1.55;}
+.options{display:flex;flex-direction:column;gap:6px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 9px 42px;position:relative;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;transition:.15s;line-height:1.5;}
+.opt::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid #bbb;border-radius:4px;background:#fff;transition:.15s;}
+.opt:hover{background:#f0f8f2;border-color:var(--pri);}
+.opt:hover::before{border-color:var(--pri);}
+.opt.selected{background:#e8f5ec;border-color:var(--pri);font-weight:600;}
+.opt.selected::before{background:var(--pri);border-color:var(--pri);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.correct{background:#e8f5e9;border-color:var(--ok);color:#1b5e20;}
+.opt.correct::before{background:var(--ok);border-color:var(--ok);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C%2Fsvg%3E");background-size:12px;background-repeat:no-repeat;background-position:center;}
+.opt.wrong{background:#ffebee;border-color:var(--no);color:#b71c1c;}
+.opt.wrong::before{background:var(--no);border-color:var(--no);content:'✕';color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.opt-letter{font-weight:700;color:var(--pri);min-width:18px;}
+.mcq-fb{font-size:.8rem;padding:8px 10px;margin-top:7px;border-radius:7px;display:none;line-height:1.6;}
+.mcq-fb.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.mcq-fb.no{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;margin-top:6px;width:100%;}
+.score-box{border-radius:var(--radius);padding:22px;text-align:center;margin-top:12px;display:none;}
+.score-box.pass{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;}
+.score-num{font-size:1.6rem;font-weight:800;margin-bottom:5px;}
+.grade-label{font-size:.95rem;opacity:.93;margin-bottom:14px;}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:10px 16px;z-index:200;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
+.nav-btn:hover{background:var(--pri-l);}
+.nav-btn:disabled{background:var(--border);color:var(--soft);cursor:default;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+.dot.visited{background:var(--acc);}
+.en{display:block;}.sw{display:none;}.sh{display:none;}
+@media(max-width:600px){.slide{padding:13px 12px 8px;}.nav-btn{padding:8px 14px;font-size:.78rem;}}
+.scripture-box{background:linear-gradient(135deg,#fffdf5,#fff8e6);border:1px solid #e8d9a8;border-left:4px solid #b8912f;border-radius:0 10px 10px 0;padding:14px 16px;margin:14px 0;}
+.scripture-box .scripture-head{color:#8a6d1f;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.scripture-box .scripture-verse{font-style:italic;color:#4a3c14;font-size:.92rem;line-height:1.7;margin-bottom:9px;}
+.scripture-box .scripture-line{color:#3a3a2a;font-size:.85rem;line-height:1.6;border-top:1px solid #eadfbe;padding-top:9px;}
+.prayer-box{background:linear-gradient(135deg,#f4f0ff,#eee7ff);border:1px solid #ddd0f7;border-radius:10px;padding:13px 16px;margin:14px 0;font-size:.87rem;line-height:1.7;font-style:italic;color:#3d2f5c;}
+.prayer-box .prayer-head{color:#5b21b6;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;font-style:normal;}
+/* ── Safety signpost — the most important box in the lesson ───────── */
+.safe-box{background:linear-gradient(135deg,#fff5f5,#fff);border:2px solid var(--no);border-radius:12px;padding:16px 18px;margin:14px 0;}
+.safe-box .safe-head{color:#8b0000;font-weight:800;font-size:.92rem;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.safe-box p{font-size:.86rem;color:#3a3a2a;line-height:1.65;margin-bottom:10px;}
+.helpline-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.helpline{background:#fff;border:1.5px solid #f5c6c6;border-radius:8px;padding:9px 12px;}
+.helpline .hl-name{font-size:.76rem;color:var(--soft);font-weight:600;}
+.helpline .hl-num{font-size:1.05rem;color:#8b0000;font-weight:800;}
+@media(max-width:480px){.helpline-grid{grid-template-columns:1fr;}}
+.pace-note{font-size:.78rem;color:var(--soft);text-align:center;margin-top:14px;font-style:italic;}
+</style></head>
+<body data-lesson-id="0" data-lesson-slug="cp6-my-rights-solo" data-module-slug="my-rights">
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 10 min</span></div><div class="lesson-name">⚖️ Do I Have Any Rights?</div></div><span class="slide-badge" id="slideCounter">1 / 5</span></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
+
+<div class="slides-wrap" id="slidesWrap">
+
+<div class="slide active">
+<div class="lo-box"><h3><span class="en">📋 By the end of this lesson, you'll know:</span><span class="sw">📋 Mwishoni mwa somo hili, utajua:</span><span class="sh">📋 Mwisho wa lesson hii, utajua:</span></h3><ol>
+<li><span class="en">Rights every child has, drawn from the UN Convention on the Rights of the Child</span><span class="sw">Haki ambazo kila mtoto anazo, kutoka Mkataba wa Umoja wa Mataifa wa Haki za Mtoto</span><span class="sh">Haki ambazo kila mtoto anazo, kutoka UN Convention on the Rights of the Child</span></li>
+<li><span class="en">That these rights come from being made and loved by God — not earned by good behaviour</span><span class="sw">Kwamba haki hizi zinatoka kwa kuumbwa na kupendwa na Mungu — si kupatikana kwa tabia njema</span><span class="sh">Ati hizi rights zinatoka kwa kuumbwa na kupendwa na Mungu — si kupatikana kwa tabia njema</span></li>
+<li><span class="en">Who you can talk to if one of your rights is not being honoured</span><span class="sw">Nani unaweza kuzungumza naye kama haki yako moja haitiliwi maanani</span><span class="sh">Nani unaweza kuongea naye kama haki yako moja haitiliwi maanani</span></li>
+</ol></div>
+<div class="inquiry"><span class="en"><strong>🔍 Big Question:</strong> A rock has no rights — it can be thrown, broken, ignored, and nothing is owed to it. What's different about you?</span><span class="sw"><strong>🔍 Swali Kubwa:</strong> Jiwe halina haki — linaweza kutupwa, kuvunjwa, kupuuzwa, na hakuna kinachodaiwa kwalo. Ni nini tofauti kukuhusu wewe?</span><span class="sh"><strong>🔍 Big Question:</strong> Jiwe halina rights — linaweza kutupwa, kuvunjwa, kupuuzwa, na hakuna kinachodaiwa kwalo. Ni nini tofauti kukuhusu wewe?</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">💎 <span class="en">Why You're Not a Rock</span><span class="sw">Kwa Nini Wewe Si Jiwe</span><span class="sh">Kwa Nini Wewe Si Jiwe</span></div>
+<p class="tp"><span class="en">A rock can be picked up, thrown, stepped on, even cut in half — and nothing is owed to it. No one is punished for how they treat a rock.</span><span class="sw">Jiwe linaweza kuokotwa, kutupwa, kukanyagwa, hata kukatwa vipande viwili — na hakuna kinachodaiwa kwalo. Hakuna anayeadhibiwa kwa jinsi analotendea jiwe.</span><span class="sh">Jiwe linaweza kuokotwa, kutupwa, kukanyagwa, hata kukatwa vipande viwili — na hakuna kinachodaiwa kwalo. Hakuna anayeadhibiwa kwa jinsi analotendea jiwe.</span></p>
+<p class="tp"><span class="en">You are not a rock. God loves you and created you with a plan for your life. Sometimes people don't treat children well — but you have rights that a rock does not, and there are real protections for how you're treated.</span><span class="sw">Wewe si jiwe. Mungu anakupenda na alikuumba na mpango kwa maisha yako. Wakati mwingine watu hawatendei watoto vizuri — lakini una haki ambazo jiwe halina, na kuna ulinzi halisi kwa jinsi unavyotendewa.</span><span class="sh">Wewe si jiwe. Mungu anakupenda na alikuumba na plan kwa maisha yako. Wakati mwingine wasee hawatendei watoto vizuri — lakini una rights ambazo jiwe halina, na kuna ulinzi halisi kwa jinsi unavyotendewa.</span></p>
+<div class="key-term"><strong><span class="en">🔑 You didn't earn these rights</span><span class="sw">🔑 Hukupata haki hizi kwa kufanya kazi</span><span class="sh">🔑 Hukupata hizi rights kwa kufanya kazi</span></strong><span class="en">They don't depend on good grades, good behaviour, or anyone's approval. They come from being made and loved by God — full stop.</span><span class="sw">Hazitegemei alama nzuri, tabia njema, au idhini ya mtu yeyote. Zinatoka kwa kuumbwa na kupendwa na Mungu — hivyo tu.</span><span class="sh">Hazitegemei alama nzuri, tabia njema, ama idhini ya msee yeyote. Zinatoka kwa kuumbwa na kupendwa na Mungu — hivyo tu.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">📜 <span class="en">Rights You Have Right Now</span><span class="sw">Haki Ulizonazo Sasa Hivi</span><span class="sh">Haki Ulizonazo Sasa Hivi</span></div>
+<ul class="bl">
+<li><span class="en">You have the right to have caregivers, organisations and your government decide based on what's <strong>best for you</strong></span><span class="sw">Una haki ya kuwa na walezi, mashirika na serikali yako wakiamua kulingana na <strong>lililo bora kwako</strong></span><span class="sh">Una right ya kuwa na walezi, mashirika na serikali yako wakiamua kulingana na <strong>lililo bora kwako</strong></span></li>
+<li><span class="en">You have the right to be treated fairly, without discrimination for any reason</span><span class="sw">Una haki ya kutendewa kwa haki, bila ubaguzi wa aina yoyote</span><span class="sh">Una right ya kutendewa kwa haki, bila ubaguzi wa aina yoyote</span></li>
+<li><span class="en">You have the right to have a say in decisions that affect you</span><span class="sw">Una haki ya kuwa na sauti katika maamuzi yanayokuhusu</span><span class="sh">Una right ya kuwa na sauti katika maamuzi yanayokuhusu</span></li>
+<li><span class="en">You have the right to expect your government to provide for you economically, socially and culturally</span><span class="sw">Una haki ya kutarajia serikali yako ikutunze kiuchumi, kijamii na kiutamaduni</span><span class="sh">Una right ya kutarajia serikali yako ikutunze kiuchumi, kijamii na kiutamaduni</span></li>
+<li><span class="en">You have the right to life, survival and growth</span><span class="sw">Una haki ya uhai, kuishi na kukua</span><span class="sh">Una right ya uhai, kuishi na kukua</span></li>
+<li><span class="en">You have the right to privacy</span><span class="sw">Una haki ya faragha</span><span class="sh">Una right ya faragha</span></li>
+<li><span class="en">You have the right to be protected from harmful or dangerous work</span><span class="sw">Una haki ya kulindwa dhidi ya kazi hatari au yenye madhara</span><span class="sh">Una right ya kulindwa dhidi ya kazi hatari ama yenye madhara</span></li>
+<li><span class="en">You have the right to be cared for by people who respect your family's religion, culture and language</span><span class="sw">Una haki ya kutunzwa na watu wanaoheshimu dini, utamaduni na lugha ya familia yako</span><span class="sh">Una right ya kutunzwa na wasee wanaoheshimu dini, utamaduni na lugha ya familia yako</span></li>
+</ul>
+<div class="scripture-box"><div class="scripture-head">✝️ Mark 10:14 (NIV)</div><div class="scripture-verse"><span class="en">"Let the little children come to me, and do not hinder them, for the kingdom of God belongs to such as these."</span><span class="sw">"Waacheni watoto wadogo waje kwangu, wala msiwazuie; kwa maana ufalme wa Mungu ni wa watu kama hao."</span><span class="sh">"Let the little children come to me, and do not hinder them, for the kingdom of God belongs to such as these."</span></div><div class="scripture-line"><span class="en">Jesus placed children at the centre, not the edge. A right you've never heard of still protects you exactly as much as one you do know — that's why it's worth learning what they are.</span><span class="sw">Yesu aliwaweka watoto katikati, si pembeni. Haki ambayo hujawahi kusikia bado inakulinda sawa na ile unayoijua — ndiyo maana ni muhimu kujua zilizopo.</span><span class="sh">Yesu aliwaweka watoto katikati, si pembeni. Right ambayo hujawahi kusikia bado inakulinda sawa na ile unayoijua — ndiyo maana ni muhimu kujua zilizopo.</span></div></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🧭 <span class="en">When a Right Isn't Honoured</span><span class="sw">Wakati Haki Haitekelezwi</span><span class="sh">Wakati Right Haitekelezwi</span></div>
+<p class="tp"><span class="en">Sometimes a child's rights aren't respected — not always through cruelty, sometimes through hardship or unfair custom. Here are two real examples:</span><span class="sw">Wakati mwingine haki za mtoto hazithaminiwi — si mara zote kwa ukatili, wakati mwingine kwa shida au desturi zisizo za haki. Hizi ni mifano miwili halisi:</span><span class="sh">Wakati mwingine rights za mtoto hazithaminiwi — si mara zote kwa ukatili, wakati mwingine kwa shida ama desturi zisizo za haki. Hizi ni mifano miwili halisi:</span></p>
+<div class="example-box"><strong><span class="en">📘 Taken out of school to work</span><span class="sw">📘 Kutolewa Shuleni Kwenda Kazini</span><span class="sh">📘 Kutolewa Shuleni Kwenda Kazini</span></strong><span class="en">A child is kept home from school to earn money for the family. This affects the right to education and protection from harmful work. A teacher, church leader, or local chief can often help the family find another way.</span><span class="sw">Mtoto anawekwa nyumbani asiende shule ili apate pesa kwa familia. Hii inaathiri haki ya elimu na ulinzi dhidi ya kazi hatari. Mwalimu, kiongozi wa kanisa, au chifu wa eneo mara nyingi anaweza kusaidia familia kupata njia nyingine.</span><span class="sh">Mtoto anawekwa nyumbani asiende shule ili apate pesa kwa familia. Hii inaathiri right ya elimu na ulinzi dhidi ya kazi hatari. Teacher, kiongozi wa kanisa, ama chifu wa eneo mara nyingi anaweza kusaidia familia kupata njia nyingine.</span></div>
+<div class="example-box"><strong><span class="en">📘 Left out for being poor</span><span class="sw">📘 Kuachwa Nje kwa Kuwa Maskini</span><span class="sh">📘 Kuachwa Nje kwa Kuwa Maskini</span></strong><span class="en">A child is left out of an award, a trip, or an activity because their family can't afford something. This is discrimination — a right you have regardless of your family's situation. A teacher or school administrator is usually the right person to raise this with.</span><span class="sw">Mtoto anaachwa nje ya tuzo, safari, au shughuli kwa sababu familia yao haiwezi kumudu kitu fulani. Huu ni ubaguzi — haki uliyonayo bila kujali hali ya familia yako. Mwalimu au msimamizi wa shule kwa kawaida ndiye mtu sahihi wa kuinua jambo hili.</span><span class="sh">Mtoto anaachwa nje ya tuzo, safari, ama shughuli kwa sababu familia yao haiwezi kumudu kitu fulani. Hii ni discrimination — right uliyonayo bila kujali hali ya familia yako. Teacher ama msimamizi wa shule kwa kawaida ndiye msee sahihi wa kuinua hili jambo.</span></div>
+<div class="warn-box"><strong><span class="en">⚠️ If this sounds like your situation</span><span class="sw">⚠️ Kama Hii Inafanana na Hali Yako</span><span class="sh">⚠️ Kama Hii Inafanana na Hali Yako</span></strong><span class="en">Speaking up doesn't have to mean confrontation. It can be as simple as telling a teacher, church leader, or local official what's happening and asking for help. If you're ever unsure who to turn to, a trusted adult — or one of the numbers below — can help you figure out the next step.</span><span class="sw">Kusema hakuhitaji kumaanisha mzozo. Inaweza kuwa rahisi kama kumwambia mwalimu, kiongozi wa kanisa, au afisa wa eneo kinachotokea na kuomba msaada. Ukiwa huna uhakika wa kumwendea, mtu mzima wa kuaminika — au mojawapo ya nambari hapa chini — anaweza kukusaidia kujua hatua inayofuata.</span><span class="sh">Kusema hakuhitaji kumaanisha mzozo. Inaweza kuwa rahisi kama kumwambia teacher, kiongozi wa kanisa, ama afisa wa eneo kinachotokea na kuomba msaada. Ukiwa huna uhakika wa kumwendea, trusted adult — ama moja ya hizi nambari hapa chini — anaweza kukusaidia kujua hatua inayofuata.</span></div>
+<div class="helpline-grid">
+<div class="helpline"><div class="hl-name">📞 Childline Kenya</div><div class="hl-num">116</div></div>
+<div class="helpline"><div class="hl-name">📞 GBV Hotline</div><div class="hl-num">1195</div></div>
+</div>
+</div>
+
+<div class="slide">
+<div class="slide-head">✅ <span class="en">Check What You Remember</span><span class="sw">Angalia Unachokumbuka</span><span class="sh">Angalia Unachokumbuka</span></div>
+<div class="mcq-block" id="q1">
+<div class="q-text"><span class="en">1. Where do your rights come from?</span><span class="sw">1. Haki zako zinatoka wapi?</span><span class="sh">1. Hizi rights zako zinatoka wapi?</span></div>
+<div class="options" id="q1opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q1','A')"><span class="opt-letter">A.</span><span><span class="en">Being made and loved by God</span><span class="sw">Kuumbwa na kupendwa na Mungu</span><span class="sh">Kuumbwa na kupendwa na Mungu</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q1','B')"><span class="opt-letter">B.</span><span><span class="en">Good grades and good behaviour</span><span class="sw">Alama nzuri na tabia njema</span><span class="sh">Alama nzuri na tabia njema</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q1','C')"><span class="opt-letter">C.</span><span><span class="en">Being old enough to ask for them</span><span class="sw">Kuwa na umri wa kutosha kuziomba</span><span class="sh">Kuwa na umri wa kutosha kuziomba</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q1"></div>
+</div>
+<div class="mcq-block" id="q2">
+<div class="q-text"><span class="en">2. A child is kept out of school to work. Which right does this affect?</span><span class="sw">2. Mtoto anawekwa nje ya shule kwenda kufanya kazi. Haki gani inaathiriwa?</span><span class="sh">2. Mtoto anawekwa nje ya shule kwenda kufanya kazi. Right gani inaathiriwa?</span></div>
+<div class="options" id="q2opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q2','A')"><span class="opt-letter">A.</span><span><span class="en">The right to a favourite colour</span><span class="sw">Haki ya rangi unayopenda</span><span class="sh">Right ya rangi unayopenda</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q2','B')"><span class="opt-letter">B.</span><span><span class="en">Education, and protection from harmful work</span><span class="sw">Elimu, na ulinzi dhidi ya kazi hatari</span><span class="sh">Elimu, na ulinzi dhidi ya kazi hatari</span></span></div>
+<div class="opt" data-opt="C" onclick="selectOpt(this,'q2','C')"><span class="opt-letter">C.</span><span><span class="en">Nothing — families can decide this freely</span><span class="sw">Hakuna — familia zinaweza kuamua hivi kwa uhuru</span><span class="sh">Hakuna — familia zinaweza kuamua hivi kwa uhuru</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q2"></div>
+</div>
+<div class="mcq-block" id="q3">
+<div class="q-text"><span class="en">3. If you think one of your rights isn't being honoured, what can you do?</span><span class="sw">3. Ukifikiri haki yako moja haitiliwi maanani, unaweza kufanya nini?</span><span class="sh">3. Ukifikiri right yako moja haitiliwi maanani, unaweza kufanya nini?</span></div>
+<div class="options" id="q3opts">
+<div class="opt" data-opt="A" onclick="selectOpt(this,'q3','A')"><span class="opt-letter">A.</span><span><span class="en">Stay quiet — nothing can be done</span><span class="sw">Baki kimya — hakuna kinachoweza kufanywa</span><span class="sh">Baki kimya — hakuna kinachoweza kufanywa</span></span></div>
+<div class="opt" data-opt="B" onclick="selectOpt(this,'q3','B')"><span class="opt-letter">B.</span><span><span class="en">Tell a trusted adult, like a teacher or church leader</span><span class="sw">Mwambie mtu mzima wa kuaminika, kama mwalimu au kiongozi wa kanisa</span><span class="sh">Mwambie trusted adult, kama teacher ama kiongozi wa kanisa</span></span></div>
+</div>
+<div class="mcq-fb" id="fb_q3"></div>
+</div>
+<button class="check-btn" onclick="submitMCQ()"><span class="en">Check My Answers</span><span class="sw">Angalia Majibu Yangu</span><span class="sh">Angalia Majibu Yangu</span></button>
+<div class="score-box" id="score-box">
+<div class="score-num" id="score-title"></div>
+<div class="grade-label" id="score-detail"></div>
+</div>
+<div class="prayer-box"><div class="prayer-head"><span class="en">🙏 A Short Prayer</span><span class="sw">🙏 Sala Fupi</span><span class="sh">🙏 Sala Fupi</span></div><span class="en">Thank You for giving me rights that come from being made and loved by You. Raise up people around me who will protect me and help me grow. Amen.</span><span class="sw">Asante kwa kunipa haki zinazotoka kwa kuumbwa na kupendwa na Wewe. Inua watu karibu nami watakaonilinda na kunisaidia kukua. Amina.</span><span class="sh">Asante kwa kunipa hizi rights zinazotoka kwa kuumbwa na kupendwa na Wewe. Inua wasee karibu nami watakaonilinda na kunisaidia kukua. Amina.</span></div>
+<p class="pace-note"><span class="en">You can come back to this lesson any time you need to.</span><span class="sw">Unaweza kurudi kwenye somo hili wakati wowote unapohitaji.</span><span class="sh">Unaweza kurudi kwenye hii lesson wakati wowote unapohitaji.</span></p>
+</div>
+
+</div>
+<div class="nav-bar"><div class="nav-inner"><button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button><div class="dots" id="dotsWrap"></div><button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button></div></div>
+<script>
+var lang = window.CP_LANG || localStorage.getItem('cp_lang') || 'en';
+function setLang(l){lang=l;['en','sw','sh'].forEach(function(c){document.querySelectorAll('.'+c).forEach(function(el){el.style.display=l===c?'block':'none';});});['enBtn','swBtn','shBtn'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('active',id===l+'Btn');});localStorage.setItem('cp_lang',l);}
+setLang(lang);
+function setSize(s){var map={sm:'13px',md:'15px',lg:'17px'};document.body.style.fontSize=map[s]||'15px';['sm','md','lg'].forEach(function(k){var b=document.getElementById('sz-'+k);if(b)b.classList.toggle('active',k===s);});localStorage.setItem('cp_textsize',s);}
+setSize(localStorage.getItem('cp_textsize')||'md');
+var cur=0,slides=[];
+function init(){
+  slides=document.querySelectorAll('.slide');
+  var dw=document.getElementById('dotsWrap');
+  slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
+  upd();
+  var slug=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
+  if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);
+}
+function navigate(dir){go(cur+dir);}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2){try{fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,slide:n})});}catch(e){}localStorage.setItem('cp_slide_'+slug2,n);}}
+function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
+var mcqAnswers={q1:'A',q2:'B',q3:'B'};
+var mcqExplain={q1:'Your rights come from being made and loved by God — not from grades, behaviour, or anyone\'s approval.',q2:'Taking a child out of school to work affects their right to education and to be protected from harmful work.',q3:'Telling a trusted adult — a teacher, church leader, or local official — is always a safe first step.'};
+function selectOpt(el,grp){document.querySelectorAll('#'+grp+'opts .opt').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');}
+function submitMCQ(){
+  var score=0,total=Object.keys(mcqAnswers).length;
+  Object.keys(mcqAnswers).forEach(function(grp){
+    var correct=mcqAnswers[grp];
+    var opts=document.querySelectorAll('#'+grp+'opts .opt');
+    var chosen=null;opts.forEach(function(o){if(o.classList.contains('selected'))chosen=o.getAttribute('data-opt');});
+    opts.forEach(function(o){o.onclick=null;});
+    var ok=chosen===correct;
+    opts.forEach(function(o){var l=o.getAttribute('data-opt');if(l===correct)o.classList.add('correct');else if(l===chosen)o.classList.add('wrong');});
+    if(ok)score++;
+    var fb=document.getElementById('fb_'+grp);
+    if(fb){fb.style.display='block';fb.className='mcq-fb '+(ok?'ok':'no');fb.innerHTML=(ok?'<strong>✓ Correct.</strong> ':'<strong>Worth remembering:</strong> ')+mcqExplain[grp];}
+  });
+  var pct=Math.round(score/total*100);
+  var sb=document.getElementById('score-box');
+  if(sb){
+    sb.style.display='block';sb.className='score-box'+(pct>=60?' pass':'');
+    document.getElementById('score-title').textContent=score+' / '+total+' ('+pct+'%)';
+    document.getElementById('score-detail').textContent=pct>=80?'⭐ You know your rights well.':pct>=60?'👍 Good — scroll up to review any highlighted answers.':'📖 Worth a second look — scroll up and re-read the highlighted parts.';
+    sb.scrollIntoView({behavior:'smooth'});
+  }
+  try{
+    fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,score:score,total:total,percent:pct})});
+  }catch(e){}
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
