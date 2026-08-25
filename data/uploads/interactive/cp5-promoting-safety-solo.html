@@ -93,9 +93,15 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 @media(max-width:480px){.helpline-grid{grid-template-columns:1fr;}}
 .pace-note{font-size:.78rem;color:var(--soft);text-align:center;margin-top:14px;font-style:italic;}
 .light-note{background:#f4f8ff;border-left:4px solid #3d7eff;border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:.82rem;color:#2a3a2a;line-height:1.6;}
+.video-slot{background:#1a1a2e;border-radius:var(--radius);margin:14px 0;overflow:hidden;}
+.video-slot video{width:100%;display:block;max-height:360px;background:#000;}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px;text-align:center;color:#fff;font-size:.9rem;font-weight:700;}
+.video-placeholder .play-icon{font-size:3rem;margin-bottom:10px;opacity:.55;}
+.upload-note{margin-top:10px;font-size:.72rem;color:rgba(255,255,255,.65);font-weight:400;background:rgba(245,166,35,.15);border:1px solid rgba(245,166,35,.3);padding:6px 14px;border-radius:20px;display:inline-block;}
+.video-caption{background:rgba(0,0,0,.55);color:rgba(255,255,255,.75);font-size:.75rem;padding:7px 14px;text-align:center;}
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="cp5-promoting-safety-solo" data-module-slug="promoting-safety">
-<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 10 min</span></div><div class="lesson-name">🛟 Promoting My Own Safety</div></div><span class="slide-badge" id="slideCounter">1 / 5</span></div>
+<div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 10 min</span></div><div class="lesson-name">🛟 Promoting My Own Safety</div></div><span class="slide-badge" id="slideCounter">1 / 6</span></div>
 <div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
 
 <div class="slides-wrap" id="slidesWrap">
@@ -128,6 +134,20 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 <li><span class="en"><strong>People and places</strong> — stay away from places known locally for crime, drugs or violence, especially after dark.</span><span class="sw"><strong>Watu na sehemu</strong> — kaa mbali na sehemu zinazojulikana kwa uhalifu, dawa za kulevya au vurugu, hasa giza likiingia.</span><span class="sh"><strong>Wasee na sehemu</strong> — kaa mbali na sehemu zinazojulikana kwa crime, dawa za kulevya ama vurugu, hasa giza likiingia.</span></li>
 </ul>
 <div class="key-term"><strong><span class="en">🔑 Noticing is the skill</span><span class="sw">🔑 Kutambua Ndio Ujuzi</span><span class="sh">🔑 Kutambua Ndio Ujuzi</span></strong><span class="en">Almost every injury was visible before it happened — the water that was too deep, the road crossed without looking. You don't need to be afraid of the world. You just need to notice the ordinary warning before it costs you something.</span><span class="sw">Karibu kila jeraha lilionekana kabla halijatokea — maji yaliyokuwa marefu mno, barabara iliyovukwa bila kuangalia. Hupaswi kuogopa dunia. Unahitaji tu kutambua onyo la kawaida kabla halijakugharimu kitu.</span><span class="sh">Karibu kila jeraha lilionekana kabla halijatokea — maji yaliyokuwa marefu mno, barabara iliyovukwa bila kuangalia. Hupaswi kuogopa dunia. Unahitaji tu kutambua onyo la kawaida kabla halijakugharimu kitu.</span></div>
+</div>
+
+<div class="slide">
+<div class="slide-head">🎬 <span class="en">Small Careful Choices</span><span class="sw">Maamuzi Madogo ya Uangalifu</span><span class="sh">Maamuzi Madogo ya Uangalifu</span></div>
+<p class="tp"><span class="en">Here's a short video with some of these everyday safety tips.</span><span class="sw">Hapa kuna video fupi yenye baadhi ya vidokezo hivi vya usalama wa kila siku.</span><span class="sh">Hapa kuna video fupi yenye baadhi ya vidokezo hivi vya usalama wa kila siku.</span></p>
+<div class="video-slot">
+    <video id="lessonVideo" controls playsinline style="display:none;"></video>
+    <div class="video-placeholder" id="videoPlaceholder">
+        <div class="play-icon">▶️</div>
+        <span class="en">Video coming soon</span><span class="sw">Video inakuja hivi karibuni</span><span class="sh">Video inakuja hivi karibuni</span>
+        <div class="upload-note"><span class="en">This space is ready — a video will appear here automatically once uploaded.</span><span class="sw">Nafasi hii iko tayari — video itaonekana hapa moja kwa moja ikisha pakiwa.</span><span class="sh">Nafasi hii iko tayari — video itaonekana hapa moja kwa moja ikisha pakiwa.</span></div>
+    </div>
+    <div class="video-caption"><span class="en">Everyday habits that keep you safe</span><span class="sw">Tabia za kila siku zinazokuweka salama</span><span class="sh">Tabia za kila siku zinazokuweka salama</span></div>
+</div>
 </div>
 
 <div class="slide">
@@ -187,6 +207,13 @@ function init(){
   var dw=document.getElementById('dotsWrap');
   slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
   upd();
+  var vid=document.getElementById('lessonVideo');
+  var ph=document.getElementById('videoPlaceholder');
+  var vurl=window.ARISE_VIDEO_URL||'';
+  if(vurl&&vid){
+    var s=document.createElement('source');s.src=vurl;s.type='video/mp4';vid.appendChild(s);vid.load();
+    vid.addEventListener('loadeddata',function(){if(ph)ph.style.display='none';vid.style.display='block';});
+  }
   var slug=window.ARISE_LESSON_SLUG||window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
   var rs=window.ARISE_RESUME_SLIDE||window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
   if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);
