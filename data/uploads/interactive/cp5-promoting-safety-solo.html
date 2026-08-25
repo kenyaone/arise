@@ -96,7 +96,7 @@ ul.bl li,ol.bl li{margin-bottom:7px;font-size:.88rem;color:#2a3a2a;line-height:1
 </style></head>
 <body data-lesson-id="0" data-lesson-slug="cp5-promoting-safety-solo" data-module-slug="promoting-safety">
 <div class="top-bar"><div class="top-bar-left"><div class="module-label">Child Protection Curriculum · On My Own<span class="duration-pill">⏱ 10 min</span></div><div class="lesson-name">🛟 Promoting My Own Safety</div></div><span class="slide-badge" id="slideCounter">1 / 5</span></div>
-<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/arise/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
+<div class="lang-bar"><div class="lang-bar-inner"><span class="lb-label">🌍</span><button class="lb-btn active" id="enBtn" onclick="setLang('en')">EN</button><button class="lb-btn" id="swBtn" onclick="setLang('sw')">SW</button><button class="lb-btn" id="shBtn" onclick="setLang('sh')">SH</button><span class="lb-sep">|</span><span class="lb-label">🔡</span><button class="lb-size-btn active" id="sz-sm" onclick="setSize('sm')">A−</button><button class="lb-size-btn" id="sz-md" onclick="setSize('md')">A</button><button class="lb-size-btn" id="sz-lg" onclick="setSize('lg')">A+</button><a href="/?p=modules" class="lb-help">🏠 All Modules</a></div></div>
 
 <div class="slides-wrap" id="slidesWrap">
 
@@ -187,12 +187,12 @@ function init(){
   var dw=document.getElementById('dotsWrap');
   slides.forEach(function(_,i){var d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=function(){go(i);};dw.appendChild(d);});
   upd();
-  var slug=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
-  var rs=window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
+  var slug=window.ARISE_LESSON_SLUG||window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;
+  var rs=window.ARISE_RESUME_SLIDE||window.CP_RESUME_SLIDE||(slug?parseInt(localStorage.getItem('cp_slide_'+slug)||'0'):0);
   if(rs>0&&rs<slides.length)setTimeout(function(){go(rs);},120);
 }
 function navigate(dir){go(cur+dir);}
-function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2){try{fetch('/arise/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,slide:n})});}catch(e){}localStorage.setItem('cp_slide_'+slug2,n);}}
+function go(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');var dots=document.querySelectorAll('.dot');dots[cur].classList.remove('active');dots[cur].classList.add('visited');cur=n;slides[cur].classList.add('active');dots[cur].classList.remove('visited');dots[cur].classList.add('active');upd();window.scrollTo(0,0);var slug2=window.ARISE_LESSON_SLUG||window.CP_LESSON_SLUG||document.body.dataset.lessonSlug;if(slug2){try{fetch('/?p=api_lesson&action=save_progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,slide:n})});}catch(e){}localStorage.setItem('cp_slide_'+slug2,n);}}
 function upd(){document.getElementById('slideCounter').textContent=(cur+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===slides.length-1;}
 var mcqAnswers={q1:'B',q2:'B',q3:'A'};
 var mcqExplain={q1:'An unfamiliar or wild animal can be dangerous even when it looks calm. Back away and tell an adult.',q2:'These are the two most important moments — after the toilet, and before food — for stopping the spread of illness.',q3:'Crossing quickly without looking is exactly how visible dangers turn into injuries. Always look first.'};
@@ -219,7 +219,7 @@ function submitMCQ(){
     sb.scrollIntoView({behavior:'smooth'});
   }
   try{
-    fetch('/arise/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,score:score,total:total,percent:pct})});
+    fetch('/?p=api_lesson&action=save_quiz_score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lesson_id:window.ARISE_LESSON_ID||0,score:score,total:total,percent:pct})});
   }catch(e){}
 }
 window.addEventListener('DOMContentLoaded',init);
