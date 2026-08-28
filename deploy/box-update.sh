@@ -99,10 +99,24 @@ cd "$ARISE_ROOT"
 
 # ── Preconditions ───────────────────────────────────────────────────────────
 step "Checking box preconditions"
-command -v git     >/dev/null || failure "git not installed on box"
-command -v sqlite3 >/dev/null || failure "sqlite3 not installed on box"
-command -v php     >/dev/null || failure "php not installed on box"
+command -v git >/dev/null || failure "git not installed on box (sudo apt install -y git)"
+command -v php >/dev/null || failure "php not installed on box"
 [[ -f data/arise.db ]] || failure "DB missing: $ARISE_ROOT/data/arise.db"
+
+# sqlite3 CLI is often absent on stripped-down boxes (the PHP sqlite3
+# extension powers the app; the CLI is a separate package). Auto-install it.
+if ! command -v sqlite3 >/dev/null; then
+    warn "sqlite3 CLI missing — attempting apt install"
+    if command -v apt-get >/dev/null; then
+        DEBIAN_FRONTEND=noninteractive apt-get install -y sqlite3 >/dev/null 2>&1 \
+            || DEBIAN_FRONTEND=noninteractive apt-get update -qq \
+            && DEBIAN_FRONTEND=noninteractive apt-get install -y sqlite3 >/dev/null 2>&1 \
+            || failure "could not install sqlite3 (no internet, or apt broken). Run: sudo apt update && sudo apt install -y sqlite3, then rerun."
+        info "sqlite3 installed"
+    else
+        failure "sqlite3 not installed and apt-get not available"
+    fi
+fi
 info "git, sqlite3, php present; DB found"
 
 # ── Branch guard — refuse master ────────────────────────────────────────────
