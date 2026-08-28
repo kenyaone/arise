@@ -1,5 +1,5 @@
 <?php
-$db = new SQLite3('/home/cpmsfdav/public_html/arise/data/arise.db');
+$db = new SQLite3(__DIR__ . '/data/arise.db');
 $db->exec('PRAGMA journal_mode=WAL;');
 
 // Ensure clusters table exists

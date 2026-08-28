@@ -1,6 +1,6 @@
 <?php
 // Migration: refusal skills lessons + module 17 quiz questions
-$db = new SQLite3('/home/cpmsfdav/public_html/arise/data/arise.db');
+$db = new SQLite3(__DIR__ . '/data/arise.db');
 $db->exec('PRAGMA journal_mode=WAL;');
 $steps = [];
 
