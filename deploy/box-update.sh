@@ -99,24 +99,28 @@ cd "$ARISE_ROOT"
 
 # ── Preconditions ───────────────────────────────────────────────────────────
 step "Checking box preconditions"
-command -v git >/dev/null || failure "git not installed on box (sudo apt install -y git)"
 command -v php >/dev/null || failure "php not installed on box"
 [[ -f data/arise.db ]] || failure "DB missing: $ARISE_ROOT/data/arise.db"
 
-# sqlite3 CLI is often absent on stripped-down boxes (the PHP sqlite3
-# extension powers the app; the CLI is a separate package). Auto-install it.
-if ! command -v sqlite3 >/dev/null; then
-    warn "sqlite3 CLI missing — attempting apt install"
-    if command -v apt-get >/dev/null; then
-        DEBIAN_FRONTEND=noninteractive apt-get install -y sqlite3 >/dev/null 2>&1 \
-            || DEBIAN_FRONTEND=noninteractive apt-get update -qq \
-            && DEBIAN_FRONTEND=noninteractive apt-get install -y sqlite3 >/dev/null 2>&1 \
-            || failure "could not install sqlite3 (no internet, or apt broken). Run: sudo apt update && sudo apt install -y sqlite3, then rerun."
-        info "sqlite3 installed"
-    else
-        failure "sqlite3 not installed and apt-get not available"
+# Auto-install missing deps (git, sqlite3 CLI). Stripped-down boxes often
+# ship the PHP sqlite3 extension without the CLI, and minimal Ubuntu
+# installs sometimes lack git. Both are needed for a safe update.
+ensure_pkg() {
+    local cmd="$1" pkg="$2"
+    command -v "$cmd" >/dev/null && return 0
+    warn "$cmd missing — attempting apt install $pkg"
+    if ! command -v apt-get >/dev/null; then
+        failure "$cmd not installed and apt-get not available"
     fi
-fi
+    if ! DEBIAN_FRONTEND=noninteractive apt-get install -y "$pkg" >/dev/null 2>&1; then
+        DEBIAN_FRONTEND=noninteractive apt-get update -qq >/dev/null 2>&1 || true
+        DEBIAN_FRONTEND=noninteractive apt-get install -y "$pkg" >/dev/null 2>&1 \
+            || failure "could not install $pkg (no internet, or apt broken). Run: sudo apt update && sudo apt install -y $pkg, then rerun."
+    fi
+    info "$pkg installed"
+}
+ensure_pkg git     git
+ensure_pkg sqlite3 sqlite3
 info "git, sqlite3, php present; DB found"
 
 # ── Branch guard — refuse master ────────────────────────────────────────────
