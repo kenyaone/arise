@@ -123,23 +123,15 @@ ensure_pkg git     git
 ensure_pkg sqlite3 sqlite3
 info "git, sqlite3, php present; DB found"
 
-# ── Branch guard — refuse master ────────────────────────────────────────────
-step "Verifying branch"
+step "Reading current git state"
 CUR_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)"
+PRE_SHA="$(git rev-parse HEAD 2>/dev/null || echo unknown)"
 info "current branch: $CUR_BRANCH"
-if [[ "$CUR_BRANCH" == "master" || "$CUR_BRANCH" == "main" ]]; then
-    failure "box is on '$CUR_BRANCH' — that branch is the CLOUD PANEL and will brick the box. Do NOT proceed. Call ops."
-fi
-if [[ "$CUR_BRANCH" != "$BRANCH" ]]; then
-    warn "not on $BRANCH; will switch to it"
-    git fetch --prune origin >/dev/null 2>&1 || failure "git fetch failed — check internet on box"
-    git checkout "$BRANCH" 2>/dev/null || git checkout -b "$BRANCH" "origin/$BRANCH" || failure "cannot switch to $BRANCH"
-fi
-
-PRE_SHA="$(git rev-parse HEAD)"
 info "pre-update SHA: ${PRE_SHA:0:12}"
 
-# ── DB backup (safe .backup, not cp) ────────────────────────────────────────
+# ── DB backup FIRST (before any git op) ─────────────────────────────────────
+# Done up-front so we have a rollback point regardless of what git does next
+# (branch switch, reset, migration failure — all can restore from here).
 step "Backing up SQLite DB"
 mkdir -p "$BACKUP_DIR"
 BACKUP="$BACKUP_DIR/arise-$STAMP.db"
@@ -148,7 +140,7 @@ info "backup: $BACKUP"
 # Keep last 14
 ls -1t "$BACKUP_DIR"/arise-*.db 2>/dev/null | tail -n +15 | xargs -r rm -f
 
-# ── Stash local edits ───────────────────────────────────────────────────────
+# ── Save any local edits (diagnostic patch), then reset working tree ────────
 step "Checking for local edits"
 if [[ -n "$(git status --porcelain)" ]]; then
     mkdir -p "$DIRTY_DIR"
@@ -160,17 +152,38 @@ else
     info "clean"
 fi
 
-# ── Fetch + reset ───────────────────────────────────────────────────────────
+# ── Fetch origin ────────────────────────────────────────────────────────────
 step "Fetching origin/$BRANCH"
 git fetch --prune origin || failure "git fetch failed — check internet on box"
+
+# ── Branch handling: switch to field-boxes if we're anywhere else ───────────
+# master/main is the CLOUD PANEL branch — it does NOT belong on a box.
+# Old boxes may be on master from before the branch was repurposed. Switching
+# AWAY from master to field-boxes is the fix direction (the danger direction
+# is pulling master CONTENT onto a box, which we never do — we only ever
+# reset to origin/field-boxes below).
+step "Verifying branch"
+if [[ "$CUR_BRANCH" != "$BRANCH" ]]; then
+    if [[ "$CUR_BRANCH" == "master" || "$CUR_BRANCH" == "main" ]]; then
+        warn "box is on '$CUR_BRANCH' (the CLOUD PANEL branch) — auto-switching to $BRANCH"
+        warn "(this is safe: DB is already backed up above; we only reset to origin/$BRANCH, never to $CUR_BRANCH)"
+    else
+        warn "not on $BRANCH (was: $CUR_BRANCH); switching to $BRANCH"
+    fi
+    git checkout -B "$BRANCH" "origin/$BRANCH" || failure "cannot switch to $BRANCH"
+    info "switched: $CUR_BRANCH → $BRANCH"
+fi
+
+# ── Reset to latest ─────────────────────────────────────────────────────────
 NEW_SHA="$(git rev-parse "origin/$BRANCH")"
-if [[ "$NEW_SHA" == "$PRE_SHA" ]]; then
+POST_SWITCH_SHA="$(git rev-parse HEAD)"
+if [[ "$NEW_SHA" == "$POST_SWITCH_SHA" && "$CUR_BRANCH" == "$BRANCH" ]]; then
     info "already at latest (${NEW_SHA:0:12}) — nothing to do"
     # Still reload Apache in case config drifted
     systemctl reload apache2 2>/dev/null || true
     success
 fi
-info "updating: ${PRE_SHA:0:12} → ${NEW_SHA:0:12}"
+info "updating to: ${NEW_SHA:0:12}"
 git reset --hard "origin/$BRANCH" || failure "git reset failed"
 
 # ── Migrations ──────────────────────────────────────────────────────────────
